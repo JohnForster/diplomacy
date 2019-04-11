@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -34,6 +36,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
-    })
-  ]
+    }),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([
+      { from: './src/assets', to: './assets'}
+    ])
+  ],
+  devServer: {
+    contentBase: path.join(process.cwd(), 'dist'),
+    compress: true,
+    port: 8083
+  }
 }
