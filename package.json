@@ -2,9 +2,13 @@
   "scripts": {
     "build": "yarn webpack",
     "host": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
-    "start": "yarn webpack-dev-server --mode=development --config ./webpack.config.js"
+    "start": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
+    "express": "node server.js"
   },
   "dependencies": {
+    "express": "^4.16.4",
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
     "svg.js": "^2.7.1",
     "svgdom": "^0.0.18"
   },

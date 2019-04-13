@@ -1,4 +1,4 @@
-import entityLocations from '../assets/entityLocations'
+import entityLocations from '../resources/entityLocations'
 import startingTerritories from '../startingTerritories'
 
 declare var SVG: any
