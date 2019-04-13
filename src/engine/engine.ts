@@ -1,48 +1,59 @@
+import entityLocations from '../assets/entityLocations'
+import startingTerritories from '../startingTerritories'
+
+declare var SVG: any
+import 'svg.js'
+
 export default new class Engine {
   private svg: HTMLElement
-
-  private startingTerritories: {[key: string]: string[]} = {
-    England: ['London', 'Liverpool', 'Yorkshire', 'Clyde', 'Edinburgh', 'Wales'],
-    France: ['Picardy', 'Brest', 'Paris', 'Gascony', 'Burgundy', 'Marseilles'],
-    Italy: ['Piedmont', 'Venice', 'Rome', 'Naples', 'Apulia', 'Tuscany'],
-    Germany: ['Berlin', 'Ruhr', 'Munich', 'Kiel', 'Silesia', 'Prussia'],
-    Austria: ['Bohemia', 'Budapest', 'Tyrolia', 'Galicia', 'Vienna', 'Trieste'],
-    Russia: ['Warsaw', 'Livonia', 'Sevastopol', 'Moscow' , 'Ukraine', 'Finland', 'St_Petersburg'],
-    Turkey: ['Constantinople', 'Smyrna', 'Syria', 'Ankara', 'Armenia']
-  }
+  private state: {'territories': {[key: string]: string[]}}
+  private tileSelected: string
+  private svgJs: any
 
   constructor() {
+    this.setState(startingTerritories)
+  }
 
+  public setState = (stateAsJSON: string) => {
+    this.state = JSON.parse(stateAsJSON)
   }
 
   public run = () => {}
 
   public setup = (svg: HTMLElement) => {
     this.svg = svg
-    const water = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
-    water.forEach((seaTile) => {
-      seaTile.addEventListener('click', (evt) => { console.log(evt) })
-      // seaTile.onclick = () => console.log(seaTile.getAttribute('title'))
+    const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
+    tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
+    tiles.forEach((tile) => {
+      // tile.addEventListener('click', (evt) => { console.log(tile.getAttribute('title')) })
+      tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })
-    for (const country in this.startingTerritories) {
-      if (this.startingTerritories.hasOwnProperty(country)) {
-        this.startingTerritories[country].forEach((territory) => this.setOwnership(territory, country))
+    const occupiedTerritories = this.state.territories
+    for (const country in occupiedTerritories) {
+      if (occupiedTerritories.hasOwnProperty(country)) {
+        occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
       }
     }
+  }
 
-    // this.startingTerritories.England.forEach((territory) => this.setOwnership(territory))
-    // this.setOwnership('London', 'England')
-    // this.setOwnership('Liverpool', 'England')
-    // this.setOwnership('Yorkshire', 'England')
-    // this.setOwnership('Clyde', 'England')
-    // this.setOwnership('Edinburgh', 'England')
-    // this.setOwnership('Wales', 'England')
+  private onClick = (territory: string) => {
+    if (!this.tileSelected) {
+      this.tileSelected = territory
+      return
+    } else {
+      this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
+      this.tileSelected = null
+    }
+  }
 
-
-    console.log(svg.getElementsByClassName('London'))
-    svg.getElementsByClassName('London')[0].classList.add('England')
-    // london.className +=
-    // const svg = svgObject.getElementById('mapSvg')
+  private drawLine = (start: {x: number, y: number}, end: {x: number, y: number}, color?: string) => {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+    line.setAttribute('d',`M ${start.x} ${start.y} L ${end.x} ${end.y}`) // Set path's data
+    // line.style.stroke = color || '#000' // Set stroke colour
+    line.setAttribute('stroke', 'green')
+    line.style.strokeWidth = '2px'
+    line.style.markerEnd = 'url(#triangle)'
+    this.svg.appendChild(line)
   }
 
   private setOwnership = (territory: string, owner: string) => {

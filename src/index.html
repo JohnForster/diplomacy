@@ -4,33 +4,47 @@
       <style>
           .bg
           {
+            object-fit: cover;
             position:absolute;
-            top: 10px;
-            left: 10px;
             z-index: -1;
-            width: 800px;
-            height: 800px;
+            width: 100%;
+            height: 100%
           }
           .map
           {
             position:absolute;
-            top: 10px;
-            left: 10px;
+            max-width: 800px;
+            width: 100%;
           }
           .europeMap
           {
-            height: 800px;
-            width: 800px;
-
+            width: 100%;
+            height: 100%
           }
+          .l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.2;}
+          .w		{fill:#99CCFF; stroke:black; stroke-linejoin:round; opacity: 0.5;}
+          .s		{fill:#DDDDDD; stroke:black; stroke-linejoin:round; }
+          .sc {fill:#DDDDDD; stroke:black;}
+
+          text		{font-family:Arial,Helvetica,sans-serif; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
+
+          .Austria	{fill:#FF0000; stroke:black}
+          .England	{fill:#0000FF; stroke:black}
+          .France 	{fill:#00FFFF; stroke:black}
+          .Germany	{fill:#808080; stroke:black}
+          .Italy  	{fill:#00FF00; stroke:black}
+          .Russia 	{fill:#008000; stroke:black}
+          .Turkey 	{fill:#FFFF00; stroke:black}
           </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My webpage!</title>
-      <img class="bg" height="800" width="800" src="./assets/paperTexture.jpg" />
-      <object id="mainMap" type="image/svg+xml" data="assets/Diplomacy.svg" class="europeMap">
-        Kiwi Logo <!-- fallback image in CSS -->
-      </object>
+      <div class="map">
+        <img class="bg" src="./assets/paperTexture.jpg" />
+        <object id="mainMap" type="image/svg+xml" data="assets/Diplomacy.svg" class="europeMap">
+          Kiwi Logo <!-- fallback image in CSS -->
+        </object>
+      </div>
   </head>
   <body>
   </body>

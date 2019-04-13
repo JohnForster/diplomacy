@@ -22,6 +22,11 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader',
+        exclude: /node_modules/
       }
     ]
   },
@@ -45,6 +50,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(process.cwd(), 'dist'),
     compress: true,
-    port: 8083
+    port: 8083,
+    host: '0.0.0.0'
   }
 }
