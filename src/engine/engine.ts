@@ -1,4 +1,6 @@
+import colours from '../resources/colours'
 import entityLocations from '../resources/entityLocations'
+import exampleMovesJson from '../resources/exampleMoves'
 import startingTerritories from '../startingTerritories'
 
 declare var SVG: any
@@ -34,6 +36,9 @@ export default new class Engine {
         occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
       }
     }
+
+    this.drawInstructions(JSON.parse(exampleMovesJson))
+
   }
 
   private onClick = (territory: string) => {
@@ -54,6 +59,12 @@ export default new class Engine {
     line.style.strokeWidth = '2px'
     line.style.markerEnd = 'url(#triangle)'
     this.svg.appendChild(line)
+  }
+
+  private drawInstructions = (instructions: {moves: {start: string, end: string, country: string}[] }) => {
+    instructions.moves.forEach((move) => {
+      this.drawLine(entityLocations[move.start], entityLocations[move.end], colours[move.country])
+    })
   }
 
   private setOwnership = (territory: string, owner: string) => {

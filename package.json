@@ -3,7 +3,7 @@
     "build": "yarn webpack",
     "host": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
     "start": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
-    "express": "node server.js"
+    "express": "yarn build && node server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
