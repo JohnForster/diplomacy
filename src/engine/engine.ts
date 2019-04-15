@@ -23,8 +23,6 @@ type Order = {
   end: string,
 }
 
-
-
 export default class Engine {
   private userId: string
   private sessionId: string
@@ -34,7 +32,7 @@ export default class Engine {
     const session = this.getSession() // ?
     this.userId = userId
     this.sessionId = sessionId
-    this.gameState = getGameState(gameId)
+    // this.gameState = getGameState(gameId)
   }
 
   private getSession = () => {

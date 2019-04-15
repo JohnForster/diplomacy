@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <style>
-          .bg
-          {
-            object-fit: cover;
-            position:absolute;
-            z-index: -1;
-            width: 100%;
-            height: 100%
-          }
-          .map
-          {
-            position:absolute;
-            max-width: 800px;
-            width: 100%;
-          }
-          .europeMap
-          {
-            width: 100%;
-            height: 100%
-          }
-          .l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.2;}
-          .w		{fill:#99CCFF; stroke:black; stroke-linejoin:round; opacity: 0.5;}
-          .s		{fill:#DDDDDD; stroke:black; stroke-linejoin:round; }
-          .sc {fill:#DDDDDD; stroke:black;}
+    <style>
+      .bg
+        {
+          object-fit: cover;
+          position:absolute;
+          z-index: -1;
+          width: 100%;
+          height: 100%
+        }
+      .map
+        {
+          position:absolute;
+          max-width: 1024px;
+          width: 100%;
+        }
+      .europeMap
+        {
+          width: 100%;
+          height: 100%
+        }
+        .l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25;}
+			.w		{fill:#99CCFF; stroke:black; stroke-linejoin:round; opacity: 0.45;}
+			.s		{fill:url(#diagonalHatch); stroke:black; stroke-linejoin:round; opacity: 0.5; }
+			.sc {fill:#DDDDDD; stroke:black;}
+			#A, #F, #sc {opacity: 0.7;}
+			text		{font-family:Arial,Helvetica,sans-serif; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
 
-          text		{font-family:Arial,Helvetica,sans-serif; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
+			.Austria	{fill:#FF0000; stroke:black}
+			.England	{fill:#0000FF; stroke:black}
+			.France 	{fill:#00FFFF; stroke:black}
+			.Germany	{fill:#808080; stroke:black}
+			.Italy  	{fill:#00FF00; stroke:black}
+			.Russia 	{fill:#008000; stroke:black}
+			.Turkey 	{fill:#FFFF00; stroke:black}
 
-          .Austria	{fill:#FF0000; stroke:black}
-          .England	{fill:#0000FF; stroke:black}
-          .France 	{fill:#00FFFF; stroke:black}
-          .Germany	{fill:#808080; stroke:black}
-          .Italy  	{fill:#00FF00; stroke:black}
-          .Russia 	{fill:#008000; stroke:black}
-          .Turkey 	{fill:#FFFF00; stroke:black}
-          </style>
+			<!-- Orders -->
+
+			.success { stroke: #1C1 }
+			.bounce { stroke: #D50 }
+			.move { stroke: #000 }
+
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My webpage!</title>
