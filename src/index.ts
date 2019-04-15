@@ -1,4 +1,4 @@
-import Engine from './engine/engine'
+import Engine from './engine/prototype'
 
 window.addEventListener('load', function () {
   const svgObject = document.getElementById('mainMap') as HTMLObjectElement

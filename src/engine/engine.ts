@@ -1,77 +1,43 @@
-import colours from '../resources/colours'
-import entityLocations from '../resources/entityLocations'
-import exampleMovesJson from '../resources/exampleMoves'
-import startingTerritories from '../startingTerritories'
+import Country from "src/resources/country.enum";
+import Territory from 'src/resources/territory.enum';
 
-declare var SVG: any
-import 'svg.js'
+type GameState = {
+  terrain: Terrain,
+  units: Units,
+  orders: Order[]
+}
 
-export default new class Engine {
-  private svg: HTMLElement
-  private state: {'territories': {[key: string]: string[]}}
-  private tileSelected: string
-  private svgJs: any
+type Terrain = {
+  [key: string]: string[]
+}
 
-  constructor() {
-    this.setState(startingTerritories)
+type Units = {
+  [key: string]: {
+    armies?: string[],
+    fleets?: string[],
+  }
+}
+type Order = {
+  orderType: string,
+  startingLocation: string,
+  end: string,
+}
+
+
+
+export default class Engine {
+  private userId: string
+  private sessionId: string
+  private gameState: GameState
+
+  constructor(userId: string, sessionId: string, gameId: string) {
+    const session = this.getSession() // ?
+    this.userId = userId
+    this.sessionId = sessionId
+    this.gameState = getGameState(gameId)
   }
 
-  public setState = (stateAsJSON: string) => {
-    this.state = JSON.parse(stateAsJSON)
+  private getSession = () => {
+    return {id: '', userId: ''}
   }
-
-  public run = () => {}
-
-  public setup = (svg: HTMLElement) => {
-    this.svg = svg
-    const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
-    tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
-    tiles.forEach((tile) => {
-      // tile.addEventListener('click', (evt) => { console.log(tile.getAttribute('title')) })
-      tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
-    })
-    const occupiedTerritories = this.state.territories
-    for (const country in occupiedTerritories) {
-      if (occupiedTerritories.hasOwnProperty(country)) {
-        occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
-      }
-    }
-
-    this.drawInstructions(JSON.parse(exampleMovesJson))
-
-  }
-
-  private onClick = (territory: string) => {
-    if (!this.tileSelected) {
-      this.tileSelected = territory
-      return
-    } else {
-      this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
-      this.tileSelected = null
-    }
-  }
-
-  private drawLine = (start: {x: number, y: number}, end: {x: number, y: number}, color?: string) => {
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-    line.setAttribute('d',`M ${start.x} ${start.y} L ${end.x} ${end.y}`) // Set path's data
-    // line.style.stroke = color || '#000' // Set stroke colour
-    line.setAttribute('stroke', 'green')
-    line.style.strokeWidth = '2px'
-    line.style.markerEnd = 'url(#triangle)'
-    this.svg.appendChild(line)
-  }
-
-  private drawInstructions = (instructions: {moves: {start: string, end: string, country: string}[] }) => {
-    instructions.moves.forEach((move) => {
-      this.drawLine(entityLocations[move.start], entityLocations[move.end], colours[move.country])
-    })
-  }
-
-  private setOwnership = (territory: string, owner: string) => {
-    const territoryElements = Array.from(this.svg.getElementsByClassName(territory))
-    territoryElements.forEach((terr) => {
-      terr.classList.remove('England', 'France', 'Germany', 'Austria', 'Russia', 'Italy', 'Turkey')
-      terr.classList.add(owner)
-    })
-  }
-} ()
+}
