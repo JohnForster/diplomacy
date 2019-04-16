@@ -39,6 +39,9 @@ export default new class Prototype {
         occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
       }
     }
+    // Create objects for units and territory etc.
+    // And then draw from internal state?
+    // Easier to check rules.
     this.units = JSON.parse(exampleGameState)
     this.drawUnits(this.units)
     this.drawInstructions(JSON.parse(exampleMovesJson))
