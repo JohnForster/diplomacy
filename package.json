@@ -1,8 +1,13 @@
 {
   "scripts": {
-    "build": "yarn webpack",
+    "build": "yarn webpack", // Build needs to webpack into dist
+    "buildServer": "typescript --src src/server --output dist", // or equivalent
     "host": "yarn webpack --watch",
     "start": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
+    "startParallel": "concurrently yarn startServerDev & startClientDev", // something like that
+    "startServerDev": "ts-node src/server/app.ts",
+    "startClientDev": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
+    "startServerLive": "node dist/server.js"
     "express": "yarn build && node server.js"
   },
   "dependencies": {

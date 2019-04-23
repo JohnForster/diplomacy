@@ -1,24 +1,21 @@
 const tiles = require('./tiles')
 const fs = require('fs')
 
-const arrayOfGroups = tiles.split('</g>')
+const arrayOfGroupStrings = tiles.split('</g>')
 const allRegions = {}
 
-// const tile = tilesAsArray[0]
-let i = 0
-arrayOfGroups.forEach((tile) => {
+arrayOfGroupStrings.forEach((tile) => {
   const matchResponse = tile.match(/(?<=title=")(\w+)"/)
   if (matchResponse) {
     const regionName = matchResponse[1]
-    // console.log(matchResponse[1])
+    // Isolate the polygon points
     const points = tile.match(/class="[wl][\s\w]*" points="([\d,\s]+)+"/)
     let pointsAsArray
     if (points) pointsAsArray = points[1].split(' ')
+    // Save as an object
     allRegions[regionName] = {
       points: pointsAsArray || [],
-      borders: []
     }
-    i++
   }
 })
 
@@ -40,6 +37,7 @@ for (let region1 in allRegions) {
     }
   }
 }
+
 fs.writeFile('tilesData.json', JSON.stringify(output), (err) => {
   if (err) throw err
   console.log(Object.keys(output).length + ' regions found')

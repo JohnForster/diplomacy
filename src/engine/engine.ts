@@ -1,4 +1,4 @@
-import Country from "src/resources/country.enum";
+import Empire from "src/resources/empire.enum";
 import Territory from 'src/resources/territory.enum';
 
 type GameState = {

@@ -4,7 +4,7 @@ import exampleGameState from '../resources/exampleGameState'
 import exampleMovesJson from '../resources/exampleMoves'
 import startingTerritories from '../resources/startingTerritories'
 
-import Country from '../resources/country.enum'
+import Empire from '../resources/empire.enum'
 
 export default new class Prototype {
   private svg: HTMLElement
