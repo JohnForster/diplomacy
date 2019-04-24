@@ -2,13 +2,13 @@ export default JSON.stringify({
   "moves": [
     {
       "country": "England",
-      "start": "London",
-      "end": "Yorkshire"
+      "start": "English_Channel",
+      "end": "Brest"
     },
     {
-      "country": "Germany",
-      "start": "Berlin",
-      "end": "Kiel"
+      "country": "Italy",
+      "start": "Rome",
+      "end": "Tyrrhenian_Sea"
     },
     {
       "country": "France",

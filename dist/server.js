@@ -20,15 +20,9 @@ var express = require('express');
 // import path from 'path'
 var app = express();
 var HTML_FILE = path.join(__dirname, 'client/index.html');
-// app.use(express.static(DIST_DIR))
-// app.use(express.static('client'))
-// app.use('/assets',express.static(path.join(__dirname, 'client/assets')));
 app.use(express.static(path.join(__dirname, '/client')));
 app.get('/', function (req, res) {
     res.sendFile(HTML_FILE);
-    // res.send({
-    //     message: 'hello world',
-    // });
 });
 var PORT = process.env.PORT || 8080;
 app.listen(PORT, function () {

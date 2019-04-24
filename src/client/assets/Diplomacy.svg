@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?xml-stylesheet href="style.css" type="text/css"?>
 <!DOCTYPE svg [
 	<!ENTITY Switzerland "219,376">
 	<!ENTITY Adriatic_Sea "296,441">
@@ -92,27 +93,6 @@ Created for Diplomap (http://www.games2relax.net/diplomap/)
 </desc>
 
 <defs>
-	<style type="text/css">
-			.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25}
-			.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45;}
-			.s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
-			.sc {fill:#DDDDDD; stroke:black;}
-			#A, #F, #sc {opacity: 0.7; pointer-events: none;}
-			text		{font-family:Palatino; fill:#222; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
-
-			.Austria	{fill:#FF77FF; stroke:black}
-			.England	{fill:#0000FF; stroke:black}
-			.France 	{fill:#00FFFF; stroke:black}
-			.Germany	{fill:#808080; stroke:black}
-			.Italy  	{fill:#00FF00; stroke:black}
-			.Russia 	{fill:#FFFF00; stroke:black}
-			.Turkey 	{fill:#FF0000; stroke:black}
-
-			<!-- Orders -->
-			.success { stroke: #1C1 }
-			.bounce { stroke: #D50 }
-			.move { stroke: #000 }
-	</style>
 	<pattern id="diagonalHatch" width="5" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
 		<rect x="0" y="0" width="10" height="10" style="fill:brown"/>
 		<line x1="0" y1="0" x2="0" y2="10" style="stroke:black; stroke-width:5" />
