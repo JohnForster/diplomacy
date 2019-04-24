@@ -1,6 +1,6 @@
 // Convert this to typescript?
 
-// const path = require('path')
+const path = require('path')
 // const express = require('express')
 
 // const app = express()
@@ -23,17 +23,13 @@ import { Request, Response } from 'express'
 // import path from 'path'
 
 const app = express()
-// const DIST_DIR = path.join(__dirname, 'dist')
-// const HTML_FILE = path.join(DIST_DIR, 'index.html')
+const HTML_FILE = path.join(__dirname, 'client/index.html')
 
-// app.use(express.static(DIST_DIR))
-app.use(express.static('assets'))
-app.get('*', (req: Request, res: Response) => {
-    // res.sendFile(HTML_FILE)
-    res.send({
-        message: 'hello world',
-    });
+app.use(express.static(path.join(__dirname, '/client')))
+app.get('/', (req: Request, res: Response) => {
+    res.sendFile(HTML_FILE)
 })
+
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
     console.log(`App listening to ${PORT}....`)

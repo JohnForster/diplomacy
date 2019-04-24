@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/client/index.ts',
   devtool: 'inline-source-map',
   //! Uncomment the below when working with express
   // target: 'node',
@@ -52,16 +52,16 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist/client')
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/client/index.html',
       filename: 'index.html',
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: './src/assets', to: './assets'}
+      { from: './src/client/assets', to: './assets'}
     ])
   ],
   devServer: {

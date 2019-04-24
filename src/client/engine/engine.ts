@@ -1,5 +1,5 @@
-import Country from "src/resources/country.enum";
-import Territory from 'src/resources/territory.enum';
+import Country from "@client/resources/country.enum"
+import Territory from '@client/resources/territory.enum';
 
 type GameState = {
   terrain: Terrain,

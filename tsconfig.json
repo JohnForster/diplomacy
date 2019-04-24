@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": { "*": ["types/*"] },
+    "paths": { 
+      "*": ["types/*"],
+      "@client/*":["src/client/*"],
+      "@server/*":["src/server/*"]
+    },
     "outDir": "./dist/",
     "noImplicitAny": true,
     "sourceMap": true,
