@@ -1,8 +1,11 @@
+import axios, { AxiosResponse } from 'axios'
+import to from 'await-to-js'
+
 import colours from '../resources/colours'
 import entityLocations from '../resources/entityLocations'
-import exampleGameState from '../resources/exampleGameState'
 import exampleMovesJson from '../resources/exampleMoves'
 import startingTerritories from '../resources/startingTerritories'
+
 
 import Country from '../resources/country.enum'
 
@@ -42,10 +45,18 @@ export default new class Prototype {
     // Create objects for units and territory etc.
     // And then draw from internal state?
     // Easier to check rules.
-    this.units = JSON.parse(exampleGameState)
-    this.drawUnits(this.units)
+
+    axios.get('/game').then((res:AxiosResponse) => {
+      console.log(res.data)
+      this.units = res.data
+      this.drawUnits(res.data)
+    })
     this.drawInstructions(JSON.parse(exampleMovesJson))
   }
+
+  // private asyncSetup = async () => {
+  //   await 
+  // }
 
   private onClick = (territory: string) => {
     if (this.tileSelected) {

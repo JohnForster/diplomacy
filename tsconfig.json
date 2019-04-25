@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": { 
       "*": ["types/*"],
       "@client/*":["src/client/*"],
@@ -9,7 +9,8 @@
     "outDir": "./dist/",
     "noImplicitAny": true,
     "sourceMap": true,
-    "module": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
     "target": "es5",
     "jsx": "react",
     "allowJs": true,
@@ -19,5 +20,4 @@
     ],
     "allowSyntheticDefaultImports": true
   },
-  
 }
