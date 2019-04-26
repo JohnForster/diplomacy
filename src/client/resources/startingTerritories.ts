@@ -5,7 +5,7 @@ export default JSON.stringify({
     "Italy": ["Piedmont", "Venice", "Rome", "Naples", "Apulia", "Tuscany"],
     "Germany": ["Berlin", "Ruhr", "Munich", "Kiel", "Silesia", "Prussia"],
     "Austria": ["Bohemia", "Budapest", "Tyrolia", "Galicia", "Vienna", "Trieste"],
-    "Russia": ["Warsaw", "Livonia", "Sevastopol", "Moscow" , "Ukraine", "Finland", "St_Petersburg"],
+    "Russia": ["Portugal", "Livonia", "Sevastopol", "Moscow" , "Ukraine", "Finland", "St_Petersburg"],
     "Turkey": ["Constantinople", "Smyrna", "Syria", "Ankara", "Armenia"]
   }
 })
@@ -16,6 +16,6 @@ export default JSON.stringify({
 //   Italy: ['Piedmont', 'Venice', 'Rome', 'Naples', 'Apulia', 'Tuscany'],
 //   Germany: ['Berlin', 'Ruhr', 'Munich', 'Kiel', 'Silesia', 'Prussia'],
 //   Austria: ['Bohemia', 'Budapest', 'Tyrolia', 'Galicia', 'Vienna', 'Trieste'],
-//   Russia: ['Warsaw', 'Livonia', 'Sevastopol', 'Moscow' , 'Ukraine', 'Finland', 'St_Petersburg'],
+//   Russia: ['Spain', 'Livonia', 'Sevastopol', 'Moscow' , 'Ukraine', 'Finland', 'St_Petersburg'],
 //   Turkey: ['Constantinople', 'Smyrna', 'Syria', 'Ankara', 'Armenia']
 // }

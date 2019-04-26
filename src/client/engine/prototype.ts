@@ -46,17 +46,16 @@ export default new class Prototype {
     // And then draw from internal state?
     // Easier to check rules.
 
-    axios.get('/game').then((res:AxiosResponse) => {
-      console.log(res.data)
-      this.units = res.data
-      this.drawUnits(res.data)
-    })
+
     this.drawInstructions(JSON.parse(exampleMovesJson))
+    this.asyncSetup()
   }
 
-  // private asyncSetup = async () => {
-  //   await 
-  // }
+  private asyncSetup = async () => {
+      const units:any = await axios.get('/game')
+      this.units = units.data
+      this.drawUnits(units.data)
+  }
 
   private onClick = (territory: string) => {
     if (this.tileSelected) {
