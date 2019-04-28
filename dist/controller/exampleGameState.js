@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports["default"] = JSON.stringify({
+exports["default"] = {
     England: [
         { unitType: 'fleet', location: 'Spain__sc' },
         { unitType: 'fleet', location: 'Mid_Atlantic_Ocean' },
@@ -14,4 +14,4 @@ exports["default"] = JSON.stringify({
         { unitType: 'army', location: 'Piedmont' },
         { unitType: 'army', location: 'Vienna' },
     ]
-});
+};

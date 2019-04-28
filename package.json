@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "yarn webpack && yarn buildServer",
-    "buildServer": "tsc src/server/* --outDir dist",
+    "buildServer": "tsc src/server/server.ts --outDir dist",
     "host": "yarn webpack --watch",
     "start": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
     "start:dev": "concurrently yarn startServerDev & yarn startClientDev",
@@ -14,9 +14,11 @@
   "dependencies": {
     "await-to-js": "^2.1.1",
     "axios": "^0.18.0",
+    "body-parser": "^1.19.0",
     "express": "^4.16.4",
     "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
+    "mongoose": "^5.5.4",
     "nodemon-webpack-plugin": "^4.0.8",
     "svg.js": "^2.7.1",
     "svgdom": "^0.0.18"

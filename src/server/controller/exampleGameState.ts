@@ -1,4 +1,4 @@
-export default JSON.stringify({
+export default {
   England: [
     { unitType: 'fleet', location: 'Spain__sc' },
     { unitType: 'fleet', location: 'Mid_Atlantic_Ocean' },
@@ -12,4 +12,4 @@ export default JSON.stringify({
     { unitType: 'army', location: 'Piedmont' },
     { unitType: 'army', location: 'Vienna' },
   ]
-})
+}

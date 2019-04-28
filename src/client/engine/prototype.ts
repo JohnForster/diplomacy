@@ -36,12 +36,7 @@ export default new class Prototype {
       // tile.addEventListener('click', (evt) => { console.log(tile.getAttribute('title')) })
       tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })
-    const occupiedTerritories = this.state.territories
-    for (const country in occupiedTerritories) {
-      if (occupiedTerritories.hasOwnProperty(country)) {
-        occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
-      }
-    }
+
     // Create objects for units and territory etc.
     // And then draw from internal state?
     // Easier to check rules.
@@ -52,9 +47,21 @@ export default new class Prototype {
   }
 
   private asyncSetup = async () => {
-      const units:any = await axios.get('/game')
-      this.units = units.data
-      this.drawUnits(units.data)
+    const occupiedTerritories:any = await axios.get('/game', {
+      params: {
+        game_id: 4
+      }
+    })
+
+    console.log('------------')
+    console.log(occupiedTerritories)
+    // for (const country in occupiedTerritories) {
+    //   if (occupiedTerritories.hasOwnProperty(country)) {
+    //     occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
+    //   }
+    // }
+      // this.units = units.data
+      // this.drawUnits(units.data)
   }
 
   private onClick = (territory: string) => {
