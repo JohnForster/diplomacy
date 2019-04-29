@@ -1,22 +1,16 @@
 import * as express from 'express'
 import {Request, Response} from 'express'
-import exampleGameState from './exampleGameState'
 import Game from '../model/game'
 
 class GameController {
   public static view(req: Request, res: Response){
     console.log('viewing games')
     Game.findById(req.params.game_id, (err, game) => {
-      console.log(req)
-      console.log(req.params.game_id)
       if (err) {
         res.send(err)
         return
       }
-      res.json({
-        message: 'Game details loading..',
-        data: game
-      })
+      res.json(game)
     })
   }
 

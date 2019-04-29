@@ -1,15 +1,12 @@
 {
   "scripts": {
     "build": "yarn webpack && yarn buildServer",
-    "buildServer": "tsc src/server/server.ts --outDir dist",
-    "host": "yarn webpack --watch",
-    "start": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
-    "start:dev": "concurrently yarn startServerDev & yarn startClientDev",
-    "startServerDev": "ts-node src/server/server.ts",
-    "startClientDev": "yarn webpack-dev-server --mode=development --config ./webpack.config.js",
+    "buildServer": "tsc src/server/server.ts --esModuleInterop --outDir dist",
+    "startDev": "concurrently 'yarn startServerDev' 'yarn startClientDev'",
+    "startServerDev": "nodemon",
+    "startClientDev": "yarn webpack --watch",
     "startServerLive": "node dist/server.js",
-    "live": "yarn build && yarn startServerLive",
-    "express": "yarn build && node server.js"
+    "live": "yarn build && yarn startServerLive"
   },
   "dependencies": {
     "await-to-js": "^2.1.1",

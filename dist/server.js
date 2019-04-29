@@ -1,22 +1,24 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-var path = require("path");
-var express = require("express");
-var api_routes_1 = require("./controller/api-routes");
-var game_1 = require("./controller/game");
-var mongoose = require("mongoose");
-var bodyParser = require("body-parser");
-mongoose.connect('mongodb://localhost/diplomacy');
+var path_1 = __importDefault(require("path"));
+var express_1 = __importDefault(require("express"));
+var game_1 = __importDefault(require("./controller/game"));
+var mongoose_1 = __importDefault(require("mongoose"));
+var body_parser_1 = __importDefault(require("body-parser"));
+mongoose_1["default"].connect('mongodb://localhost/diplomacy');
 var isDev = process.env.NODE_ENV !== 'production';
-var app = express();
-var HTML_FILE = path.join(__dirname, 'client/index.html');
+var app = express_1["default"]();
+var HTML_FILE = path_1["default"].join(__dirname, 'client/index.html');
 // Configure bodyparser to handle post requests
-app.use(bodyParser.urlencoded({
+app.use(body_parser_1["default"].urlencoded({
     extended: true
 }));
-app.use(bodyParser.json());
+app.use(body_parser_1["default"].json());
 // Serve up static files
-app.use(express.static(path.join(__dirname, '/client')));
+app.use(express_1["default"].static(path_1["default"].join(__dirname, '/client')));
 app.get('/', function (req, res) {
     res.sendFile(HTML_FILE);
 });
@@ -25,6 +27,5 @@ app.listen(PORT, function () {
     console.log("App listening to " + PORT + "...");
     console.log('Press Ctrl+C to quit.');
 });
-app.use('/api', api_routes_1["default"]);
 app.use('/game', game_1["default"]);
 exports["default"] = app;

@@ -61,8 +61,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: './src/client/assets', to: './assets'}
-    ])
+      { from: './src/client/assets', to: './assets' }
+    ], {copyUnmodified: true})
   ],
   devServer: {
     contentBase: path.join(process.cwd(), 'dist'),

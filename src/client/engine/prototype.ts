@@ -4,27 +4,16 @@ import to from 'await-to-js'
 import colours from '../resources/colours'
 import entityLocations from '../resources/entityLocations'
 import exampleMovesJson from '../resources/exampleMoves'
-import startingTerritories from '../resources/startingTerritories'
 
 
 import Country from '../resources/country.enum'
 
 export default new class Prototype {
   private svg: HTMLElement
-  private state: {'territories': {[key: string]: string[]}}
   private tileSelected: string
   private units: any // units type?
   private svgJs: any
   private playerCountry: string = "England"
-  
-
-  constructor() {
-    this.setState(startingTerritories)
-  }
-
-  public setState = (stateAsJSON: string) => {
-    this.state = JSON.parse(stateAsJSON)
-  }
 
   public run = () => {}
 
@@ -41,27 +30,21 @@ export default new class Prototype {
     // And then draw from internal state?
     // Easier to check rules.
 
-
     this.drawInstructions(JSON.parse(exampleMovesJson))
     this.asyncSetup()
   }
 
   private asyncSetup = async () => {
-    const occupiedTerritories:any = await axios.get('/game', {
-      params: {
-        game_id: 4
-      }
-    })
-
-    console.log('------------')
-    console.log(occupiedTerritories)
-    // for (const country in occupiedTerritories) {
-    //   if (occupiedTerritories.hasOwnProperty(country)) {
-    //     occupiedTerritories[country].forEach((territory) => this.setOwnership(territory, country))
-    //   }
-    // }
-      // this.units = units.data
-      // this.drawUnits(units.data)
+    const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
+    if (err) throw new Error('No game data found')
+    if (res) {
+      const empireObjects = res.data.territories
+      empireObjects.forEach((empireObject: {empire: string, ownedTerritories: string[]}) => {
+        empireObject.ownedTerritories.forEach(territory => this.setOwnership(territory, empireObject.empire))
+      })
+    }
+    // this.units = units.data
+    // this.drawUnits(units.data)
   }
 
   private onClick = (territory: string) => {
@@ -122,24 +105,6 @@ export default new class Prototype {
     unit.setAttribute('transform', `translate(${location.x}, ${location.y})`)
     this.svg.appendChild(unit)
   }
-
-  // private drawFleet = (fleetLocation: string, playerCountry:string) => {
-  //   const ship = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-  //   const location = entityLocations[fleetLocation]
-  //   ship.setAttribute('href', '#F')
-  //   ship.setAttribute('class', playerCountry)
-  //   ship.setAttribute('transform', `translate(${location.x}, ${location.y})`)
-  //   this.svg.appendChild(ship)
-  // }
-
-  // private drawTank = (armyLocation: string, playerCountry:string) => {
-  //   const army = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-  //   const location = entityLocations[armyLocation]
-  //   army.setAttribute('href', '#A')
-  //   army.setAttribute('class', playerCountry)
-  //   army.setAttribute('transform', `translate(${location.x}, ${location.y})`)
-  //   this.svg.appendChild(army)
-  // }
 
   private drawInstructions = (instructions: {moves: {start: string, end: string, country: string}[] }) => {
     instructions.moves.forEach((move) => {

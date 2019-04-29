@@ -1,0 +1,5 @@
+{
+  "watch": ["src/server"],
+  "ext": "ts",
+  "exec": "ts-node -O '{\"module\": \"commonjs\"}' src/server/server.ts --outDir dist"
+}

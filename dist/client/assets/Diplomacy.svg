@@ -261,7 +261,7 @@ Created for Diplomap (http://www.games2relax.net/diplomap/)
 </g>
 <g title="Bohemia" class="landTile">>
 	<polygon class="l Bohemia" points="281,356 276,346 268,343 264,329 266,325 278,326 288,321 297,322 311,334 314,332 321,339 322,347 316,348 303,346 295,349 292,357"/>
-	<text x="283" y="347">Bohemia</text>
+	<text x="278" y="338">Bohemia</text>
 </g>
 <g title="Brest" class="landTile">>
 	<polygon class="l Brest" points="150,319 144,318 142,312 136,310 136,326 124,323 122,318 102,317 100,322 103,328 109,329 123,344 122,350 123,357 128,363 146,365 146,337 148,329"/>
@@ -342,13 +342,13 @@ Created for Diplomap (http://www.games2relax.net/diplomap/)
 </g>
 <g title="Liverpool" class="landTile">>
 	<polygon class="l Liverpool" points="128,262 126,256 121,257 132,250 135,250 139,240 136,229 130,227 130,223 138,217 138,214 144,213 145,217 155,228 155,239 151,248 150,264 143,262"/>
-	<text x="130" y="225">Lvp.</text>
+	<text x="140" y="230">Lvp.</text>
 	<use href="#SC" transform="translate(&scLiverpool;)"/>
 </g>
 <g title="Livonia" class="landTile">>
 	<polygon class="l Livonia" points="369,202 365,204 368,210 372,213 373,221 377,227 373,229 366,228 359,220 349,229 347,243 354,251 356,261 362,260 367,265 365,281 372,283 379,290 389,285 392,278
 		404,275 405,239 409,228 405,217 394,205 382,206 372,205"/>
-	<text x="380" y="260">Livonia</text>
+	<text x="370" y="250">Livonia</text>
 </g>
 <g title="London" class="landTile">>
 	<polygon class="l London" points="166,269 168,270 171,268 177,270 178,274 176,283 165,293 172,294 168,296 160,298 147,295 145,281 150,277 153,271"/>
@@ -514,7 +514,7 @@ Created for Diplomap (http://www.games2relax.net/diplomap/)
 </g>
 <g title="Vienna" class="landTile">>
 	<polygon class="l Vienna" points="292,357 295,349 303,346 316,348 322,347 329,346 337,350 335,354 322,370 311,375 308,383 299,385 294,380 295,362"/>
-	<text x="307" y="370">Vienna</text>
+	<text x="305" y="356">Vienna</text>
 	<use href="#SC" transform="translate(&scVienna;)"/>
 </g>
 <g title="Wales" class="landTile">>
@@ -524,7 +524,7 @@ Created for Diplomap (http://www.games2relax.net/diplomap/)
 <g title="Warsaw" class="landTile">>
 	<polygon class="l Warsaw" points="333,330 326,327 323,322 320,303 324,299 326,292 341,287 345,289 359,286 365,281 372,283 379,290 386,309 383,327 379,324 374,327 367,329 361,324 356,323 353,327
 		344,332 341,330"/>
-	<text x="355" y="304">Warsaw</text>
+	<text x="345" y="316">Warsaw</text>
 	<use href="#SC" transform="translate(&scWarsaw;)"/>
 </g>
 <g title="Yorkshire" class="landTile">>
