@@ -5,8 +5,9 @@
     "startDev": "concurrently 'yarn startServerDev' 'yarn startClientDev'",
     "startServerDev": "nodemon",
     "startClientDev": "yarn webpack --watch",
-    "startServerLive": "node dist/server.js",
-    "live": "yarn build && yarn startServerLive"
+    "startServerLive": "NODE_ENV=production node dist/server.js",
+    "live": "yarn build && yarn startServerLive",
+    "mongoDev": "mongod --config /usr/local/etc/mongod.conf"
   },
   "dependencies": {
     "await-to-js": "^2.1.1",

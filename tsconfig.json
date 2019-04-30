@@ -4,7 +4,7 @@
     "paths": { 
       "*": ["types/*"],
       "@client/*":["src/client/*"],
-      "@server/*":["src/server/*"]
+      "@server/*":["src/server/*"],
     },
     "outDir": "./dist/",
     "noImplicitAny": true,

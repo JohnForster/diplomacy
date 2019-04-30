@@ -1,10 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
 import to from 'await-to-js'
 
-import colours from '../resources/colours'
 import entityLocations from '../resources/entityLocations'
 import exampleMovesJson from '../resources/exampleMoves'
-
+import tilesData from '../resources/tilesData'
 
 import Country from '../resources/country.enum'
 
@@ -12,7 +11,6 @@ export default new class Prototype {
   private svg: HTMLElement
   private tileSelected: string
   private units: any // units type?
-  private svgJs: any
   private playerCountry: string = "England"
 
   public run = () => {}
@@ -22,7 +20,6 @@ export default new class Prototype {
     const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
     tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
     tiles.forEach((tile) => {
-      // tile.addEventListener('click', (evt) => { console.log(tile.getAttribute('title')) })
       tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })
 
@@ -43,16 +40,24 @@ export default new class Prototype {
         empireObject.ownedTerritories.forEach(territory => this.setOwnership(territory, empireObject.empire))
       })
     }
-    // this.units = units.data
-    // this.drawUnits(units.data)
+    this.drawUnits()
   }
 
   private onClick = (territory: string) => {
     if (this.tileSelected) {
+      this.finishOrder(territory)
       this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
       this.tileSelected = null
     } else {
       this.startOrder(territory)
+    }
+  }
+
+  private finishOrder = (territory: string) => {
+    // if (territory.borders(this.tileSelected)) {...}
+    if (tilesData[this.tileSelected].includes(territory)) {
+      this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
+      this.tileSelected = null
     }
   }
 
@@ -69,7 +74,7 @@ export default new class Prototype {
     return !!unit
   }
 
-  private drawLine = (start: {x: number, y: number}, end: {x: number, y: number}, color?: string) => {
+  private drawLine = (start: {x: number, y: number}, end: {x: number, y: number}) => {
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'path')
     line.setAttribute('d',`M ${start.x} ${start.y} L ${end.x} ${end.y}`) // Set path's data
     // line.style.stroke = color || '#000' // Set stroke colour
@@ -79,8 +84,7 @@ export default new class Prototype {
     this.svg.appendChild(line)
   }
 
-  // Enum for countries?
-  private drawUnits = (gameState: {[key: string]: {unitType: string, location: string}[]}) => {
+  private drawUnits = (gameState?: {[key: string]: {unitType: string, location: string}[]}) => {
     for (let n in Country) {
       if (Country.hasOwnProperty(n)) {
         const country = Country[n]
@@ -89,9 +93,6 @@ export default new class Prototype {
         gameState[country].forEach((unit) => {
           this.drawUnit(unit.location, country, unit.unitType)
         })
-        // gameState[country].armies.forEach((armyLocation) => {
-        //   this.drawTank(armyLocation, country)
-        // })
       }
     }
   }
@@ -108,7 +109,7 @@ export default new class Prototype {
 
   private drawInstructions = (instructions: {moves: {start: string, end: string, country: string}[] }) => {
     instructions.moves.forEach((move) => {
-      this.drawLine(entityLocations[move.start], entityLocations[move.end], colours[move.country])
+      this.drawLine(entityLocations[move.start], entityLocations[move.end])
     })
   }
 

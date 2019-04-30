@@ -18,8 +18,6 @@ var GameController = /** @class */ (function () {
     GameController.view = function (req, res) {
         console.log('viewing games');
         game_1["default"].findById(req.params.game_id, function (err, game) {
-            console.log(req);
-            console.log(req.params.game_id);
             if (err) {
                 res.send(err);
                 return;
