@@ -1,9 +1,9 @@
-import path from 'path'
+import bodyParser from 'body-parser'
 import express from 'express'
 import { Request, Response } from 'express'
-import game from './controller/game'
 import mongoose from 'mongoose'
-import bodyParser from 'body-parser'
+import path from 'path'
+import game from './controller/game'
 
 mongoose.connect('mongodb://localhost/diplomacy')
 
@@ -13,10 +13,9 @@ const HTML_FILE = isDev ? path.join(__dirname, '../../dist/client/index.html') :
 
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
-
+    extended: true,
+}))
+app.use(bodyParser.json())
 
 // Serve up static files
 app.use(express.static(path.join(__dirname, isDev ? '../../dist/client' : '/client')))

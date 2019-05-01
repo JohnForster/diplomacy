@@ -1,19 +1,19 @@
 export default JSON.stringify({
-  "moves": [
+  moves: [
     {
-      "country": "England",
-      "start": "English_Channel",
-      "end": "Brest"
+      country: 'England',
+      start: 'English_Channel',
+      end: 'Brest',
     },
     {
-      "country": "Italy",
-      "start": "Rome",
-      "end": "Tyrrhenian_Sea"
+      country: 'Italy',
+      start: 'Rome',
+      end: 'Tyrrhenian_Sea',
     },
     {
-      "country": "France",
-      "start": "Burgundy",
-      "end": "Marseilles"
+      country: 'France',
+      start: 'Burgundy',
+      end: 'Marseilles',
     },
-  ]
+  ],
 })

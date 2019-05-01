@@ -5,14 +5,13 @@ interface IGame extends mongoose.Document {
 }
 
 const gameSchema: mongoose.Schema = new mongoose.Schema({
-  territories:[{
+  territories: [{
     empire: String,
-    ownedTerritories: [String]
-  }]
+    ownedTerritories: [String],
+  }],
 })
 
 export default mongoose.model<IGame>('game', gameSchema)
-
 
 // Example Schema:
 

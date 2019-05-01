@@ -1,6 +1,6 @@
-const mongoose =require('mongoose')
+const mongoose = require('mongoose')
 const isDev = true
-const dbURL = isDev ? 'mongodb://localhost/diplomacy_test' : '' 
+const dbURL = isDev ? 'mongodb://localhost/diplomacy_test' : ''
 
 mongoose.connect(dbURL)
 mongoose.connection
@@ -8,9 +8,8 @@ mongoose.connection
     console.log('Connection Established')
   })
   .on('error', (error: Error) => {
-    console.log("Warning: " + error)
+    console.log('Warning: ' + error)
   })
-
 
   // const schema = {
   //   id: number,

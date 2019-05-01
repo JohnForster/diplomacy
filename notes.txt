@@ -1,1 +1,3 @@
 Use environment variables for storing sensitive information, and to avoid hardcoding things like URLs
+
+Refactor schema to use ES6 class
