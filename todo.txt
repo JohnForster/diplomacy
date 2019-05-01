@@ -1,0 +1,62 @@
+- Log in
+  -FE
+    - Log in front end page
+    - Session
+  - FE 
+    - Back end user models
+
+- Models
+  - Game model
+    - Players
+    - Current State
+    - History
+    - Pending Moves?
+
+- Submit Moves
+  - FE
+    - Classes (player, move, game)
+    - Submit button
+    - Finalise?
+  - BE
+    - Moves models
+
+- Rules 1
+  - FE
+    - Armies on land only
+    - Coastal solution
+    - One move per unit
+
+- Turns
+  - BE
+    - Timed execution
+    - Move resolution
+    - Finalise causes execution?
+  - FE
+    - Current year/season
+    - Deadline & Countdown
+    - Display resolved moves
+
+- Cheat Prevention
+  - BE
+    - Validate moves came from proper user (with session)
+    - Validate moves are legal (copy rules from front end?)
+    - Obfuscate turns?
+
+- Rules 2
+  - Support
+  - Fall/Spring
+  - Supply Centres
+  - Build Phase
+  - Retreat Phase
+  - Victory/Loss
+
+- Scale & Polish
+  - Game history
+  - Multiple games
+  - Create new games
+  - Join games
+  - Invites
+
+- Deployment
+  - Docker?
+
