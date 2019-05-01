@@ -2,7 +2,7 @@
   -FE
     - Log in front end page
     - Session
-  - FE 
+  - BE 
     - Back end user models
 
 - Models

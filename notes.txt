@@ -1,0 +1,1 @@
+Use environment variables for storing sensitive information, and to avoid hardcoding things like URLs

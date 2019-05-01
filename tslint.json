@@ -11,6 +11,5 @@
       "array-type": [true, "array"],
       "no-empty": false,
       "interface-over-type-literal": false,
-  },
-  "rulesDirectory": []
+  }
 }
