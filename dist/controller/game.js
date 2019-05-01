@@ -16,19 +16,17 @@ var GameController = /** @class */ (function () {
     function GameController() {
     }
     GameController.view = function (req, res) {
-        console.log('viewing games');
         game_1["default"].findById(req.params.game_id, function (err, game) {
             if (err) {
                 res.send(err);
                 return;
             }
+            console.log("Returning game with id: " + req.params.game_id);
             res.json(game);
         });
     };
     GameController.create = function (req, res) {
         var game = new game_1["default"]();
-        console.log(Object.keys(req));
-        console.log(req.body);
         game.territories = req.body.territories;
         game.save(function (err) {
             if (err) {
@@ -48,8 +46,4 @@ var router = express.Router();
 router.route('/:game_id')
     .get(GameController.view)
     .post(GameController.create);
-// (req: Request, res: Response) => {
-//   const id = req.params.id
-//   res.json(Game.getGameState(id))
-// })
 exports["default"] = router;
