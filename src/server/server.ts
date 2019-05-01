@@ -4,6 +4,7 @@ import { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import path from 'path'
 import game from './controller/game'
+import user from './controller/user'
 
 mongoose.connect('mongodb://localhost/diplomacy')
 
@@ -32,5 +33,6 @@ app.listen(PORT, () => {
 })
 
 app.use('/game', game)
+app.use('/user', user)
 
 export default app

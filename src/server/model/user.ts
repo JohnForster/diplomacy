@@ -10,6 +10,9 @@ const secret = 'secret' // Get from env variable in production
 // ? Get Schema from ES6 class?
 // https://mongoosejs.com/docs/advanced_schemas.html
 
+//? Second opinion on creating users
+// https://dzone.com/articles/using-mongodb-and-mongoose
+
 const userSchema: mongoose.Schema = new mongoose.Schema({
   username: {
     type: String,
@@ -68,6 +71,6 @@ userSchema.methods.toAuthJSON = function() {
   }
 }
 
-mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema)
 
 // Can now be accessed anywhere by using mongoose.model('User')
