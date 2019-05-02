@@ -1,5 +1,5 @@
-			.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25}
-			.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45;}
+			.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25; stroke-width:0.8;}
+			.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45; stroke-width:0.8;}
 			.s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
 			.sc {fill:#DDDDDD; stroke:black;}
 			#A, #F, #sc {pointer-events: none;}

@@ -56,6 +56,7 @@
   - Create new games
   - Join games
   - Invites
+  - Choose colour (25 options)
 
 - Deployment
   - Docker?
