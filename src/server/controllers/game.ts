@@ -1,6 +1,6 @@
 import * as express from 'express'
 import {Request, Response} from 'express'
-import Game from '../model/game'
+import Game from '../models/game'
 
 class GameController {
   public static view(req: Request, res: Response) {

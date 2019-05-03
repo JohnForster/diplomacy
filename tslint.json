@@ -7,6 +7,12 @@
     "object-literal-sort-keys": false,
     "array-type": [true, "array"],
     "no-empty": false,
-    "interface-over-type-literal": false
+    "interface-over-type-literal": false,
+    "curly": [true, "ignore-same-line"]
+  },
+  "linterOptions": {
+    "exclude": [
+      "**/*.ignore.ts"
+    ]
   }
 }

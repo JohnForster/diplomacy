@@ -3,17 +3,18 @@ import * as mongoose from 'mongoose'
 
 // ? Might need to use require here
 import * as jwt from 'jsonwebtoken'
-import uniqueValidator from 'mongoose-unique-validator'
+
+import config from '../config'
 
 const secret = 'secret' // Get from env variable in production
-
+let uniqueValidator
 // ? Get Schema from ES6 class?
 // https://mongoosejs.com/docs/advanced_schemas.html
 
 //? Second opinion on creating users
 // https://dzone.com/articles/using-mongodb-and-mongoose
 
-const userSchema: mongoose.Schema = new mongoose.Schema({
+const Schema: mongoose.Schema = new mongoose.Schema({
   username: {
     type: String,
     lowercase: true,
@@ -35,8 +36,15 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
   salt: String,
 }, {timestamps: true})
 
-userSchema.plugin(uniqueValidator, { message: 'is already taken' })
+Schema.plugin(uniqueValidator, { message: 'is already taken' })
 
+export default mongoose.model('User', Schema)
+// Can now be accessed anywhere by using mongoose.model('User')
+
+// ! Ignore the below, compare later with services/user
+// ! Remove when no longer of interest
+
+const userSchema: any = {}
 const generateHash = (password: string, salt: string) => {
   return crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex')
 }
@@ -59,7 +67,7 @@ userSchema.methods.generateJWT = function() {
     id: this._id,
     username: this.username,
     exp: exp.getTime() / 1000,
-  }, secret)
+  }, config.TOKEN_SECRET)
 }
 
 userSchema.methods.toAuthJSON = function() {
@@ -70,7 +78,3 @@ userSchema.methods.toAuthJSON = function() {
     image: this.image,
   }
 }
-
-export default mongoose.model('User', userSchema)
-
-// Can now be accessed anywhere by using mongoose.model('User')
