@@ -22,7 +22,6 @@ export default (app: Express, isDev: boolean) => {
   app.use('/game', game)
   app.use('/user', user)
 
-
   // app.use('/user', user)
   // app.post('/auth/login', Auth.login)
   // app.post('/auth/signup', Auth.signup)

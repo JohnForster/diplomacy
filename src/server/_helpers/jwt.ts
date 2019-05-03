@@ -12,8 +12,8 @@ const jwt = () => {
   return expressJwt(options).unless({
     path: [
       // public routes that don't require authentication
-      '/users/authenticate',
-      '/users/register',
+      '/user/authenticate',
+      '/user/register',
     ],
   })
 }

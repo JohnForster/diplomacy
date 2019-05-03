@@ -29,8 +29,9 @@ abstract class UserController {
     if (users) res.json(users)
   }
 
-  public static async getCurrent(req: Request, res: Response, next: (error: any) => void) {
-    const [err, user] = await to(userService.getById(req.body.user.sub))
+  // Create an interface that extends the espress Request type?
+  public static async getCurrent(req: any, res: Response, next: (error: any) => void) {
+    const [err, user] = await to(userService.getById(req.user.sub))
     if (!err && !user) res.sendStatus(404)
     if (err) next(err)
     if (user) res.json(user)

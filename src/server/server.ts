@@ -3,8 +3,9 @@ import express from 'express'
 import mongoose from 'mongoose'
 import path from 'path'
 
+import jwt from './_helpers/jwt'
 import config from './config'
-import routes from './routes.ignore'
+import routes from './routes'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -17,6 +18,9 @@ mongoose.connection.on('error', (err) => {
 
 // Start the App
 const app = express()
+
+// Ensure JWT auth with app.use(jwt())
+app.use(jwt())
 
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({

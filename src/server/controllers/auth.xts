@@ -1,5 +1,0 @@
-export default class Auth {
-  public static login = () => {}
-
-  public static signup = () => {}
-}
