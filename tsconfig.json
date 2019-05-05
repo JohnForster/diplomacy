@@ -13,6 +13,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "jsx": "react",
+    "jsxFactory": "h",
     "allowJs": true,
     "lib": [
       "dom",

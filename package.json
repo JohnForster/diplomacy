@@ -22,8 +22,7 @@
     "mongoose": "^5.5.4",
     "mongoose-unique-validator": "^2.0.3",
     "nodemon-webpack-plugin": "^4.0.8",
-    "svg.js": "^2.7.1",
-    "svgdom": "^0.0.18"
+    "preact": "^8.4.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

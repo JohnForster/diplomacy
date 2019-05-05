@@ -2,13 +2,14 @@
   "defaultSeverity": "error",
   "extends": "tslint:recommended",
   "rules": {
-    "semicolon": [true, "never"],
-    "quotemark": [true, "single", "avoid-escape"],
-    "object-literal-sort-keys": false,
     "array-type": [true, "array"],
-    "no-empty": false,
+    "curly": [true, "ignore-same-line"],
     "interface-over-type-literal": false,
-    "curly": [true, "ignore-same-line"]
+    "member-access": [true, "no-public"],
+    "no-empty": false,
+    "object-literal-sort-keys": false,
+    "quotemark": [true, "single", "avoid-escape"],
+    "semicolon": [true, "never"]
   },
   "linterOptions": {
     "exclude": [
