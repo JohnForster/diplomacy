@@ -1,0 +1,22 @@
+			.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25}
+			.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45;}
+			.s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
+			.sc {fill:#DDDDDD; stroke:black;}
+			#A, #F, #sc {pointer-events: none;}
+			text		{font-family:Palatino; fill:#222; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
+
+			.Austria	{fill:#FF77FF; stroke:black}
+			.England	{fill:#0000FF; stroke:black}
+			.France 	{fill:#00FFFF; stroke:black}
+			.Germany	{fill:#808080; stroke:black}
+			.Italy  	{fill:#00FF00; stroke:black}
+			.Russia 	{fill:#FFFF00; stroke:black}
+      .Turkey 	{fill:#FF0000; stroke:black}
+
+			.success { stroke: #1C1 }
+			.bounce { stroke: #D50 }
+      .move { stroke: #000 }
+
+      .light {fill:#06B559;}
+      .medium{fill:#0B9B53;}
+      .shadow{fill:#088443;}

@@ -33,6 +33,7 @@ export default new class Prototype {
 
   private asyncSetup = async () => {
     const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
+    console.log(res)
     if (err) { throw new Error('No game data found') }
     if (res) {
       const empireObjects = res.data.territories

@@ -4,3 +4,8 @@ Refactor schema to use ES6 class
 
 Very good tutorial, very clear:
 DB wrapper: https://jasonwatmore.com/post/2018/06/14/nodejs-mongodb-simple-api-for-authentication-registration-and-user-management#db-js
+
+Boilerplate includes:
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="site.webmanifest">
+Why?

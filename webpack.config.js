@@ -61,7 +61,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: './src/client/assets', to: './assets' }
+      { from: './src/client/assets', to: './assets' },
+      { from: './src/client/login', to: './login'}
     ], {copyUnmodified: true})
   ],
   devServer: {

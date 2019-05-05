@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="assets/css/login.css">
+  </head>
+
+  <body>
+    <script src="js/login.js"></script>
+    <form action="/user/register" method="post">
+      Username:<br>
+      <input type="text" name="username"><br>
+      Name:<br>
+      <input type="text" name="name"><br>
+      Email:<br>
+      <input type="text" name="email"><br>
+      Password:<br>
+      <input type="text" name="password"><br>
+      <input type="submit" value="Submit">
+    </form>
+    <form action="/user/authenticate" method="post">
+      Username:<br>
+      <input type="text" name="username"><br>
+      Password:<br>
+      <input type="text" name="password"><br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

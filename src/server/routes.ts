@@ -14,9 +14,14 @@ export default (app: Express, isDev: boolean) => {
 
   app.use(express.static(path.join(__dirname, middlePath, '/client')))
 
-  const HTML_FILE = path.join(__dirname, middlePath, '/client/index.html')
+  const index = path.join(__dirname, middlePath, '/client/index.html')
   app.get('/', (req: Request, res: Response) => {
-    res.sendFile(HTML_FILE)
+    res.sendFile(index)
+  })
+
+  const loginpath = path.join(__dirname, middlePath, '/client/login/login.html')
+  app.get('/login', (req: Request, res: Response) => {
+    res.sendFile(loginpath)
   })
 
   app.use('/game', game)

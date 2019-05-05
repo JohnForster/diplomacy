@@ -1,9 +1,8 @@
 - Log in
   -FE
     - Log in front end page
-    - Session
   - BE 
-    - Back end user models
+    - Back end user models 
 
 - Models
   - Game model

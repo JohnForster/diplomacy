@@ -3,7 +3,7 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 // Need to include timestamps in interface?
 // Create Schema from ES6 class instead of interface?
-interface IUserModel extends mongoose.Document {
+export interface IUserModel extends mongoose.Document {
   username: string,
   email: string,
   name: string,
