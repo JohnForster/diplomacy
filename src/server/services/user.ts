@@ -18,7 +18,8 @@ export default abstract class UserService {
    * @param {String} password The plaintext password
    * @return A promise to be resolved with an object with the userdata (without the hash) and the json web token
    */
-  public static async authenticate({username, password}: {username: string, password: string}): Promise<object> {
+  public static async authenticate({username, password}: {username: string, password: string}): Promise<any> {
+    // ! Need typing for the return object
     // Could refactor await statements to use await-to-js?
     const user = await User.findOne({ username })
     if (!user) return

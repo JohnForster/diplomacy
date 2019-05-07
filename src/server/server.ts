@@ -1,5 +1,7 @@
 import bodyParser from 'body-parser'
-import express from 'express'
+import mongoDBStoreConstructor from 'connect-mongodb-session'
+import express, {Request, Response, RequestHandler} from 'express'
+import session from 'express-session'
 import mongoose from 'mongoose'
 import path from 'path'
 
@@ -19,8 +21,27 @@ mongoose.connection.on('error', (err) => {
 // Start the App
 const app = express()
 
+const MongoDBStore = mongoDBStoreConstructor(session)
+const mongoDBStore = new MongoDBStore({
+  uri: config.MONGO_URI,
+  databaseName: 'diplomacy', 
+  collection: 'userSessions',
+}, (error) => { console.log(error) })
+
+// TODO https://medium.com/@evangow/server-authentication-basics-express-sessions-passport-and-curl-359b7456003d
+app.use(session({
+  secret: config.TOKEN_SECRET,
+  store: mongoDBStore,
+  // ? Why the below options?
+  resave: false,
+  saveUninitialized: true,
+}))
+
+// Need to set up session store
+// TODO https://www.npmjs.com/package/connect-mongodb-session
+
 // Ensure JWT auth with app.use(jwt())
-app.use(jwt())
+// app.use(jwt())
 
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({

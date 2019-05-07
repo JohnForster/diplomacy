@@ -14,7 +14,13 @@ abstract class UserController {
     const [err, user] = await to(userService.authenticate(req.body))
     if (!user && !err) res.status(400).json({ message: 'Username or password is incorrect'})
     if (err) next(err)
-    if (user) res.json(user)
+    console.log('---------------------')
+    console.log(user)
+    console.log('---------------------')
+    if (user) {
+      res.cookie('access_token', user.token, { httpOnly: true })
+      res.send()
+    }
   }
 
   public static async register(req: Request, res: Response, next: (error: any) => void) {

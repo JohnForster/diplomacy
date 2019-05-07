@@ -24,6 +24,10 @@ export default (app: Express, isDev: boolean) => {
     res.sendFile(loginpath)
   })
 
+  app.get('/test', (req: Request, res: Response) => {
+    res.send('Hello')
+  })
+
   app.use('/game', game)
   app.use('/user', user)
 

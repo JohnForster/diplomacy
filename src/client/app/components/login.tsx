@@ -15,7 +15,8 @@ export default class Login extends Component <ILoginProps, ILoginState> {
   public render(props: ILoginProps, state: ILoginState) {
     return (
       <div>
-        <button value="log in" onClick={this.logIn}/>
+        <button value='log in' onClick={this.logIn}>Log in</button>
+        <button value='authenticate' onClick={this.test}>Am I logged in?</button>
         <form action='/user/register' method='post'>
           Username:<br/>
           <input type='text' name='username'/><br/>
@@ -44,6 +45,13 @@ export default class Login extends Component <ILoginProps, ILoginState> {
       username: 'john',
       password: 'johnspassword',
     }))
+    console.log('------------------------')
+    console.log(err)
+    console.log(res)
+  }
+
+  test = async () => {
+    const [err, res] = await to(axios.get('/test', {withCredentials: true}))
     console.log(err)
     console.log(res)
   }
