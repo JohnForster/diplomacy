@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express'
 import to from 'await-to-js'
 
-import userService from '../services/user'
+import userService from '../services/user.service'
 
 /*
   The users controller defines all user routes for the api, the route definitions
@@ -10,18 +10,16 @@ import userService from '../services/user'
 
 abstract class UserController {
   // If using next only to handle errors, maybe rename?
-  public static async authenticate(req: Request, res: Response, next: (error: any) => void) {
-    const [err, user] = await to(userService.authenticate(req.body))
-    if (!user && !err) res.status(400).json({ message: 'Username or password is incorrect'})
-    if (err) next(err)
-    console.log('---------------------')
-    console.log(user)
-    console.log('---------------------')
-    if (user) {
-      res.cookie('access_token', user.token, { httpOnly: true })
-      res.send()
-    }
-  }
+  // public static async authenticate(req: Request, res: Response, next: (error: any) => void) {
+  //   const [err, user] = await to(userService.authenticate(req.body))
+  //   if (!user && !err) res.status(400).json({ message: 'Username or password is incorrect'})
+  //   if (err) next(err)
+  //   if (user) {
+  //     // ?  Change these lines?
+  //     res.cookie('access_token', user.token, { httpOnly: true })
+  //     res.send()
+  //   }
+  // }
 
   public static async register(req: Request, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService.create(req.body))
@@ -66,7 +64,7 @@ abstract class UserController {
 
 // ? Move routes into a separate file?
 const router = express.Router()
-router.post('/authenticate', UserController.authenticate)
+// router.post('/authenticate', UserController.authenticate)
 router.post('/register', UserController.register)
 router.get('/', UserController.getAll)
 router.get('/current', UserController.getCurrent)

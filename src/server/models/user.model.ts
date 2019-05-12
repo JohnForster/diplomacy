@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt'
+import crypto from 'crypto'
 import mongoose, {Schema} from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 
@@ -8,7 +10,7 @@ export interface IUserModel extends mongoose.Document {
   email: string,
   name: string,
   hash: string,
-  salt: string,
+  validatePassword: (password: string) => Promise<boolean>,
 }
 
 const schema = new Schema({
@@ -30,10 +32,17 @@ const schema = new Schema({
   },
   name: String,
   hash: String,
-  salt: String,
 }, {timestamps: true})
 
 schema.plugin(uniqueValidator, { message: 'is already taken' })
+
+schema.methods.validatePassword = async function(password: string) {
+  console.log('INSIDE USER.MODEL.VALIDATEPASSWORD')
+  const comparison = bcrypt.compare(password, this.hash)
+  return comparison
+}
+
+// Should possibly move authentication/password setting methods to the usermodel?
 
 // Means that any virtual properties (eg. full name) will be included in when converting to JSON
 // Probably not necessary for this schema, but useful elsewhere.

@@ -1,11 +1,10 @@
 import to from 'await-to-js'
 import axios, { AxiosResponse } from 'axios'
 
-import entityLocations from '../resources/entityLocations'
-import exampleMovesJson from '../resources/exampleMoves'
-import tilesData from '../resources/tilesData'
-
-import Country from '../resources/country.enum'
+import Country from './resources/country.enum'
+import entityLocations from './resources/entityLocations'
+import exampleMovesJson from './resources/exampleMoves'
+import tilesData from './resources/tilesData'
 
 export default new class Prototype {
   private svg: HTMLElement
@@ -13,9 +12,9 @@ export default new class Prototype {
   private units: any // units type?
   private playerCountry: string = 'England'
 
-  public run = () => {}
+  run = () => {}
 
-  public setup = (svg: HTMLElement) => {
+  setup = (svg: HTMLElement) => {
     this.svg = svg
     const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
     tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))

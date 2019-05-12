@@ -1,11 +1,9 @@
-import {h, Component} from 'preact'
+import {Component, h} from 'preact'
 
 import Game from './components/game'
 import Login from './components/login'
 
-export interface IAppProps {
-  message: string
-}
+export interface IAppProps {}
 
 interface IAppState {
   jwt: string,

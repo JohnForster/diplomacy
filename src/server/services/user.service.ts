@@ -3,7 +3,9 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 import config from '../config'
-import User from '../models/user'
+import UserModel, { IUserModel } from '../models/user.model'
+import to from 'await-to-js';
+import { userInfo } from 'os';
 
 /*
   The user service contains the core business logic for user authentication and management in the node api;
@@ -18,49 +20,50 @@ export default abstract class UserService {
    * @param {String} password The plaintext password
    * @return A promise to be resolved with an object with the userdata (without the hash) and the json web token
    */
-  public static async authenticate({username, password}: {username: string, password: string}): Promise<any> {
-    // ! Need typing for the return object
+  static async authenticate(username: string, password: string): Promise<{user: IUserModel, message: string}> {
     // Could refactor await statements to use await-to-js?
-    const user = await User.findOne({ username })
-    if (!user) return
-    const comparison = await bcrypt.compare(password, user.hash)
-    if (comparison) {
-      const { hash, ...userWithoutHash } = user.toObject()
-      const token = jwt.sign({sub: user.id}, config.TOKEN_SECRET)
-      return {
-        ...userWithoutHash,
-        token,
-      }
+    console.log('INSIDE USER.SERVICE AUTHENTICATE METHOD')
+    const [err, user] = await to<IUserModel>(UserModel.findOne({ username }).exec())
+    console.log(`user: ${user}`)
+    if (err) throw err
+    if (user === null) return {user, message: 'User not found'}
+    if (user) {
+      const passwordsMatch = await user.validatePassword(password)
+      if (!passwordsMatch) return {user: null, message: 'Passwords did not match'}
+      if (passwordsMatch) return {user, message: 'success'}
     }
   }
 
   /** Returns all users, without their hashes */
-  public static async getAll() {
-    return await User.find().select('-hash')
+  static async getAll() {
+    return await UserModel.find().select('-hash')
   }
 
-  public static async getById(id: string) {
-    return await User.findById(id).select('-hash')
+  static async getById(id: any): Promise<IUserModel> {
+    return await UserModel.findById(id).select('-hash')
   }
 
-  public static async create(userParams: any) {
+  static async create(userParams: any) {
+    console.log('INSIDE USER_OLD SERVICE CREATE METHOD')
     // ! Do we need further validation or is this handled by the mongoose schema?
-    if (await User.findOne({username: userParams.username})){
+    if (await UserModel.findOne({username: userParams.username})){
       throw new Error(`Username "${userParams.username}" is taken`)
     }
 
-    const user = new User(userParams)
-
+    const user = new UserModel(userParams)
+    // set hash here or in mongoose usermodel?
     if (userParams.password) {
-      const hash = await bcrypt.hashSync(userParams.password, 10)
+      const hash = await bcrypt.hash(userParams.password, 10)
       user.hash = hash
     }
 
+    console.log(`userParams.password: ${userParams.password}`)
+    console.log(`user.hash: ${user.hash}`)
     return await user.save()
   }
 
-  public static async update(id: string, userParam: any) {
-    const user = await User.findById(id)
+  static async update(id: string, userParam: any) {
+    const user = await UserModel.findById(id)
     if (!user) throw new Error (`User not found. (id: ${id})`)
     if (user.username !== userParam.username) {
       throw new Error ('Cannot change username')
@@ -78,8 +81,8 @@ export default abstract class UserService {
   }
 
   // ? Why the underscore?
-  public static async _delete(id: string) {
-    await User.findByIdAndRemove(id)
+  static async _delete(id: string) {
+    await UserModel.findByIdAndRemove(id)
     return true
   }
 }
