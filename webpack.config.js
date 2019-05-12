@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = {
-  entry: './src/client/index.ts',
+  entry: './src/client/index.tsx',
   devtool: 'inline-source-map',
   //! Uncomment the below when working with express
   // target: 'node',
@@ -61,7 +61,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: './src/client/assets', to: './assets' }
+      { from: './src/client/assets', to: './assets' },
+      { from: './src/client/login', to: './login'}
     ], {copyUnmodified: true})
   ],
   devServer: {

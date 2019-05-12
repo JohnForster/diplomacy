@@ -5,11 +5,11 @@ export default {
     { unitType: 'fleet', location: 'English_Channel' },
     { unitType: 'army', location: 'Burgundy' },
     { unitType: 'army', location: 'Holland' },
-  ], 
+  ],
   Italy: [
     { unitType: 'fleet', location: 'Rome' },
     { unitType: 'fleet', location: 'Marseilles' },
     { unitType: 'army', location: 'Piedmont' },
     { unitType: 'army', location: 'Vienna' },
-  ]
+  ],
 }

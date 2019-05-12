@@ -1,21 +1,20 @@
-import axios, { AxiosResponse } from 'axios'
 import to from 'await-to-js'
+import axios, { AxiosResponse } from 'axios'
 
-import entityLocations from '../resources/entityLocations'
-import exampleMovesJson from '../resources/exampleMoves'
-import tilesData from '../resources/tilesData'
-
-import Country from '../resources/country.enum'
+import Country from './resources/country.enum'
+import entityLocations from './resources/entityLocations'
+import exampleMovesJson from './resources/exampleMoves'
+import tilesData from './resources/tilesData'
 
 export default new class Prototype {
   private svg: HTMLElement
   private tileSelected: string
   private units: any // units type?
-  private playerCountry: string = "England"
+  private playerCountry: string = 'England'
 
-  public run = () => {}
+  run = () => {}
 
-  public setup = (svg: HTMLElement) => {
+  setup = (svg: HTMLElement) => {
     this.svg = svg
     const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
     tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
@@ -33,11 +32,12 @@ export default new class Prototype {
 
   private asyncSetup = async () => {
     const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
-    if (err) throw new Error('No game data found')
+    console.log(res)
+    if (err) { throw new Error('No game data found') }
     if (res) {
       const empireObjects = res.data.territories
       empireObjects.forEach((empireObject: {empire: string, ownedTerritories: string[]}) => {
-        empireObject.ownedTerritories.forEach(territory => this.setOwnership(territory, empireObject.empire))
+        empireObject.ownedTerritories.forEach((territory) => this.setOwnership(territory, empireObject.empire))
       })
     }
     this.drawUnits()
@@ -62,7 +62,7 @@ export default new class Prototype {
   }
 
   private startOrder = (territory: string) => {
-    if (this.playerHasUnitAt(territory)){
+    if (this.playerHasUnitAt(territory)) {
       this.tileSelected = territory
     }
   }
@@ -76,7 +76,7 @@ export default new class Prototype {
 
   private drawLine = (start: {x: number, y: number}, end: {x: number, y: number}) => {
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-    line.setAttribute('d',`M ${start.x} ${start.y} L ${end.x} ${end.y}`) // Set path's data
+    line.setAttribute('d', `M ${start.x} ${start.y} L ${end.x} ${end.y}`) // Set path's data
     // line.style.stroke = color || '#000' // Set stroke colour
     line.setAttribute('stroke', 'green')
     line.style.strokeWidth = '2px'
@@ -85,7 +85,7 @@ export default new class Prototype {
   }
 
   private drawUnits = (gameState?: {[key: string]: {unitType: string, location: string}[]}) => {
-    for (let n in Country) {
+    for (const n in Country) {
       if (Country.hasOwnProperty(n)) {
         const country = Country[n]
         if (!gameState[country]) {continue}
