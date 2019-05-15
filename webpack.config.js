@@ -3,6 +3,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
+console.log(path.resolve(__dirname, "src/lib"))
+
 module.exports = {
   entry: './src/client/index.tsx',
   devtool: 'inline-source-map',
@@ -48,7 +50,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.tsx', '.ts', '.js' ],
+    alias: {
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
   },
   output: {
     filename: 'bundle.js',

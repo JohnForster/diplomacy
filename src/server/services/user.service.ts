@@ -1,11 +1,7 @@
-
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-
-import config from '../config'
-import UserModel, { IUserModel } from '../models/user.model'
 import to from 'await-to-js';
-import { userInfo } from 'os';
+import bcrypt from 'bcrypt'
+
+import UserModel, { IUserModel } from '../models/user.model'
 
 /*
   The user service contains the core business logic for user authentication and management in the node api;
@@ -29,6 +25,7 @@ export default abstract class UserService {
     if (user === null) return {user, message: 'User not found'}
     if (user) {
       const passwordsMatch = await user.validatePassword(password)
+      console.log(`passwordsMatch: ${passwordsMatch}`)
       if (!passwordsMatch) return {user: null, message: 'Passwords did not match'}
       if (passwordsMatch) return {user, message: 'success'}
     }
@@ -46,7 +43,7 @@ export default abstract class UserService {
   static async create(userParams: any) {
     console.log('INSIDE USER_OLD SERVICE CREATE METHOD')
     // ! Do we need further validation or is this handled by the mongoose schema?
-    if (await UserModel.findOne({username: userParams.username})){
+    if (await UserModel.findOne({username: userParams.username})) {
       throw new Error(`Username "${userParams.username}" is taken`)
     }
 

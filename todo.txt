@@ -2,7 +2,7 @@
   -FE
     - Log in front end page
   - BE 
-    - Back end user models 
+    - Back end user models
 
 - Models
   - Game model

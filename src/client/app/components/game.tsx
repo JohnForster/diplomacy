@@ -1,4 +1,4 @@
-import {h, Component} from 'preact'
+import {Component, h} from 'preact'
 
 import Engine from '../../engine/prototype'
 
@@ -10,8 +10,8 @@ interface IGameState {
   
 }
 
-export default class Game extends Component <IGameState> {
-
+export default class Game extends Component <IGameProps, IGameState> {
+  state: IGameState = {}
   render(props: IGameProps, state: IGameState) {
     return (
       <div className='map'>

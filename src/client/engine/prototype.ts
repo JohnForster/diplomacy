@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 
 import Country from './resources/country.enum'
 import entityLocations from './resources/entityLocations'
+import exampleGameState from './resources/exampleGameState'
 import exampleMovesJson from './resources/exampleMoves'
 import tilesData from './resources/tilesData'
 
@@ -26,7 +27,6 @@ export default new class Prototype {
     // And then draw from internal state?
     // Easier to check rules.
 
-    this.drawInstructions(JSON.parse(exampleMovesJson))
     this.asyncSetup()
   }
 
@@ -35,12 +35,13 @@ export default new class Prototype {
     console.log(res)
     if (err) { throw new Error('No game data found') }
     if (res) {
-      const empireObjects = res.data.territories
-      empireObjects.forEach((empireObject: {empire: string, ownedTerritories: string[]}) => {
-        empireObject.ownedTerritories.forEach((territory) => this.setOwnership(territory, empireObject.empire))
+      const empires = res.data.territories
+      empires.forEach((empire: {empire: string, ownedTerritories: string[]}) => {
+        empire.ownedTerritories.forEach((territory) => this.setOwnership(territory, empire.empire))
       })
     }
-    this.drawUnits()
+    this.drawUnits(exampleGameState)
+    this.drawInstructions(JSON.parse(exampleMovesJson))
   }
 
   private onClick = (territory: string) => {
@@ -84,7 +85,7 @@ export default new class Prototype {
     this.svg.appendChild(line)
   }
 
-  private drawUnits = (gameState?: {[key: string]: {unitType: string, location: string}[]}) => {
+  private drawUnits = (gameState: {[key: string]: {unitType: string, location: string}[]}) => {
     for (const n in Country) {
       if (Country.hasOwnProperty(n)) {
         const country = Country[n]

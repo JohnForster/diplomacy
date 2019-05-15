@@ -10,11 +10,19 @@ export default async (app: Express, isDev: boolean) => {
   const verifyFunction: passportLocal.VerifyFunction = async (username, password, done) => {
     console.log(`Attempting to verify user '${username}'`)
     const [err, {user, message}] = await to(UserService.authenticate(username, password))
+    console.log('------------- UserService.authenticate complete -----------')
+    console.log(err)
+    console.log('--------------')
+    console.log(user)
+    console.log('--------------')
+    console.log(message)
+    console.log('------------- --------------------------------- -----------')
     if (err) {
       console.log('INSIDE VERIFY FUNCITON')
       console.log(`${err}`)
       return done(err)
     }
+    if (!user) return done(message)
     return done(null, user, {message})
 
     // ! Can be removed once everything is working
@@ -54,15 +62,30 @@ export default async (app: Express, isDev: boolean) => {
 
   // ROUTES
   app.post('/login', (req, res, next) => {
-    passport.authenticate('local', {failureFlash: true}, (err, user, info) => {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/game',
+      failureFlash: true,
+    }, (err, user, info) => {
+      console.log(`attempting to authenticate user '${user}'`)
+      console.log('error:')
+      console.log(err)
+      console.log('info:')
+      console.log(info)
+
       if (err) {
-        return res.send('An error ocurred while attempting to authenticate this user') 
+        return res.status(404).send('Internal Error')
       }
-      if (!user) return res.send(info.message)
+
+      if (!user) return res.status(404).send(info.message)
       req.logIn(user, (loginErr) => {
-        if (loginErr) return res.send(loginErr.message)
-        return res.send('You were authenticated and logged in!')
+        console.log('inside res.logIn')
+        if (loginErr) {
+          return next(err)
+        }
       })
+      console.log('Sending success message')
+      return res.send('You were authenticated and logged in!')
     })(req, res, next)
   })
 
