@@ -14,3 +14,33 @@ Why?
 express-session options, {resave: true} - why?
 https://github.com/expressjs/session#resave
 
+When storing data in the database, a game consists of:
+a) Who's in the game, ie. players
+b) Date/time/turn information.
+c) Which territories are currently owned by whom.
+d) The units that are currently on the board.
+e) The moves people have entered.
+f) History (previous game states inc. previous moves)
+
+Q1. Which of these should have their own tables in the database, and which should be stored within a game state object? How do you make this decision?
+Q2. Should I just have a table called "moves" that stores every move for every game, and then pull them up by gameID or would that be poor practice? Slow? (relatively)
+Q3. This approach would also mean that data was repeated. Should instead the game consist of something more along the lines of:
+
+  {
+    gameInfo: {turnNumber, turnLength etc.}
+    players: {
+      0: {
+        playerId,
+        empire,
+        ownedTerritories,
+        units,
+        moves,
+      },
+      1: {...}
+      ...
+    }
+  }
+
+But even then, should I include the player's name in the object, or just reference it through the id?
+
+Q4. Basically, how should databases (specifically mongodb) work?
