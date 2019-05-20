@@ -11,23 +11,14 @@ import UserModel, { IUserModel } from '../models/user.model'
 
 // For typescripty goodness, make services extend a common interface?
 export default abstract class UserService {
-  /**
-   * @param {String} username The username of the user to be identified.
-   * @param {String} password The plaintext password
-   * @return A promise to be resolved with an object with the userdata (without the hash) and the json web token
-   */
   static async authenticate(username: string, password: string): Promise<{user: IUserModel, message: string}> {
-    // Could refactor await statements to use await-to-js?
-    console.log('INSIDE USER.SERVICE AUTHENTICATE METHOD')
     const [err, user] = await to<IUserModel>(UserModel.findOne({ username }).exec())
-    console.log(`user: ${user}`)
     if (err) throw err
     if (user === null) return {user, message: 'User not found'}
     if (user) {
       const passwordsMatch = await user.validatePassword(password)
-      console.log(`passwordsMatch: ${passwordsMatch}`)
       if (!passwordsMatch) return {user: null, message: 'Passwords did not match'}
-      if (passwordsMatch) return {user, message: 'success'}
+      return {user, message: 'success'}
     }
   }
 
@@ -41,21 +32,17 @@ export default abstract class UserService {
   }
 
   static async create(userParams: any) {
-    console.log('INSIDE USER_OLD SERVICE CREATE METHOD')
     // ! Do we need further validation or is this handled by the mongoose schema?
     if (await UserModel.findOne({username: userParams.username})) {
       throw new Error(`Username "${userParams.username}" is taken`)
     }
+    if (!userParams.password) throw new Error('Password required')
 
     const user = new UserModel(userParams)
-    // set hash here or in mongoose usermodel?
-    if (userParams.password) {
-      const hash = await bcrypt.hash(userParams.password, 10)
-      user.hash = hash
-    }
+    // ? set hash here or in mongoose usermodel?
+    // I think inside usermodel, including password validation.
+    user.hash = await bcrypt.hash(userParams.password, 10)
 
-    console.log(`userParams.password: ${userParams.password}`)
-    console.log(`user.hash: ${user.hash}`)
     return await user.save()
   }
 

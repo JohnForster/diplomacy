@@ -1,19 +1,23 @@
 import mongoose, {Schema, Types} from 'mongoose'
 
-export interface IGame extends mongoose.Document {
+import TurnModel, { ITurnModel } from './turn.model'
+export interface IGameModel extends mongoose.Document {
   timeStarted: Date,
   isPaused: boolean,
   isComplete?: boolean,
   winner?: Types.ObjectId,
-  turnLength: number,
-  currentState: Types.ObjectId,
+  turnLengthMinutes: number,
+  currentTurn: Types.ObjectId,
   history: Types.ObjectId[]
+  createdBy: Types.ObjectId,
+  randomEmpires: boolean,
+  start: () => void,
+  setTurn: (turn: ITurnModel) => void,
 }
 
 const gameSchema = new Schema({
   timeStarted: {
     type: Date,
-    default: Date.now()
   },
   isPaused: {
     type: Boolean,
@@ -25,65 +29,39 @@ const gameSchema = new Schema({
   },
   winner: {
     type: Schema.Types.ObjectId,
-    ref: 'Player',
+    ref: 'User',
   },
   turnLengthMinutes: {
     type: Number,
     default: 2880, // 48 hours
   },
-  currentState: Schema.Types.ObjectId, // gameStateID
-  history: [Schema.Types.ObjectId], // array of past gameStateIDs
-})
+  randomEmpires: {
+    type: Boolean,
+    default: true,
+  },
+  currentTurn: {
+    type: Schema.Types.ObjectId,
+    ref: 'Turn',
+  }, // gameStateID
+  history: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Turn',
+  }], // array of past gameStateIDs
+}, {timestamps: true})
 
-const turnSchema = {
-  id: String,
-  info: {
-    phaseNumber: Number,
-    year: Number,
-    season: String,
-    phase: String,
-    timeStarted: String,
-    timeEnds: String,
-    isComplete: Boolean,
-  },
-  players: {
-    0: {
-      playerID: String,
-      color: String,
-      empire: String,
-      ownedTerritories: [String],
-      ownedUnits: [{
-        type: String,
-        location: String,
-        status: String,
-      }],
-      moves: [{
-        unit: String,
-        moveType: String,
-        from: String,
-        to: String,
-        supportFrom: String,
-        wasSuccessful: String,
-      }], // Array of moveIDs
-    },
-  },
+gameSchema.methods.start = async function(turn: ITurnModel): Promise<boolean> {
+  if (turn.isReadyToStart()) {
+    this.isPaused = false
+    this.currentTurn = turn.id
+    this.timeStarted = Date.now()
+    return true
+  }
+  throw new Error('Game is not ready to start')
 }
 
-// const gameSchema: mongoose.Schema = new mongoose.Schema({
-//   territories: [{
-//     empire: String,
-//     ownedTerritories: [String],
-//   }],
-// })
+gameSchema.methods.setTurn = function(turnID: string): void {
+  if (this.currentTurn) throw new Error('Game already has a turn in progress')
+  this.currentTurn = turnID
+}
 
-export default mongoose.model<IGame>('game', gameSchema)
-
-// Example Schema:
-
-// const userSchema: Schema = new Schema({
-//   email: { type: String, index: { unique: true }, required: true },
-//   name: { type: String, index: { unique: true }, required: true },
-//   password: { type: String, required: true }
-// });
-
-
+export default mongoose.model<IGameModel>('Game', gameSchema)

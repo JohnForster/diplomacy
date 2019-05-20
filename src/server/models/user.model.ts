@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt'
-import crypto from 'crypto'
 import mongoose, {Schema} from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 
 // Need to include timestamps in interface?
-// Create Schema from ES6 class instead of interface?
 export interface IUserModel extends mongoose.Document {
   username: string,
   email: string,
@@ -13,7 +11,7 @@ export interface IUserModel extends mongoose.Document {
   validatePassword: (password: string) => Promise<boolean>,
 }
 
-const schema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     lowercase: true,
@@ -34,9 +32,9 @@ const schema = new Schema({
   hash: String,
 }, {timestamps: true})
 
-schema.plugin(uniqueValidator, { message: 'is already taken' })
+userSchema.plugin(uniqueValidator, { message: 'is already taken' })
 
-schema.methods.validatePassword = async function(password: string) {
+userSchema.methods.validatePassword = async function(password: string) {
   console.log('INSIDE USER.MODEL.VALIDATEPASSWORD')
   const comparison = bcrypt.compare(password, this.hash)
   return comparison
@@ -46,6 +44,6 @@ schema.methods.validatePassword = async function(password: string) {
 
 // Means that any virtual properties (eg. full name) will be included in when converting to JSON
 // Probably not necessary for this schema, but useful elsewhere.
-schema.set('toJSON', { virtuals: true })
+userSchema.set('toJSON', { virtuals: true })
 
-export default mongoose.model<IUserModel>('User', schema)
+export default mongoose.model<IUserModel>('User', userSchema)

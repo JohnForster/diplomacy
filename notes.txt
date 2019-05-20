@@ -44,3 +44,14 @@ Q3. This approach would also mean that data was repeated. Should instead the gam
 But even then, should I include the player's name in the object, or just reference it through the id?
 
 Q4. Basically, how should databases (specifically mongodb) work?
+
+Models talking to each other? Directly or through services?
+
+
+ISOLATE API TO /api ROUTES
+
+UNIFY 'Id' vs 'ID'
+
+REFACTOR mongoose models to use ES6 classes
+
+Implement random/choosing empires

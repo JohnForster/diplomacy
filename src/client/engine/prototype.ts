@@ -1,6 +1,7 @@
 import to from 'await-to-js'
 import axios, { AxiosResponse } from 'axios'
 
+import { ITurnModel } from '@server/models/turn.model'
 import Country from './resources/country.enum'
 import entityLocations from './resources/entityLocations'
 import exampleGameState from './resources/exampleGameState'
@@ -31,14 +32,22 @@ export default new class Prototype {
   }
 
   private asyncSetup = async () => {
-    const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
+    // const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
+    const [err, res] = await to(axios.get('/game/5ce1446377f920956aaf2e22'))
     console.log(res)
     if (err) { throw new Error('No game data found') }
     if (res) {
-      const empires = res.data.territories
-      empires.forEach((empire: {empire: string, ownedTerritories: string[]}) => {
-        empire.ownedTerritories.forEach((territory) => this.setOwnership(territory, empire.empire))
+      const gameState: ITurnModel = res.data
+      gameState.players.forEach((player) => {
+        player.ownedTerritories.forEach((territory) => {
+          this.setOwnership(territory, player.empire)
+        })
       })
+
+      // const empires = res.data.territories
+      // empires.forEach((empire: {empire: string, ownedTerritories: string[]}) => {
+      //   empire.ownedTerritories.forEach((territory) => this.setOwnership(territory, empire.empire))
+      // })
     }
     this.drawUnits(exampleGameState)
     this.drawInstructions(JSON.parse(exampleMovesJson))
