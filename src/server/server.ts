@@ -1,9 +1,12 @@
 import bodyParser from 'body-parser'
 import mongoDBStoreConstructor from 'connect-mongodb-session'
-import express from 'express' 
+import express, {Request, Response} from 'express' 
 import session from 'express-session'
 import mongoose from 'mongoose'
 import path from 'path'
+
+import gameController from './controllers/game.controller'
+import userController from './controllers/user.controller'
 
 import config from './config'
 import routes from './routes'
@@ -48,8 +51,18 @@ app.use(bodyParser.json())
 // Setup passport
 setupPassport(app, isDev)
 
-// Set up routes
-routes(app, isDev)
+// API Routes
+app.use('/api/game', gameController)
+app.use('/api/user', userController)
+
+// Front end routes
+const middlePath = isDev ? '../../dist' : ''
+app.use(express.static(path.join(__dirname, middlePath, '/client')))
+const index = path.join(__dirname, middlePath, '/client/index.html')
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(index)
+})
+
 
 app.listen(config.LISTEN_PORT, () => {
   console.log(`App listening to ${config.LISTEN_PORT}...`)

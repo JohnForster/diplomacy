@@ -54,4 +54,10 @@ UNIFY 'Id' vs 'ID'
 
 REFACTOR mongoose models to use ES6 classes
 
-Implement random/choosing empires
+Implement choosing empires ? 
+
+NEXT:
+  refactor api to use /api
+  add api routes to create a new game
+  add buttons on front end to call api routes to set up a new game
+  add front end capability to load a specific game by id

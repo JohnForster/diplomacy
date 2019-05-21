@@ -63,8 +63,8 @@ export default async (app: Express, isDev: boolean) => {
   // ROUTES
   app.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/game',
+      successRedirect: '/game',
+      failureRedirect: '/',
       failureFlash: true,
     }, (err, user, info) => {
       console.log(`attempting to authenticate user '${user}'`)
