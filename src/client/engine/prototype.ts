@@ -99,13 +99,11 @@ export default new class Prototype {
   // ! TYPESCRIPT NEEDS TYPE FOR UNITS
   private drawUnits = (units: any[], empire: string) => {
     units.forEach((unit) => {
-      console.log('Drawing unit: ', unit)
       this.drawUnit(unit.location, empire, unit.unitType)
     })
   }
 
   private drawUnit = (unitLocation: string, playerCountry: string, unitType: string) => {
-    console.log(unitType)
     const unitClasses: {[key: string]: string} = {Fleet: '#F', Army: '#A'}
     const unit = document.createElementNS('http://www.w3.org/2000/svg', 'use')
     const location = entityLocations[unitLocation]
