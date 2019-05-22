@@ -21,7 +21,6 @@ export default class App extends Component <IAppProps, IAppState> {
     switch (event.url) {
       case '/game':
         console.log('attempting to route to /game')
-        console
         const isAuthed = this.state.isLoggedIn
         isAuthed ? route('/game', true) : route('/', true)
     }

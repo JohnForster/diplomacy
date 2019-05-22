@@ -1,5 +1,5 @@
 import mongoose, {Schema, Types} from 'mongoose'
-import {startingTerritories, startingUnits} from '../../../data/initialState'
+import {startingTerritories, startingUnits, defaultColours} from '../../../data/initialState'
 import { IMove, IPlayerState } from './types'
 
 import shuffle from 'lodash/shuffle'
@@ -47,7 +47,7 @@ const turnSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    colour: {type: String, required: true},
+    colour: String,
     empire: String,
     ownedTerritories: [String],
     ownedUnits: [{
@@ -87,6 +87,7 @@ turnSchema.methods.addMoves = function(playerID: any, moves: IMove[]): void {
   moves.forEach((move) => {
     player.moves.push(move)
   })
+  this.save()
 }
 
 // Will need separate replace player function?
@@ -100,6 +101,7 @@ turnSchema.methods.addPlayer = function(playerID: string, colour?: string) {
     playerID,
     colour,
   })
+  this.save()
 }
 
 turnSchema.methods.start = function() {
@@ -108,18 +110,23 @@ turnSchema.methods.start = function() {
   this.players.forEach((player: IPlayerState) => {
     player.ownedTerritories = startingTerritories[player.empire]
     player.ownedUnits = startingUnits[player.empire]
+    console.log(player.ownedUnits)
+    player.colour = player.colour || defaultColours[player.empire]
   })
   this.phaseNumber = 0
   this.year = 1901
   this.season = 'Spring'
   this.phase = 'Move'
+  this.save()
 }
 
 turnSchema.methods.randomiseEmpires = function() {
+  console.log('Randomising empires...')
   const empires = shuffle(['England', 'France', 'Germany', 'Italy', 'Austria', 'Russia', 'Turkey'])
   this.players.forEach((player: IPlayerState) => {
     player.empire = empires.pop()
   })
+  this.save()
 }
 
 export default mongoose.model<ITurnModel>('Turn', turnSchema)

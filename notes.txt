@@ -61,3 +61,5 @@ NEXT:
   add api routes to create a new game
   add buttons on front end to call api routes to set up a new game
   add front end capability to load a specific game by id
+
+  SORT OUT FRONT END TYPES

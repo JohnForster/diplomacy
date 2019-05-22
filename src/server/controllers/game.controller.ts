@@ -40,10 +40,18 @@ class GameController {
 
   static async join(req: Request, res: Response) {
     const {gameID, playerID} = req.body
-    if (!(gameID && playerID)) res.status(400).send('Require both gameID and playerID in request')
+    if (!(gameID && playerID)) return res.status(400).send('Require both gameID and playerID in request')
     const [err, game] = await to(GameService.joinGame(gameID, playerID))
+    console.log('Err, game:')
+    console.log(err, game)
     if (err) res.status(400).send(err)
     if (game) res.json(game)
+  }
+
+  static async start(req: Request, res: Response) {
+    const [err, game] = await to(GameService.start(req.params.game_id))
+    if (err) return res.status(400).send(err)
+    if (game) return res.send('Game Started!')
   }
 }
 
@@ -59,9 +67,14 @@ router.route('/:game_id')
     checkAuthentication,
     GameController.view,
   )
-router.route('/:game_id')
-  .get(
+router.route('/join')
+  .post(
     checkAuthentication,
-    GameController.view,
+    GameController.join,
+  )
+router.route('/:game_id/start')
+  .post(
+    checkAuthentication,
+    GameController.start,
   )
 export default router

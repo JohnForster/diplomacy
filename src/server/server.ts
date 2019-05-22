@@ -9,7 +9,7 @@ import gameController from './controllers/game.controller'
 import userController from './controllers/user.controller'
 
 import config from './config'
-import routes from './routes'
+
 import setupPassport from './services/passport'
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -49,9 +49,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 // Setup passport
+// Change to use '/api' as well?
 setupPassport(app, isDev)
 
 // API Routes
+
 app.use('/api/game', gameController)
 app.use('/api/user', userController)
 

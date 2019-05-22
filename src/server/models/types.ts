@@ -15,7 +15,7 @@ export interface IPlayerState {
   empire: string,
   ownedTerritories: string[],
   ownedUnits: {
-    type: string,
+    unitType: string,
     location: string,
     status: string,
   }[],

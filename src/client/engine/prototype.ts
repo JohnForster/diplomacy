@@ -16,7 +16,7 @@ export default new class Prototype {
 
   run = () => {}
 
-  setup = (svg: HTMLElement) => {
+  setup = (svg: HTMLElement, turn: any) => {
     this.svg = svg
     const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
     tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
@@ -28,29 +28,31 @@ export default new class Prototype {
     // And then draw from internal state?
     // Easier to check rules.
 
-    this.asyncSetup()
+    this.asyncSetup(turn)
   }
 
-  private asyncSetup = async () => {
+  private asyncSetup = async (turn: any) => {
     // const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
-    const [err, res] = await to(axios.get('/game/5ce1446377f920956aaf2e22'))
-    console.log(res)
-    if (err) { throw new Error('No game data found') }
-    if (res) {
-      const gameState: ITurnModel = res.data
-      gameState.players.forEach((player) => {
-        player.ownedTerritories.forEach((territory) => {
-          this.setOwnership(territory, player.empire)
-        })
+    // const [err, res] = await to(axios.get('/game/5ce1446377f920956aaf2e22'))
+    // console.log(res)
+    // if (err) { throw new Error('No game data found') }
+    const gameState: ITurnModel = turn
+    console.log('performing setup with turn: ', turn)
+    gameState.players.forEach((player) => {
+      player.ownedTerritories.forEach((territory) => {
+        this.setOwnership(territory, player.empire)
       })
+      console.log('drawing', player.ownedUnits, player.empire)
+      this.drawUnits(player.ownedUnits, player.empire)
+    })
 
       // const empires = res.data.territories
       // empires.forEach((empire: {empire: string, ownedTerritories: string[]}) => {
       //   empire.ownedTerritories.forEach((territory) => this.setOwnership(territory, empire.empire))
       // })
-    }
-    this.drawUnits(exampleGameState)
-    this.drawInstructions(JSON.parse(exampleMovesJson))
+    // }
+    // this.drawUnits(exampleGameState)
+    // this.drawInstructions(JSON.parse(exampleMovesJson))
   }
 
   private onClick = (territory: string) => {
@@ -94,21 +96,17 @@ export default new class Prototype {
     this.svg.appendChild(line)
   }
 
-  private drawUnits = (gameState: {[key: string]: {unitType: string, location: string}[]}) => {
-    for (const n in Country) {
-      if (Country.hasOwnProperty(n)) {
-        const country = Country[n]
-        if (!gameState[country]) {continue}
-
-        gameState[country].forEach((unit) => {
-          this.drawUnit(unit.location, country, unit.unitType)
-        })
-      }
-    }
+  // ! TYPESCRIPT NEEDS TYPE FOR UNITS
+  private drawUnits = (units: any[], empire: string) => {
+    units.forEach((unit) => {
+      console.log('Drawing unit: ', unit)
+      this.drawUnit(unit.location, empire, unit.unitType)
+    })
   }
 
   private drawUnit = (unitLocation: string, playerCountry: string, unitType: string) => {
-    const unitClasses: {[key: string]: string} = {fleet: '#F', army: '#A'}
+    console.log(unitType)
+    const unitClasses: {[key: string]: string} = {Fleet: '#F', Army: '#A'}
     const unit = document.createElementNS('http://www.w3.org/2000/svg', 'use')
     const location = entityLocations[unitLocation]
     unit.setAttribute('href', unitClasses[unitType])

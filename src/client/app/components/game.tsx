@@ -1,32 +1,55 @@
 import {Component, h} from 'preact'
 
+import setupGame from '../../devTools/setupGame'
+import Axios from 'axios';
 import Engine from '../../engine/prototype'
 
 export interface IGameProps {
-  
+
 }
 
 interface IGameState {
-  
+  game?: object,
+  turn?: object,
 }
 
 export default class Game extends Component <IGameProps, IGameState> {
   state: IGameState = {}
   render(props: IGameProps, state: IGameState) {
     return (
-      <div className='map'>
-      <img class='bg' src='./assets/paperTexture.jpg' />
-        <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='europeMap' onLoad={this.runGame}>
-          There should be a diplomacy map here...
-        </object>
+      <div>
+        <button onClick={this.setupGame}>Set Up Game</button><br/>
+        <div className='map'>
+          <img class='bg' src='./assets/paperTexture.jpg' />
+          <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='europeMap'>
+            There should be a diplomacy map here...
+          </object>
+        </div>
       </div>
     )
   }
 
+  private setupGame = async () => {
+    const obj = await setupGame()
+    // @ts-ignore
+    console.log('obj', obj)
+    this.setState({game: obj.data.game, turn: obj.data.turn}, () => {
+      this.runGame()
+    })
+  }
+
+  // Move axios requests into a helper service?
+  private async fetchGame(id: string) {
+    const game = await Axios.get(`/api/game/id`)
+    this.setState({game})
+  }
+
   private runGame() {
+    console.log('Running game')
     const svgObject = document.getElementById('mainMap') as HTMLObjectElement
     const svg = svgObject.contentDocument.getElementById('mapSvg')
-    Engine.setup(svg)
+    console.log(this.state.turn)
+    Engine.setup(svg, this.state.turn)
     Engine.run()
   }
 }
