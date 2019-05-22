@@ -10,14 +10,10 @@ const setupGame = async () => {
   console.log('Creating a new game...')
   const [err, res] = await to(Axios.post('/api/game'))
   if (err) {
-    console.log(err)
     return err
   }
 
   const game = res.data
-
-  console.log('Game: ', game)
-  console.log(game.id)
   await Promise.all([
     Axios.post('/api/game/join', {gameID: game._id, playerID: '5cd85783c26513e12f695ce2'}),
     Axios.post('/api/game/join', {gameID: game._id, playerID: '5cd8988c463115ffdbc672b3'}),

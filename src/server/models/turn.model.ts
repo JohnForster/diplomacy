@@ -110,7 +110,6 @@ turnSchema.methods.start = function() {
   this.players.forEach((player: IPlayerState) => {
     player.ownedTerritories = startingTerritories[player.empire]
     player.ownedUnits = startingUnits[player.empire]
-    console.log(player.ownedUnits)
     player.colour = player.colour || defaultColours[player.empire]
   })
   this.phaseNumber = 0
@@ -120,13 +119,13 @@ turnSchema.methods.start = function() {
   this.save()
 }
 
-turnSchema.methods.randomiseEmpires = function() {
+turnSchema.methods.randomiseEmpires = async function() {
   console.log('Randomising empires...')
   const empires = shuffle(['England', 'France', 'Germany', 'Italy', 'Austria', 'Russia', 'Turkey'])
   this.players.forEach((player: IPlayerState) => {
     player.empire = empires.pop()
   })
-  this.save()
+  return this.save()
 }
 
 export default mongoose.model<ITurnModel>('Turn', turnSchema)

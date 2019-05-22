@@ -38,10 +38,10 @@ const GameService = {
   async start(gameID: string): Promise<IGameModel> {
     const game = await GameModel.findById(gameID)
     if (!game) throw new Error ('Game not found')
-
+    
     const turn = await TurnService.getByID(game.currentTurn)
 
-    if (game.randomEmpires) turn.randomiseEmpires()
+    if (game.randomEmpires) await turn.randomiseEmpires()
     if (turn.isReadyToStart()) {
       turn.start()
       return game
