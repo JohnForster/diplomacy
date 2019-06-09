@@ -11,6 +11,7 @@ import userController from './controllers/user.controller'
 
 import setupPassport from './services/passport'
 
+import checkAuthentication, { confirmAuthentication } from './_helpers/checkAuthentication'
 import config from './config'
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -54,6 +55,7 @@ app.use(bodyParser.json())
 setupPassport(app, isDev)
 
 // API Routes
+app.use('/api/auth', checkAuthentication, confirmAuthentication)
 app.use('/api/game', gameController)
 app.use('/api/turn', turnController)
 app.use('/api/user', userController)
@@ -65,7 +67,6 @@ const index = path.join(__dirname, middlePath, '/client/index.html')
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(index)
 })
-
 
 app.listen(config.LISTEN_PORT, () => {
   console.log(`App listening to ${config.LISTEN_PORT}...`)

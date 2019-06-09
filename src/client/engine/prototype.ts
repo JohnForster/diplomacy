@@ -11,7 +11,7 @@ import tilesData from './resources/tilesData'
 export default new class Prototype {
   private svg: HTMLElement
   private tileSelected: string
-  private units: any // units type?
+  private units: any = {} // units type?
   private playerCountry: string = 'England'
 
   run = () => {}
@@ -42,7 +42,7 @@ export default new class Prototype {
       player.ownedTerritories.forEach((territory) => {
         this.setOwnership(territory, player.empire)
       })
-      console.log('drawing', player.ownedUnits, player.empire)
+      this.units[player.empire] = player.ownedUnits
       this.drawUnits(player.ownedUnits, player.empire)
     })
 
@@ -58,7 +58,6 @@ export default new class Prototype {
   private onClick = (territory: string) => {
     if (this.tileSelected) {
       this.finishOrder(territory)
-      this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
       this.tileSelected = null
     } else {
       this.startOrder(territory)
@@ -66,10 +65,9 @@ export default new class Prototype {
   }
 
   private finishOrder = (territory: string) => {
-    // if (territory.borders(this.tileSelected)) {...}
+    console.log('finishing order')
     if (tilesData[this.tileSelected].includes(territory)) {
       this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
-      this.tileSelected = null
     }
   }
 

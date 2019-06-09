@@ -31,9 +31,10 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   // ? Move axios requests into a helper service?
   private setupGame = async () => {
-    const game = await setupNewFullGame()
-    const turn = await Axios.get(`api/turn/${game.data.currentTurn}`)
-    this.setState({game: game.data, turn: turn.data}, () => {
+    const {data: game} = await setupNewFullGame()
+    console.log(game)
+    const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    this.setState({game, turn}, () => {
       this.runGame()
     })
   }
