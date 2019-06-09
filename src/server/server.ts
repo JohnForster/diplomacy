@@ -6,11 +6,12 @@ import mongoose from 'mongoose'
 import path from 'path'
 
 import gameController from './controllers/game.controller'
+import turnController from './controllers/turn.controller'
 import userController from './controllers/user.controller'
 
-import config from './config'
-
 import setupPassport from './services/passport'
+
+import config from './config'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -53,8 +54,8 @@ app.use(bodyParser.json())
 setupPassport(app, isDev)
 
 // API Routes
-
 app.use('/api/game', gameController)
+app.use('/api/turn', turnController)
 app.use('/api/user', userController)
 
 // Front end routes

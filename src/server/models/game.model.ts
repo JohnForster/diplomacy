@@ -19,6 +19,10 @@ const gameSchema = new Schema({
   timeStarted: {
     type: Date,
   },
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   isPaused: {
     type: Boolean,
     default: true,

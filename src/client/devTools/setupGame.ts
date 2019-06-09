@@ -1,17 +1,10 @@
-import Axios from "axios";
-import to from "await-to-js";
+import to from 'await-to-js'
+import Axios from 'axios'
 
-type Game = {
-  game: object,
-  turn: object,
-}
-
-const setupGame = async () => {
+const setupNewFullGame = async () => {
   console.log('Creating a new game...')
   const [err, res] = await to(Axios.post('/api/game'))
-  if (err) {
-    return err
-  }
+  if (err) return err
 
   const game = res.data
   await Promise.all([
@@ -27,4 +20,4 @@ const setupGame = async () => {
   return await Axios.get(`/api/game/${game._id}`)
 }
 
-export default setupGame
+export default setupNewFullGame

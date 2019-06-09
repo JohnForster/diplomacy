@@ -1,6 +1,6 @@
 import {Component, h} from 'preact'
 
-import setupGame from '../../devTools/setupGame'
+import setupNewFullGame from '../../devTools/setupGame'
 import Axios from 'axios';
 import Engine from '../../engine/prototype'
 
@@ -29,16 +29,15 @@ export default class Game extends Component <IGameProps, IGameState> {
     )
   }
 
+  // ? Move axios requests into a helper service?
   private setupGame = async () => {
-    const obj = await setupGame()
-    // @ts-ignore
-    console.log('obj', obj)
-    this.setState({game: obj.data.game, turn: obj.data.turn}, () => {
+    const game = await setupNewFullGame()
+    const turn = await Axios.get(`api/turn/${game.data.currentTurn}`)
+    this.setState({game: game.data, turn: turn.data}, () => {
       this.runGame()
     })
   }
 
-  // Move axios requests into a helper service?
   private async fetchGame(id: string) {
     const game = await Axios.get(`/api/game/id`)
     this.setState({game})
