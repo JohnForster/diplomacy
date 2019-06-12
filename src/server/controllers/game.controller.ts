@@ -12,6 +12,13 @@ class GameController {
     return res.status(500).send('Something went wrong in fetching game data')
   }
 
+  static async viewLatest(req: Request, res: Response) {
+    const [err, game] = await to(GameService.getLatest())
+    if (err) return res.status(400).send(err.message)
+    if (game) return res.json(game)
+    return res.status(500).send('Something went wrong in fetching the game')
+  }
+
   static async create(req: Request, res: Response) {
     const config: IGameConfig = req.body.config
     const userID = req.session.passport.user
@@ -42,6 +49,11 @@ router.route('/')
     checkAuthentication,
     GameController.create,
   )
+  router.route('/latest')
+    .get(
+      checkAuthentication,
+      GameController.viewLatest,
+    )
 router.route('/:game_id')
   .get(
     checkAuthentication,

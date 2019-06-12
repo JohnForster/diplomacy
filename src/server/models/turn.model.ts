@@ -79,17 +79,14 @@ turnSchema.methods.isReadyToStart = function(): boolean {
 }
 
 turnSchema.methods.getMoves = function(playerID: any): IMove[] {
-  const player: IPlayerState = this.players.find((p: IPlayerState) => {
-    return p.playerID === playerID
-  })
+  const player: IPlayerState = this.players.find((p: IPlayerState) => p.playerID.equals(playerID))
   return player.moves
 }
 
 turnSchema.methods.addMoves = function(playerID: any, moves: IMove[]): void {
-  const player = this.players.find((p: IPlayerState) => p.playerID === playerID)
-  moves.forEach((move) => {
-    player.moves.push(move)
-  })
+  const player = this.players.find((p: IPlayerState) => p.playerID.equals(playerID))
+  console.log(moves)
+  player.moves = moves
   this.save()
 }
 

@@ -24,10 +24,10 @@ const TurnService = {
   },
 
   async addMove(id: any, playerId: any, ...moves: IMove[]) {
+    // ! Need to remove existing moves by this player
     const turn = await TurnModel.findById(id)
     if (!turn) throw new Error('No turn found with that ID')
     turn.addMoves(playerId, moves)
-    turn.save()
   },
 }
 

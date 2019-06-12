@@ -1,4 +1,10 @@
+import { IMove } from '@server/types/types'
+
 export default class Order {
+  static from(move: IMove) {
+    return new Order('', move.from, move.to, move.moveType, move.supportFrom)
+  }
+
   unit: string
   moveType: string
   from: string

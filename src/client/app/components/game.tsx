@@ -21,7 +21,7 @@ export default class Game extends Component <IGameProps, IGameState> {
     return (
       <div>
         <button onClick={this.setupGame}>Set Up Game</button>
-        <button onClick={() => this.fetchGame('5cfd76c74adbc243344cb4c0')}>Load Game</button>
+        <button onClick={this.getLatestGame}>Load Game</button>
         <button onClick={this.submitOrders}>Submit Orders</button><br/>
         <div className='map'>
           <img class='bg' src='./assets/paperTexture.jpg' />
@@ -44,7 +44,14 @@ export default class Game extends Component <IGameProps, IGameState> {
     })
   }
 
-  private async fetchGame(id: string) {
+  private getLatestGame = async () => {
+    const {data: game} = await Axios.get('/api/game/latest')
+    console.log(game)
+    const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    this.setState({game, turn}, this.runGame)
+  }
+
+  private fetchGame = async (id: string) => {
     const {data: game} = await Axios.get(`/api/game/${id}`)
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
     this.setState({game, turn})
@@ -53,6 +60,7 @@ export default class Game extends Component <IGameProps, IGameState> {
   private submitOrders = async () => {
     await Axios.patch(`/api/turn/${this.state.game.currentTurn}`, {
       moves: engine.orders.map((order) => order.toObject()),
+      turnID: this.state.game.currentTurn,
     })
     console.log('sent!')
   }

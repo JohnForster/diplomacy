@@ -22,6 +22,12 @@ const GameService = {
     return await GameModel.findById(id)
   },
 
+  async getLatest(): Promise<IGameModel> {
+    const turn = await GameModel.findOne().limit(1).sort({ date: -1 })
+    if (!turn) throw new Error('No game found')
+    return turn
+  },
+
   async _delete(id: string) {
     await GameModel.findByIdAndRemove(id)
     return true
