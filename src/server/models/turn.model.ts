@@ -1,10 +1,11 @@
-import mongoose, {Schema, Types} from 'mongoose'
-import {startingTerritories, startingUnits, defaultColours} from '../../../data/initialState'
-import { IMove, IPlayerState } from './types'
+import mongoose, {Schema} from 'mongoose'
+import {defaultColours, startingTerritories, startingUnits} from '../../../data/initialState'
+import { IMove, IPlayerState } from '../types/types'
 
 import shuffle from 'lodash/shuffle'
 
-export interface ITurnModel extends mongoose.Document {
+// Shared between server and client. Move into some types folder?
+export interface IGameTurn {
   info: {
     phaseNumber: number,
     year: number,
@@ -15,6 +16,8 @@ export interface ITurnModel extends mongoose.Document {
     isComplete: boolean,
   },
   players: IPlayerState[],
+}
+export interface ITurnModel extends mongoose.Document, IGameTurn {
   isReadyToStart: () => boolean,
   getMoves: (id: any) => IMove[],
   addMoves: (playerID: any, moves: IMove[]) => void,

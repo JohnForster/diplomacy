@@ -1,22 +1,58 @@
-			.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25; stroke-width:0.8;}
-			.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45; stroke-width:0.8;}
-			.s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
-			.sc {fill:#DDDDDD; stroke:black;}
-			#A, #F, #sc {pointer-events: none;}
-			text		{font-family:Palatino; fill:#222; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
+.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25; stroke-width:0.8;}
+.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45; stroke-width:0.8;}
+.s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
+.sc {fill:#DDDDDD; stroke:black;}
+#A, #F, #sc {pointer-events: none;}
+text		{font-family:Palatino; fill:#222; font-size:9px; text-shadow: -0.2px 0px #FFF; transform:translate(-5px, 0px)}
 
-			.Austria	{fill:#FF77FF; stroke:black}
-			.England	{fill:#0000FF; stroke:black}
-			.France 	{fill:#00FFFF; stroke:black}
-			.Germany	{fill:#808080; stroke:black}
-			.Italy  	{fill:#00FF00; stroke:black}
-			.Russia 	{fill:#FFFF00; stroke:black}
-      .Turkey 	{fill:#FF0000; stroke:black}
+.Austria	{fill:#FF77FF; stroke:black}
+.England	{fill:#0000FF; stroke:black}
+.France 	{fill:#00FFFF; stroke:black}
+.Germany	{fill:#808080; stroke:black}
+.Italy  	{fill:#00FF00; stroke:black}
+.Russia 	{fill:#FFFF00; stroke:black}
+.Turkey 	{fill:#FF0000; stroke:black}
 
-			.success { stroke: #1C1 }
-			.bounce { stroke: #D50 }
-      .move { stroke: #000 }
+.empire1  {fill: #FFFF88;}
+.empire2  {fill: #FFFF00;}
+.empire3  {fill: #FF88FF;}
+.empire4  {fill: #FF8888;}
+.empire5  {fill: #FF8800;}
+.empire6  {fill: #FF00FF;}
+.empire7  {fill: #FF0088;}
+.empire8  {fill: #FF0000;}
+.empire9  {fill: #88FFFF;}
+.empire10 {fill: #88FF88;}
+.empire11 {fill: #88FF00;}
+.empire12 {fill: #8888FF;}
+.empire13 {fill: #888888;}
+.empire14 {fill: #888800;}
+.empire15 {fill: #8800FF;}
+.empire16 {fill: #880088;}
+.empire17 {fill: #880000;}
+.empire18 {fill: #00FFFF;}
+.empire19 {fill: #00FF88;}
+.empire20 {fill: #00FF00;}
+.empire21 {fill: #0088FF;}
+.empire22 {fill: #008888;}
+.empire23 {fill: #008800;}
+.empire24 {fill: #0000FF;}
+.empire25 {fill: #000088;}
 
-      .light {fill:#06B559;}
-      .medium{fill:#0B9B53;}
-      .shadow{fill:#088443;}
+.success { stroke: #1C1 }
+.bounce { stroke: #D50 }
+.move { stroke: #000 }
+
+.light {fill:#06B559;}
+.medium{fill:#0B9B53;}
+.shadow{fill:#088443;}
+
+svg text {
+	-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+					user-select: none;
+}
+svg text::selection {
+	background: none;
+}

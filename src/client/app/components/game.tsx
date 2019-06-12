@@ -1,16 +1,18 @@
 import {Component, h} from 'preact'
 
+import { IGame } from '@server/models/game.model'
+import { IGameTurn } from '@server/models/turn.model'
+import Axios from 'axios'
 import setupNewFullGame from '../../devTools/setupGame'
-import Axios from 'axios';
-import Engine from '../../engine/prototype'
+import engine from '../../engine/prototype'
 
 export interface IGameProps {
 
 }
 
 interface IGameState {
-  game?: object,
-  turn?: object,
+  game?: IGame,
+  turn?: IGameTurn,
 }
 
 export default class Game extends Component <IGameProps, IGameState> {
@@ -18,13 +20,16 @@ export default class Game extends Component <IGameProps, IGameState> {
   render(props: IGameProps, state: IGameState) {
     return (
       <div>
-        <button onClick={this.setupGame}>Set Up Game</button><br/>
+        <button onClick={this.setupGame}>Set Up Game</button>
+        <button onClick={() => this.fetchGame('5cfd76c74adbc243344cb4c0')}>Load Game</button>
+        <button onClick={this.submitOrders}>Submit Orders</button><br/>
         <div className='map'>
           <img class='bg' src='./assets/paperTexture.jpg' />
           <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='europeMap'>
             There should be a diplomacy map here...
           </object>
         </div>
+        {engine.orders.map((order) => <span>`${order.moveType} ${order.unit} from ${order.from} to ${order.to}`</span>)}
       </div>
     )
   }
@@ -32,16 +37,24 @@ export default class Game extends Component <IGameProps, IGameState> {
   // ? Move axios requests into a helper service?
   private setupGame = async () => {
     const {data: game} = await setupNewFullGame()
-    console.log(game)
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
     this.setState({game, turn}, () => {
+      console.log(this.state)
       this.runGame()
     })
   }
 
   private async fetchGame(id: string) {
-    const game = await Axios.get(`/api/game/id`)
-    this.setState({game})
+    const {data: game} = await Axios.get(`/api/game/${id}`)
+    const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    this.setState({game, turn})
+  }
+
+  private submitOrders = async () => {
+    await Axios.patch(`/api/turn/${this.state.game.currentTurn}`, {
+      moves: engine.orders.map((order) => order.toObject()),
+    })
+    console.log('sent!')
   }
 
   private runGame() {
@@ -49,7 +62,7 @@ export default class Game extends Component <IGameProps, IGameState> {
     const svgObject = document.getElementById('mainMap') as HTMLObjectElement
     const svg = svgObject.contentDocument.getElementById('mapSvg')
     console.log(this.state.turn)
-    Engine.setup(svg, this.state.turn)
-    Engine.run()
+    engine.setup(svg, this.state.turn)
+    engine.run()
   }
 }

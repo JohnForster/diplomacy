@@ -1,4 +1,4 @@
-import { IMove } from '@server/models/types';
+import { IMove } from '@server/types/types';
 import TurnModel, {ITurnModel} from '../models/turn.model'
 
 export interface ITurnConfig {}

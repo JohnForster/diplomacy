@@ -1,7 +1,8 @@
 import mongoose, {Schema, Types} from 'mongoose'
 
 import TurnModel, { ITurnModel } from './turn.model'
-export interface IGameModel extends mongoose.Document {
+
+export interface IGame {
   timeStarted: Date,
   isPaused: boolean,
   isComplete?: boolean,
@@ -11,6 +12,8 @@ export interface IGameModel extends mongoose.Document {
   history: Types.ObjectId[]
   createdBy: Types.ObjectId,
   randomEmpires: boolean,
+}
+export interface IGameModel extends IGame, mongoose.Document {
   start: () => void,
   setTurn: (turn: ITurnModel) => void,
 }

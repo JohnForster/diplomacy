@@ -1,80 +1,77 @@
-import to from 'await-to-js'
-import axios, { AxiosResponse } from 'axios'
-
-import { ITurnModel } from '@server/models/turn.model'
-import Country from './resources/country.enum'
+import { IGameTurn, ITurnModel } from '@server/models/turn.model'
+import remove from 'lodash/remove'
+import Order from './move'
 import entityLocations from './resources/entityLocations'
-import exampleGameState from './resources/exampleGameState'
-import exampleMovesJson from './resources/exampleMoves'
-import tilesData from './resources/tilesData'
+import neighboursTo from './resources/tilesData'
 
 export default new class Prototype {
+  orders: Order[] = []
+
   private svg: HTMLElement
   private tileSelected: string
   private units: any = {} // units type?
   private playerCountry: string = 'England'
+  private turn: IGameTurn
 
   run = () => {}
 
-  setup = (svg: HTMLElement, turn: any) => {
+  setup = (svg: HTMLElement, turn: IGameTurn) => {
     this.svg = svg
+    this.turn = turn
+
     const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
     tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
     tiles.forEach((tile) => {
       tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })
-
-    // Create objects for units and territory etc.
-    // And then draw from internal state?
-    // Easier to check rules.
-
-    this.asyncSetup(turn)
-  }
-
-  private asyncSetup = async (turn: any) => {
-    // const [err, res] = await to(axios.get('/game/5cc5d578382f88cc84d4f6e2'))
-    // const [err, res] = await to(axios.get('/game/5ce1446377f920956aaf2e22'))
-    // console.log(res)
-    // if (err) { throw new Error('No game data found') }
-    const gameState: ITurnModel = turn
-    console.log('performing setup with turn: ', turn)
-    gameState.players.forEach((player) => {
+    turn.players.forEach((player) => {
       player.ownedTerritories.forEach((territory) => {
         this.setOwnership(territory, player.empire)
       })
+
       this.units[player.empire] = player.ownedUnits
       this.drawUnits(player.ownedUnits, player.empire)
-    })
 
-      // const empires = res.data.territories
-      // empires.forEach((empire: {empire: string, ownedTerritories: string[]}) => {
-      //   empire.ownedTerritories.forEach((territory) => this.setOwnership(territory, empire.empire))
-      // })
-    // }
-    // this.drawUnits(exampleGameState)
-    // this.drawInstructions(JSON.parse(exampleMovesJson))
+      player.moves.forEach(this.drawOrder)
+    })
   }
 
   private onClick = (territory: string) => {
-    if (this.tileSelected) {
+    if (this.tileSelected
+      && neighboursTo[this.tileSelected].includes(territory)
+    ) {
       this.finishOrder(territory)
-      this.tileSelected = null
     } else {
       this.startOrder(territory)
     }
   }
 
   private finishOrder = (territory: string) => {
-    console.log('finishing order')
-    if (tilesData[this.tileSelected].includes(territory)) {
-      this.drawLine(entityLocations[this.tileSelected], entityLocations[territory])
-    }
+    this.orders = this.orders.filter((m) => {
+      return m.from !== this.tileSelected
+    })
+    // ! Unit type AND MOVE TYPE are currently hard coded!
+    const order = new Order('Army', this.tileSelected, territory, 'Move')
+    this.orders.push(order)
+    this.drawOrder(order)
+    this.tileSelected = null
+    this.redraw()
+  }
+
+  private drawOrder = (order: Order) => {
+    this.drawLine(entityLocations[order.from], entityLocations[order.to])
   }
 
   private startOrder = (territory: string) => {
     if (this.playerHasUnitAt(territory)) {
       this.tileSelected = territory
     }
+  }
+
+  private redraw = () => {
+    const orderArray = Array.from(this.svg.getElementsByClassName('order'))
+    orderArray.forEach((order) => order.remove())
+    this.orders.forEach(this.drawOrder)
   }
 
   private playerHasUnitAt = (territory: string) => {
@@ -89,6 +86,8 @@ export default new class Prototype {
     line.setAttribute('d', `M ${start.x} ${start.y} L ${end.x} ${end.y}`) // Set path's data
     // line.style.stroke = color || '#000' // Set stroke colour
     line.setAttribute('stroke', 'green')
+    line.setAttribute('class', 'order')
+    console.log(line)
     line.style.strokeWidth = '2px'
     line.style.markerEnd = 'url(#triangle)'
     this.svg.appendChild(line)

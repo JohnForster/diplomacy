@@ -15,6 +15,8 @@ class TurnController {
 
   static async update(req: Request, res: Response) {
     // Method for making moves goes here
+    console.log(req.body)
+    res.send('success')
   }
 }
 
