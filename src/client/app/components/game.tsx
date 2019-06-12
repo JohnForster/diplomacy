@@ -4,7 +4,7 @@ import { IGame } from '@server/models/game.model'
 import { IGameTurn } from '@server/models/turn.model'
 import Axios from 'axios'
 import setupNewFullGame from '../../devTools/setupGame'
-import engine from '../../engine/prototype'
+import game from '../../engine/game'
 
 export interface IGameProps {
 
@@ -29,7 +29,7 @@ export default class Game extends Component <IGameProps, IGameState> {
             There should be a diplomacy map here...
           </object>
         </div>
-        {engine.orders.map((order) => <span>`${order.moveType} ${order.unit} from ${order.from} to ${order.to}`</span>)}
+        {game.orders.map((order) => <span>`${order.moveType} ${order.unit} from ${order.from} to ${order.to}`</span>)}
       </div>
     )
   }
@@ -59,7 +59,7 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   private submitOrders = async () => {
     await Axios.patch(`/api/turn/${this.state.game.currentTurn}`, {
-      moves: engine.orders.map((order) => order.toObject()),
+      moves: game.orders.map((order) => order.toObject()),
       turnID: this.state.game.currentTurn,
     })
     console.log('sent!')
@@ -70,7 +70,7 @@ export default class Game extends Component <IGameProps, IGameState> {
     const svgObject = document.getElementById('mainMap') as HTMLObjectElement
     const svg = svgObject.contentDocument.getElementById('mapSvg')
     console.log(this.state.turn)
-    engine.setup(svg, this.state.turn)
-    engine.run()
+    game.setup(svg, this.state.turn)
+    game.run()
   }
 }

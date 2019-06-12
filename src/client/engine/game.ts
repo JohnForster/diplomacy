@@ -3,7 +3,7 @@ import Order from './order'
 import neighboursTo from './resources/tilesData'
 import BoardPainter from './boardPainter/boardPainter'
 
-export default new class Prototype {
+export default new class Game {
   orders: Order[] = []
   private boardPainter: BoardPainter
   private svg: HTMLElement
@@ -14,9 +14,10 @@ export default new class Prototype {
 
   run = () => {}
 
-  setup = (svg: HTMLElement, turn: IGameTurn) => {
+  setup = (svg: HTMLElement, turn: IGameTurn, empire?: string) => {
     this.svg = svg
     this.turn = turn
+    if (empire) this.orders = this.turn.players.find(player => player.empire === empire).moves.map(Order.from)
     this.turn.players.forEach(player => this.units[player.empire] = player.ownedUnits)
     this.boardPainter = new BoardPainter(svg, turn)
     // this.playerCountry = this.turn.players[playerID].empire
