@@ -5,12 +5,14 @@ import entityLocations from '../resources/entityLocations'
 export default class BoardPainter {
   board: HTMLElement
   turn: IGameTurn
-  armySvg: HTMLElement
+  army: HTMLElement
+  fleet: HTMLElement
 
-  constructor(board: HTMLElement, turn: IGameTurn, armySvg: HTMLElement) {
+  constructor(board: HTMLElement, turn: IGameTurn, armySvg: HTMLElement, fleetSvg: HTMLElement) {
     this.board = board
     this.turn = turn
-    this.armySvg = armySvg
+    this.army = armySvg
+    this.fleet = fleetSvg
     this.draw()
   }
 
@@ -61,25 +63,16 @@ export default class BoardPainter {
   }
 
   private drawUnit = (unit: {unitType: string, location: string, status: string}, empire: string, colour: string) => {
-    const unitClasses: {[key: string]: string} = {Fleet: '#F', Army: '#A'}
-    // const svgUnit = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-    const svgUnit = this.armySvg.cloneNode(true) as HTMLElement
+    const svg = unit.unitType === 'Army' ? this.army : this.fleet
+    const svgUnit = svg.cloneNode(true) as HTMLElement
     const location = entityLocations[unit.location]
-    svgUnit.setAttribute('href', unitClasses[unit.unitType])
-    svgUnit.setAttribute('class', 'unit')
-    svgUnit.setAttribute('class', empire)
+    svgUnit.setAttribute('class', `${empire} unit`)
     svgUnit.setAttribute('x', (location.x - 13).toString())
     svgUnit.setAttribute('y', (location.y - 18).toString())
-    Array.from(svgUnit.getElementsByClassName('light')).forEach(el => el.setAttribute('class', `${colour}-light`))
-    Array.from(svgUnit.getElementsByClassName('medium')).forEach(el => el.setAttribute('class', `${colour}-medium`))
-    Array.from(svgUnit.getElementsByClassName('shadow')).forEach(el => el.setAttribute('class', `${colour}-shadow`))
-
-    // svgUnit.setAttributeNS('http://www.w3.org/2000/svg', 'href', 'svg/001-tank-1.svg')
-    // svgUnit.setAttribute('transform', `translate(${location.x}, ${location.y})`)
-    // svgUnit.setAttribute('height', '30')
-    // svgUnit.setAttribute('width', '30')
-    
-    // <image x="10" y="20" width="80" height="80" xlink:href="recursion.svg" />
+    const brightnesses = ['light', 'medium', 'shadow']
+    brightnesses.forEach((brightness) => {
+      Array.from(svgUnit.getElementsByClassName(brightness)).forEach(el => el.setAttribute('class', `${colour}-${brightness}`))
+    })
     this.board.appendChild(svgUnit)
   }
 

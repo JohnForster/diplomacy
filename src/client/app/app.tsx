@@ -5,7 +5,6 @@ import Game from './components/game'
 import Login from './components/login/login'
 import RegistrationBox from './components/login/registrationBox/registrationBox'
 import checkAuthentication from './_helpers/checkAuthentication';
-import { arch } from 'os';
 
 export interface IAppProps {}
 

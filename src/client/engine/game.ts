@@ -8,6 +8,7 @@ export default new class Game {
   private boardPainter: BoardPainter
   private mapSvg: HTMLElement
   private armySvg: HTMLElement
+  private fleetSvg: HTMLElement
   private tileSelected: string
   private units: any = {} // units type?
   private playerCountry: string = 'England'
@@ -19,10 +20,11 @@ export default new class Game {
   setup = (svgs: {map: HTMLElement, army: HTMLElement, fleet: HTMLElement}, turn: IGameTurn, empire?: string) => {
     this.mapSvg = svgs.map
     this.armySvg = svgs.army
+    this.fleetSvg = svgs.fleet
     this.turn = turn
     if (empire) this.orders = this.turn.players.find(player => player.empire === empire).moves.map(Order.from)
     this.turn.players.forEach(player => this.units[player.empire] = player.ownedUnits)
-    this.boardPainter = new BoardPainter(this.mapSvg, turn, this.armySvg)
+    this.boardPainter = new BoardPainter(this.mapSvg, turn, this.armySvg, this.fleetSvg)
     // this.playerCountry = this.turn.players[playerID].empire
 
     const tiles = Array.from(this.mapSvg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)

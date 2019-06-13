@@ -24,6 +24,7 @@ export default class Game extends Component <IGameProps, IGameState> {
         <button onClick={this.getLatestGame}>Load Game</button>
         <button onClick={this.submitOrders}>Submit Orders</button><br/>
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
+          <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
         <div className='map'>
           <img class='bg' src='./assets/paperTexture.jpg' />
           <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='europeMap'>
@@ -69,12 +70,17 @@ export default class Game extends Component <IGameProps, IGameState> {
   private runGame() {
     console.log('Running game')
     const svgObject = document.getElementById('mainMap') as HTMLObjectElement
-    const svg = svgObject.contentDocument.getElementById('mapSvg')
+    const map = svgObject.contentDocument.getElementById('mapSvg')
 
     const armyObject = document.getElementById('army') as HTMLObjectElement
-    const armySvg = armyObject.contentDocument.getElementById('armySvg')
+    const army = armyObject.contentDocument.getElementById('armySvg')
 
-    game.setup({map: svg, army: armySvg, fleet: null}, this.state.turn)
+    const fleetObject = document.getElementById('fleet') as HTMLObjectElement
+    const fleet = fleetObject.contentDocument.getElementById('fleetSvg')
+
+    console.log(fleet)
+
+    game.setup({map, army, fleet}, this.state.turn)
     game.run()
   }
 }
