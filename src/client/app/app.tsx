@@ -5,6 +5,7 @@ import Game from './components/game'
 import Login from './components/login/login'
 import RegistrationBox from './components/login/registrationBox/registrationBox'
 import checkAuthentication from './_helpers/checkAuthentication';
+import { arch } from 'os';
 
 export interface IAppProps {}
 
@@ -36,7 +37,11 @@ export default class App extends Component <IAppProps, IAppState> {
   }
 
   checkAuthentication = async () => {
-    if (await checkAuthentication) this.toggleLogIn(true)
+    if (await checkAuthentication) {
+      this.setState({isLoggedIn: true}, () => {
+        route('/game', true)
+      })
+    }
   }
 
   render(props: IAppProps, state: IAppState) {

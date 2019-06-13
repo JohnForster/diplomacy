@@ -28,9 +28,9 @@ class GameController {
   }
 
   static async join(req: Request, res: Response) {
-    const {gameID, playerID} = req.body
+    const {gameID, playerID, colour} = req.body
     if (!(gameID && playerID)) return res.status(400).send('Require both gameID and playerID in request')
-    const [err, game] = await to(GameService.joinGame(gameID, playerID))
+    const [err, game] = await to(GameService.joinGame(gameID, playerID, colour))
     if (err) res.status(400).send(err)
     if (game) res.json(game)
   }

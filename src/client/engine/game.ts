@@ -6,7 +6,8 @@ import BoardPainter from './boardPainter/boardPainter'
 export default new class Game {
   orders: Order[] = []
   private boardPainter: BoardPainter
-  private svg: HTMLElement
+  private mapSvg: HTMLElement
+  private armySvg: HTMLElement
   private tileSelected: string
   private units: any = {} // units type?
   private playerCountry: string = 'England'
@@ -14,16 +15,18 @@ export default new class Game {
 
   run = () => {}
 
-  setup = (svg: HTMLElement, turn: IGameTurn, empire?: string) => {
-    this.svg = svg
+  // ? Player ID or empire? Should the engine be id agnostic?
+  setup = (svgs: {map: HTMLElement, army: HTMLElement, fleet: HTMLElement}, turn: IGameTurn, empire?: string) => {
+    this.mapSvg = svgs.map
+    this.armySvg = svgs.army
     this.turn = turn
     if (empire) this.orders = this.turn.players.find(player => player.empire === empire).moves.map(Order.from)
     this.turn.players.forEach(player => this.units[player.empire] = player.ownedUnits)
-    this.boardPainter = new BoardPainter(svg, turn)
+    this.boardPainter = new BoardPainter(this.mapSvg, turn, this.armySvg)
     // this.playerCountry = this.turn.players[playerID].empire
 
-    const tiles = Array.from(svg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
-    tiles.push(...Array.from(svg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
+    const tiles = Array.from(this.mapSvg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
+    tiles.push(...Array.from(this.mapSvg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
     tiles.forEach((tile) => {
       tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })

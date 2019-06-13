@@ -23,6 +23,7 @@ export default class Game extends Component <IGameProps, IGameState> {
         <button onClick={this.setupGame}>Set Up Game</button>
         <button onClick={this.getLatestGame}>Load Game</button>
         <button onClick={this.submitOrders}>Submit Orders</button><br/>
+          <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
         <div className='map'>
           <img class='bg' src='./assets/paperTexture.jpg' />
           <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='europeMap'>
@@ -69,8 +70,11 @@ export default class Game extends Component <IGameProps, IGameState> {
     console.log('Running game')
     const svgObject = document.getElementById('mainMap') as HTMLObjectElement
     const svg = svgObject.contentDocument.getElementById('mapSvg')
-    console.log(this.state.turn)
-    game.setup(svg, this.state.turn)
+
+    const armyObject = document.getElementById('army') as HTMLObjectElement
+    const armySvg = armyObject.contentDocument.getElementById('armySvg')
+
+    game.setup({map: svg, army: armySvg, fleet: null}, this.state.turn)
     game.run()
   }
 }
