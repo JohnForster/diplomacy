@@ -65,14 +65,19 @@ export default class BoardPainter {
   private drawUnit = (unit: {unitType: string, location: string, status: string}, empire: string, colour: string) => {
     const svg = unit.unitType === 'Army' ? this.army : this.fleet
     const svgUnit = svg.cloneNode(true) as HTMLElement
+
     const location = entityLocations[unit.location]
-    svgUnit.setAttribute('class', `${empire} unit`)
+    svgUnit.setAttribute('class', `unit ${unit.unitType} ${unit.location} ${empire}`)
     svgUnit.setAttribute('x', (location.x - 13).toString())
     svgUnit.setAttribute('y', (location.y - 18).toString())
+
     const brightnesses = ['light', 'medium', 'shadow']
     brightnesses.forEach((brightness) => {
-      Array.from(svgUnit.getElementsByClassName(brightness)).forEach(el => el.setAttribute('class', `${colour}-${brightness}`))
+      Array.from(svgUnit.getElementsByClassName(brightness)).forEach((el) => {
+        el.setAttribute('class', `${colour}-${brightness}`)
+      })
     })
+
     this.board.appendChild(svgUnit)
   }
 

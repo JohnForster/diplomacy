@@ -1,9 +1,9 @@
-.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25; stroke-width:0.8;}
+.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: .25; stroke-width:0.8;}
 .w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45; stroke-width:0.8;}
 .s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
 .sc {fill:#DDDDDD; stroke:black;}
 #A, #F, #sc {pointer-events: none; stroke: black;}
-#unit { pointer-events:none }
+#unit { transform: scaleX(-1); pointer-events:none }
 text		{font-family:Palatino; fill:#222; font-size:9px; transform:translate(-5px, 0px)}
 
 /* .Austria	{fill:#FF77FF; stroke:black}

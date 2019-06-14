@@ -32,6 +32,10 @@ export default new class Game {
     tiles.forEach((tile) => {
       tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })
+    const units = Array.from(this.mapSvg.getElementsByClassName('unit') as HTMLCollectionOf<HTMLElement>)
+    units.forEach((unit) => {
+      unit.addEventListener('click', (evt) => this.onClick(unit.classList[2]))
+    })
   }
 
   private onClick = (territory: string) => {
