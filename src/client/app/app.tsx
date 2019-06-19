@@ -36,7 +36,7 @@ export default class App extends Component <IAppProps, IAppState> {
   }
 
   checkAuthentication = async () => {
-    if (await checkAuthentication) {
+    if (await checkAuthentication()) {
       this.setState({isLoggedIn: true}, () => {
         route('/game', true)
       })
