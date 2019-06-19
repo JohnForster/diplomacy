@@ -59,6 +59,10 @@ app.use('/api/auth', checkAuthentication, confirmAuthentication)
 app.use('/api/game', gameController)
 app.use('/api/turn', turnController)
 app.use('/api/user', userController)
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+})
 
 // Front end routes
 const middlePath = isDev ? '../../dist' : ''

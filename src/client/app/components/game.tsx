@@ -1,13 +1,14 @@
 import {Component, h} from 'preact'
 
 import { IGame } from '@server/models/game.model'
-import { IGameTurn } from '@server/models/turn.model'
+import { IGameTurn } from '@client/types/types'
 import Axios from 'axios'
 import setupNewFullGame from '../../devTools/setupGame'
 import game from '../../engine/game'
 
 export interface IGameProps {
-
+  userID: string,
+  logOut: () => void,
 }
 
 interface IGameState {
@@ -22,7 +23,8 @@ export default class Game extends Component <IGameProps, IGameState> {
       <div>
         <button onClick={this.setupGame}>Set Up Game</button>
         <button onClick={this.getLatestGame}>Load Game</button>
-        <button onClick={this.submitOrders}>Submit Orders</button><br/>
+        <button onClick={this.submitOrders}>Submit Orders</button>
+        <button onClick={this.props.logOut}>Log out</button><br/>
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
         <div className='map'>
@@ -31,7 +33,6 @@ export default class Game extends Component <IGameProps, IGameState> {
             There should be a diplomacy map here...
           </object>
         </div>
-        {game.orders.map((order) => <span>`${order.moveType} ${order.unit} from ${order.from} to ${order.to}`</span>)}
       </div>
     )
   }
@@ -80,7 +81,7 @@ export default class Game extends Component <IGameProps, IGameState> {
 
     console.log(fleet)
 
-    game.setup({map, army, fleet}, this.state.turn)
+    game.setup({map, army, fleet}, this.state.turn, this.props.userID)
     game.run()
   }
 }

@@ -6,5 +6,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
 }
 
 export const confirmAuthentication = ((req: Request, res: Response) => {
-  return res.send('Authentication confirmed')
+  return res.send({userID: req.session.passport.user})
 })

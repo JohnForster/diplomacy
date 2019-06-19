@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 export default async () => {
   const [err, res] = await to(Axios.get('/api/auth'))
-  console.log(err, res)
-  if (err) return false
-  if (res) return true
+  console.log(res)
+  if (err) return null
+  return res.data.userID as string
 }

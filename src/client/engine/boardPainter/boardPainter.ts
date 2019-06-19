@@ -1,4 +1,4 @@
-import { IGameTurn } from '@server/models/turn.model'
+import { IGameTurn } from '@client/types/types'
 import Order from '../order'
 import entityLocations from '../resources/entityLocations'
 

@@ -5,16 +5,19 @@ import Game from './components/game'
 import Login from './components/login/login'
 import RegistrationBox from './components/login/registrationBox/registrationBox'
 import checkAuthentication from './_helpers/checkAuthentication';
+import Axios from 'axios';
 
 export interface IAppProps {}
 
 interface IAppState {
-  isLoggedIn: boolean
+  isLoggedIn: boolean,
+  userID: string
 }
 
 export default class App extends Component <IAppProps, IAppState> {
   state: IAppState = {
     isLoggedIn: false,
+    userID: null,
   }
 
   componentDidMount() {
@@ -36,17 +39,30 @@ export default class App extends Component <IAppProps, IAppState> {
   }
 
   checkAuthentication = async () => {
-    if (await checkAuthentication()) {
-      this.setState({isLoggedIn: true}, () => {
+    const authID = await checkAuthentication()
+    if (authID) {
+      this.setState({
+        userID: authID,
+        isLoggedIn: true,
+      }, () => {
         route('/game', true)
       })
     }
   }
 
+  logOut = async () => {
+    console.log(await Axios.get('/logout'))
+    route('/', true)
+    this.setState({
+      userID: null,
+      isLoggedIn: false,
+    })
+  }
+
   render(props: IAppProps, state: IAppState) {
     return (
       <Router onChange={this.handleRoute}>
-        <Game path='/game'/>
+        <Game path='/game' userID={state.userID} logOut={this.logOut}/>
         <RegistrationBox path='/register'/>
         <Login path='/' toggleLogIn={this.toggleLogIn}/>
       </Router>
