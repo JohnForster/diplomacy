@@ -1,13 +1,13 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const path = require('path')
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require("path");
 
-console.log(path.resolve(__dirname, "src/lib"))
+console.log(path.resolve(__dirname, "src/lib"));
 
 module.exports = {
-  entry: './src/client/index.tsx',
-  devtool: 'inline-source-map',
+  entry: "./src/client/index.tsx",
+  devtool: "inline-source-map",
   //! Uncomment the below when working with express
   // target: 'node',
   // node: {
@@ -30,13 +30,13 @@ module.exports = {
       // },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader',
-        exclude: /node_modules/
+        loader: "svg-inline-loader",
+        exclude: /node_modules/,
       },
       // {
       //   test: /\.(html)$/,
@@ -47,34 +47,34 @@ module.exports = {
       //   test: /\.(png|svg|jpg|gif)$/,
       //   loader: 'file-loader'
       // }
-    ]
+    ],
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: [ ".tsx", ".ts", ".js" ],
     alias: {
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat'
-    }
+      "react": "preact-compat",
+      "react-dom": "preact-compat",
+    },
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist/client')
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist/client"),
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/client/index.html',
-      filename: 'index.html',
+      template: "./src/client/index.html",
+      filename: "index.html",
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: './src/client/assets', to: './assets' },
-      { from: './src/client/login', to: './login'}
-    ], {copyUnmodified: true})
+      { from: "./src/client/assets", to: "./assets" },
+      { from: "./src/client/login", to: "./login"},
+    ], {copyUnmodified: true}),
   ],
   devServer: {
-    contentBase: path.join(process.cwd(), 'dist'),
+    contentBase: path.join(process.cwd(), "dist"),
     compress: true,
     port: 8083,
-    host: '0.0.0.0'
-  }
-}
+    host: "0.0.0.0",
+  },
+};

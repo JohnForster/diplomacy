@@ -1,9 +1,9 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
+var __importStar = (this && this.__importStar) || function(mod) {
+    if (mod && mod.__esModule) { return mod; }
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) { for (var k in mod) { if (Object.hasOwnProperty.call(mod, k)) { result[k] = mod[k]; } } }
+    result.default = mod;
     return result;
 };
 exports.__esModule = true;
@@ -13,16 +13,16 @@ var gameSchema = new mongoose.Schema({
             id: String,
             name: String,
             empire: String,
-            color: String
+            color: String,
         }],
     territories: [{
             name: String,
-            empire: String
+            empire: String,
         }],
     units: [{
             id: String,
             type: String,
-            empire: String
+            empire: String,
         }],
     moves: [{
             id: String,
@@ -30,8 +30,8 @@ var gameSchema = new mongoose.Schema({
             player_id: String,
             unit: String,
             moveType: String,
-            supportFrom: String
-        }]
+            supportFrom: String,
+        }],
 });
 // const gameSchema: mongoose.Schema = new mongoose.Schema({
 //   territories: [{
@@ -39,7 +39,7 @@ var gameSchema = new mongoose.Schema({
 //     ownedTerritories: [String],
 //   }],
 // })
-exports["default"] = mongoose.model('game', gameSchema);
+exports.default = mongoose.model("game", gameSchema);
 // Example Schema:
 // const userSchema: Schema = new Schema({
 //   email: { type: String, index: { unique: true }, required: true },

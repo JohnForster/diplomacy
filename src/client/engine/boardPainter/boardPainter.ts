@@ -1,14 +1,14 @@
-import { IGameTurn } from '@client/types/types'
+import { IGameTurnJSON } from '@shared/types'
 import Order from '../order'
 import entityLocations from '../resources/entityLocations'
 
 export default class BoardPainter {
   board: HTMLElement
-  turn: IGameTurn
+  turn: IGameTurnJSON
   army: HTMLElement
   fleet: HTMLElement
 
-  constructor(board: HTMLElement, turn: IGameTurn, armySvg: HTMLElement, fleetSvg: HTMLElement) {
+  constructor(board: HTMLElement, turn: IGameTurnJSON, armySvg: HTMLElement, fleetSvg: HTMLElement) {
     this.board = board
     this.turn = turn
     this.army = armySvg
@@ -16,7 +16,7 @@ export default class BoardPainter {
     this.draw()
   }
 
-  draw = (turn?: IGameTurn) => {
+  draw = (turn?: IGameTurnJSON) => {
     if (turn) this.turn = turn
     this.turn.players.forEach((player) => {
       this.colourTerritories(player.ownedTerritories, player.empire, player.colour)

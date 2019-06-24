@@ -40,6 +40,13 @@ class GameController {
     if (err) return res.status(400).send(err)
     if (game) return res.send('Game Started!')
   }
+
+  static async nextTurn(req: Request, res: Response) {
+    const [err, game] = await to(GameService.processTurn(req.params.game_id))
+    console.log(err, game)
+    if (err) return res.status(400).send(err)
+    if (game) return res.json(game)
+  }
 }
 
 // Move into API Routes file?
@@ -49,7 +56,7 @@ router.route('/')
     checkAuthentication,
     GameController.create,
   )
-  router.route('/latest')
+router.route('/latest')
     .get(
       checkAuthentication,
       GameController.viewLatest,
@@ -68,6 +75,11 @@ router.route('/:game_id/start')
   .post(
     checkAuthentication,
     GameController.start,
+  )
+router.route('/:game_id/next')
+  .post(
+    // method to check if in dev mode?
+    GameController.nextTurn,
   )
 
 export default router

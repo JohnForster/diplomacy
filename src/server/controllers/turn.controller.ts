@@ -9,7 +9,7 @@ class TurnController {
     // Need to strip other players moves if turn isn't complete.
     const [err, turn] = await to(TurnService.getByID(req.params.turn_id))
     turn.players.forEach((player) => {
-      if (!player.playerID.equals(req.session.passport.user)) {
+      if (player.playerID !== req.session.passport.user) {
         player.moves = []
       }
     })

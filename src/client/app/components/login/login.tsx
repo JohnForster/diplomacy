@@ -4,7 +4,7 @@ import to from 'await-to-js'
 import axios from 'axios'
 import clone from 'lodash/clone'
 
-import { route, Link } from 'preact-router'
+import { Link, route } from 'preact-router'
 
 export interface ILoginProps {
   toggleLogIn: (arg: boolean) => void
@@ -31,7 +31,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
           <input type='text' name='password' onChange={this.handleChange('password')}/><br/>
           <input type='submit' value='Submit'/>
         </form>
-        <p> New member? Register 
+        <p> New member? Register
           <Link href='/register'>here</Link>
         </p>
       </div>
@@ -49,7 +49,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
     if (res) {
       console.log('success!')
       console.log(res.data)
-      this.props.toggleLogIn(true)
+      await this.props.toggleLogIn(true)
       route('/game')
     }
   }

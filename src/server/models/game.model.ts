@@ -1,21 +1,24 @@
 import mongoose, {Schema, Types} from 'mongoose'
 
+import TurnService from '@server/services/turn.service';
 import TurnModel, { ITurnModel } from './turn.model'
+import {IGameDB} from '@shared/types'
 
-export interface IGame {
-  timeStarted: Date,
-  isPaused: boolean,
-  isComplete?: boolean,
-  winner?: Types.ObjectId,
-  turnLengthMinutes: number,
-  currentTurn: Types.ObjectId,
-  history: Types.ObjectId[]
-  createdBy: Types.ObjectId,
-  randomEmpires: boolean,
-}
-export interface IGameModel extends IGame, mongoose.Document {
+// export interface IGame {
+//   timeStarted: Date,
+//   isPaused: boolean,
+//   isComplete?: boolean,
+//   winner?: Types.ObjectId,
+//   turnLengthMinutes: number,
+//   currentTurn: Types.ObjectId,
+//   history: Types.ObjectId[]
+//   createdBy: Types.ObjectId,
+//   randomEmpires: boolean,
+// }
+export interface IGameModel extends IGameDB, mongoose.Document {
   start: () => void,
-  setTurn: (turn: ITurnModel) => void,
+  setTurn: (turn: string) => void,
+  advanceTurn: () => void,
 }
 
 const gameSchema = new Schema({
@@ -54,7 +57,12 @@ const gameSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Turn',
   }], // array of past gameStateIDs
-}, {timestamps: true})
+}, {timestamps: true, toJSON: {virtuals: true}})
+
+// Duplicate the ID field.
+gameSchema.virtual('id').get(function() {
+  return this._id.toHexString()
+})
 
 gameSchema.methods.start = async function(turn: ITurnModel): Promise<boolean> {
   if (turn.isReadyToStart()) {
@@ -69,6 +77,25 @@ gameSchema.methods.start = async function(turn: ITurnModel): Promise<boolean> {
 gameSchema.methods.setTurn = function(turnID: string): void {
   if (this.currentTurn) throw new Error('Game already has a turn in progress')
   this.currentTurn = turnID
+}
+
+// ? Move Turnservice calls into gameService and pass as args to avoid
+// ?   making this method async?
+gameSchema.methods.advanceTurn = async function(): Promise<ITurnModel> {
+  const turn = await TurnService.getByID(this.currentTurn)
+  const nextTurn = await TurnService.create({})
+  nextTurn.players = turn.players
+  nextTurn.players.forEach((player) => {
+    player.moves.forEach((move) => {
+      const unit = player.ownedUnits.find((u) => u.location === move.from)
+      if (unit) unit.location = move.to
+    })
+    player.moves = []
+  })
+  console.log(nextTurn)
+  this.currentTurn = nextTurn.id
+  this.save()
+  return nextTurn
 }
 
 export default mongoose.model<IGameModel>('Game', gameSchema)

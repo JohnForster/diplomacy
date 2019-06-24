@@ -23,7 +23,7 @@ const GameService = {
   },
 
   async getLatest(): Promise<IGameModel> {
-    const turn = await GameModel.findOne().limit(1).sort({ date: -1 })
+    const turn = await GameModel.findOne().limit(1).sort({ createdAt: -1 })
     if (!turn) throw new Error('No game found')
     return turn
   },
@@ -44,7 +44,7 @@ const GameService = {
   async start(gameID: string): Promise<IGameModel> {
     const game = await GameModel.findById(gameID)
     if (!game) throw new Error ('Game not found')
-    
+
     const turn = await TurnService.getByID(game.currentTurn)
 
     if (game.randomEmpires) await turn.randomiseEmpires()
@@ -54,6 +54,13 @@ const GameService = {
     }
 
     throw new Error('Game is not ready to start. ')
+  },
+
+  async processTurn(gameID: string): Promise<IGameModel> {
+    const game = await GameModel.findById(gameID)
+    if (!game) throw Error('Game not found!')
+    await game.advanceTurn()
+    return game
   },
 }
 

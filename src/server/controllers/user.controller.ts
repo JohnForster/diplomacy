@@ -1,5 +1,5 @@
-import express, {Request, Response} from 'express'
 import to from 'await-to-js'
+import express, {Request, Response} from 'express'
 
 import userService from '../services/user.service'
 
@@ -21,40 +21,40 @@ abstract class UserController {
   //   }
   // }
 
-  public static async register(req: Request, res: Response, next: (error: any) => void) {
+  static async register(req: Request, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService.create(req.body))
     if (err) next(err)
     if (user) res.json({})
   }
 
-  public static async getAll(req: Request, res: Response, next: (error: any) => void) {
+  static async getAll(req: Request, res: Response, next: (error: any) => void) {
     const [err, users] = await to(userService.getAll())
     if (err) next(err)
     if (users) res.json(users)
   }
 
   // Create an interface that extends the espress Request type?
-  public static async getCurrent(req: any, res: Response, next: (error: any) => void) {
+  static async getCurrent(req: any, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService.getById(req.user.sub))
     if (!err && !user) res.sendStatus(404)
     if (err) next(err)
     if (user) res.json(user)
   }
 
-  public static async getById(req: Request, res: Response, next: (error: any) => void) {
+  static async getById(req: Request, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService.getById(req.params.id))
     if (!err && !user) res.sendStatus(404)
     if (err) next(err)
     if (user) res.json(user)
   }
 
-  public static async update(req: Request, res: Response, next: (error: any) => void) {
+  static async update(req: Request, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService.update(req.params.id, req.body))
     if (err) next(err)
     if (user) res.json(user)
   }
 
-  public static async _delete(req: Request, res: Response, next: (error: any) => void) {
+  static async _delete(req: Request, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService._delete(req.params.id))
     if (err) next(err)
     if (user) res.json({message: 'User deleted'})

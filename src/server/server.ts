@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser'
 import mongoDBStoreConstructor from 'connect-mongodb-session'
-import express, {Request, Response} from 'express' 
+import express, {Request, Response} from 'express'
 import session from 'express-session'
 import mongoose from 'mongoose'
 import path from 'path'
@@ -60,8 +60,8 @@ app.use('/api/game', gameController)
 app.use('/api/turn', turnController)
 app.use('/api/user', userController)
 app.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.logout()
+  res.redirect('/')
 })
 
 // Front end routes

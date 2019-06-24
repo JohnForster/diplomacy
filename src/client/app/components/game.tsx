@@ -1,7 +1,7 @@
 import {Component, h} from 'preact'
 
-import { IGame } from '@server/models/game.model'
-import { IGameTurn } from '@client/types/types'
+import { IGameJSON , IGameTurnJSON} from '@shared/types'
+import to from 'await-to-js'
 import Axios from 'axios'
 import setupNewFullGame from '../../devTools/setupGame'
 import game from '../../engine/game'
@@ -12,19 +12,22 @@ export interface IGameProps {
 }
 
 interface IGameState {
-  game?: IGame,
-  turn?: IGameTurn,
+  game?: IGameJSON,
+  turn?: IGameTurnJSON,
+  gameIsRunning: boolean
 }
 
 export default class Game extends Component <IGameProps, IGameState> {
-  state: IGameState = {}
+  state: IGameState = {gameIsRunning: false}
+
   render(props: IGameProps, state: IGameState) {
     return (
       <div>
         <button onClick={this.setupGame}>Set Up Game</button>
         <button onClick={this.getLatestGame}>Load Game</button>
         <button onClick={this.submitOrders}>Submit Orders</button>
-        <button onClick={this.props.logOut}>Log out</button><br/>
+        <button onClick={this.props.logOut}>Log out</button>
+        <button onClick={this.nextTurn}>Next Turn</button><br/>
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
         <div className='map'>
@@ -41,15 +44,15 @@ export default class Game extends Component <IGameProps, IGameState> {
   private setupGame = async () => {
     const {data: game} = await setupNewFullGame()
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    console.log('setting up game...')
+    console.log(turn)
     this.setState({game, turn}, () => {
-      console.log(this.state)
       this.runGame()
     })
   }
 
   private getLatestGame = async () => {
     const {data: game} = await Axios.get('/api/game/latest')
-    console.log(game)
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
     this.setState({game, turn}, this.runGame)
   }
@@ -66,6 +69,15 @@ export default class Game extends Component <IGameProps, IGameState> {
       turnID: this.state.game.currentTurn,
     })
     console.log('sent!')
+  }
+
+  private nextTurn = async () => {
+    console.log(this.state.game)
+    const [err, res] = await to(Axios.post(`/api/game/${this.state.game._id}/next`))
+    if (err) console.log(err)
+    if (res) {
+      this.getLatestGame()
+    }
   }
 
   private runGame() {

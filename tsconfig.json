@@ -5,6 +5,7 @@
       "*": ["types/*"],
       "@client/*":["src/client/*"],
       "@server/*":["src/server/*"],
+      "@shared/*":["src/shared/*"],
     },
     "outDir": "./dist/",
     "noImplicitAny": true,

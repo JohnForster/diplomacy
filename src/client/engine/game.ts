@@ -1,7 +1,7 @@
-import { IGameTurn } from '@client/types/types'
+import { IGameTurnJSON } from '@shared/types'
+import BoardPainter from './boardPainter/boardPainter'
 import Order from './order'
 import neighboursTo from './resources/tilesData'
-import BoardPainter from './boardPainter/boardPainter'
 
 export default new class Game {
   orders: Order[] = []
@@ -12,20 +12,20 @@ export default new class Game {
   private tileSelected: string
   private units: any = {} // units type?
   private playerEmpire: string
-  private turn: IGameTurn
+  private turn: IGameTurnJSON
 
   run = () => {}
 
   // ? Player ID or empire? Should the engine be id agnostic?
-  setup = (svgs: {map: HTMLElement, army: HTMLElement, fleet: HTMLElement}, turn: IGameTurn, playerID: string) => {
+  setup = (svgs: {map: HTMLElement, army: HTMLElement, fleet: HTMLElement}, turn: IGameTurnJSON, playerID: string) => {
     this.mapSvg = svgs.map
     this.armySvg = svgs.army
     this.fleetSvg = svgs.fleet
     this.turn = turn
-    this.playerEmpire = this.turn.players.find(p => p.playerID === playerID).empire
+    this.playerEmpire = this.turn.players.find((p) => p.playerID === playerID).empire
 
-    this.orders = this.turn.players.find(player => player.playerID === playerID).moves.map(Order.from)
-    this.turn.players.forEach(player => this.units[player.empire] = player.ownedUnits)
+    this.orders = this.turn.players.find((player) => player.playerID === playerID).moves.map(Order.from)
+    this.turn.players.forEach((player) => this.units[player.empire] = player.ownedUnits)
     this.boardPainter = new BoardPainter(this.mapSvg, turn, this.armySvg, this.fleetSvg)
     // this.playerCountry = this.turn.players[playerID].empire
 

@@ -1,11 +1,11 @@
-import to from 'await-to-js';
-import Axios from 'axios';
+import to from 'await-to-js'
+import Axios from 'axios'
 import clone from 'lodash/clone'
 import {Component, h} from 'preact'
-import { route } from 'preact-router';
+import { route } from 'preact-router'
 
 export interface IRegistrationBoxProps {
-  
+
 }
 
 interface IRegistrationBoxState {
@@ -36,7 +36,7 @@ export default class RegistrationBox extends Component <IRegistrationBoxProps, I
 
           Name:<br/>
           <input
-            type='text' 
+            type='text'
             name='name'
             value={state.formFields.name}
             onChange={this.handleChange('name')}

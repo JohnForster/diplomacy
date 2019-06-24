@@ -1,23 +1,11 @@
 import mongoose, {Schema} from 'mongoose'
 import {defaultColours, startingTerritories, startingUnits} from '../../../data/initialState'
-import { IMove, IPlayerState } from '../types/types'
+
+import { IGameTurnDB, IMove, IPlayerStateDB } from '@shared/types'
 
 import shuffle from 'lodash/shuffle'
 
-// Shared between server and client. Move into some types folder?
-export interface IGameTurn {
-  info: {
-    phaseNumber: number,
-    year: number,
-    season: string,
-    phase: string,
-    timeStarted: number,
-    timeEnds: string,
-    isComplete: boolean,
-  },
-  players: IPlayerState[],
-}
-export interface ITurnModel extends mongoose.Document, IGameTurn {
+export interface ITurnModel extends mongoose.Document, IGameTurnDB {
   isReadyToStart: () => boolean,
   getMoves: (id: any) => IMove[],
   addMoves: (playerID: any, moves: IMove[]) => void,
@@ -25,6 +13,29 @@ export interface ITurnModel extends mongoose.Document, IGameTurn {
   start: () => void,
   randomiseEmpires: () => void,
 }
+
+const playerSchema = new Schema({
+  playerID: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  colour: String,
+  empire: String,
+  ownedTerritories: [String],
+  ownedUnits: [{
+    unitType: String,
+    location: String,
+    status: String,
+  }],
+  moves: [{
+    unitType: String,
+    moveType: String,
+    from: String,
+    to: String,
+    supportFrom: String,
+    wasSuccessful: Boolean,
+  }], // Array of moveIDs
+})
 
 const turnSchema = new Schema({
   info: {
@@ -45,47 +56,27 @@ const turnSchema = new Schema({
       default: false,
     },
   },
-  players: [{
-    playerID: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    colour: String,
-    empire: String,
-    ownedTerritories: [String],
-    ownedUnits: [{
-      unitType: String,
-      location: String,
-      status: String,
-    }],
-    moves: [{
-      unitType: String,
-      moveType: String,
-      from: String,
-      to: String,
-      supportFrom: String,
-      wasSuccessful: Boolean,
-    }], // Array of moveIDs
-  }],
-})
+  players: [playerSchema],
+}, {toJSON: {virtuals: true}})
 
 turnSchema.methods.isReadyToStart = function(): boolean {
   // Make more complex, to specify the reason the game cannot begin.
   if (
     this.players.length === 7
-    && this.players.every((player: IPlayerState) => !!player.empire)
+    && this.players.every((player: IPlayerStateDB) => !!player.empire)
   ) return true
   return false
 }
 
 turnSchema.methods.getMoves = function(playerID: any): IMove[] {
-  const player: IPlayerState = this.players.find((p: IPlayerState) => p.playerID.equals(playerID))
+  const player: IPlayerStateDB = this.players.find((p: any) => p.playerID.equals(playerID))
   return player.moves
 }
 
-turnSchema.methods.addMoves = function(playerID: any, moves: IMove[]): void {
-  const player = this.players.find((p: IPlayerState) => p.playerID.equals(playerID))
-  console.log(moves)
+turnSchema.methods.addMoves = function(playerID: string, moves: IMove[]): void {
+  const player = this.players.find((p: ITurnModel['players'][0]) => {
+    return p.playerID.equals(playerID)
+  })
   player.moves = moves
   this.save()
 }
@@ -94,7 +85,7 @@ turnSchema.methods.addMoves = function(playerID: any, moves: IMove[]): void {
 // Will need to edit this function to accept choosing a color.
 turnSchema.methods.addPlayer = function(playerID: string, colour?: string) {
   if (this.players.length > 7) throw new Error ('Game is full!')
-  if (colour && this.players.find((player: IPlayerState) => player.colour === colour)) {
+  if (colour && this.players.find((player: IPlayerStateDB) => player.colour === colour)) {
     throw new Error (`Colour ${colour} is already taken`)
   }
   this.players.push({
@@ -107,7 +98,7 @@ turnSchema.methods.addPlayer = function(playerID: string, colour?: string) {
 turnSchema.methods.start = function() {
   this.timeStarted = Date.now()
   // set end date? Maybe make end date a virtual?
-  this.players.forEach((player: IPlayerState) => {
+  this.players.forEach((player: IPlayerStateDB) => {
     player.ownedTerritories = startingTerritories[player.empire]
     player.ownedUnits = startingUnits[player.empire]
     player.colour = player.colour || defaultColours[player.empire]
@@ -122,7 +113,7 @@ turnSchema.methods.start = function() {
 turnSchema.methods.randomiseEmpires = async function() {
   console.log('Randomising empires...')
   const empires = shuffle(['England', 'France', 'Germany', 'Italy', 'Austria', 'Russia', 'Turkey'])
-  this.players.forEach((player: IPlayerState) => {
+  this.players.forEach((player: IPlayerStateDB) => {
     player.empire = empires.pop()
   })
   return this.save()

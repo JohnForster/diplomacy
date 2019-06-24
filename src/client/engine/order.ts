@@ -1,4 +1,4 @@
-import { IMove } from '@server/types/types'
+import { IMove } from '@shared/types'
 
 export default class Order {
   static from(move: IMove) {
