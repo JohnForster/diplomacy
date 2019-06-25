@@ -2,8 +2,8 @@ import to from 'await-to-js'
 import { Express, Request, Response } from 'express'
 import passport from 'passport'
 import passportLocal from 'passport-local'
-import { IUserModel } from '../models/user.model'
-import UserService from './user.service'
+import { IUserModel } from '../../models/user.model'
+import UserService from '../user.service'
 const LocalStrategy = passportLocal.Strategy
 
 export default async (app: Express, isDev: boolean) => {

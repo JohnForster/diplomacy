@@ -1,8 +1,8 @@
 import mongoose, {Schema, Types} from 'mongoose'
 
-import TurnService from '@server/services/turn.service';
-import TurnModel, { ITurnModel } from './turn.model'
+import TurnService from '@server/services/turn.service'
 import {IGameDB} from '@shared/types'
+import TurnModel, { ITurnModel } from './turn.model'
 
 // export interface IGame {
 //   timeStarted: Date,

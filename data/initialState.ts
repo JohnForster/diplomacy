@@ -38,7 +38,7 @@ const startingUnits: {[key: string]: {unitType: string, location: string, status
     {unitType: 'Army', location: 'Moscow', status: 'Active'},
     {unitType: 'Army', location: 'Warsaw', status: 'Active'},
     {unitType: 'Fleet', location: 'Sevastopol', status: 'Active'},
-    // {unitType: 'Fleet', location: 'St_Petersburg__sc', status: 'Active'}, // Leaving for now
+    // {unitType: 'Fleet', location: 'St_Petersburg__sc', status: 'Active'}, // Leaving until coasts are implemented
   ],
   Turkey: [
     {unitType: 'Army', location: 'Constantinople', status: 'Active'},

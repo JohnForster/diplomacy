@@ -9,7 +9,7 @@ import gameController from './controllers/game.controller'
 import turnController from './controllers/turn.controller'
 import userController from './controllers/user.controller'
 
-import setupPassport from './services/passport'
+import setupPassport from './services/passport/passport'
 
 import checkAuthentication, { confirmAuthentication } from './_helpers/checkAuthentication'
 import config from './config'
@@ -32,9 +32,7 @@ const mongoDBStore = new MongoDBStore({
   uri: config.MONGO_URI,
   databaseName: 'diplomacy',
   collection: 'userSessions',
-}, (err) => {
-  if (err) console.log(err)
-})
+}, console.log)
 
 app.use(session({
   secret: config.TOKEN_SECRET,
@@ -67,9 +65,8 @@ app.get('/logout', (req, res) => {
 // Front end routes
 const middlePath = isDev ? '../../dist' : ''
 app.use(express.static(path.join(__dirname, middlePath, '/client')))
-const index = path.join(__dirname, middlePath, '/client/index.html')
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(index)
+  res.sendFile(path.join(__dirname, middlePath, '/client/index.html'))
 })
 
 app.listen(config.LISTEN_PORT, () => {

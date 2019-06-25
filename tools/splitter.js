@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 const tiles = require("./tiles");
 const fs = require("fs");
 

@@ -1,4 +1,6 @@
-const moveValidator = (turn: any , move: any) => {
+import { IGameTurnJSON } from '@shared/types'
+
+const moveValidator = (turn: IGameTurnJSON , move: any) => {
 
 }
 
