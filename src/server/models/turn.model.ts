@@ -88,7 +88,6 @@ turnSchema.methods.addMoves = function(playerID: Types.ObjectId, moves: IMove[])
     return p.playerID.equals(playerID)
   })
   player.moves = moves
-  console.log('success submitting moves!')
   this.save()
 }
 
