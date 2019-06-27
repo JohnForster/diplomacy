@@ -1,7 +1,9 @@
 import { IGameTurnJSON } from '@shared/types'
 import BoardPainter from './boardPainter/boardPainter'
 import Order from './order'
-import neighboursTo from './resources/tilesData'
+
+import validateMove from '@shared/helpers/validateMove'
+import neighboursTo from '@shared/resources/tilesData'
 
 export default new class Game {
   orders: Order[] = []
@@ -13,6 +15,7 @@ export default new class Game {
   private units: any = {} // units type?
   private playerEmpire: string
   private turn: IGameTurnJSON
+  private playerID: string
 
   run = () => {}
 
@@ -22,7 +25,9 @@ export default new class Game {
     this.armySvg = svgs.army
     this.fleetSvg = svgs.fleet
     this.turn = turn
+    this.playerID = playerID
     this.playerEmpire = this.turn.players.find((p) => p.playerID === playerID).empire
+    console.log('playing as ', this.playerEmpire)
 
     this.orders = this.turn.players.find((player) => player.playerID === playerID).moves.map(Order.from)
     this.turn.players.forEach((player) => this.units[player.empire] = player.ownedUnits)
@@ -43,22 +48,31 @@ export default new class Game {
   private onClick = (territory: string) => {
     if (this.tileSelected
       && neighboursTo[this.tileSelected].includes(territory)
-    ) {
-      this.finishOrder(territory)
-    } else {
+      ) {
+        this.finishOrder(territory)
+        console.log('finishingOrder')
+      } else {
+      console.log('startingOrder')
       this.startOrder(territory)
     }
   }
 
   private finishOrder = (territory: string) => {
-    this.orders = this.orders.filter((m) => {
-      return m.from !== this.tileSelected
+    this.orders = this.orders.filter((order) => {
+      return order.from !== this.tileSelected
     })
+
     // ! Unit type AND MOVE TYPE are currently hard coded!
-    const order = new Order('Army', this.tileSelected, territory, 'Move')
-    this.orders.push(order)
-    this.boardPainter.redrawOrders(this.orders)
-    this.tileSelected = null
+    const newOrder = new Order('Army', this.tileSelected, territory, 'Move')
+
+    console.log('validating move...')
+    console.log(validateMove(this.turn, newOrder, this.playerID))
+
+    if (validateMove(this.turn, newOrder, this.playerID)) {
+      this.orders.push(newOrder)
+      this.boardPainter.redrawOrders(this.orders)
+      this.tileSelected = null
+    }
   }
 
   private startOrder = (territory: string) => {

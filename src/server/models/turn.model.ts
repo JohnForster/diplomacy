@@ -1,9 +1,11 @@
-import mongoose, {Schema} from 'mongoose'
+import mongoose, {Schema, Types} from 'mongoose'
 import {defaultColours, startingTerritories, startingUnits} from '../../../data/initialState'
 
 import { IGameTurnDB, IMove, IPlayerStateDB } from '@shared/types'
 
 import shuffle from 'lodash/shuffle'
+import validateMove from '@shared/helpers/validateMove';
+import toJSON from '@shared/helpers/toJSON';
 
 export interface ITurnModel extends mongoose.Document, IGameTurnDB {
   isReadyToStart: () => boolean,
@@ -35,7 +37,7 @@ const playerSchema = new Schema({
     supportFrom: String,
     wasSuccessful: Boolean,
   }], // Array of moveIDs
-})
+}, {toJSON: {virtuals: true}})
 
 const turnSchema = new Schema({
   info: {
@@ -73,11 +75,20 @@ turnSchema.methods.getMoves = function(playerID: any): IMove[] {
   return player.moves
 }
 
-turnSchema.methods.addMoves = function(playerID: string, moves: IMove[]): void {
+turnSchema.methods.addMoves = function(playerID: Types.ObjectId, moves: IMove[]): void {
+  if (!moves.every((move) => {
+    return validateMove(toJSON(this), move, playerID.toString())
+  })) {
+    console.error('Submitted move is not valid!')
+    console.error(moves)
+    return
+  }
+
   const player = this.players.find((p: ITurnModel['players'][0]) => {
     return p.playerID.equals(playerID)
   })
   player.moves = moves
+  console.log('success submitting moves!')
   this.save()
 }
 
@@ -103,10 +114,11 @@ turnSchema.methods.start = function() {
     player.ownedUnits = startingUnits[player.empire]
     player.colour = player.colour || defaultColours[player.empire]
   })
-  this.phaseNumber = 0
-  this.year = 1901
-  this.season = 'Spring'
-  this.phase = 'Move'
+  this.info.phaseNumber = 0
+  this.info.year = 1901
+  this.info.season = 'Spring'
+  this.info.phase = 'movement'
+  console.log('saving turn...')
   this.save()
 }
 

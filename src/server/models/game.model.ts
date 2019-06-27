@@ -92,7 +92,6 @@ gameSchema.methods.advanceTurn = async function(): Promise<ITurnModel> {
     })
     player.moves = []
   })
-  console.log(nextTurn)
   this.currentTurn = nextTurn.id
   this.save()
   return nextTurn

@@ -9,7 +9,7 @@ class TurnController {
     // Need to strip other players moves if turn isn't complete.
     const [err, turn] = await to(TurnService.getByID(req.params.turn_id))
     turn.players.forEach((player) => {
-      if (player.playerID !== req.session.passport.user) {
+      if (!player.playerID.equals(req.session.passport.user)) {
         player.moves = []
       }
     })
@@ -21,7 +21,7 @@ class TurnController {
   static async update(req: Request, res: Response) {
     // Method for making moves goes here
     // Need some error handling/checking that user is part of this turnID
-    TurnService.addMove(req.body.turnID, req.session.passport.user, ...req.body.moves)
+    TurnService.addMove(req.body.turnID, String(req.session.passport.user), ...req.body.moves)
     res.send('success')
   }
 }

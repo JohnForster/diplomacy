@@ -1,7 +1,7 @@
 import { Types } from 'mongoose'
 import { IPlayerStateDB, IPlayerStateJSON } from './IPlayerState'
 
-interface IGameTurn {
+export interface IGameTurn {
   info: {
     phaseNumber: number,
     year: number,
