@@ -38,6 +38,15 @@ module.exports = {
         loader: "svg-inline-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.s?css$/,
+        exclude: /node_modules/,
+        use: [
+          {loader: "style-loader"},
+          {loader: "css-loader"},
+          {loader: "sass-loader"}
+        ]
+      }
       // {
       //   test: /\.(html)$/,
       //   loader: 'html-loader',
