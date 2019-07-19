@@ -53,7 +53,12 @@ export default class Game extends Component <IGameProps, IGameState> {
   private getLatestGame = async () => {
     const {data: game} = await Axios.get('/api/game/latest')
     const {data: turn} = await Axios.get(`/api/turn/${game.currentTurn}`)
-    this.setState({game, turn}, this.runGame)
+    this.setState({game, turn}, this.refresh)
+  }
+
+  private refresh = () => {
+    game.clearMap()
+    this.runGame()
   }
 
   private fetchGame = async (id: string) => {

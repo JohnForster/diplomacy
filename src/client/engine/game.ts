@@ -30,9 +30,10 @@ export default new class Game {
     this.playerEmpire = this.turn.players.find((p) => p.playerID === playerID).empire
     console.log('playing as ', this.playerEmpire)
 
-    this.orders = this.turn.players.find((player) => player.playerID === playerID).moves.map(Order.from)
     this.turn.players.forEach((player) => this.units[player.empire] = player.ownedUnits)
     this.boardPainter = new BoardPainter(this.mapSvg, turn, this.armySvg, this.fleetSvg)
+    this.orders = this.turn.players.find((player) => player.playerID === playerID).moves.map(Order.from)
+    this.boardPainter.redraw()
     // this.playerCountry = this.turn.players[playerID].empire
 
     const tiles = Array.from(this.mapSvg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
@@ -44,6 +45,14 @@ export default new class Game {
     units.forEach((unit) => {
       unit.addEventListener('click', (evt) => this.onClick(unit.classList[2]))
     })
+  }
+
+  clearMap = () => {
+    if (!this.mapSvg) return
+    const units = Array.from(this.mapSvg.getElementsByClassName('unit'))
+    units.forEach(unit => unit.remove())
+    const orders = Array.from(this.mapSvg.getElementsByClassName('order'))
+    orders.forEach(order => order.remove())
   }
 
   private onClick = (territory: string) => {

@@ -69,7 +69,7 @@ const adjacentBySeaTilesData: {[key: string]: string[]} = {
   Smyrna: ['Aegean_Sea', 'Eastern_Mediterranean', 'Ankara', 'Armenia', 'Constantinople', 'Syria'],
   Spain__nc: ['Mid_Atlantic_Ocean', 'Gascony', 'Portugal'],
   Spain__sc: ['Gulf_of_Lyon', 'Mid_Atlantic_Ocean', 'Western_Mediterranean', 'Gascony', 'Marseilles', 'Portugal'],
-  St_Petersburg__nc: ['Barents_Sea', 'Finland', 'St_Petersburg__sc'],
+  St_Petersburg__nc: ['Barents_Sea', 'Norway'],
   St_Petersburg__sc: ['Gulf_of_Bothnia', 'Finland', 'Livonia'],
   Sweden: ['Baltic_Sea', 'Gulf_of_Bothnia', 'Skagerrak', 'Denmark', 'Finland', 'Norway'],
   Syria: ['Eastern_Mediterranean', 'Armenia', 'Smyrna'],
