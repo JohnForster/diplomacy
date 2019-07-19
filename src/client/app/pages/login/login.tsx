@@ -22,6 +22,17 @@ interface ILoginState {
 
 export default class Login extends Component <ILoginProps, ILoginState> {
   state: ILoginState = { formFields: {} }
+  usernameInput: HTMLInputElement
+  passwordInput: HTMLInputElement
+
+  componentDidMount () {
+    this.setState({
+      formFields: {
+        username: this.usernameInput.value,
+        password: this.passwordInput.value,
+      }
+    })
+  }
 
   render(props: ILoginProps, state: ILoginState) {
     return (
@@ -31,9 +42,9 @@ export default class Login extends Component <ILoginProps, ILoginState> {
             {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
             <form action='api/user/authenticate' method='post' onSubmit={this.login}>
               Username<br/>
-              <input type='text' name='username' onChange={this.handleChange('username')}/><br/>
+              <input ref={usernameInput => this.usernameInput = usernameInput} type='text' name='username' onChange={this.handleChange('username')}/><br/>
               Password<br/>
-              <input type='text' name='password' onChange={this.handleChange('password')}/><br/>
+              <input ref={passwordInput => this.passwordInput = passwordInput} type='text' name='password' onChange={this.handleChange('password')}/><br/>
               <input type='submit' value='Submit'/>
             </form>
             {'New? Register '}
@@ -46,6 +57,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
   login = async (evt: Event) => {
     evt.preventDefault()
     console.log('attempting to log in')
+    console.log(this.state.formFields)
     const [err, res] = await to(axios.post('api/login', this.state.formFields))
     if (err) {
       console.log('logging an err')

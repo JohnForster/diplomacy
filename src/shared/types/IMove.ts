@@ -1,5 +1,5 @@
 export interface IMove {
-  unit: string,
+  unit: 'Army' | 'Fleet',
   moveType: string,
   from: string,
   to: string,

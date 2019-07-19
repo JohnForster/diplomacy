@@ -5,7 +5,7 @@ export default class Order {
     return new Order('', move.from, move.to, move.moveType, move.supportFrom)
   }
 
-  unit: string
+  unit: 'Army' | 'Fleet'
   moveType: string
   from: string
   to: string

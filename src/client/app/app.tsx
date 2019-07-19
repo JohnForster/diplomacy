@@ -7,8 +7,8 @@ import Game from './pages/game/game'
 import Login from './pages/login/login'
 import Register from './pages/register/register'
 
-import './variables/colors.scss'
 import './app.scss'
+import './variables/colors.scss'
 
 export interface IAppProps {}
 

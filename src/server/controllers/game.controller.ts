@@ -78,7 +78,7 @@ router.route('/:game_id/start')
   )
 router.route('/:game_id/next')
   .post(
-    // method to check if in dev mode?
+    // method to check if in dev mode so that this can't be abused?
     GameController.nextTurn,
   )
 

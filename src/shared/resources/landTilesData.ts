@@ -1,4 +1,4 @@
-const adjacentTilesData: {[key: string]: string[]} = {
+const adjacentByLandTilesData: {[key: string]: string[]} = {
   Adriatic_Sea: ['Ionian_Sea', 'Albania', 'Apulia', 'Trieste', 'Venice'],
   Aegean_Sea: ['Eastern_Mediterranean', 'Ionian_Sea', 'Bulgaria__sc', 'Constantinople', 'Greece', 'Smyrna'],
   Baltic_Sea: ['Gulf_of_Bothnia', 'Skagerrak', 'Berlin', 'Denmark', 'Kiel', 'Livonia', 'Prussia', 'Sweden'],
@@ -85,4 +85,4 @@ const adjacentTilesData: {[key: string]: string[]} = {
   Yorkshire: ['North_Sea', 'Edinburgh', 'Liverpool', 'London', 'Wales'],
 }
 
-export default adjacentTilesData
+export default adjacentByLandTilesData

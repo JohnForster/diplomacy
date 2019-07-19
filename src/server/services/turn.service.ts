@@ -1,12 +1,14 @@
 import { IMove } from '@shared/types'
 import TurnModel, {ITurnModel} from '../models/turn.model'
 
-export interface ITurnConfig {}
+export interface ITurnConfig {
+  phase: 'movement' | 'retreat' | 'build'
+}
 
 const TurnService = {
   async create(turnConfig: ITurnConfig): Promise<ITurnModel> {
     const turn = new TurnModel()
-    Object.assign(turn, turnConfig)
+    Object.assign(turn.info, turnConfig)
     turn.save()
     return turn
   },

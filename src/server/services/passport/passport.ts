@@ -45,7 +45,7 @@ export default async (app: Express, isDev: boolean) => {
         return res.status(404).send('Internal Error')
       }
 
-      if (!user) return res.status(404).send(info.message)
+      if (!user) {console.log('no user found'); return res.status(404).send(info.message)}
       req.logIn(user, (loginErr) => {
         if (loginErr) {
           return next(err)

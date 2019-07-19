@@ -83,7 +83,8 @@ gameSchema.methods.setTurn = function(turnID: string): void {
 // ?   making this method async?
 gameSchema.methods.advanceTurn = async function(): Promise<ITurnModel> {
   const turn = await TurnService.getByID(this.currentTurn)
-  const nextTurn = await TurnService.create({})
+  // ! Phase is currently hard coded as 'Move'
+  const nextTurn = await TurnService.create({phase: 'movement'})
   nextTurn.players = turn.players
   nextTurn.players.forEach((player) => {
     player.moves.forEach((move) => {

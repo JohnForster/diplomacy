@@ -1,10 +1,11 @@
-import { IGameTurnJSON } from '@shared/types'
+import { IGameTurnJSON, IUnit } from '@shared/types'
 import BoardPainter from './boardPainter/boardPainter'
 import Order from './order'
 
 import validateMove from '@shared/helpers/validateMove'
-import neighboursTo from '@shared/resources/tilesData'
+import neighboursTo from '@shared/resources/landTilesData'
 
+// ! NEED TO CREATE UNIT CLASS
 export default new class Game {
   orders: Order[] = []
   private boardPainter: BoardPainter
@@ -12,7 +13,7 @@ export default new class Game {
   private armySvg: HTMLElement
   private fleetSvg: HTMLElement
   private tileSelected: string
-  private units: any = {} // units type?
+  private units: {[key: string]: IUnit[]} = {} // units type?
   private playerEmpire: string
   private turn: IGameTurnJSON
   private playerID: string
@@ -58,17 +59,20 @@ export default new class Game {
   }
 
   private finishOrder = (territory: string) => {
+    console.log(this.units[this.playerEmpire], this.tileSelected)
+    const unit = this.units[this.playerEmpire].find(u => u.location === this.tileSelected)
     this.orders = this.orders.filter((order) => {
       return order.from !== this.tileSelected
     })
 
-    // ! Unit type AND MOVE TYPE are currently hard coded!
-    const newOrder = new Order('Army', this.tileSelected, territory, 'Move')
+    console.log(this.turn)
 
-    console.log('validating move...')
-    console.log(validateMove(this.turn, newOrder, this.playerID))
+    // ! MOVE TYPE is currently hard coded!
+    const newOrder = new Order(unit.unitType, this.tileSelected, territory, 'Move')
 
-    if (validateMove(this.turn, newOrder, this.playerID)) {
+    console.log(validateMove(this.turn, newOrder.toObject(), this.playerID))
+
+    if (validateMove(this.turn, newOrder.toObject(), this.playerID)) {
       this.orders.push(newOrder)
       this.boardPainter.redrawOrders(this.orders)
       this.tileSelected = null

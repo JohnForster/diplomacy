@@ -1,3 +1,5 @@
+import { IUnit } from "@shared/types";
+
 const startingTerritories: {[key: string]: string[]} = {
   England: ['London', 'Liverpool', 'Yorkshire', 'Clyde', 'Edinburgh', 'Wales'],
   France: ['Picardy', 'Brest', 'Paris', 'Gascony', 'Burgundy', 'Marseilles'],
@@ -8,7 +10,7 @@ const startingTerritories: {[key: string]: string[]} = {
   Turkey: ['Constantinople', 'Smyrna', 'Syria', 'Ankara', 'Armenia'],
 }
 
-const startingUnits: {[key: string]: {unitType: string, location: string, status: string}[]} = {
+const startingUnits: {[key: string]: IUnit[]} = {
   England: [
     {unitType: 'Fleet', location: 'London', status: 'Active'},
     {unitType: 'Fleet', location: 'Edinburgh', status: 'Active'},

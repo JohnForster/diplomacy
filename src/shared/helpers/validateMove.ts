@@ -39,7 +39,7 @@ const validateMove = (turn: IGameTurnJSON, move: IMove, playerID: string): boole
     return false
   }
 
-  const isAdjacentToDestination = areAdjacent(move.to)
+  const isAdjacentToDestination = areAdjacent(move.unit)(move.to)
 
   switch (move.moveType) {
     case 'Move':
@@ -48,6 +48,7 @@ const validateMove = (turn: IGameTurnJSON, move: IMove, playerID: string): boole
         console.log('is not adjacent')
         return false
       }
+
       // TODO Check that unit can move there (land/sea)
 
       return true

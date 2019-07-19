@@ -10,7 +10,7 @@ const GameService = {
     const game = new GameModel({createdBy: userId})
     Object.assign(game, gameConfig)
 
-    const turn = await TurnService.create({})
+    const turn = await TurnService.create({phase: 'movement'})
     game.setTurn(turn.id)
 
     await game.save()
