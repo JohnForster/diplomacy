@@ -3,9 +3,12 @@ import Router, { route, RouterOnChangeArgs } from 'preact-router'
 
 import Axios from 'axios'
 import checkAuthentication from './_helpers/checkAuthentication'
-import Game from './components/game'
-import Login from './components/login/login'
-import RegistrationBox from './components/login/registrationBox/registrationBox'
+import Game from './pages/game/game'
+import Login from './pages/login/login'
+import Register from './pages/register/register'
+
+import './variables/colors.scss'
+import './app.scss'
 
 export interface IAppProps {}
 
@@ -61,7 +64,7 @@ export default class App extends Component <IAppProps, IAppState> {
     return (
       <Router onChange={this.handleRoute}>
         <Game path='/game' userID={state.userID} logOut={this.logOut}/>
-        <RegistrationBox path='/register'/>
+        <Register path='/register'/>
         <Login path='/' toggleLogIn={this.toggleLogIn}/>
       </Router>
     )

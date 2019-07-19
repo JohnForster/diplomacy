@@ -3,8 +3,10 @@ import {Component, h} from 'preact'
 import { IGameJSON , IGameTurnJSON} from '@shared/types'
 import to from 'await-to-js'
 import Axios from 'axios'
-import setupNewFullGame from '../../devTools/setupGame'
-import game from '../../engine/game'
+import setupNewFullGame from '../../../devTools/setupGame'
+import game from '@client/engine/game'
+
+import './game.scss'
 
 export interface IGameProps {
   userID: string,
@@ -22,17 +24,19 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   render(props: IGameProps, state: IGameState) {
     return (
-      <div>
-        <button onClick={this.setupGame}>Set Up Game</button>
-        <button onClick={this.getLatestGame}>Load Game</button>
-        <button onClick={this.submitOrders}>Submit Orders</button>
-        <button onClick={this.props.logOut}>Log out</button>
-        <button onClick={this.nextTurn}>Next Turn</button><br/>
+      <div className='page'>
+        <div className='buttonsContainer' >
+          <button onClick={this.setupGame}>Set Up Game</button>
+          <button onClick={this.getLatestGame}>Load Game</button>
+          <button onClick={this.submitOrders}>Submit Orders</button>
+          <button onClick={this.props.logOut}>Log out</button>
+          <button onClick={this.nextTurn}>Next Turn</button><br/>
+        </div><br/>
+        <div className='map'>
+          <img class='paperImg' src='./assets/paperTexture.jpg' />
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
-        <div className='map'>
-          <img class='bg' src='./assets/paperTexture.jpg' />
-          <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='europeMap'>
+          <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>
             There should be a diplomacy map here...
           </object>
         </div>

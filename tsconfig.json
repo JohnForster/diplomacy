@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "paths": { 
+    "paths": {
       "*": ["types/*"],
       "@client/*":["src/client/*"],
       "@server/*":["src/server/*"],

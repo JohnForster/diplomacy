@@ -7,6 +7,8 @@ import clone from 'lodash/clone'
 import { Link, route } from 'preact-router'
 import './login.scss'
 
+import FormBox from '../../components/formBox/formBox';
+
 export interface ILoginProps {
   toggleLogIn: (arg: boolean) => void
 }
@@ -23,19 +25,20 @@ export default class Login extends Component <ILoginProps, ILoginState> {
 
   render(props: ILoginProps, state: ILoginState) {
     return (
-      <div className='login-container'>
-        <div className="login-box" >
-        {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
-        <form action='api/user/authenticate' method='post' onSubmit={this.login}>
-          Username<br/>
-          <input type='text' name='username' onChange={this.handleChange('username')}/><br/>
-          Password<br/>
-          <input type='text' name='password' onChange={this.handleChange('password')}/><br/>
-          <input type='submit' value='Submit'/>
-        </form>
-        {'New member? Register '}
-        <Link href='/register'>here</Link>
-        </div>
+      <div className='page'>
+        <h1>Diplomacy</h1><br/>
+        <FormBox>
+            {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
+            <form action='api/user/authenticate' method='post' onSubmit={this.login}>
+              Username<br/>
+              <input type='text' name='username' onChange={this.handleChange('username')}/><br/>
+              Password<br/>
+              <input type='text' name='password' onChange={this.handleChange('password')}/><br/>
+              <input type='submit' value='Submit'/>
+            </form>
+            {'New? Register '}
+          <Link href='/register'>here</Link>
+        </FormBox>
       </div>
     )
   }

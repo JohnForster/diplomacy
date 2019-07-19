@@ -1,0 +1,8 @@
+@import '../../variables/colors';
+
+h1 {
+  color: $shadow;
+  font-size: 84px;
+  text-shadow: 5px 5px 0px $mid;
+  text-align: center;
+}
