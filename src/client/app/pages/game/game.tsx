@@ -32,10 +32,10 @@ export default class Game extends Component <IGameProps, IGameState> {
           <button onClick={this.props.logOut}>Log out</button>
           <button onClick={this.nextTurn}>Next Turn</button><br/>
         </div><br/>
-        <div className='map'>
+        <div>
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
-          <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object>
+          <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object>
         </div>
       </div>
     )
@@ -45,8 +45,6 @@ export default class Game extends Component <IGameProps, IGameState> {
   private setupGame = async () => {
     const {data: game} = await setupNewFullGame()
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
-    console.log('setting up game...')
-    console.log(turn)
     this.setState({game, turn}, () => {
       this.runGame()
     })
@@ -54,13 +52,13 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   private getLatestGame = async () => {
     const {data: game} = await Axios.get('/api/game/latest')
-    const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    const {data: turn} = await Axios.get(`/api/turn/${game.currentTurn}`)
     this.setState({game, turn}, this.runGame)
   }
 
   private fetchGame = async (id: string) => {
     const {data: game} = await Axios.get(`/api/game/${id}`)
-    const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    const {data: turn} = await Axios.get(`/api/turn/${game.currentTurn}`)
     this.setState({game, turn})
   }
 
@@ -73,27 +71,18 @@ export default class Game extends Component <IGameProps, IGameState> {
   }
 
   private nextTurn = async () => {
-    console.log(this.state.game)
     const [err, res] = await to(Axios.post(`/api/game/${this.state.game._id}/next`))
     if (err) console.log(err)
-    if (res) {
-      this.getLatestGame()
-    }
+    if (res) this.getLatestGame()
+  }
+
+  private getSvg = (label: string) => {
+    const svgObject = document.getElementById(label) as HTMLObjectElement
+    return svgObject.contentDocument.getElementById(`${label}Svg`)
   }
 
   private runGame() {
-    console.log('Running game')
-    const svgObject = document.getElementById('mainMap') as HTMLObjectElement
-    const map = svgObject.contentDocument.getElementById('mapSvg')
-
-    const armyObject = document.getElementById('army') as HTMLObjectElement
-    const army = armyObject.contentDocument.getElementById('armySvg')
-
-    const fleetObject = document.getElementById('fleet') as HTMLObjectElement
-    const fleet = fleetObject.contentDocument.getElementById('fleetSvg')
-
-    console.log(fleet)
-
+    const [map, army, fleet] = ['map', 'army', 'fleet'].map(this.getSvg)
     game.setup({map, army, fleet}, this.state.turn, this.props.userID)
     game.run()
   }

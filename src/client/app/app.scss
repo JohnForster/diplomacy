@@ -12,3 +12,15 @@ body {
   padding: 56px;
   font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+input,button {
+  font-family: 'Arvo', Calibri, sans-serif;
+  color: $shadow;
+  font-size: 18px;
+  height: 24px;
+  border-radius: 3px;
+  background-color: $offwhite;
+  margin: 10px 0px;
+  box-sizing: border-box;
+  text-align: center;
+}

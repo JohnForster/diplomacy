@@ -15,7 +15,6 @@ const findUnit = (playerState: IGameTurnJSON['players'][0]) => (from: string) =>
   return playerState.ownedUnits.find((unit) => unit.location === from)
 }
 
-
 const validateMove = (turn: IGameTurnJSON, move: IMove, playerID: string): boolean => {
   // Find player in game turn
 
