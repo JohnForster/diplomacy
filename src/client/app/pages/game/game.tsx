@@ -33,12 +33,9 @@ export default class Game extends Component <IGameProps, IGameState> {
           <button onClick={this.nextTurn}>Next Turn</button><br/>
         </div><br/>
         <div className='map'>
-          <img class='paperImg' src='./assets/paperTexture.jpg' />
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
-          <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>
-            There should be a diplomacy map here...
-          </object>
+          <object id='mainMap' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object>
         </div>
       </div>
     )

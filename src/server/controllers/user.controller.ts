@@ -23,6 +23,7 @@ abstract class UserController {
 
   static async register(req: Request, res: Response, next: (error: any) => void) {
     const [err, user] = await to(userService.create(req.body))
+    console.log(err, user)
     if (err) next(err)
     if (user) res.json({})
   }

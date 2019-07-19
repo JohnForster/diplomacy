@@ -69,7 +69,7 @@ export default class Register extends Component <IRegisterProps, IRegisterState>
 
   private handleSubmit = async (evt: Event) => {
     evt.preventDefault()
-    const [err, res] = await to(Axios.post('/user/register', this.state.formFields))
+    const [err, res] = await to(Axios.post('/api/user/register', this.state.formFields))
     if (err) console.log(err)
     if (res) route('/', true)
   }
