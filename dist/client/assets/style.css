@@ -1,11 +1,18 @@
-.l, .Unowned	{fill:rgb(255,255,221, 0.25); stroke:black; stroke-linejoin:round; stroke-width:0.8; stroke-opacity: 0.45; fill-opacity: 0.25}
-.w		{fill:rgb(153,204,255,0.45); stroke:#222; stroke-linejoin:round; stroke-width:0.8; stroke-opacity: 0.45;}
-.l:hover, .w:hover {stroke: black; stroke-width: 2; stroke-opacity: 1;}
+.l, .Unowned	{fill:#FFFFDD; stroke:black; stroke-linejoin:round; opacity: 0.25; stroke-width:0.8;}
+.w		{fill:#99CCFF; stroke:#222; stroke-linejoin:round; opacity: 0.45; stroke-width:0.8;}
 .s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
 .sc {fill:#DDDDDD; stroke:black;}
 #A, #F, #sc {pointer-events: none; stroke: black;}
-.unit { pointer-events:none }
-text		{font-family:Palatino; fill:#222; font-size:9px; transform:translate(-5px, 0px); pointer-events:none;}
+#unit { pointer-events:none }
+text		{font-family:Palatino; fill:#222; font-size:9px; transform:translate(-5px, 0px)}
+
+/* .Austria	{fill:#FF77FF; stroke:black}
+.England	{fill:#0000FF; stroke:black}
+.France 	{fill:#00FFFF; stroke:black}
+.Germany	{fill:#808080; stroke:black}
+.Italy  	{fill:#00FF00; stroke:black}
+.Russia 	{fill:#FFFF00; stroke:black}
+.Turkey 	{fill:#FF0000; stroke:black} */
 
 .empire1  {fill: #FFFF88;}
 .empire2  {fill: #FFFF00;}
@@ -36,6 +43,10 @@ text		{font-family:Palatino; fill:#222; font-size:9px; transform:translate(-5px,
 .success { stroke: #1C1 }
 .bounce { stroke: #D50 }
 .move { stroke: #000 }
+
+/* .light {fill:#06B559;}
+.medium{fill:#0B9B53;}
+.shadow{fill:#088443;} */
 
 svg text {
 	-webkit-user-select: none;
