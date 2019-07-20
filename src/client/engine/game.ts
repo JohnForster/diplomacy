@@ -5,7 +5,6 @@ import Order from './order'
 import validateMove from '@shared/helpers/validateMove'
 import neighboursTo from '@shared/resources/landTilesData'
 
-// ! NEED TO CREATE UNIT CLASS
 export default new class Game {
   orders: Order[] = []
   private boardPainter: BoardPainter
@@ -38,6 +37,7 @@ export default new class Game {
 
     const tiles = Array.from(this.mapSvg.getElementsByClassName('seaTile') as HTMLCollectionOf<HTMLElement>)
     tiles.push(...Array.from(this.mapSvg.getElementsByClassName('landTile') as HTMLCollectionOf<HTMLElement>))
+
     tiles.forEach((tile) => {
       tile.addEventListener('click', (evt) => { this.onClick(tile.getAttribute('title')) })
     })

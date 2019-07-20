@@ -29,8 +29,7 @@
     "passport-local": "^1.0.0",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.5",
-    "preact-router": "^2.6.1",
-    "proptypes": "^1.1.0"
+    "preact-router": "^2.6.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
