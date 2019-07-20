@@ -1,11 +1,57 @@
-.l, .Unowned	{fill:rgb(255,255,221, 0.25); stroke:black; stroke-linejoin:round; stroke-width:0.8; stroke-opacity: 0.45; fill-opacity: 0.25}
-.w		{fill:rgb(153,204,255,0.45); stroke:#222; stroke-linejoin:round; stroke-width:0.8; stroke-opacity: 0.45;}
-.l:hover, .w:hover {stroke: black; stroke-width: 2; stroke-opacity: 1;}
-.s		{fill:url(#diagonalHatch); stroke:#220; stroke-linejoin:round; opacity: 0.5; }
-.sc {fill:#DDDDDD; stroke:black;}
-#A, #F, #sc {pointer-events: none; stroke: black;}
-.unit { pointer-events:none }
-text		{font-family:Palatino; fill:#222; font-size:9px; transform:translate(-5px, 0px); pointer-events:none;}
+@import '@client/app/variables/colors.scss';
+
+.l, .Unowned {
+  fill: #FFFFDD;
+  stroke: black;
+  stroke-linejoin: round;
+  fill-opacity: 0.2;
+  stroke-width: 0.8;
+}
+
+.w {
+  fill: #99CCFF;
+  stroke: #222;
+  stroke-linejoin: round;
+  fill-opacity: 0.45;
+  stroke-width: 0.8;
+}
+
+.w:hover {
+  fill: #AADDFF
+}
+
+.l:hover ~ text, .w:hover ~ text {
+  font-size: 10px;
+}
+
+.l:hover {
+  fill-opacity: 0.5
+}
+
+.s {
+  fill: url(#diagonalHatch);
+  stroke: #220;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+.sc {
+  fill: #DDDDDD;
+  stroke: black;
+}
+
+#A, #F, #sc {
+  pointer-events: none;
+  stroke: black;
+}
+
+text {
+  font-family: Palatino;
+  fill: #222;
+  font-size: 9px;
+  transform: translate(-5px, 0px);
+  pointer-events: none;
+}
 
 .empire1  {fill: #FFFF88;}
 .empire2  {fill: #FFFF00;}

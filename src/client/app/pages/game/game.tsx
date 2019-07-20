@@ -7,6 +7,7 @@ import setupNewFullGame from '../../../devTools/setupGame'
 import game from '@client/engine/game'
 
 import './game.scss'
+import Board from '@client/app/components/board/board';
 
 export interface IGameProps {
   userID: string,
@@ -35,7 +36,8 @@ export default class Game extends Component <IGameProps, IGameState> {
         <div>
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
-          <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object>
+          {/* <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object> */}
+          <Board/>
         </div>
       </div>
     )
@@ -83,11 +85,12 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   private getSvg = (label: string) => {
     const svgObject = document.getElementById(label) as HTMLObjectElement
+    console.log(svgObject, label)
     return svgObject.contentDocument.getElementById(`${label}Svg`)
   }
-
   private runGame() {
-    const [map, army, fleet] = ['map', 'army', 'fleet'].map(this.getSvg)
+    const [army, fleet] = ['army', 'fleet'].map(this.getSvg)
+    const map = document.getElementById('gameBoard') as HTMLObjectElement
     game.setup({map, army, fleet}, this.state.turn, this.props.userID)
     game.run()
   }

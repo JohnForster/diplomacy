@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!-- <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <?xml-stylesheet href="style.css" type="text/css"?>
 <!DOCTYPE svg [
 	<!ENTITY Switzerland "219,376">
@@ -639,4 +639,4 @@ Created for Diplomap (http://www.games2relax.net/diplomap/)
 	</marker>
 	<use id="SC" href="#sc" class="sc"/>
 </defs>
-</svg>
+</svg> -->

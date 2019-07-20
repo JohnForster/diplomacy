@@ -1,0 +1,14 @@
+@import '@client/app/variables/colors.scss';
+
+
+.gameBoard {
+  border: 2px solid $shadow;
+  border-radius: 4px;
+  height: 80vmin;
+  background-image: url(/assets/paperTexture.jpg);
+  background-size: contain;
+}
+
+.unit {
+  pointer-events: none;
+}

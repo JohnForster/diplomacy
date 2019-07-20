@@ -1,5 +1,7 @@
 import {Component, h} from 'preact'
 import Router, { route, RouterOnChangeArgs } from 'preact-router'
+// ! import LazyRoute from 'preact-lazy-route';
+// ! https://github.com/scurker/preact-lazy-route
 
 import Axios from 'axios'
 import checkAuthentication from './_helpers/checkAuthentication'
