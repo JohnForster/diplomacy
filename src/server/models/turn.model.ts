@@ -3,7 +3,7 @@ import {defaultColours, startingTerritories, startingUnits} from '../../../data/
 
 import { IGameTurnDB, IMove, IPlayerStateDB } from '@shared/types'
 
-import shuffle from 'lodash/shuffle'
+import shuffle from 'lodash.shuffle'
 import validateMove from '@shared/helpers/validateMove';
 import toJSON from '@shared/helpers/toJSON';
 

@@ -1,6 +1,6 @@
 import to from 'await-to-js'
 import Axios from 'axios'
-import clone from 'lodash/clone'
+import clone from 'lodash.clone'
 import {Component, h} from 'preact'
 import { route } from 'preact-router'
 

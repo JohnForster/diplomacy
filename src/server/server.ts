@@ -65,6 +65,7 @@ app.get('/logout', (req, res) => {
 // Front end routes
 const middlePath = isDev ? '../../dist' : ''
 app.use(express.static(path.join(__dirname, middlePath, '/client')))
+
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, middlePath, '/client/index.html'))
 })

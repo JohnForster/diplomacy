@@ -1,16 +1,16 @@
 import {Component, h} from 'preact'
+import {lazy, Suspense} from 'preact/compat'
 import Router, { route, RouterOnChangeArgs } from 'preact-router'
-// ! import LazyRoute from 'preact-lazy-route';
-// ! https://github.com/scurker/preact-lazy-route
 
 import Axios from 'axios'
 import checkAuthentication from './_helpers/checkAuthentication'
-import Game from './pages/game/game'
-import Login from './pages/login/login'
-import Register from './pages/register/register'
 
 import './app.scss'
 import './variables/colors.scss'
+
+const Game = lazy(() => import('./pages/game/game'))
+const Login = lazy(() => import('./pages/login/login'))
+const Register = lazy(() => import('./pages/register/register'))
 
 export interface IAppProps {}
 
@@ -64,11 +64,13 @@ export default class App extends Component <IAppProps, IAppState> {
 
   render(props: IAppProps, state: IAppState) {
     return (
-      <Router onChange={this.handleRoute}>
-        <Game path='/game' userID={state.userID} logOut={this.logOut}/>
-        <Register path='/register'/>
-        <Login path='/' toggleLogIn={this.toggleLogIn}/>
-      </Router>
+      <Suspense fallback={<h1>Loading!!!</h1>}>
+        <Router onChange={this.handleRoute}>
+          <Game path='/game' userID={state.userID} logOut={this.logOut}/>
+          <Register path='/register'/>
+          <Login path='/' toggleLogIn={this.toggleLogIn}/>
+        </Router>
+      </Suspense>
     )
   }
 }

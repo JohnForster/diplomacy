@@ -1,13 +1,16 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack')
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
+const CompressionPlugin = require('compression-webpack-plugin')
 const path = require("path");
 
 console.log(path.resolve(__dirname, "src/lib"));
 
 module.exports = {
   entry: "./src/client/index.tsx",
-  devtool: "inline-source-map",
+  devtool: "source-map",
   //! Uncomment the below when working with express
   // target: 'node',
   // node: {
@@ -47,15 +50,6 @@ module.exports = {
           {loader: "sass-loader"}
         ]
       }
-      // {
-      //   test: /\.(html)$/,
-      //   loader: 'html-loader',
-      //   exclude: /node_modules/,
-      // },
-      // {
-      //   test: /\.(png|svg|jpg|gif)$/,
-      //   loader: 'file-loader'
-      // }
     ],
   },
   resolve: {
@@ -80,7 +74,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: "./src/client/assets", to: "./assets" },
-      { from: "./src/client/login", to: "./login"},
     ], {copyUnmodified: true}),
   ],
   devServer: {

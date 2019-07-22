@@ -1,7 +1,7 @@
 import to from 'await-to-js'
 import Axios from 'axios'
-import range from 'lodash/range'
-import shuffle from 'lodash/shuffle'
+import range from 'lodash.range'
+import shuffle from 'lodash.shuffle'
 
 const setupNewFullGame = async () => {
   console.log('Creating a new game...')

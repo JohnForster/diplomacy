@@ -2,7 +2,7 @@ import {Component, h} from 'preact'
 
 import to from 'await-to-js'
 import axios from 'axios'
-import clone from 'lodash/clone'
+import clone from 'lodash.clone'
 
 import { Link, route } from 'preact-router'
 import './login.scss'

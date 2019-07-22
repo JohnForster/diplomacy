@@ -19,15 +19,19 @@ interface ITerritoryState {
 }
 
 export default class Territory extends Component <ITerritoryProps, ITerritoryState> {
-  doSomething = (title:string) => () => {
+  handleClick = (title:string) => () => {
     console.log(title)
   }
 
   public render(props: ITerritoryProps, state: ITerritoryState) {
     return (
       <g title={props.tile.title} class={props.tile.tileType}>
-        <path class={props.tile.id} d={props.tile.path} onClick={this.doSomething(props.tile.title)}/>
-        {props.tile.textLocation && <text {...props.tile.textLocation} className='countryText'>{props.tile.title}</text>}
+        <path class={props.tile.id} d={props.tile.path} onClick={this.handleClick(props.tile.title)}/>
+        {props.tile.textLocation && <text 
+          {...props.tile.textLocation}
+        >
+          {props.tile.title}
+        </text>}
       </g>
     )
   }
