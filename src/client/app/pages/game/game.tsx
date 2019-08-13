@@ -1,13 +1,14 @@
-import {Component, h} from 'preact'
-
-import { IGameJSON , IGameTurnJSON} from '@shared/types'
 import to from 'await-to-js'
 import Axios from 'axios'
-import setupNewFullGame from '../../../devTools/setupGame'
+import {Component, h} from 'preact'
+
+import Board from '@client/app/components/board/board';
+import boardData from '@client/assets/countryData'
 import game from '@client/engine/game'
+import { IGameJSON , IGameTurnJSON} from '@shared/types'
+import setupNewFullGame from '../../../devTools/setupGame'
 
 import './game.scss'
-import Board from '@client/app/components/board/board';
 
 export interface IGameProps {
   userID: string,
@@ -17,11 +18,15 @@ export interface IGameProps {
 interface IGameState {
   game?: IGameJSON,
   turn?: IGameTurnJSON,
-  gameIsRunning: boolean
+  gameIsRunning: boolean,
+  activeTerritory: string
 }
 
 export default class Game extends Component <IGameProps, IGameState> {
-  state: IGameState = {gameIsRunning: false}
+  state: IGameState = {
+    gameIsRunning: false,
+    activeTerritory: null,
+  }
 
   render(props: IGameProps, state: IGameState) {
     return (
@@ -37,10 +42,18 @@ export default class Game extends Component <IGameProps, IGameState> {
           <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
           <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
           {/* <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object> */}
-          <Board/>
+          {/* ? Active territory here or in board? */}
+          {/* Can extend in future to have a "showText" boolean for board previews? */}
+          <Board boardData={boardData} activeTerritory={state.activeTerritory} onTileSelect={this.onTileSelect}/>
         </div>
       </div>
     )
+  }
+
+  onTileSelect = (territoryName: string) => {
+    return () => {
+      this.setState({activeTerritory: territoryName})
+    }
   }
 
   // ? Move axios requests into a helper service?
@@ -63,18 +76,12 @@ export default class Game extends Component <IGameProps, IGameState> {
     this.runGame()
   }
 
-  private fetchGame = async (id: string) => {
-    const {data: game} = await Axios.get(`/api/game/${id}`)
-    const {data: turn} = await Axios.get(`/api/turn/${game.currentTurn}`)
-    this.setState({game, turn})
-  }
-
   private submitOrders = async () => {
     await Axios.patch(`/api/turn/${this.state.game.currentTurn}`, {
       moves: game.orders.map((order) => order.toObject()),
       turnID: this.state.game.currentTurn,
     })
-    console.log('sent!')
+    console.log('Orders submitted!')
   }
 
   private nextTurn = async () => {
@@ -85,9 +92,9 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   private getSvg = (label: string) => {
     const svgObject = document.getElementById(label) as HTMLObjectElement
-    console.log(svgObject, label)
     return svgObject.contentDocument.getElementById(`${label}Svg`)
   }
+
   private runGame() {
     const [army, fleet] = ['army', 'fleet'].map(this.getSvg)
     const map = document.getElementById('gameBoard') as HTMLObjectElement

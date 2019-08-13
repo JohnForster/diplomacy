@@ -12,6 +12,7 @@ export default {
       textLocation: {
         x: '280',
         y: '427',
+        rotate: '45deg',
       },
     },
     {
