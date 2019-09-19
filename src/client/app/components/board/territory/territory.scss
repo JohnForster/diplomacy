@@ -1,6 +1,13 @@
 @import '@client/app/variables/colors.scss';
 
+.territorySquare {
+  position: absolute;
+  width: 100%;
+  pointer-events: none
+}
+
 .l, .Unowned {
+  pointer-events: all;
   fill: #FFFFDD;
   stroke: #444444;
   stroke-linejoin: round;
@@ -9,6 +16,7 @@
 }
 
 .w {
+  pointer-events: all;
   fill: #99CCFF;
   stroke: #444444;
   stroke-linejoin: round;

@@ -1,4 +1,4 @@
-interface ITerritory {
+export interface IBoardTerritory {
   title: string
   name: string
   tileType: string
@@ -14,5 +14,5 @@ interface ITerritory {
 export default interface IGameBoard {
   mapTitle: string
   viewBox: string
-  territories: ITerritory[]
+  territories: IBoardTerritory[]
 }

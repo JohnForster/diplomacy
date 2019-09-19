@@ -1,5 +1,4 @@
-import { Types } from 'mongoose'
-import { IPlayerStateDB, IPlayerStateJSON } from './IPlayerState'
+import { IPlayerStateDB, IPlayerStateJSON } from './IPlayerState.d'
 
 export interface IGameTurn {
   info: {

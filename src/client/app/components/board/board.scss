@@ -2,11 +2,12 @@
 
 
 .gameBoard {
-  position: absolute;
+  position: relative;
   border: 2px solid $shadow;
   border-radius: 4px;
-  height: 80vmin;
-  // background-image: url(/assets/paperTexture.jpg);
+  width: 80vmin;
+  height: 73.43vmin;
+  background-image: url(/assets/paperTexture.jpg);
   background-size: contain;
 }
 

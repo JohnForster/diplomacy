@@ -1,4 +1,4 @@
-import IGameBoard from '@shared/types/IGameBoard'
+import IGameBoard, { IBoardTerritory } from '@shared/types/IGameBoard'
 import {Component, Fragment, h} from 'preact'
 import './board.scss'
 import Territory from './territory/territory'
@@ -16,7 +16,7 @@ interface IBoardState {
 }
 
 export default class Board extends Component <IBoardProps, IBoardState> {
-  get activeTileData(): IGameBoard['territories'][0] {
+  get activeTileData(): IBoardTerritory {
     if (!this.props.activeTerritory) return null
     return this.props.boardData.territories
       .find(t => t.title === this.props.activeTerritory)
@@ -25,20 +25,16 @@ export default class Board extends Component <IBoardProps, IBoardState> {
   render(props: IBoardProps, state: IBoardState) {
     return (
       <Fragment>
-          {props.boardData.territories.map(tile => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox={props.boardData.viewBox} className='gameBoard' id='gameBoard'>
+        <div className='gameBoard' id='gameBoard'>
+            {props.boardData.territories.map(tile => (
               <Territory
               tile={tile}
               isSelected={tile.title === props.activeTerritory}
               onSelect={props.onTileSelect(tile.title)}
+              viewBox={props.boardData.viewBox}
               />
-            </svg>
-          ))}
-        {props.activeTerritory && 
-          <div style={`position: absolute; top:${this.activeTileData.textLocation.y}px; left:${this.activeTileData.textLocation.x}px`}>
-            Hello {`top:${this.activeTileData.textLocation.y}px; left:${this.activeTileData.textLocation.x}px`}
-          </div>
-        }
+            ))}
+        </div>
       </Fragment>
     )
   }

@@ -39,8 +39,8 @@ export default class Game extends Component <IGameProps, IGameState> {
           <button onClick={this.nextTurn}>Next Turn</button><br/>
         </div><br/>
         <div>
-          <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'></object>
-          <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'></object>
+          <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'/>
+          <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'/>
           {/* <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object> */}
           {/* ? Active territory here or in board? */}
           {/* Can extend in future to have a "showText" boolean for board previews? */}
