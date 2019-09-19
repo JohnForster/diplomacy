@@ -26,6 +26,7 @@ export default class Game extends Component <IGameProps, IGameState> {
   state: IGameState = {
     gameIsRunning: false,
     activeTerritory: null,
+    turn: null,
   }
 
   render(props: IGameProps, state: IGameState) {
@@ -44,7 +45,12 @@ export default class Game extends Component <IGameProps, IGameState> {
           {/* <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object> */}
           {/* ? Active territory here or in board? */}
           {/* Can extend in future to have a "showText" boolean for board previews? */}
-          <Board boardData={boardData} activeTerritory={state.activeTerritory} onTileSelect={this.onTileSelect}/>
+          <Board
+            boardData={boardData}
+            activeTerritory={state.activeTerritory}
+            onTileSelect={this.onTileSelect}
+            turnData={state.turn}
+          />
         </div>
       </div>
     )

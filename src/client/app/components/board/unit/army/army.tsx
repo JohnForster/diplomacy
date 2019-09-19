@@ -1,19 +1,19 @@
 import {h, Component} from 'preact'
-import Unit from '../unit'
+import './army.scss'
 
-export interface ITankProps {
+export interface IArmyProps {
   viewBox: string
-  location: string
+  location: {x: number, y: number}
   empire: string
   colour: string
 }
 
-interface ITankState {
+interface IArmyState {
 
 }
 
-export default class Tank extends Component<ITankProps, ITankState> {
-  public render(props: ITankProps, state: ITankState) {
+export default class Army extends Component<IArmyProps, IArmyState> {
+  public render(props: IArmyProps, state: IArmyState) {
     const colours = {
       light: `${props.colour}-light`,
       medium: `${props.colour}-medium`,
@@ -21,8 +21,8 @@ export default class Tank extends Component<ITankProps, ITankState> {
     }
 
     return (
-      // <svg viewBox={props.viewBox} xmlns='http://www.w3.org/2000/svg'  id='armySvg'>
-        <g transform={`translate(${props.location}) scale(0.055)`}>
+      <svg viewBox={props.viewBox} xmlns='http://www.w3.org/2000/svg'  id='armySvg' class='armySquare'>
+        <g transform={`translate(${props.location.x - 15} ${props.location.y - 18}) scale(0.055)`}>
           <g>
             {/* <!-- Wheels --> */}
             <path style='fill:#999999;' d='M145.687,374.175c0-13.504-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455
@@ -105,7 +105,7 @@ export default class Tank extends Component<ITankProps, ITankState> {
               l-4.524-10.961l-4.025-9.767l42.552-17.538l8.544,20.731L449.479,162.952z'/>
           </g>
         </g>
-      // </svg>
+      </svg>
     )
   }
 }

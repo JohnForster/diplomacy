@@ -1,6 +1,5 @@
 import {Component, h} from 'preact'
 import './territory.scss'
-import Tank from '../unit/tank/tank'
 // Move tile type into shared types folder?
 export interface ITerritoryProps {
   tile: {
@@ -43,18 +42,8 @@ export default class Territory extends Component <ITerritoryProps, ITerritorySta
                 rotate(${props.tile.textLocation.rotate || '0'})
               `}
             >
-
-
               <text>{props.tile.name.split('\n').map(line => <tspan  x='0' text-anchor='middle' dy='10px'>{line}</tspan>)}</text>
             </g>
-          }
-          {props.tile.textLocation &&
-            <Tank
-              viewBox={props.viewBox}
-              location={`${parseInt(props.tile.textLocation.x, 10) - 10} ${parseInt(props.tile.textLocation.y, 10) - 18}`}
-              empire='England'
-              colour='e10'
-            />
           }
         </g>
       </svg>
