@@ -11,7 +11,7 @@ export interface IBoardTerritory {
   }
 }
 
-export default interface IGameBoard {
+export interface IGameBoard {
   mapTitle: string
   viewBox: string
   territories: IBoardTerritory[]

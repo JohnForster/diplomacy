@@ -1,10 +1,12 @@
-import IGameBoard, { IBoardTerritory } from '@shared/types/IGameBoard'
-import {Component, Fragment, h} from 'preact'
-import './board.scss'
+import {Component, h} from 'preact'
+
+import { IBoardTerritory, IGameBoard, IGameTurnJSON, IMove } from '@shared/types'
+
 import Territory from './territory/territory'
-import { IGameTurnJSON } from '@shared/types'
-import Army from './unit/army/army'
 import Unit from './unit/unit'
+
+import './board.scss'
+import Order from './order/order'
 
 // ? Recieve boardData as props or import?
 // ? Import is simpler, prop;s allows for extending in the future.
@@ -13,6 +15,7 @@ export interface IBoardProps {
   turnData: IGameTurnJSON,
   activeTerritory: string,
   onTileSelect: (title: string) => () => void,
+  newOrders: IMove[]
 }
 
 interface IBoardState {
@@ -66,7 +69,13 @@ export default class Board extends Component <IBoardProps, IBoardState> {
           ))
         ))}
         {/* Draw Orders */}
+          {props.turnData && props.turnData.info.isComplete && props.turnData.players.map(player => (
+            player.moves.map(order => <Order {...order} boardData={props.boardData}/>)
+          ))}
 
+          {props.newOrders && props.newOrders.map(order => (
+            <Order {...order} boardData={props.boardData} />
+          )) }
       </div>
     )
   }

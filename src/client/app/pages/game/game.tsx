@@ -54,6 +54,7 @@ export default class Game extends Component <IGameProps, IGameState> {
             activeTerritory={state.activeTerritory}
             onTileSelect={this.onTileSelect}
             turnData={state.turn}
+            newOrders={state.newOrders}
           />
         </div>
       </div>
@@ -62,28 +63,32 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   onTileSelect = (territoryName: string) => {
     return () => {
-      if (this.state.newOrder){
-        const newOrder: IMove = {
-          unit: this.state.newOrder.unit,
-          from: this.state.newOrder.from,
-          moveType: 'move',
-          to: territoryName,
-          wasSuccessful: null,
-          supportFrom: null,
-        }
-        const newOrders = [...this.state.newOrders]
-        newOrders.push(newOrder)
-        this.setState({newOrders})
-      }
-      if (!this.state.newOrder && this.playerHasUnitAt(territoryName)) {
-        const unit = this.getUnitAt(territoryName)
-        const newOrder: Partial<IMove> = {
-          unit: unit.unitType,
-          from: unit.location,
-        }
-        this.setState({newOrder})
-      }
+      if (this.state.newOrder) this.completeMove(territoryName)
+      if (!this.state.newOrder && this.playerHasUnitAt(territoryName)) this.beginMove(territoryName)
     }
+  }
+
+  private beginMove(territoryName: string) {
+    const unit = this.getUnitAt(territoryName);
+    const newOrder: Partial<IMove> = {
+      unit: unit.unitType,
+      from: unit.location,
+  }
+    this.setState({ newOrder });
+  }
+
+  private completeMove(territoryName: string) {
+    const newOrder: IMove = {
+      unit: this.state.newOrder.unit,
+      from: this.state.newOrder.from,
+      moveType: 'move',
+      to: territoryName,
+      wasSuccessful: null,
+      supportFrom: null,
+    };
+    const newOrders = this.state.newOrders.filter(o => o.from !== newOrder.from)
+    newOrders.push(newOrder)
+    this.setState({ newOrders, newOrder: null })
   }
 
   get player() {
@@ -130,7 +135,7 @@ export default class Game extends Component <IGameProps, IGameState> {
       moves: this.state.newOrders,
       turnID: this.state.game.currentTurn,
     })
-    console.log('Orders submitted!')
+    console.log('Orders submitted!', this.state.newOrders)
   }
 
   private nextTurn = async () => {
