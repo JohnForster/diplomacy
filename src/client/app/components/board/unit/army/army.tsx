@@ -22,7 +22,7 @@ export default class Army extends Component<IArmyProps, IArmyState> {
 
     return (
       <svg viewBox={props.viewBox} xmlns='http://www.w3.org/2000/svg'  id='armySvg' class='armySquare'>
-        <g transform={`translate(${props.location.x - 15} ${props.location.y - 18}) scale(0.055)`}>
+        <g transform={`translate(${props.location.x - 15} ${props.location.y - 20}) scale(0.055)`}>
           <g>
             {/* <!-- Wheels --> */}
             <path style='fill:#999999;' d='M145.687,374.175c0-13.504-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455

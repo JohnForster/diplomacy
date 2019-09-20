@@ -19,6 +19,7 @@ export interface ITerritoryProps {
   isSelected: boolean
   viewBox: string
   onSelect: () => void
+  colour: string
 }
 
 interface ITerritoryState {
@@ -32,9 +33,9 @@ export default class Territory extends Component <ITerritoryProps, ITerritorySta
 
   public render(props: ITerritoryProps, state: ITerritoryState) {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox={props.viewBox} className='territorySquare' width='100%'>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox={props.viewBox} className={`territorySquare `} width='100%'>
         <g title={props.tile.title} class={props.tile.tileType}>
-          <path class={props.tile.id} d={props.tile.path} onClick={props.onSelect}/>
+          <path class={`${props.tile.id} ${props.colour}-light`} d={props.tile.path} onClick={props.onSelect}/>
           {props.tile.textLocation &&
             <g
               transform={`

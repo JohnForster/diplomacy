@@ -63,3 +63,5 @@ NEXT:
   add front end capability to load a specific game by id
 
   SORT OUT FRONT END TYPES
+
+  Refactor api messages to give arrays.

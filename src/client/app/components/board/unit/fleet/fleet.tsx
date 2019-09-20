@@ -22,7 +22,7 @@ export default class Fleet extends Component<IFleetProps, IFleetState> {
 
     return (
       <svg viewBox={props.viewBox} xmlns='http://www.w3.org/2000/svg'  id='fleetSvg' class='fleetSquare'>
-        <g transform={`translate(${props.location.x - 15} ${props.location.y - 18}) scale(0.05)`}>
+        <g transform={`translate(${props.location.x - 15} ${props.location.y - 20}) scale(0.05)`}>
           <path class={colours.light} d='M128.904,85.83v64.869H97.813c-9.197,0-16.655-7.458-16.655-16.655v-31.559
             c0-9.197,7.458-16.655,16.655-16.655H128.904z'/>
           <path class={colours.light} d='M176.638,102.485v31.559c0,9.197-7.458,16.655-16.655,16.655h-31.079V85.83h31.079

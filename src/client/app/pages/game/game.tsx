@@ -4,9 +4,9 @@ import {Component, h} from 'preact'
 
 import Board from '@client/app/components/board/board';
 import boardData from '@client/assets/countryData'
-import game from '@client/engine/game'
-import { IGameJSON , IGameTurnJSON} from '@shared/types'
-import setupNewFullGame from '../../../devTools/setupGame'
+import setupNewFullGame from '@client/devTools/setupGame'
+import validateMove from '@shared/helpers/validateMove';
+import { IGameJSON , IGameTurnJSON, IMove, IUnit} from '@shared/types'
 
 import './game.scss'
 
@@ -16,9 +16,11 @@ export interface IGameProps {
 }
 
 interface IGameState {
-  game?: IGameJSON,
-  turn?: IGameTurnJSON,
-  gameIsRunning: boolean,
+  game?: IGameJSON
+  turn?: IGameTurnJSON
+  newOrders: IMove[]
+  newOrder: Partial<IMove>
+  gameIsRunning: boolean
   activeTerritory: string
 }
 
@@ -27,6 +29,8 @@ export default class Game extends Component <IGameProps, IGameState> {
     gameIsRunning: false,
     activeTerritory: null,
     turn: null,
+    newOrders: [],
+    newOrder: null,
   }
 
   render(props: IGameProps, state: IGameState) {
@@ -40,8 +44,8 @@ export default class Game extends Component <IGameProps, IGameState> {
           <button onClick={this.nextTurn}>Next Turn</button><br/>
         </div><br/>
         <div>
-          <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'/>
-          <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'/>
+          {/* <object id='army' type='image/svg+xml' data='assets/svg/001-tank-1.svg' width='0'/> */}
+          {/* <object id='fleet' type='image/svg+xml' data='assets/svg/002-cruiser.svg' width='0'/> */}
           {/* <object id='map' type='image/svg+xml' data='assets/Diplomacy.svg' class='overlay'>Diplomacy map should be here</object> */}
           {/* ? Active territory here or in board? */}
           {/* Can extend in future to have a "showText" boolean for board previews? */}
@@ -58,33 +62,72 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   onTileSelect = (territoryName: string) => {
     return () => {
-      this.setState({activeTerritory: territoryName})
+      if (this.state.newOrder){
+        const newOrder: IMove = {
+          unit: this.state.newOrder.unit,
+          from: this.state.newOrder.from,
+          moveType: 'move',
+          to: territoryName,
+          wasSuccessful: null,
+          supportFrom: null,
+        }
+        const newOrders = [...this.state.newOrders]
+        newOrders.push(newOrder)
+        this.setState({newOrders})
+      }
+      if (!this.state.newOrder && this.playerHasUnitAt(territoryName)) {
+        const unit = this.getUnitAt(territoryName)
+        const newOrder: Partial<IMove> = {
+          unit: unit.unitType,
+          from: unit.location,
+        }
+        this.setState({newOrder})
+      }
     }
+  }
+
+  get player() {
+    if (!this.state.turn) return null
+    return this.state.turn.players.find(p => p.playerID === this.props.userID)
+  }
+
+  private playerHasUnitAt = (territoryName: string): boolean => {
+    if (!this.state.turn) return false
+    const player = this.state.turn.players.find(p => p.playerID === this.props.userID)
+    return !!player.ownedUnits.find(u => u.location === territoryName)
+  }
+
+  private getUnitAt = (territoryName: string): IUnit => {
+    let unit
+    this.state.turn.players.forEach(p => {
+      p.ownedUnits.forEach(u => {
+        if (u.location === territoryName) unit = u
+      })
+    })
+    return unit
   }
 
   // ? Move axios requests into a helper service?
   private setupGame = async () => {
     const {data: game} = await setupNewFullGame()
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
-    this.setState({game, turn}, () => {
-      this.runGame()
-    })
+    this.setState({game, turn})
   }
 
   private getLatestGame = async () => {
     const {data: game} = await Axios.get('/api/game/latest')
     const {data: turn} = await Axios.get(`/api/turn/${game.currentTurn}`)
-    this.setState({game, turn}, this.refresh)
+    this.setState({game, turn})
   }
 
-  private refresh = () => {
-    game.clearMap()
-    this.runGame()
-  }
+  // private refresh = () => {
+  //   game.clearMap()
+  //   this.runGame()
+  // }
 
   private submitOrders = async () => {
     await Axios.patch(`/api/turn/${this.state.game.currentTurn}`, {
-      moves: game.orders.map((order) => order.toObject()),
+      moves: this.state.newOrders,
       turnID: this.state.game.currentTurn,
     })
     console.log('Orders submitted!')
@@ -96,15 +139,15 @@ export default class Game extends Component <IGameProps, IGameState> {
     if (res) this.getLatestGame()
   }
 
-  private getSvg = (label: string) => {
-    const svgObject = document.getElementById(label) as HTMLObjectElement
-    return svgObject.contentDocument.getElementById(`${label}Svg`)
-  }
+  // private getSvg = (label: string) => {
+  //   const svgObject = document.getElementById(label) as HTMLObjectElement
+  //   return svgObject.contentDocument.getElementById(`${label}Svg`)
+  // }
 
-  private runGame() {
-    const [army, fleet] = ['army', 'fleet'].map(this.getSvg)
-    const map = document.getElementById('gameBoard') as HTMLObjectElement
-    game.setup({map, army, fleet}, this.state.turn, this.props.userID)
-    game.run()
-  }
+  // private runGame() {
+  //   const [army, fleet] = ['army', 'fleet'].map(this.getSvg)
+  //   const map = document.getElementById('gameBoard') as HTMLObjectElement
+  //   game.setup({map, army, fleet}, this.state.turn, this.props.userID)
+  //   game.run()
+  // }
 }
