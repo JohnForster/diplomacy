@@ -14,8 +14,7 @@ interface IOrderState {
 
 export default class Order extends Component <IOrderProps, IOrderState> {
   getLocation = (property: 'from' | 'to' | 'supportFrom'): string => {
-    const territory = this.props.boardData.territories.find(t => t.name === this.props[property])
-    console.log(territory, property)
+    const territory = this.props.boardData.territories.find(t => t.title === this.props[property])
     return `${territory.textLocation.x},${territory.textLocation.y}`
   }
 

@@ -75,12 +75,12 @@ turnSchema.methods.getMoves = function(playerID: any): IMove[] {
   return player.moves
 }
 
-turnSchema.methods.addMovesd = function(playerID: Types.ObjectId, moves: IMove[]): void {
+turnSchema.methods.addMoves = function(playerID: Types.ObjectId, moves: IMove[]): void {
   if (!moves.every((move) => {
     return validateMove(toJSON(this), move, playerID.toString())
   })) {
     console.error('Submitted move is not valid!')
-    console.error(moves)
+    console.error(moves.filter(move => !validateMove(toJSON(this), move, playerID.toString())))
     return
   }
 

@@ -42,8 +42,9 @@ export default class Board extends Component <IBoardProps, IBoardState> {
     return player.colour
   }
 
-  render(props: IBoardProps, state: IBoardState) {
+  render(props: IBoardProps, state: IBoardState) { 
 
+    console.log('Turn Data:', props.turnData)
     return (
       <div className='gameBoard' id='gameBoard'>
         {/* Draw Territories */}
@@ -69,7 +70,7 @@ export default class Board extends Component <IBoardProps, IBoardState> {
           ))
         ))}
         {/* Draw Orders */}
-          {props.turnData && props.turnData.info.isComplete && props.turnData.players.map(player => (
+          {props.turnData && props.turnData.players.map(player => (
             player.moves.map(order => <Order {...order} boardData={props.boardData}/>)
           ))}
 

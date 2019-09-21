@@ -20,6 +20,7 @@ class TurnController {
 
   static async update(req: Request, res: Response) {
     // TODO Need some error handling/checking that user is part of this turnID
+    console.log('req.body.moves:', req.body.moves)
     TurnService.addMove(req.body.turnID, String(req.session.passport.user), ...req.body.moves)
     res.send('success')
   }

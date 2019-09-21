@@ -1,10 +1,10 @@
-import {Component, h} from 'preact'
-import {lazy, Suspense} from 'preact/compat'
-import Router, { route, RouterOnChangeArgs } from 'preact-router'
-
 import Axios from 'axios'
-import checkAuthentication from './_helpers/checkAuthentication'
+import {Component, h} from 'preact'
+import Router, { route, RouterOnChangeArgs } from 'preact-router'
+import {lazy, Suspense} from 'preact/compat'
 
+
+import checkAuthentication from './_helpers/checkAuthentication'
 import './app.scss'
 import './variables/colors.scss'
 
@@ -45,9 +45,7 @@ export default class App extends Component <IAppProps, IAppState> {
     const authID = await checkAuthentication()
     console.log(`authID: ${authID}`)
     if (authID) {
-      this.setState({
-        userID: authID,
-      })
+      this.setState({userID: authID})
       return true
     }
     return false

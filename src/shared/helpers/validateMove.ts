@@ -2,7 +2,7 @@ import { IGameTurnJSON, IMove } from '@shared/types'
 import areAdjacent from './areAdjacent'
 
 const phases: {[key: string]: string[]} = {
-  movement: ['Move', 'support', 'hold'],
+  movement: ['move', 'support', 'hold'],
   retreat: ['retreat'],
   build: ['build', 'disband'],
 }
@@ -34,15 +34,16 @@ const validateMove = (turn: IGameTurnJSON, move: IMove, playerID: string): boole
   // Check if the movement type is appropriate for the phase
   const possibleMoves = phases[turn.info.phase] || []
   if (!possibleMoves.includes(move.moveType)) {
-    console.log('not included', move.moveType)
-    console.log(`turn.info.phase: ${turn.info.phase}`)
+    console.error('Incorrect moveType provided:', move.moveType)
+    console.error('Must be one of:', possibleMoves)
+    console.error(`Phase: ${turn.info.phase}`)
     return false
   }
 
   const isAdjacentToDestination = areAdjacent(move.unit)(move.to)
 
   switch (move.moveType) {
-    case 'Move':
+    case 'move':
       // Check that destination is adjacent
       if (!isAdjacentToDestination(move.from)) {
         console.log('is not adjacent')
