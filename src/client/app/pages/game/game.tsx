@@ -6,7 +6,7 @@ import Board from '@client/app/components/board/board';
 import boardData from '@client/assets/countryData'
 import setupNewFullGame from '@client/devTools/setupGame'
 import validateMove from '@shared/helpers/validateMove';
-import { IGameJSON , IGameTurnJSON, IMove, IUnit} from '@shared/types'
+import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
 
 import './game.scss'
 
@@ -36,6 +36,7 @@ export default class Game extends Component <IGameProps, IGameState> {
   render(props: IGameProps, state: IGameState) {
     return (
       <div className='page'>
+        <h1>Stop being a perfectionist!</h1>
         <div className='buttonsContainer' >
           <button onClick={this.setupGame}>Set Up Game</button>
           <button onClick={this.getLatestGame}>Load Game</button>
@@ -53,6 +54,7 @@ export default class Game extends Component <IGameProps, IGameState> {
             boardData={boardData}
             activeTerritory={state.activeTerritory}
             onTileSelect={this.onTileSelect}
+            onMoveSelect={this.onMoveSelect}
             turnData={state.turn}
             newOrders={state.newOrders}
           />
@@ -63,32 +65,51 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   onTileSelect = (territoryName: string) => {
     return () => {
-      if (this.state.newOrder) this.completeMove(territoryName)
+      if (this.state.newOrder && this.state.newOrder.moveType) {
+        const order = {...this.state.newOrder}
+        if (order.moveType === 'support') {
+          if (order.supportFrom) return this.completeMove(territoryName)
+          order.supportFrom = territoryName
+          this.setState({newOrder: order})
+        }
+        if (order.moveType === 'move') this.completeMove(territoryName)
+      }
       if (!this.state.newOrder && this.playerHasUnitAt(territoryName)) this.beginMove(territoryName)
     }
   }
 
+  onMoveSelect = (orderType: OrderType) => () => {
+    if (orderType === null) return this.setState({newOrder: null, activeTerritory: null})
+    const newOrder = {...this.state.newOrder}
+    newOrder.moveType = orderType
+
+    this.setState({newOrder}, () => {
+      if (orderType === 'hold') this.completeMove(newOrder.from)
+    })
+  }
+
   private beginMove(territoryName: string) {
-    const unit = this.getUnitAt(territoryName);
+    const unit = this.getUnitAt(territoryName)
     const newOrder: Partial<IMove> = {
       unit: unit.unitType,
       from: unit.location,
-  }
-    this.setState({ newOrder });
+    }
+    this.setState({ newOrder, activeTerritory: territoryName })
   }
 
   private completeMove(territoryName: string) {
     const newOrder: IMove = {
       unit: this.state.newOrder.unit,
       from: this.state.newOrder.from,
-      moveType: 'move',
+      moveType: this.state.newOrder.moveType,
+      supportFrom: this.state.newOrder.supportFrom,
       to: territoryName,
       wasSuccessful: null,
-      supportFrom: null,
-    };
+    }
     const newOrders = this.state.newOrders.filter(o => o.from !== newOrder.from)
     newOrders.push(newOrder)
-    this.setState({ newOrders, newOrder: null })
+    console.log('newOrder:', newOrder)
+    this.setState({ newOrders, newOrder: null, activeTerritory: null })
   }
 
   get player() {

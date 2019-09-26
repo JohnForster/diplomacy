@@ -1,6 +1,6 @@
 import {Component, h} from 'preact'
 
-import { IBoardTerritory, IGameBoard, IGameTurnJSON, IMove } from '@shared/types'
+import { IBoardTerritory, IGameBoard, IGameTurnJSON, IMove, OrderType } from '@shared/types'
 
 import Territory from './territory/territory'
 import Unit from './unit/unit'
@@ -15,11 +15,12 @@ export interface IBoardProps {
   turnData: IGameTurnJSON,
   activeTerritory: string,
   onTileSelect: (title: string) => () => void,
+  onMoveSelect: (move: OrderType) => () => void,
   newOrders: IMove[]
 }
 
 interface IBoardState {
-  activeTerritory: string
+
 }
 
 export default class Board extends Component <IBoardProps, IBoardState> {
@@ -43,8 +44,6 @@ export default class Board extends Component <IBoardProps, IBoardState> {
   }
 
   render(props: IBoardProps, state: IBoardState) { 
-
-    console.log('Turn Data:', props.turnData)
     return (
       <div className='gameBoard' id='gameBoard'>
         {/* Draw Territories */}
@@ -53,6 +52,7 @@ export default class Board extends Component <IBoardProps, IBoardState> {
             tile={tile}
             isSelected={tile.title === props.activeTerritory}
             onSelect={props.onTileSelect(tile.title)}
+            onMoveSelect={props.onMoveSelect}
             viewBox={props.boardData.viewBox}
             colour={this.getColour(tile.title)}
           />
