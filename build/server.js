@@ -35,6 +35,8 @@ var _config = _interopRequireDefault(require("./config"));
 
 var isDev = process.env.NODE_ENV !== 'production'; // Connect to mongoDB
 
+console.log(_config["default"].MONGO_URI);
+
 _mongoose["default"].connect(_config["default"].MONGO_URI, {
   useNewUrlParser: true
 });

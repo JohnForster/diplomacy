@@ -32,7 +32,6 @@ const app = express()
 const MongoDBStore = mongoDBStoreConstructor(session)
 const mongoDBStore = new MongoDBStore({
   uri: config.MONGO_URI,
-  databaseName: 'diplomacy',
   collection: 'userSessions',
 }, console.log)
 
