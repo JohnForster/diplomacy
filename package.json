@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build:server && yarn build:client",
-    "build:server": "babel src -d build --extensions .ts --ignore src/client",
+    "build:server": "yarn babel src -d build --extensions .ts --ignore src/client",
     "build:client": "cd ./src/client && yarn build",
     "start": "node build/server.js"
   },
