@@ -18,6 +18,7 @@ import config from './config'
 const isDev = process.env.NODE_ENV !== 'production'
 
 // Connect to mongoDB
+console.log(config.MONGO_URI)
 mongoose.connect(config.MONGO_URI, {useNewUrlParser: true})
 mongoose.connection.on('error', (err) => {
   console.log('Something went wrong connecting to mongoDB!')
