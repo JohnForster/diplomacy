@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn build:server && yarn build:client",
     "build:server": "yarn babel src -d build --extensions .ts --ignore src/client",
-    "build:client": "cd ./src/client && yarn build",
+    "build:client": "cd ./src/client && yarn && yarn build",
     "start": "node build/server.js"
   },
   "dependencies": {
