@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "esModuleInterop": true,
+  },
+  "include":[
+    "./**/*"
+  ]
+}

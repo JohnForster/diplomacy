@@ -2,10 +2,9 @@ import to from 'await-to-js'
 import Axios from 'axios'
 import {Component, h} from 'preact'
 
-import Board from '@client/app/components/board/board';
+import Board from '@client/src/app/components/board/board';
 import boardData from '@client/assets/countryData'
-import setupNewFullGame from '@client/devTools/setupGame'
-import validateMove from '@shared/helpers/validateMove';
+import setupNewFullGame from '@client/src/devTools/setupGame'
 import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
 
 import './game.scss'
