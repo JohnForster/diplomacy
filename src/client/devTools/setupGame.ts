@@ -6,7 +6,7 @@ import shuffle from 'lodash.shuffle'
 const setupNewFullGame = async () => {
   console.log('Creating a new game...')
   const [err, res] = await to(Axios.post('/api/game'))
-  if (err) return err
+  if (err) return Promise.reject(err)
 
   const game = res.data
   const numbers = shuffle(range(1, 25)).map((x) => x.toString().padStart(2, '0'))
