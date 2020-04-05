@@ -24,7 +24,7 @@
     "lodash.clone": "^4.5.0",
     "lodash.range": "^3.2.0",
     "lodash.shuffle": "^4.2.0",
-    "mongoose": "^5.5.4",
+    "mongoose": "^5.7.5",
     "mongoose-unique-validator": "^2.0.3",
     "nodemon-webpack-plugin": "^4.0.8",
     "passport": "^0.4.0",
