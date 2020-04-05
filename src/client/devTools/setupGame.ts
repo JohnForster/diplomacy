@@ -20,7 +20,7 @@ const setupNewFullGame = async () => {
     Axios.post('/api/game/join', {gameID: game.id, playerID: '5ce28cd263ca37c488983f96', colour: 'e' + numbers.pop()}),
   ])
   await Axios.post(`/api/game/${game.id}/start`)
-  return await Axios.get(`/api/game/${game.id}`)
+  return Axios.get(`/api/game/${game.id}`)
 }
 
 export default setupNewFullGame

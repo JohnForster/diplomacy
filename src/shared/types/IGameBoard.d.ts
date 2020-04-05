@@ -5,9 +5,9 @@ export interface IBoardTerritory {
   id: string
   path: string
   textLocation?: {
-    x: string,
-    y: string,
-    rotate?: string,
+    x: number,
+    y: number,
+    rotate?: number,
   }
 }
 

@@ -72,6 +72,7 @@ app.get('*', (req: Request, res: Response) => {
 
 app.listen(config.LISTEN_PORT, () => {
   console.log(`App listening to ${config.LISTEN_PORT}...`)
+  console.log(`App available at http://localhost:${config.LISTEN_PORT}`)
   console.log('Press Ctrl+C to quit.')
 })
 
