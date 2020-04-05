@@ -16,7 +16,6 @@
     "connect-mongodb-session": "^2.3.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "jfdiplomacy-shared": "../shared",
     "lodash.shuffle": "^4.2.0",
     "module-alias": "^2.2.2",
     "mongoose": "^5.9.7",
