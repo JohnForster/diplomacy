@@ -1,0 +1,205 @@
+@import '@client/src/app/variables/colors.scss';
+
+.territorySquare {
+  width: 100%;
+  pointer-events: none
+}
+
+.l, .Unowned {
+  pointer-events: all;
+  fill: #FFFFDD;
+  stroke: #444444;
+  stroke-linejoin: round;
+  fill-opacity: 0.2;
+  stroke-width: 0.5;
+}
+
+.w {
+  pointer-events: all;
+  fill: #99CCFF;
+  stroke: #444444;
+  stroke-linejoin: round;
+  fill-opacity: 0.45;
+  stroke-width: 0.5;
+}
+
+.w:hover {
+  fill: #AADDFF
+}
+
+.l:hover {
+  fill-opacity: 0.4
+}
+
+.s {
+  fill: url(#diagonalHatch);
+  stroke: #220;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+.sc {
+  fill: #DDDDDD;
+  stroke: black;
+}
+
+#A, #F, #sc {
+  pointer-events: none;
+  stroke: black;
+}
+
+text {
+  font-family: Palatino;
+  fill: #222;
+  font-size: 9px;
+  transform: translate(0, 8px);
+  pointer-events: none;
+}
+
+.orderTitle {
+  font-weight: bold
+}
+
+.empire1  {fill: #FFFF88;}
+.empire2  {fill: #FFFF00;}
+.empire3  {fill: #FF88FF;}
+.empire4  {fill: #FF8888;}
+.empire5  {fill: #FF8800;}
+.empire6  {fill: #FF00FF;}
+.empire7  {fill: #FF0088;}
+.empire8  {fill: #FF0000;}
+.empire9  {fill: #88FFFF;}
+.empire10 {fill: #88FF88;}
+.empire11 {fill: #88FF00;}
+.empire12 {fill: #8888FF;}
+.empire13 {fill: #888888;}
+.empire14 {fill: #888800;}
+.empire15 {fill: #8800FF;}
+.empire16 {fill: #880088;}
+.empire17 {fill: #880000;}
+.empire18 {fill: #00FFFF;}
+.empire19 {fill: #00FF88;}
+.empire20 {fill: #00FF00;}
+.empire21 {fill: #0088FF;}
+.empire22 {fill: #008888;}
+.empire23 {fill: #008800;}
+.empire24 {fill: #0000FF;}
+.empire25 {fill: #000088;}
+
+.success { stroke: #1C1 }
+.bounce { stroke: #D50 }
+.move { stroke: #000 }
+
+/* .light {fill:#06B559;}
+.medium{fill:#0B9B53;}
+.shadow{fill:#088443;} */
+
+svg text {
+	-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+					user-select: none;
+}
+svg text::selection {
+	background: none;
+}
+
+.e01-light  {fill: #00007f}
+.e01-medium {fill: #000065}
+.e01-shadow {fill: #00004c}
+
+.e02-light  {fill: #0000ff}
+.e02-medium {fill: #0000cc}
+.e02-shadow {fill: #000099}
+
+.e03-light  {fill: #007f00}
+.e03-medium {fill: #006500}
+.e03-shadow {fill: #004c00}
+
+.e04-light  {fill: #007f7f}
+.e04-medium {fill: #006565}
+.e04-shadow {fill: #004c4c}
+
+.e05-light  {fill: #007fff}
+.e05-medium {fill: #0065cc}
+.e05-shadow {fill: #004c99}
+
+.e06-light  {fill: #00ff00}
+.e06-medium {fill: #00cc00}
+.e06-shadow {fill: #009900}
+
+.e07-light  {fill: #00ff7f}
+.e07-medium {fill: #00cc65}
+.e07-shadow {fill: #00994c}
+
+.e08-light  {fill: #00ffff}
+.e08-medium {fill: #00cccc}
+.e08-shadow {fill: #009999}
+
+.e09-light  {fill: #7f0000}
+.e09-medium {fill: #650000}
+.e09-shadow {fill: #4c0000}
+
+.e10-light  {fill: #7f007f}
+.e10-medium {fill: #650065}
+.e10-shadow {fill: #4c004c}
+
+.e11-light  {fill: #7f00ff}
+.e11-medium {fill: #6500cc}
+.e11-shadow {fill: #4c0099}
+
+.e12-light  {fill: #7f7f00}
+.e12-medium {fill: #656500}
+.e12-shadow {fill: #4c4c00}
+
+.e13-light  {fill: #7f7f7f}
+.e13-medium {fill: #656565}
+.e13-shadow {fill: #4c4c4c}
+
+.e14-light  {fill: #7f7fff}
+.e14-medium {fill: #6565cc}
+.e14-shadow {fill: #4c4c99}
+
+.e15-light  {fill: #7fff00}
+.e15-medium {fill: #65cc00}
+.e15-shadow {fill: #4c9900}
+
+.e16-light  {fill: #7fff7f}
+.e16-medium {fill: #65cc65}
+.e16-shadow {fill: #4c994c}
+
+.e17-light  {fill: #7fffff}
+.e17-medium {fill: #65cccc}
+.e17-shadow {fill: #4c9999}
+
+.e18-light  {fill: #ff0000}
+.e18-medium {fill: #cc0000}
+.e18-shadow {fill: #990000}
+
+.e19-light  {fill: #ff007f}
+.e19-medium {fill: #cc0065}
+.e19-shadow {fill: #99004c}
+
+.e20-light  {fill: #ff00ff}
+.e20-medium {fill: #cc00cc}
+.e20-shadow {fill: #990099}
+
+.e21-light  {fill: #ff7f00}
+.e21-medium {fill: #cc6500}
+.e21-shadow {fill: #994c00}
+
+.e22-light  {fill: #ff7f7f}
+.e22-medium {fill: #cc6565}
+.e22-shadow {fill: #994c4c}
+
+.e23-light  {fill: #ff7fff}
+.e23-medium {fill: #cc65cc}
+.e23-shadow {fill: #994c99}
+
+.e24-light  {fill: #ffff00}
+.e24-medium {fill: #cccc00}
+.e24-shadow {fill: #999900}
+
+.e25-light  {fill: #ffff7f}
+.e25-medium {fill: #cccc65}
+.e25-shadow {fill: #99994c}

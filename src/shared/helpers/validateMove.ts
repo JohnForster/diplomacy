@@ -1,4 +1,4 @@
-import { IGameTurnJSON, IMove } from '@shared/types'
+import { IGameTurnJSON, IMove } from '../types'
 import areAdjacent from './areAdjacent'
 
 const phases: {[key: string]: string[]} = {
