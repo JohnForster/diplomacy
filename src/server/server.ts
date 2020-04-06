@@ -30,7 +30,7 @@ const startServer = () => {
   const MongoDBStore = mongoDBStoreConstructor(session)
   const mongoDBStore = new MongoDBStore({
     uri: config.MONGO_URI,
-    databaseName: 'diplomacy',
+    // databaseName: 'diplomacy',
     collection: 'userSessions',
   }, console.log)
 

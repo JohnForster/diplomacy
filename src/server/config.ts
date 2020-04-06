@@ -6,5 +6,5 @@ export default {
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'secret',
 
   // 3. Express Server Port
-  LISTEN_PORT: process.env.LISTEN_PORT || 8080,
+  LISTEN_PORT: process.env.PORT || 8080,
 }
