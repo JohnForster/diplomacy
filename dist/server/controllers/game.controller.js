@@ -1,178 +1,333 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _checkAuthentication = _interopRequireDefault(require("../_helpers/checkAuthentication"));
+
+var _game = _interopRequireDefault(require("../services/game.service"));
+
+var _awaitToJs = _interopRequireDefault(require("await-to-js"));
+
+var _express = _interopRequireDefault(require("express"));
+
+var GameController = /*#__PURE__*/function () {
+  function GameController() {
+    (0, _classCallCheck2["default"])(this, GameController);
+  }
+
+  (0, _createClass2["default"])(GameController, null, [{
+    key: "view",
+    value: function () {
+      var _view = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
+        var _yield$to, _yield$to2, err, game;
+
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return (0, _awaitToJs["default"])(_game["default"].getById(req.params.game_id));
+
+              case 2:
+                _yield$to = _context.sent;
+                _yield$to2 = (0, _slicedToArray2["default"])(_yield$to, 2);
+                err = _yield$to2[0];
+                game = _yield$to2[1];
+
+                if (!err) {
+                  _context.next = 8;
+                  break;
+                }
+
+                return _context.abrupt("return", res.status(400).send(err));
+
+              case 8:
+                if (!game) {
+                  _context.next = 10;
+                  break;
+                }
+
+                return _context.abrupt("return", res.json(game));
+
+              case 10:
+                return _context.abrupt("return", res.status(500).send('Something went wrong in fetching game data'));
+
+              case 11:
+              case "end":
+                return _context.stop();
             }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-exports.__esModule = true;
-var checkAuthentication_1 = __importDefault(require("@server/_helpers/checkAuthentication"));
-var game_service_1 = __importDefault(require("@server/services/game.service"));
-var await_to_js_1 = __importDefault(require("await-to-js"));
-var express_1 = __importDefault(require("express"));
-var GameController = /** @class */ (function () {
-    function GameController() {
-    }
-    GameController.view = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, err, game;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, await_to_js_1["default"](game_service_1["default"].getById(req.params.game_id))];
-                    case 1:
-                        _a = _b.sent(), err = _a[0], game = _a[1];
-                        if (err)
-                            return [2 /*return*/, res.status(400).send(err)];
-                        if (game)
-                            return [2 /*return*/, res.json(game)];
-                        return [2 /*return*/, res.status(500).send('Something went wrong in fetching game data')];
+          }
+        }, _callee);
+      }));
+
+      function view(_x, _x2) {
+        return _view.apply(this, arguments);
+      }
+
+      return view;
+    }()
+  }, {
+    key: "viewLatest",
+    value: function () {
+      var _viewLatest = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res) {
+        var _yield$to3, _yield$to4, err, game;
+
+        return _regenerator["default"].wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return (0, _awaitToJs["default"])(_game["default"].getLatest());
+
+              case 2:
+                _yield$to3 = _context2.sent;
+                _yield$to4 = (0, _slicedToArray2["default"])(_yield$to3, 2);
+                err = _yield$to4[0];
+                game = _yield$to4[1];
+
+                if (!err) {
+                  _context2.next = 8;
+                  break;
                 }
-            });
-        });
-    };
-    GameController.viewLatest = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, err, game;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, await_to_js_1["default"](game_service_1["default"].getLatest())];
-                    case 1:
-                        _a = _b.sent(), err = _a[0], game = _a[1];
-                        if (err)
-                            return [2 /*return*/, res.status(400).send(err.message)];
-                        if (game)
-                            return [2 /*return*/, res.json(game)];
-                        return [2 /*return*/, res.status(500).send('Something went wrong in fetching the game')];
+
+                return _context2.abrupt("return", res.status(400).send(err.message));
+
+              case 8:
+                if (!game) {
+                  _context2.next = 10;
+                  break;
                 }
-            });
-        });
-    };
-    GameController.create = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var config, userID, _a, err, game;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        config = req.body.config;
-                        userID = req.session.passport.user;
-                        return [4 /*yield*/, await_to_js_1["default"](game_service_1["default"].create(config, userID))];
-                    case 1:
-                        _a = _b.sent(), err = _a[0], game = _a[1];
-                        if (err) {
-                            res.status(400).send(err);
-                        }
-                        if (game)
-                            res.json(game);
-                        return [2 /*return*/];
+
+                return _context2.abrupt("return", res.json(game));
+
+              case 10:
+                return _context2.abrupt("return", res.status(500).send('Something went wrong in fetching the game'));
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function viewLatest(_x3, _x4) {
+        return _viewLatest.apply(this, arguments);
+      }
+
+      return viewLatest;
+    }()
+  }, {
+    key: "create",
+    value: function () {
+      var _create = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res) {
+        var config, userID, _yield$to5, _yield$to6, err, game;
+
+        return _regenerator["default"].wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                config = req.body.config;
+                userID = req.session.passport.user;
+                _context3.next = 4;
+                return (0, _awaitToJs["default"])(_game["default"].create(config, userID));
+
+              case 4:
+                _yield$to5 = _context3.sent;
+                _yield$to6 = (0, _slicedToArray2["default"])(_yield$to5, 2);
+                err = _yield$to6[0];
+                game = _yield$to6[1];
+
+                if (err) {
+                  res.status(400).send(err);
                 }
-            });
-        });
-    };
-    GameController.join = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, gameID, playerID, colour, _b, err, game;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _a = req.body, gameID = _a.gameID, playerID = _a.playerID, colour = _a.colour;
-                        if (!(gameID && playerID))
-                            return [2 /*return*/, res.status(400).send('Require both gameID and playerID in request')];
-                        return [4 /*yield*/, await_to_js_1["default"](game_service_1["default"].joinGame(gameID, playerID, colour))];
-                    case 1:
-                        _b = _c.sent(), err = _b[0], game = _b[1];
-                        if (err)
-                            res.status(400).send(err);
-                        if (game)
-                            res.json(game);
-                        return [2 /*return*/];
+
+                if (game) res.json(game);
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function create(_x5, _x6) {
+        return _create.apply(this, arguments);
+      }
+
+      return create;
+    }()
+  }, {
+    key: "join",
+    value: function () {
+      var _join = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res) {
+        var _req$body, gameID, playerID, colour, _yield$to7, _yield$to8, err, game;
+
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _req$body = req.body, gameID = _req$body.gameID, playerID = _req$body.playerID, colour = _req$body.colour;
+
+                if (gameID && playerID) {
+                  _context4.next = 3;
+                  break;
                 }
-            });
-        });
-    };
-    GameController.start = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, err, game;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, await_to_js_1["default"](game_service_1["default"].start(req.params.game_id))];
-                    case 1:
-                        _a = _b.sent(), err = _a[0], game = _a[1];
-                        if (err)
-                            return [2 /*return*/, res.status(400).send(err)];
-                        if (game)
-                            return [2 /*return*/, res.send('Game Started!')];
-                        return [2 /*return*/];
+
+                return _context4.abrupt("return", res.status(400).send('Require both gameID and playerID in request'));
+
+              case 3:
+                _context4.next = 5;
+                return (0, _awaitToJs["default"])(_game["default"].joinGame(gameID, playerID, colour));
+
+              case 5:
+                _yield$to7 = _context4.sent;
+                _yield$to8 = (0, _slicedToArray2["default"])(_yield$to7, 2);
+                err = _yield$to8[0];
+                game = _yield$to8[1];
+                if (err) res.status(400).send(err);
+                if (game) res.json(game);
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function join(_x7, _x8) {
+        return _join.apply(this, arguments);
+      }
+
+      return join;
+    }()
+  }, {
+    key: "start",
+    value: function () {
+      var _start = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res) {
+        var _yield$to9, _yield$to10, err, game;
+
+        return _regenerator["default"].wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return (0, _awaitToJs["default"])(_game["default"].start(req.params.game_id));
+
+              case 2:
+                _yield$to9 = _context5.sent;
+                _yield$to10 = (0, _slicedToArray2["default"])(_yield$to9, 2);
+                err = _yield$to10[0];
+                game = _yield$to10[1];
+
+                if (!err) {
+                  _context5.next = 8;
+                  break;
                 }
-            });
-        });
-    };
-    GameController.nextTurn = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, err, game;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, await_to_js_1["default"](game_service_1["default"].processTurn(req.params.game_id))];
-                    case 1:
-                        _a = _b.sent(), err = _a[0], game = _a[1];
-                        console.log(err, game);
-                        if (err)
-                            return [2 /*return*/, res.status(400).send(err)];
-                        if (game)
-                            return [2 /*return*/, res.json(game)];
-                        return [2 /*return*/];
+
+                return _context5.abrupt("return", res.status(400).send(err));
+
+              case 8:
+                if (!game) {
+                  _context5.next = 10;
+                  break;
                 }
-            });
-        });
-    };
-    return GameController;
-}());
-// Move into API Routes file?
-var router = express_1["default"].Router();
-router.route('/')
-    .post(checkAuthentication_1["default"], GameController.create);
-router.route('/latest')
-    .get(checkAuthentication_1["default"], GameController.viewLatest);
-router.route('/:game_id')
-    .get(checkAuthentication_1["default"], GameController.view);
-router.route('/join')
-    .post(checkAuthentication_1["default"], GameController.join);
-router.route('/:game_id/start')
-    .post(checkAuthentication_1["default"], GameController.start);
-router.route('/:game_id/next')
-    .post(
-// method to check if in dev mode so that this can't be abused?
+
+                return _context5.abrupt("return", res.send('Game Started!'));
+
+              case 10:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function start(_x9, _x10) {
+        return _start.apply(this, arguments);
+      }
+
+      return start;
+    }()
+  }, {
+    key: "nextTurn",
+    value: function () {
+      var _nextTurn = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(req, res) {
+        var _yield$to11, _yield$to12, err, game;
+
+        return _regenerator["default"].wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return (0, _awaitToJs["default"])(_game["default"].processTurn(req.params.game_id));
+
+              case 2:
+                _yield$to11 = _context6.sent;
+                _yield$to12 = (0, _slicedToArray2["default"])(_yield$to11, 2);
+                err = _yield$to12[0];
+                game = _yield$to12[1];
+                console.log(err, game);
+
+                if (!err) {
+                  _context6.next = 9;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.status(400).send(err));
+
+              case 9:
+                if (!game) {
+                  _context6.next = 11;
+                  break;
+                }
+
+                return _context6.abrupt("return", res.json(game));
+
+              case 11:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function nextTurn(_x11, _x12) {
+        return _nextTurn.apply(this, arguments);
+      }
+
+      return nextTurn;
+    }()
+  }]);
+  return GameController;
+}(); // Move into API Routes file?
+
+
+var router = _express["default"].Router();
+
+router.route('/').post(_checkAuthentication["default"], GameController.create);
+router.route('/latest').get(_checkAuthentication["default"], GameController.viewLatest);
+router.route('/:game_id').get(_checkAuthentication["default"], GameController.view);
+router.route('/join').post(_checkAuthentication["default"], GameController.join);
+router.route('/:game_id/start').post(_checkAuthentication["default"], GameController.start);
+router.route('/:game_id/next').post( // method to check if in dev mode so that this can't be abused?
 GameController.nextTurn);
-exports["default"] = router;
+var _default = router;
+exports["default"] = _default;

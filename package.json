@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "NODE_ENV=production node dist/server.js",
+    "start": "NODE_ENV=production node dist/main.js",
     "lint": "tslint --project tsconfig.json",
     "build": "yarn buildClient && yarn buildServer",
     "buildClient": "yarn webpack --mode production",

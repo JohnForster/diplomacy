@@ -1,5 +1,5 @@
 import mongoose, {Schema, Types} from 'mongoose'
-import {defaultColours, startingTerritories, startingUnits} from '../../../data/initialState'
+import {defaultColours, startingTerritories, startingUnits} from '../data/initialState'
 
 import { IGameTurnDB, IMove, IPlayerStateDB } from '@shared/types'
 
