@@ -2035,7 +2035,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 var setupNewFullGame = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, err, res, game, numbers;
+    var _a, err, res, game, numbers, devIDs, prodIDs, IDs;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -2047,14 +2047,17 @@ var setupNewFullGame = function () { return __awaiter(void 0, void 0, void 0, fu
                     return [2 /*return*/, Promise.reject(err)];
                 game = res.data;
                 numbers = lodash_shuffle__WEBPACK_IMPORTED_MODULE_3___default()(lodash_range__WEBPACK_IMPORTED_MODULE_2___default()(1, 25)).map(function (x) { return x.toString().padStart(2, '0'); });
+                devIDs = ['5cd85783c26513e12f695ce2', '5cd8988c463115ffdbc672b3', '5ce28c5b63ca37c488983f92', '5ce28c7563ca37c488983f93', '5ce28c9663ca37c488983f94', '5ce28cbd63ca37c488983f95', '5ce28cd263ca37c488983f96'];
+                prodIDs = ['5e8a6040505fed0021be01eb', '5e8ad95766a29400215ebe2d', '5e8b206400462a0021d55454', '5e8b207600462a0021d55455', '5e8b208d00462a0021d55456', '5e8b20ab00462a0021d55457', '5e8b20ea00462a0021d55458'];
+                IDs =  false ? undefined : devIDs;
                 return [4 /*yield*/, Promise.all([
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5cd85783c26513e12f695ce2', colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5cd8988c463115ffdbc672b3', colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5ce28c5b63ca37c488983f92', colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5ce28c7563ca37c488983f93', colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5ce28c9663ca37c488983f94', colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5ce28cbd63ca37c488983f95', colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: '5ce28cd263ca37c488983f96', colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
                     ])];
             case 2:
                 _b.sent();
