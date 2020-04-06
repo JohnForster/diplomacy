@@ -19,9 +19,9 @@ var _initialState = require("../data/initialState");
 
 var _lodash = _interopRequireDefault(require("lodash.shuffle"));
 
-var _validateMove = _interopRequireDefault(require("../shared/helpers/validateMove"));
+var _validateMove = _interopRequireDefault(require("../../shared/helpers/validateMove"));
 
-var _toJSON = _interopRequireDefault(require("../shared/helpers/toJSON"));
+var _toJSON = _interopRequireDefault(require("../../shared/helpers/toJSON"));
 
 var playerSchema = new _mongoose.Schema({
   playerID: {

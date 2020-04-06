@@ -10,6 +10,6 @@ var _default = {
   // 2. JWT
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'secret',
   // 3. Express Server Port
-  LISTEN_PORT: process.env.LISTEN_PORT || 8080
+  PORT: process.env.PORT || 8080
 };
 exports["default"] = _default;

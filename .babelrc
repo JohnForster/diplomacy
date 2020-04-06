@@ -15,11 +15,11 @@
         "root": ["."],
         "alias": {
           "@shared": "./src/shared",
-          "@helpers": "./src/helpers",
-          "@controllers": "./src/controllers",
-          "@data": "./src/data",
-          "@models": "./src/models",
-          "@services": "./src/services"
+          "@helpers": "./src/server/helpers",
+          "@controllers": "./src/server/controllers",
+          "@data": "./src/server/data",
+          "@models": "./src/server/models",
+          "@services": "./src/server/services"
         }
       }
     ],

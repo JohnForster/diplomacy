@@ -2,7 +2,7 @@ import { IGameTurnJSON, IMove } from '../types'
 import areAdjacent from './areAdjacent'
 
 const phases: {[key: string]: string[]} = {
-  movement: ['move', 'support', 'hold'],
+  movement: ['move', 'support', 'hold', 'convoy'],
   retreat: ['retreat'],
   build: ['build', 'disband'],
 }
@@ -50,13 +50,15 @@ const validateMove = (turn: IGameTurnJSON, move: IMove, playerID: string): boole
       }
 
       // TODO Check that unit can move there (land/sea)
+      // TODO Need to differentiate between landlocked and coastal tiles.
 
       return true
 
     case 'support':
       // Check that destination is adjacent
       if (!isAdjacentToDestination(move.from)) return false
-      // TODO Check that unitType can support in that way
+      // TODO Check that unitType can support in that way.
+      // TODO   i.e. can unit legally move to that tile
 
       // Check that support from is adjacent to destination
       if (!isAdjacentToDestination(move.supportFrom)) return false

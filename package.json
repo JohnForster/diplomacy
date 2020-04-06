@@ -8,7 +8,7 @@
     "build:full": "yarn build:server && yarn build:client",
     "build:server": "yarn babel src -d build --extensions .ts --ignore src/client",
     "build:client": "cd ./src/client && yarn && yarn build",
-    "start": "node build/server.js"
+    "start": "node build/main.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
@@ -40,6 +40,7 @@
     "@types/node": "^13.11.0",
     "@types/passport": "^1.0.3",
     "@types/passport-local": "^1.0.33",
-    "babel-plugin-module-resolver": "^4.0.0"
+    "babel-plugin-module-resolver": "^4.0.0",
+    "nodemon": "^2.0.2"
   }
 }
