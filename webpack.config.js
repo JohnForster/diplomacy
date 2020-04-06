@@ -9,7 +9,7 @@ console.log(path.resolve(__dirname, "src/lib"));
 module.exports = {
   entry: "./src/client/index.tsx",
   devtool: "source-map",
-  mode: "production",
+  mode: process.env.NODE_ENV,
   //! Uncomment the below when working with express
   // target: 'node',
   // node: {

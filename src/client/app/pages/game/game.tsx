@@ -34,9 +34,10 @@ export default class Game extends Component <IGameProps, IGameState> {
   }
 
   render(props: IGameProps, state: IGameState) {
+    console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
     return (
       <div className='page'>
-        <h1>Stop being a perfectionist!</h1>
+        <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1>
         <div className='buttonsContainer' >
           <button onClick={this.setupGame}>Set Up Game</button>
           <button onClick={this.getLatestGame}>Load Game</button>

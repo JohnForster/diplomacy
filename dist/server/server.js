@@ -77,10 +77,16 @@ var startServer = function startServer() {
     res.redirect('/');
   }); // Front end routes
 
-  var middlePath = isDev ? '../../dist' : '';
-  app.use(_express["default"]["static"](_path["default"].join(__dirname, middlePath, '/client')));
+  var middlePath = '../../dist';
+
+  var clientPath = _path["default"].join(__dirname, middlePath, '/client');
+
+  console.log('clientPath:', clientPath);
+  console.log('middlepath:', middlePath);
+  console.log('isDev, process.env.NODE_ENV:', isDev, process.env.NODE_ENV);
+  app.use(_express["default"]["static"](clientPath));
   app.get('*', function (req, res) {
-    res.sendFile(_path["default"].join(__dirname, middlePath, '/client/index.html'));
+    res.sendFile(_path["default"].join(clientPath, '/index.html'));
   });
   app.listen(_config["default"].LISTEN_PORT, function () {
     console.log("App listening to ".concat(_config["default"].LISTEN_PORT, "..."));
