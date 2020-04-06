@@ -4,7 +4,7 @@
     "lint": "tslint --project tsconfig.json",
     "build": "yarn buildClient && yarn buildServer",
     "buildClient": "yarn webpack --mode production",
-    "buildServer": "tsc src/main.ts --esModuleInterop --outDir dist",
+    "buildServer": "yarn babel src -d dist --extensions .ts --ignore src/client",
     "startDev": "concurrently 'yarn startServerDev' 'yarn startClientDev'",
     "startServerDev": "nodemon --exec babel-node src/main.ts --outDir dist",
     "startClientDev": "yarn webpack --watch",
