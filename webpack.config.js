@@ -70,7 +70,7 @@ module.exports = {
       template: "./src/client/index.html",
       filename: "index.html",
     }),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({cleanStaleWebpackAssets: false,}),
     new CopyWebpackPlugin([
       { from: "./src/client/assets", to: "./assets" },
     ], {copyUnmodified: true}),
