@@ -64,10 +64,13 @@ const startServer = () => {
 
   // Front end routes
   const middlePath = isDev ? '../../dist' : ''
-  app.use(express.static(path.join(__dirname, middlePath, '/client')))
+  const clientPath = path.join(__dirname, middlePath, '/client')
+  console.log('middlepath:', middlePath)
+  console.log('isDev, process.env.NODE_ENV:', isDev, process.env.NODE_ENV)
+  app.use(express.static(clientPath))
 
   app.get('*', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, middlePath, '/client/index.html'))
+    res.sendFile(path.join(__dirname, clientPath, '/index.html'))
   })
 
   app.listen(config.LISTEN_PORT, () => {
