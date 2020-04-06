@@ -16,64 +16,67 @@ import config from './config'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
-// Connect to mongoDB
-mongoose.connect(config.MONGO_URI)
-mongoose.connection.on('error', (err) => {
+const startServer = () => {
+  mongoose.connect(config.MONGO_URI)
+  mongoose.connection.on('error', (err) => {
   console.log('Something went wrong connecting to mongoDB!')
   console.log(err)
-})
+  })
 
-// Start the App
-const app = express()
+  // Start the App
+  const app = express()
 
-// Set up MongoDB for sessions
-const MongoDBStore = mongoDBStoreConstructor(session)
-const mongoDBStore = new MongoDBStore({
-  uri: config.MONGO_URI,
-  databaseName: 'diplomacy',
-  collection: 'userSessions',
-}, console.log)
+  // Set up MongoDB for sessions
+  const MongoDBStore = mongoDBStoreConstructor(session)
+  const mongoDBStore = new MongoDBStore({
+    uri: config.MONGO_URI,
+    databaseName: 'diplomacy',
+    collection: 'userSessions',
+  }, console.log)
 
-app.use(session({
-  secret: config.TOKEN_SECRET,
-  store: mongoDBStore,
-  // ? Why the below options?
-  resave: false,
-  saveUninitialized: true,
-}))
+  app.use(session({
+    secret: config.TOKEN_SECRET,
+    store: mongoDBStore,
+    // ? Why the below options?
+    resave: false,
+    saveUninitialized: true,
+  }))
 
-// Configure bodyparser to handle post requests
-app.use(bodyParser.urlencoded({
-  extended: true,
-}))
-app.use(bodyParser.json())
+  // Configure bodyparser to handle post requests
+  app.use(bodyParser.urlencoded({
+    extended: true,
+  }))
+  app.use(bodyParser.json())
 
-// Setup passport
-// Change to use '/api' as well?
-setupPassport(app, isDev)
+  // Setup passport
+  // Change to use '/api' as well?
+  setupPassport(app, isDev)
 
-// API Routes
-app.use('/api/auth', checkAuthentication, confirmAuthentication)
-app.use('/api/game', gameController)
-app.use('/api/turn', turnController)
-app.use('/api/user', userController)
-app.get('/logout', (req, res) => {
-  req.logout()
-  res.redirect('/')
-})
+  // API Routes
+  app.use('/api/auth', checkAuthentication, confirmAuthentication)
+  app.use('/api/game', gameController)
+  app.use('/api/turn', turnController)
+  app.use('/api/user', userController)
+  app.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/')
+  })
 
-// Front end routes
-const middlePath = isDev ? '../../dist' : ''
-app.use(express.static(path.join(__dirname, middlePath, '/client')))
+  // Front end routes
+  const middlePath = isDev ? '../../dist' : ''
+  app.use(express.static(path.join(__dirname, middlePath, '/client')))
 
-app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, middlePath, '/client/index.html'))
-})
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, middlePath, '/client/index.html'))
+  })
 
-app.listen(config.LISTEN_PORT, () => {
-  console.log(`App listening to ${config.LISTEN_PORT}...`)
-  console.log(`App available at http://localhost:${config.LISTEN_PORT}`)
-  console.log('Press Ctrl+C to quit.')
-})
+  app.listen(config.LISTEN_PORT, () => {
+    console.log(`App listening to ${config.LISTEN_PORT}...`)
+    console.log(`App available at http://localhost:${config.LISTEN_PORT}`)
+    console.log('Press Ctrl+C to quit.')
+  })
+}
+// Connect to mongoDB
 
-export default app
+
+export default startServer

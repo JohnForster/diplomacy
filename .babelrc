@@ -1,0 +1,28 @@
+{
+  "presets": [
+    [
+      "@babel/env"
+    ],
+    "@babel/typescript"
+  ],
+  "ignore": [
+    "src/client/**/*"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    [
+      "babel-plugin-module-resolver", {
+        "root": ["."],
+        "alias": {
+          "@server": "./src/server",
+          "@shared": "./src/shared",
+          "@helpers": "./src/server/_helpers",
+          "@controllers": "./src/server/controllers",
+          "@data": "./src/server/data",
+          "@models": "./src/server/models",
+          "@services": "./src/server/services"
+        }
+      }
+    ],
+  ]
+}

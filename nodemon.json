@@ -1,5 +1,5 @@
 {
-  "watch": ["src/server"],
-  "ext": "ts,scss",
-  "exec": "ts-node -O '{\"module\": \"commonjs\"}' -r tsconfig-paths/register src/server/server.ts --outDir dist"
+  "watch": ["src/server", "src/shared"],
+  "ext": "ts",
+  "exec": "babel-node src/main.ts --extensions .ts --ignore src/client"
 }

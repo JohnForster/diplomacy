@@ -3,9 +3,9 @@
     "start": "NODE_ENV=production node dist/server.js",
     "lint": "tslint --project tsconfig.json",
     "build": "yarn webpack --mode production",
-    "buildServer": "tsc src/server/server.ts --esModuleInterop --outDir dist",
+    "buildServer": "tsc src/main.ts --esModuleInterop --outDir dist",
     "startDev": "concurrently 'yarn startServerDev' 'yarn startClientDev'",
-    "startServerDev": "nodemon",
+    "startServerDev": "nodemon --exec babel-node src/main.ts --outDir dist",
     "startClientDev": "yarn webpack --watch",
     "startServerLive": "NODE_ENV=production node -r dotenv/config dist/server.js",
     "live": "yarn build && yarn startServerLive",
@@ -13,6 +13,7 @@
     "analyze": "source-map-explorer /dist/client/assets/bundle.*"
   },
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
     "await-to-js": "^2.1.1",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
@@ -29,10 +30,16 @@
     "nodemon-webpack-plugin": "^4.0.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "preact": "^10.0.0-rc.0",
-    "preact-router": "^3.0.1"
+    "preact": "^10.3.4",
+    "preact-router": "^3.2.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-typescript": "^7.9.0",
     "@types/bcrypt": "^3.0.0",
     "@types/connect-mongodb-session": "^0.0.2",
     "@types/express": "^4.16.1",
@@ -45,6 +52,7 @@
     "@types/node-sass": "^4.11.0",
     "@types/passport": "^1.0.0",
     "@types/passport-local": "^1.0.33",
+    "babel-plugin-module-resolver": "^4.0.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^3.0.0",
