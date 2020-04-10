@@ -1,6 +1,6 @@
 import {Component, h} from 'preact'
 
-import { IBoardTerritory, IGameBoard, IGameTurnJSON, IMove, OrderType } from '@shared/types'
+import { IBoardTerritory, IGameBoard, IGameTurnJSON, IOrder, OrderType } from '@shared/types'
 
 import Territory from './territory/territory'
 import Unit from './unit/unit'
@@ -17,7 +17,7 @@ export interface IBoardProps {
   activeTerritory: string,
   onTileSelect: (title: string) => () => void,
   onMoveSelect: (move: OrderType) => () => void,
-  newOrders: IMove[]
+  newOrders: IOrder[]
 }
 
 interface IBoardState {

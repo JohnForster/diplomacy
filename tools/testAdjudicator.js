@@ -125,14 +125,6 @@ const turnObj = {
   "Bounces": {},
   "Resolutions": {},
   "Orders": {
-    "England": {
-      "lon": ["Move", "yor"],
-      "lvp": ["Support", 'edi', 'yor'],
-      "edi": ["Move", "yor"],
-    },
-    "Italy": {
-      'nap': ["Move", 'tys'],
-    }
   }
 }
 

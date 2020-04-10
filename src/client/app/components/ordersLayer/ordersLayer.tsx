@@ -1,13 +1,13 @@
 import {Component, Fragment, h} from 'preact'
 
-import { IGame, IGameBoard, IGameTurnJSON, IMove } from '@shared/types'
+import { IGame, IGameBoard, IGameTurnJSON, IOrder } from '@shared/types'
 
 import Order from './order/order'
 
 export interface IOrdersLayerProps {
   turnData: IGameTurnJSON
   boardData: IGameBoard
-  newOrders: IMove[]
+  newOrders: IOrder[]
 }
 
 interface IOrdersLayerState {

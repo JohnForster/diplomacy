@@ -1,11 +1,11 @@
 import {Component, Fragment, h} from 'preact'
 
-import { IGameBoard, IMove } from '@shared/types'
+import { IGameBoard, IOrder } from '@shared/types'
 
 import './order.scss'
 import { pathToFileURL } from 'url'
 
-export interface IOrderProps extends IMove {
+export interface IOrderProps extends IOrder {
   boardData: IGameBoard
 }
 

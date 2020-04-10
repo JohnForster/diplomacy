@@ -1,12 +1,12 @@
 import { Types } from 'mongoose'
-import { IMove, IUnit } from '.'
+import { IOrder, IUnit } from '.'
 
 interface IPlayerState {
   colour: string,
   empire: string,
   ownedTerritories: string[],
   ownedUnits: IUnit[],
-  moves: IMove[],
+  moves: IOrder[],
 }
 
 export interface IPlayerStateJSON extends IPlayerState {

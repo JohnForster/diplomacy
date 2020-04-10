@@ -1,4 +1,5 @@
 import { Types } from 'mongoose'
+import Nation from './enums/Nation';
 
 interface IGame {
   timeStarted: Date,
@@ -14,10 +15,14 @@ export interface IGameJSON extends IGame {
   winner?: string,
   createdBy: string,
   history: string[]
+  currentPlayerIds: string[]
+  colours: {[n in Nation]: string},
 }
 
 export interface IGameDB extends IGame {
   winner?: Types.ObjectId,
   createdBy: Types.ObjectId,
   history: Types.ObjectId[]
+  currentPlayerIds: Types.ObjectId[]
+  colours: Map<Nation, string>,
 }

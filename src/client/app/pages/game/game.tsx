@@ -6,7 +6,7 @@ import Board from '@client/app/components/board/board';
 import boardData from '@client/assets/countryData'
 import setupNewFullGame from '@client/devTools/setupGame'
 import validateMove from '@shared/helpers/validateMove';
-import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
+import { IGameJSON , IGameTurnJSON, IOrder, IUnit, OrderType} from '@shared/types'
 
 import './game.scss'
 
@@ -18,8 +18,8 @@ export interface IGameProps {
 interface IGameState {
   game?: IGameJSON
   turn?: IGameTurnJSON
-  newOrders: IMove[]
-  newOrder: Partial<IMove>
+  newOrders: IOrder[]
+  newOrder: Partial<IOrder>
   gameIsRunning: boolean
   activeTerritory: string
 }
@@ -88,7 +88,7 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   private beginMove(territoryName: string) {
     const unit = this.getUnitAt(territoryName)
-    const newOrder: Partial<IMove> = {
+    const newOrder: Partial<IOrder> = {
       unit: unit.unitType,
       from: unit.location,
     }
@@ -96,7 +96,7 @@ export default class Game extends Component <IGameProps, IGameState> {
   }
 
   private completeMove(territoryName: string) {
-    const newOrder: IMove = {
+    const newOrder: IOrder = {
       unit: this.state.newOrder.unit,
       from: this.state.newOrder.from,
       moveType: this.state.newOrder.moveType,
