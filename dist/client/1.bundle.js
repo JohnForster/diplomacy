@@ -882,8 +882,10 @@ var Game = /** @class */ (function (_super) {
                     case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(_client_devTools_setupGame__WEBPACK_IMPORTED_MODULE_5__["default"])())];
                     case 1:
                         _a = _b.sent(), err = _a[0], game = _a[1].data;
-                        if (err)
+                        if (err) {
+                            console.log("Error ocurred when setting up new full game: " + err.message);
                             return [2 /*return*/, Promise.reject(err)];
+                        }
                         return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/turn/" + game.currentTurn)];
                     case 2:
                         turn = (_b.sent()).data;

@@ -6,6 +6,7 @@ import { IGameTurnDB, IMove, IPlayerStateDB } from '@shared/types'
 import shuffle from 'lodash.shuffle'
 import validateMove from '@shared/helpers/validateMove';
 import toJSON from '@shared/helpers/toJSON';
+import Nation from '@shared/types/enums/Nation';
 
 export interface ITurnModel extends mongoose.Document, IGameTurnDB {
   isReadyToStart: () => boolean,
@@ -123,7 +124,7 @@ turnSchema.methods.start = function() {
 
 turnSchema.methods.randomiseEmpires = async function() {
   console.log('Randomising empires...')
-  const empires = shuffle(['England', 'France', 'Germany', 'Italy', 'Austria', 'Russia', 'Turkey'])
+  const empires: Nation[] = shuffle(['England', 'France', 'Germany', 'Italy', 'Austria', 'Russia', 'Turkey'])
   this.players.forEach((player: IPlayerStateDB) => {
     player.empire = empires.pop()
   })

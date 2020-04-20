@@ -6,16 +6,19 @@ import OrderType from '@shared/types/enums/OrderType'
 import getLocationFromId from '@shared/helpers/getLocationFromId'
 import getIdFromLocation from '@shared/helpers/getIdFromLocation'
 
-interface IConversionData {
+export interface IConversionData {
   phaseNumber: number,
   timeStarted: number,
   timeEnds: number,
+  _id?: string
   players: {
     colour: string,
     empire: Nation,
     playerId: string
   }[]
 }
+
+// TODO extract some of these into helpers? Or convert to class.
 
 const getUnits = (empire: Nation, apiState: IApiStateJSON) => {
   const unitsInApiFormat = Object.entries(apiState.Units).filter(([, u]) => u.Nation === empire)
@@ -32,7 +35,7 @@ export const apiToGameState = (
 ): IGameTurnJSON => {
   // TODO Add key features from ApiState to game. i.e Dislodgeds, Resolutions, bounces?
   return {
-    _id: null, // ! Maybe get from data, would need to create turn before doing conversion.
+    _id: data._id, // ! Maybe get from data, would need to create turn before doing conversion.
     info: {
       phaseNumber: data.phaseNumber,
       year: apiState.Year,

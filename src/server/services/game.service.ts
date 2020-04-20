@@ -10,10 +10,11 @@ const GameService = {
     const game = new GameModel({createdBy: userId})
     Object.assign(game, gameConfig)
 
-    const turn = await TurnService.create({phase: 'movement'})
+    const turn = await TurnService.createFirstTurn()
     game.setTurn(turn.id)
 
     await game.save()
+    console.log(`New game created with id ${game._id}`)
     return game
   },
 

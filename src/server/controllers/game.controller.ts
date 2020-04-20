@@ -31,7 +31,10 @@ class GameController {
     const {gameID, playerID, colour} = req.body
     if (!(gameID && playerID)) return res.status(400).send('Require both gameID and playerID in request')
     const [err, game] = await to(GameService.joinGame(gameID, playerID, colour))
-    if (err) res.status(400).send(err)
+    if (err) {
+      console.log(err.message)
+      res.status(400).send(err)
+    }
     if (game) res.json(game)
   }
 

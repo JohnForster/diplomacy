@@ -16,9 +16,9 @@ import TurnModel, { ITurnModel } from './turn.model'
 //   randomEmpires: boolean,
 // }
 export interface IGameModel extends IGameDB, mongoose.Document {
-  start: () => void,
-  setTurn: (turn: string) => void,
-  advanceTurn: () => void,
+  start: (this: IGameModel) => void,
+  setTurn: (this: IGameModel, turn: string) => void,
+  advanceTurn: (this: IGameModel) => void,
 }
 
 const gameSchema = new Schema({
