@@ -7,9 +7,10 @@ export interface IGameTurn {
     season: string,
     phase: string,
     timeStarted: number,
-    timeEnds: string,
+    timeEnds: number,
     isComplete: boolean,
   },
+  previousState: string,
 }
 
 export interface IGameTurnJSON extends IGameTurn {

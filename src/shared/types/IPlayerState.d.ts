@@ -1,9 +1,10 @@
 import { Types } from 'mongoose'
 import { IMove, IUnit } from '.'
+import Nation from './enums/Nation'
 
 interface IPlayerState {
   colour: string,
-  empire: string,
+  empire: Nation,
   ownedTerritories: string[],
   ownedUnits: IUnit[],
   moves: IMove[],
