@@ -198,7 +198,7 @@ var Register = /** @class */ (function (_super) {
         return _this;
     }
     Register.prototype.render = function (props, state) {
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("div", { className: "page" },
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])(preact__WEBPACK_IMPORTED_MODULE_3__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])(_components_formBox_formBox__WEBPACK_IMPORTED_MODULE_5__["default"], null,
                 Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("form", { action: '/user/register', method: 'post', onSubmit: this.handleSubmit },
                     "Username:",

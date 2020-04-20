@@ -7,6 +7,7 @@ import {lazy, Suspense} from 'preact/compat'
 import checkAuthentication from './_helpers/checkAuthentication'
 import './app.scss'
 import './variables/colors.scss'
+import Lobby from './pages/lobby/lobby'
 
 const Game = lazy(() => import('./pages/game/game'))
 const Login = lazy(() => import('./pages/login/login'))
@@ -26,12 +27,10 @@ export default class App extends Component <IAppProps, IAppState> {
   }
 
   handleRoute = async (event: RouterOnChangeArgs) => {
-    switch (event.url) {
-      case '/game':
-        console.log('attempting to route to /game')
-        const isAuthed = await this.checkAuthentication()
-        if (!isAuthed) route('/', true)
-    }
+    console.log(`Attempting to route to ${event.url}`)
+    const isAuthed = await this.checkAuthentication()
+    if (isAuthed  && (event.url === '/' || event.url === '/register')) route('/game', true)
+    if (!isAuthed) route('/', true)
   }
 
   toggleLogIn = (isLoggedIn?: boolean) => {
@@ -63,11 +62,14 @@ export default class App extends Component <IAppProps, IAppState> {
   render(props: IAppProps, state: IAppState) {
     return (
       <Suspense fallback={<h1>Loading!!!</h1>}>
-        <Router onChange={this.handleRoute}>
-          <Game path='/game' userID={state.userID} logOut={this.logOut}/>
-          <Register path='/register'/>
-          <Login path='/' toggleLogIn={this.toggleLogIn}/>
-        </Router>
+        <div className='page'>
+          <Router onChange={this.handleRoute}>
+            <Game path='/game' userID={state.userID} logOut={this.logOut}/>
+            <Register path='/register'/>
+            <Login path='/' toggleLogIn={this.toggleLogIn}/>
+            <Lobby path='/lobby'/>
+          </Router>
+        </div>
       </Suspense>
     )
   }

@@ -1,4 +1,4 @@
-import {Component, h} from 'preact'
+import {Component, h, Fragment} from 'preact'
 
 import to from 'await-to-js'
 import axios from 'axios'
@@ -36,7 +36,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
 
   render(props: ILoginProps, state: ILoginState) {
     return (
-      <div className='page'>
+      <Fragment>
         <h1>Diplomacy</h1><br/>
         <FormBox>
             {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
@@ -50,7 +50,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
             {'New? Register '}
           <Link href='/register'>here</Link>
         </FormBox>
-      </div>
+      </Fragment>
     )
   }
 

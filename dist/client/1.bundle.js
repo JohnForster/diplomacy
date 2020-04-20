@@ -300,9 +300,9 @@ var Territory = /** @class */ (function (_super) {
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { title: props.tile.title, class: props.tile.tileType },
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: props.tile.id + " " + props.colour + "-light", d: props.tile.path, onClick: props.onSelect }),
                 props.tile.textLocation && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("circle", { stroke: 'white', cx: props.tile.textLocation.x, cy: props.tile.textLocation.y, r: "1" }),
+                     true && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("circle", { stroke: 'white', cx: props.tile.textLocation.x, cy: props.tile.textLocation.y, r: "1" })),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "\n              translate(" + props.tile.textLocation.x + " " + props.tile.textLocation.y + ")\n              rotate(" + (props.tile.textLocation.rotate || '0') + ")\n              " },
-                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("text", null, props.tile.name.split('\n').map(function (line) { return Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("tspan", { x: '0', "text-anchor": 'middle' }, line); }))))))));
+                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("text", null, props.tile.name.split('\n').map(function (line, i) { return Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("tspan", { dy: i ? '8' : '0', x: '0', "text-anchor": 'middle' }, line); }))))))));
     };
     return Territory;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
@@ -959,7 +959,7 @@ var Game = /** @class */ (function (_super) {
         var totalOrders = 0;
         if (state.turn)
             state.turn.players.forEach(function (p) { return totalOrders += p.moves.length; });
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("div", { className: 'page' },
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(preact__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("h1", null,  true ? 'Stop being a perfectionist!' : undefined),
             Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("div", { className: 'buttonsContainer' },
                 Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.setupGame }, "Set Up Game"),
@@ -1852,8 +1852,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Sweden',
             path: "M 275 203 L 277 218 L 276 224 L 282 236 L 279 240 L 279 243 L 282 253 L 289 254 L 294 245 L 305 244 L 312 229 L 311 220 L 314 209 L 322 206 L 328 203 L 331 193 L 326 183 L 320 182 L 321 161 L 330 146 L 343 138 L 351 128 L 347 121 L 349 112 L 355 104 L 362 107 L 356 71 L 342 61 L 341 65 L 330 64 L 332 74 L 324 71 L 311 101 L 308 104 L 309 115 L 300 126 L 301 132 L 292 133 L 290 164 L 285 170 L 287 177 L 279 204 L 275 203",
             textLocation: {
-                x: 300,
-                y: 145,
+                x: 305,
+                y: 187,
             },
         },
         {
@@ -1907,8 +1907,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Tyrolia',
             path: "M 234 366 L 243 370 L 246 369 L 250 371 L 267 368 L 271 370 L 269 362 L 275 362 L 281 356 L 292 357 L 295 362 L 294 380 L 289 385 L 276 386 L 268 385 L 259 388 L 255 394 L 250 397 L 246 392 L 243 388 L 245 384 L 241 378 L 234 374 L 234 366",
             textLocation: {
-                x: 255,
-                y: 380,
+                x: 268,
+                y: 373,
             },
         },
         {
@@ -1940,7 +1940,7 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Vienna',
             path: "M 292 357 L 295 349 L 303 346 L 316 348 L 322 347 L 329 346 L 337 350 L 335 354 L 322 370 L 311 375 L 308 383 L 299 385 L 294 380 L 295 362 L 292 357",
             textLocation: {
-                x: 305,
+                x: 311,
                 y: 356,
             },
         },

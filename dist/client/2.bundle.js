@@ -267,7 +267,7 @@ var Login = /** @class */ (function (_super) {
     };
     Login.prototype.render = function (props, state) {
         var _this = this;
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'page' },
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("h1", null, "Diplomacy"),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_components_formBox_formBox__WEBPACK_IMPORTED_MODULE_6__["default"], null,

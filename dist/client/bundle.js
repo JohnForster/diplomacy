@@ -2058,7 +2058,7 @@ module.exports = {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n  background-color: #EFEFEF;\n  margin: 8px 0; }\n\n.page {\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; }\n\ninput, button {\n  font-family: 'Arvo', Calibri, sans-serif;\n  color: #102542;\n  font-size: 18px;\n  height: 24px;\n  border-radius: 3px;\n  background-color: #EFEFEF;\n  margin: 10px 0px;\n  box-sizing: border-box;\n  text-align: center; }\n", ""]);
+exports.push([module.i, "body {\n  background-color: #EFEFEF;\n  margin: 8px 0; }\n\n.page {\n  animation: fadein 1s;\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\ninput, button {\n  font-family: 'Arvo', Calibri, sans-serif;\n  color: #102542;\n  font-size: 18px;\n  height: 24px;\n  border-radius: 3px;\n  background-color: #EFEFEF;\n  margin: 10px 0px;\n  box-sizing: border-box;\n  text-align: center; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -3226,6 +3226,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
                 console.log(res);
                 if (err)
                     return [2 /*return*/, null];
+                console.log(res.data.userID);
                 return [2 /*return*/, res.data.userID];
         }
     });
@@ -3284,6 +3285,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_app_scss__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _variables_colors_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./variables/colors.scss */ "./src/client/app/variables/colors.scss");
 /* harmony import */ var _variables_colors_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_variables_colors_scss__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _pages_lobby_lobby__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/lobby/lobby */ "./src/client/app/pages/lobby/lobby.tsx");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -3340,6 +3342,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./pages/game/game */ "./src/client/app/pages/game/game.tsx")); });
 var Login = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./pages/login/login */ "./src/client/app/pages/login/login.tsx")); });
 var Register = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./pages/register/register */ "./src/client/app/pages/register/register.tsx")); });
@@ -3352,24 +3355,19 @@ var App = /** @class */ (function (_super) {
             userID: null,
         };
         _this.handleRoute = function (event) { return __awaiter(_this, void 0, void 0, function () {
-            var _a, isAuthed;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var isAuthed;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _a = event.url;
-                        switch (_a) {
-                            case '/game': return [3 /*break*/, 1];
-                        }
-                        return [3 /*break*/, 3];
-                    case 1:
-                        console.log('attempting to route to /game');
+                        console.log("Attempting to route to " + event.url);
                         return [4 /*yield*/, this.checkAuthentication()];
-                    case 2:
-                        isAuthed = _b.sent();
+                    case 1:
+                        isAuthed = _a.sent();
+                        if (isAuthed && (event.url === '/' || event.url === '/register'))
+                            Object(preact_router__WEBPACK_IMPORTED_MODULE_2__["route"])('/game', true);
                         if (!isAuthed)
                             Object(preact_router__WEBPACK_IMPORTED_MODULE_2__["route"])('/', true);
-                        _b.label = 3;
-                    case 3: return [2 /*return*/];
+                        return [2 /*return*/];
                 }
             });
         }); };
@@ -3414,14 +3412,55 @@ var App = /** @class */ (function (_super) {
     }
     App.prototype.render = function (props, state) {
         return (Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact_compat__WEBPACK_IMPORTED_MODULE_3__["Suspense"], { fallback: Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])("h1", null, "Loading!!!") },
-            Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact_router__WEBPACK_IMPORTED_MODULE_2__["default"], { onChange: this.handleRoute },
-                Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Game, { path: '/game', userID: state.userID, logOut: this.logOut }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Register, { path: '/register' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Login, { path: '/', toggleLogIn: this.toggleLogIn }))));
+            Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])("div", { className: 'page' },
+                Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact_router__WEBPACK_IMPORTED_MODULE_2__["default"], { onChange: this.handleRoute },
+                    Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Game, { path: '/game', userID: state.userID, logOut: this.logOut }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Register, { path: '/register' }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Login, { path: '/', toggleLogIn: this.toggleLogIn }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_pages_lobby_lobby__WEBPACK_IMPORTED_MODULE_7__["default"], { path: '/lobby' })))));
     };
     return App;
 }(preact__WEBPACK_IMPORTED_MODULE_1__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/lobby/lobby.tsx":
+/*!**********************************************!*\
+  !*** ./src/client/app/pages/lobby/lobby.tsx ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var Lobby = /** @class */ (function (_super) {
+    __extends(Lobby, _super);
+    function Lobby() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Lobby.prototype.render = function (props, state) {
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null));
+    };
+    return Lobby;
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (Lobby);
 
 
 /***/ }),

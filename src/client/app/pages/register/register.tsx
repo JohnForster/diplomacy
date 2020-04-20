@@ -1,7 +1,7 @@
 import to from 'await-to-js'
 import Axios from 'axios'
 import clone from 'lodash.clone'
-import {Component, h} from 'preact'
+import {Component, h, Fragment} from 'preact'
 import { route } from 'preact-router'
 
 import FormBox from '../../components/formBox/formBox';
@@ -26,7 +26,7 @@ export default class Register extends Component <IRegisterProps, IRegisterState>
 
   render(props: IRegisterProps, state: IRegisterState) {
     return (
-      <div className="page">
+      <Fragment>
         <FormBox>
           <form action='/user/register' method='post'  onSubmit={this.handleSubmit}>
             Username:<br/>
@@ -63,7 +63,7 @@ export default class Register extends Component <IRegisterProps, IRegisterState>
             <input type='submit' value='Submit' />
           </form>
         </FormBox>
-      </div>
+      </Fragment>
     )
   }
 

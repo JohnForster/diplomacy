@@ -38,7 +38,7 @@ export default class Game extends Component <IGameProps, IGameState> {
     let totalOrders = 0
     if (state.turn) state.turn.players.forEach(p => totalOrders += p.moves.length)
     return (
-      <div className='page'>
+      <Fragment>
         <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1>
         <div className='buttonsContainer' >
           <button onClick={this.setupGame}>Set Up Game</button>
@@ -62,7 +62,7 @@ export default class Game extends Component <IGameProps, IGameState> {
           turnData={state.turn}
           newOrders={state.newOrders}
         />
-      </div>
+      </Fragment>
     )
   }
 

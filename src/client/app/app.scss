@@ -6,11 +6,17 @@ body {
 }
 
 .page {
+  animation: fadein 1s;
   display: flex;
   align-items: center;
   align-content: flex-start;
   flex-direction: column;
   font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 input,button {
