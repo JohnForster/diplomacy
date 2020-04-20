@@ -5,10 +5,12 @@ import {Component, h} from 'preact'
 import Board from '@client/app/components/board/board';
 import boardData from '@client/assets/countryData'
 import setupNewFullGame from '@client/devTools/setupGame'
-import validateMove from '@shared/helpers/validateMove';
-import { IGameJSON , IGameTurnJSON, IOrder, IUnit, OrderType} from '@shared/types'
+import { IGameJSON , IGameTurnJSON, IOrder } from '@shared/types'
 
 import './game.scss'
+import ProvinceId from '@shared/types/enums/ProvinceId';
+import OrderType from '@shared/types/enums/OrderType';
+import Nation from '@shared/types/enums/Nation';
 
 export interface IGameProps {
   userID: string,
@@ -21,7 +23,7 @@ interface IGameState {
   newOrders: IOrder[]
   newOrder: Partial<IOrder>
   gameIsRunning: boolean
-  activeTerritory: string
+  activeTerritory: ProvinceId
 }
 
 export default class Game extends Component <IGameProps, IGameState> {
@@ -35,6 +37,7 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   render(props: IGameProps, state: IGameState) {
     console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
+    console.log('game.tsx state.turn:', state.turn)
     return (
       <div className='page'>
         <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1>
@@ -46,11 +49,12 @@ export default class Game extends Component <IGameProps, IGameState> {
           <button onClick={this.nextTurn}>Next Turn</button><br/>
         </div><br/>
         {!!state.turn && (
-          <h2>You are playing as {state.turn.players.find(p => p.playerID === props.userID).empire}</h2>
+          <h2>You are playing as {Object.entries(state.turn.info.players).find(([empire, id]) => id === props.userID)[0]}</h2>
         )}
         {/* Can extend in future to have a "showText" boolean for board previews? */}
         <Board
           boardData={boardData}
+          players={state.game?.players}
           activeTerritory={state.activeTerritory}
           onTileSelect={this.onTileSelect}
           onMoveSelect={this.onMoveSelect}
@@ -61,16 +65,16 @@ export default class Game extends Component <IGameProps, IGameState> {
     )
   }
 
-  onTileSelect = (territoryName: string) => {
+  onTileSelect = (territoryName: ProvinceId) => {
     return () => {
       if (this.state.newOrder && this.state.newOrder.moveType) {
         const order = {...this.state.newOrder}
-        if (order.moveType === 'support') {
+        if (order.moveType === 'Support') {
           if (order.supportFrom) return this.completeMove(territoryName)
           order.supportFrom = territoryName
           this.setState({newOrder: order})
         }
-        if (order.moveType === 'move') this.completeMove(territoryName)
+        if (order.moveType === 'Move') this.completeMove(territoryName)
       }
       if (!this.state.newOrder && this.playerHasUnitAt(territoryName)) this.beginMove(territoryName)
     }
@@ -82,26 +86,28 @@ export default class Game extends Component <IGameProps, IGameState> {
     newOrder.moveType = orderType
 
     this.setState({newOrder}, () => {
-      if (orderType === 'hold') this.completeMove(newOrder.from)
+      if (orderType === 'Hold') this.completeMove(newOrder.from)
     })
   }
 
-  private beginMove(territoryName: string) {
-    const unit = this.getUnitAt(territoryName)
+  private beginMove(territoryId: ProvinceId) {
+    const unit = this.state.turn.state.Units[territoryId]
     const newOrder: Partial<IOrder> = {
-      unit: unit.unitType,
-      from: unit.location,
+      empire: unit.Nation,
+      unit: unit.Type,
+      from: territoryId,
     }
-    this.setState({ newOrder, activeTerritory: territoryName })
+    this.setState({ newOrder, activeTerritory: territoryId })
   }
 
-  private completeMove(territoryName: string) {
+  private completeMove(territoryId: ProvinceId) {
     const newOrder: IOrder = {
+      empire: this.state.turn?.state.Units[territoryId]?.Nation,
       unit: this.state.newOrder.unit,
       from: this.state.newOrder.from,
       moveType: this.state.newOrder.moveType,
       supportFrom: this.state.newOrder.supportFrom,
-      to: territoryName,
+      to: territoryId,
       wasSuccessful: null,
     }
     const newOrders = this.state.newOrders.filter(o => o.from !== newOrder.from)
@@ -110,38 +116,36 @@ export default class Game extends Component <IGameProps, IGameState> {
     this.setState({ newOrders, newOrder: null, activeTerritory: null })
   }
 
-  get player() {
+  get player(): {id: string, empire: Nation} {
     if (!this.state.turn) return null
-    return this.state.turn.players.find(p => p.playerID === this.props.userID)
+    const empire = Object.entries(this.state.turn?.info.players).find(([e, id]) => id = this.props.userID)?.[0]
+    return {
+      id: this.props.userID,
+      empire: empire as Nation,
+    }
   }
 
-  private playerHasUnitAt = (territoryName: string): boolean => {
+  private playerHasUnitAt = (territoryId: ProvinceId): boolean => {
     if (!this.state.turn) return false
-    const player = this.state.turn.players.find(p => p.playerID === this.props.userID)
-    return !!player.ownedUnits.find(u => u.location === territoryName)
-  }
-
-  private getUnitAt = (territoryName: string): IUnit => {
-    let unit
-    this.state.turn.players.forEach(p => {
-      p.ownedUnits.forEach(u => {
-        if (u.location === territoryName) unit = u
-      })
-    })
-    return unit
+    return this.state.turn?.state.Units[territoryId]?.Nation === this.player.empire
   }
 
   // ? Move axios requests into a helper service?
   private setupGame = async () => {
-    const [err, {data: game}] = await to(setupNewFullGame())
+    const [err, res] = await to(setupNewFullGame())
     if (err) return Promise.reject(err)
+    const game = res.data
+    console.log('game:', game)
     const {data: turn} = await Axios.get(`api/turn/${game.currentTurn}`)
+    console.log('turn:', turn)
     this.setState({game, turn})
   }
 
   private getLatestGame = async () => {
     const {data: game} = await Axios.get('/api/game/latest')
+    console.log('game:', game)
     const {data: turn} = await Axios.get(`/api/turn/${game.currentTurn}`)
+    console.log('turn:', turn)
     this.setState({game, turn})
   }
 

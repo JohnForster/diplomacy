@@ -4,86 +4,86 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _IGame = require("./IGame.d");
+var _Nation = require("./Nation");
 
-Object.keys(_IGame).forEach(function (key) {
+Object.keys(_Nation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IGame[key];
+      return _Nation[key];
     }
   });
 });
 
-var _IGameBoard = require("./IGameBoard.d");
+var _OrderType = require("./OrderType");
 
-Object.keys(_IGameBoard).forEach(function (key) {
+Object.keys(_OrderType).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IGameBoard[key];
+      return _OrderType[key];
     }
   });
 });
 
-var _IGameTurn = require("./IGameTurn.d");
+var _PhaseType = require("./PhaseType");
 
-Object.keys(_IGameTurn).forEach(function (key) {
+Object.keys(_PhaseType).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IGameTurn[key];
+      return _PhaseType[key];
     }
   });
 });
 
-var _IOrder = require("./IOrder");
+var _ProvinceId = require("./ProvinceId");
 
-Object.keys(_IOrder).forEach(function (key) {
+Object.keys(_ProvinceId).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IOrder[key];
+      return _ProvinceId[key];
     }
   });
 });
 
-var _IPlayerState = require("./IPlayerState.d");
+var _Resolution = require("./Resolution");
 
-Object.keys(_IPlayerState).forEach(function (key) {
+Object.keys(_Resolution).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IPlayerState[key];
+      return _Resolution[key];
     }
   });
 });
 
-var _IUnit = require("./IUnit.d");
+var _Season = require("./Season");
 
-Object.keys(_IUnit).forEach(function (key) {
+Object.keys(_Season).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IUnit[key];
+      return _Season[key];
     }
   });
 });
 
-var _IApiState = require("./IApiState.d");
+var _UnitType = require("./UnitType");
 
-Object.keys(_IApiState).forEach(function (key) {
+Object.keys(_UnitType).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _IApiState[key];
+      return _UnitType[key];
     }
   });
 });

@@ -5,8 +5,9 @@ import { IGameBoard, IOrder } from '@shared/types'
 import './order.scss'
 import { pathToFileURL } from 'url'
 
-export interface IOrderProps extends IOrder {
+export interface IOrderProps {
   boardData: IGameBoard
+  order: IOrder
 }
 
 interface IOrderState {
@@ -15,16 +16,17 @@ interface IOrderState {
 
 export default class Order extends Component <IOrderProps, IOrderState> {
   getLocation = (property: 'from' | 'to' | 'supportFrom'): string => {
-    const territory = this.props.boardData.territories.find(t => t.title === this.props[property])
+    const id = this.props.order[property]
+    const territory = this.props.boardData.territories[id]
     if (!territory) return ''
     return `${territory.textLocation.x},${territory.textLocation.y}`
   }
 
   getMarkerColour = <T extends string>(moveType: T) => {
     switch(moveType) {
-      case 'move': return 'black';
-      case 'support': return 'brown';
-      case 'retreat': return 'blue';
+      case 'Move': return 'black';
+      case 'Support': return 'brown';
+      case 'etreat': return 'blue';
       default: return ''
     }
   }
@@ -33,11 +35,11 @@ export default class Order extends Component <IOrderProps, IOrderState> {
     const fromLocation = this.getLocation('from')
     const toLocation = this.getLocation('to')
     const supportFromLocation = this.getLocation('supportFrom')
-    const markerColour = this.getMarkerColour(props.moveType)
+    const markerColour = this.getMarkerColour(props.order.moveType)
 
     return (
       <Fragment>
-        {props.moveType === 'support' && (
+        {props.order.moveType === 'Support' && (
           <Fragment>
             <path
               marker-end='url(#head-support)'
@@ -50,7 +52,7 @@ export default class Order extends Component <IOrderProps, IOrderState> {
             />
           </ Fragment>
         )}
-        {props.moveType === 'move' && (
+        {props.order.moveType === 'Move' && (
           <path
             marker-end='url(#head-move)'
             stroke-width='2' fill='black' stroke='black'

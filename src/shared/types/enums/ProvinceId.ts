@@ -80,6 +80,13 @@ const ProvinceId = {
   RUH : 'ruh',
   TYR : 'tyr',
   KIE : 'kie',
+  N_SWI: 'n/swi',
+  N_IRE: 'n/ire',
+  N_COR: 'n/cor',
+  N_SAR: 'n/sar',
+  N_MAL: 'n/mal',
+  N_SIC: 'n/sic',
+  N_CRE: 'n/cre',
 } as const
 type ProvinceId = (typeof ProvinceId)[keyof typeof ProvinceId]
 

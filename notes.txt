@@ -65,3 +65,26 @@ NEXT:
   SORT OUT FRONT END TYPES
 
   Refactor api messages to give arrays.
+
+// Missing sea & land tile data
+No sea tile data found for boh
+No sea tile data found for bud
+No land tile data found for bul
+No sea tile data found for bul
+No land tile data found for bul/ec
+No sea tile data found for bul/ec
+No sea tile data found for bur
+No sea tile data found for gal
+No sea tile data found for mos
+No sea tile data found for mun
+No sea tile data found for par
+No sea tile data found for ser
+No sea tile data found for sil
+No land tile data found for spa
+No sea tile data found for spa
+No land tile data found for stp
+No sea tile data found for stp
+No sea tile data found for tyr
+No sea tile data found for ukr
+No sea tile data found for vie
+No sea tile data found for war

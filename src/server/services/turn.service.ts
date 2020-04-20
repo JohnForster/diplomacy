@@ -28,7 +28,7 @@ class TurnService {
 
   async getByID(id: any): Promise<ITurnModel> {
     const turn =  await TurnModel.findById(id)
-    if (!turn) throw new Error('No turn found with that ID')
+    if (!turn) throw new Error(`No turn found with id ${id}`)
     return turn
   }
 

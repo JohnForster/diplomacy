@@ -1,21 +1,11 @@
-import { OrderType } from '@shared/types'
+import { IGameBoard } from '@shared/types'
 import {Component, Fragment, h} from 'preact'
 import './territory.scss'
+import ProvinceId from '@shared/types/enums/ProvinceId'
 // Move tile type into shared types folder?
 export interface ITerritoryProps {
-  tile: {
-    title: string;
-    name: string;
-    id: string;
-    tileType: string;
-    path: string;
-    textLocation?: {
-      x: number,
-      y: number,
-      rotate?: number,
-    }
-    transform?: string
-  }
+  id: ProvinceId,
+  tile: IGameBoard['territories'][keyof IGameBoard['territories']]
   // unit: 'army' | 'fleet' | null
   isSelected: boolean
   viewBox: string
@@ -35,7 +25,7 @@ export default class Territory extends Component <ITerritoryProps, ITerritorySta
   render(props: ITerritoryProps, state: ITerritoryState) {
     return (
       <Fragment>
-        <g title={props.tile.title} class={props.tile.tileType}>
+        <g title={props.id} class={props.tile.tileType}>
           <path class={`${props.tile.id} ${props.colour}-light`} d={props.tile.path} onClick={props.onSelect}/>
           {props.tile.textLocation && (
           <Fragment>

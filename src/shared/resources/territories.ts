@@ -82,6 +82,13 @@ const countries: {[n in ProvinceId]: string} = {
   'ruh': 'Ruhr',
   'tyr': 'Tyrolia',
   'kie': 'Kiel',
+  'n/ire': 'Ireland',
+  'n/swi': 'Switzerland',
+  'n/cor': 'Corsica',
+  'n/mal': 'Mallorca',
+  'n/sic': 'Sicily',
+  'n/cre': 'Crete',
+  'n/sar': 'Sardinia',
 }
 
 export default countries

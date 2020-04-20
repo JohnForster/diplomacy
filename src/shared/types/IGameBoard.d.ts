@@ -1,5 +1,6 @@
+import ProvinceId from './enums/ProvinceId';
+
 export interface IBoardTerritory {
-  title: string
   name: string
   tileType: string
   id: string
@@ -9,10 +10,13 @@ export interface IBoardTerritory {
     y: number,
     rotate?: number,
   }
+  adjacentByLand: ProvinceId[]
+  adjacentBySea: ProvinceId[]
 }
 
 export interface IGameBoard {
   mapTitle: string
   viewBox: string
-  territories: IBoardTerritory[]
+  territories: {
+    [p in ProvinceId]: IBoardTerritory}
 }

@@ -1,7 +1,5 @@
 import mongoose, {Schema, Types} from 'mongoose'
-import {defaultColours, startingTerritories, startingUnits} from '../data/old_initialState'
-
-import { IGameTurnDB, IOrder, IPlayerStateDB, IApiStateDB, IGame } from '@shared/types'
+import { IGameTurnDB, IOrder } from '@shared/types'
 
 import Nation from '@shared/types/enums/Nation';
 
@@ -75,7 +73,7 @@ const turnSchema = new Schema<ITurnModel>({
       default: false,
     },
   },
-  state: [gameStateSchema],
+  state: gameStateSchema,
   // See above for schema
   orders: {
     type: Map, // Empire

@@ -8,6 +8,7 @@ class TurnController {
   static async view(req: Request, res: Response) {
     // Need to strip other players moves if turn isn't complete.
     const [err, turn] = await to(TurnService.getByID(req.params.turn_id))
+    console.log('Inside TurnController.view... turn:', turn)
     if (err) return res.status(400).send(err.message)
     if (turn) return res.json(turn)
     return res.status(500).send('Something went wrong in fetching turn data')

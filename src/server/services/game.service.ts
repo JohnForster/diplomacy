@@ -14,12 +14,13 @@ export interface IGameConfig {
 const isReadyToStart = (game: IGameModel) => {
   return (
     game &&
-    game.currentPlayerIds.length === 7
+    game.players.length === 7
   )
 }
 
 class GameService {
   async create(gameConfig: IGameConfig, userId: any): Promise<IGameModel> {
+    console.log('Creating new game... userId:', userId)
     const game = new GameModel({createdBy: userId})
     Object.assign(game, gameConfig)
 
@@ -46,29 +47,23 @@ class GameService {
   async joinGame(gameID: string, playerID: string, colour?: string) {
     const game = await GameModel.findById(gameID)
     if (!game) throw new Error ('Game not found')
-    const turn = await TurnService.getByID(game.currentTurn)
-    turn.addPlayer(playerID, colour)
+    console.log(`Player joining game... playerID: ${playerID}, gameID: ${gameID}`)
+    await game.addPlayer(playerID, {colour})
     return game
   }
 
   // Move into separate helper?
-  randomiseEmpires(playerIds: IGameModel['currentPlayerIds']): Map<Nation, string> {
-    const players = new Map<Nation, string>()
-    console.log('Randomising empires...')
-    const empires: Nation[] = shuffle(['England', 'France', 'Germany', 'Italy', 'Austria', 'Russia', 'Turkey'])
-    playerIds.forEach(playerId => {
-      players.set(empires.pop(), playerId.toHexString())
-    })
-    return players
-  }
+
 
   async createStartingTurn(game: IGameModel) {
     const timeStarted = Date.now()
+    const players = new Map<Nation, string>()
+    game.players.forEach(p => {players.set(p.empire, p.playerId.toHexString())})
     return await TurnService.createNewTurn({
       info: {
         timeStarted,
         timeEnds: timeStarted + game.turnLengthMinutes * 60,
-        players: this.randomiseEmpires(game.currentPlayerIds)
+        players,
       },
       ownedTerritories: new Map(Object.entries(initialTerritories)),
       state: stateToDb(initialState),
@@ -79,8 +74,11 @@ class GameService {
     const game = await GameModel.findById(gameID)
     if (!game) throw new Error ('Game not found')
     if (isReadyToStart(game)) {
+      await game.randomiseEmpires()
+      console.log('radomisation done', game)
       const newTurnId = await this.createStartingTurn(game)
       await game.setTurn(newTurnId)
+      console.log('Started game:', game)
       return game
     }
 

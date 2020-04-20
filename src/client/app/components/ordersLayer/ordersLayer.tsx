@@ -16,9 +16,9 @@ interface IOrdersLayerState {
 
 export default class OrdersLayer extends Component <IOrdersLayerProps, IOrdersLayerState> {
   markerColours = {
-    support: 'brown',
-    move: 'black',
-    retreat: 'blue',
+    Support: 'skyblue',
+    Move: 'black',
+    Retreat: 'brown',
   }
 
   render(props: IOrdersLayerProps, state: IOrdersLayerState) {
@@ -38,11 +38,13 @@ export default class OrdersLayer extends Component <IOrdersLayerProps, IOrdersLa
             </marker>
           ))}
         </defs>
-        {props.turnData && props.turnData.players.map(player => (
-          player.moves.map(order => <Order {...order} boardData={props.boardData}/>)
+        {props.turnData && Object.entries(props.turnData.orders).map(([empire, orders]) => (
+          <Fragment>
+            {orders.map(o => <Order order={o} boardData={props.boardData}/>)}
+          </Fragment>
         ))}
         {props.newOrders && props.newOrders.map(order => (
-          <Order {...order} boardData={props.boardData} />
+          <Order order={order} boardData={props.boardData} />
         ))}
       </Fragment>
     )

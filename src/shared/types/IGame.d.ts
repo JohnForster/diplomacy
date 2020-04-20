@@ -15,14 +15,13 @@ export interface IGameJSON extends IGame {
   winner?: string,
   createdBy: string,
   history: string[]
-  currentPlayerIds: string[]
-  colours: {[n in Nation]: string},
+  players: {playerId: string, colour: string, empire: Nation}[]
+  colours: {[id: string]: string},
 }
 
 export interface IGameDB extends IGame {
   winner?: Types.ObjectId,
   createdBy: Types.ObjectId,
   history: Types.ObjectId[]
-  currentPlayerIds: Types.ObjectId[]
-  colours: Map<Nation, string>,
+  players: {playerId: Types.ObjectId, colour: string, empire: Nation}[]
 }
