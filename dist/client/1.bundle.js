@@ -956,6 +956,9 @@ var Game = /** @class */ (function (_super) {
     }
     Game.prototype.render = function (props, state) {
         console.log('process.env.NODE_ENV:', "development");
+        var totalOrders = 0;
+        if (state.turn)
+            state.turn.players.forEach(function (p) { return totalOrders += p.moves.length; });
         return (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("div", { className: 'page' },
             Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("h1", null,  true ? 'Stop being a perfectionist!' : undefined),
             Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("div", { className: 'buttonsContainer' },
@@ -966,9 +969,9 @@ var Game = /** @class */ (function (_super) {
                 Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.nextTurn }, "Next Turn"),
                 Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("br", null)),
             Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("br", null),
-            !!state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("h2", null,
-                "You are playing as ",
-                state.turn.players.find(function (p) { return p.playerID === props.userID; }).empire)),
+            !!state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(preact__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null,
+                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("p", null, "You are playing as " + state.turn.players.find(function (p) { return p.playerID === props.userID; }).empire),
+                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("p", null, state.turn.info.season + " " + state.turn.info.year + ": " + state.turn.info.phase + ". Current Orders: " + totalOrders))),
             Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(_client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__["default"], activeTerritory: state.activeTerritory, onTileSelect: this.onTileSelect, onMoveSelect: this.onMoveSelect, turnData: state.turn, newOrders: state.newOrders })));
     };
     Game.prototype.beginMove = function (territoryName) {

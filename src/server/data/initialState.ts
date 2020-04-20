@@ -1,6 +1,6 @@
 import { IUnit } from "@shared/types";
 
-const startingTerritories: {[key: string]: string[]} = {
+export const startingTerritories: {[key: string]: string[]} = {
   England: ['London', 'Liverpool', 'Yorkshire', 'Clyde', 'Edinburgh', 'Wales'],
   France: ['Picardy', 'Brest', 'Paris', 'Gascony', 'Burgundy', 'Marseilles'],
   Italy: ['Piedmont', 'Venice', 'Rome', 'Naples', 'Apulia', 'Tuscany'],
@@ -10,7 +10,7 @@ const startingTerritories: {[key: string]: string[]} = {
   Turkey: ['Constantinople', 'Smyrna', 'Syria', 'Ankara', 'Armenia'],
 }
 
-const startingUnits: {[key: string]: IUnit[]} = {
+export const startingUnits: {[key: string]: IUnit[]} = {
   England: [
     {unitType: 'Fleet', location: 'London', status: 'Active'},
     {unitType: 'Fleet', location: 'Edinburgh', status: 'Active'},
@@ -49,7 +49,7 @@ const startingUnits: {[key: string]: IUnit[]} = {
   ],
 }
 
-const defaultColours: {[key: string]: string} = {
+export const defaultColours: {[key: string]: string} = {
   Austria: '#FF77FF',
   England: '#0000FF',
   France: '#00FFFF',
@@ -57,10 +57,4 @@ const defaultColours: {[key: string]: string} = {
   Italy: '#00FF00',
   Russia: '#FFFF00',
   Turkey: '#FF0000',
-}
-
-export {
-  startingTerritories,
-  startingUnits,
-  defaultColours,
 }

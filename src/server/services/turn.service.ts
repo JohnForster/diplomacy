@@ -5,6 +5,7 @@ import { apiToGameState, IConversionData, gameToApiState } from '@server/_helper
 import to from 'await-to-js'
 import axios from 'axios'
 import { IApiStateJSON } from '@shared/types/IApiState'
+import PhaseType from '@shared/types/enums/PhaseType'
 
 export interface ITurnConfig {
   phase: 'movement' | 'retreat' | 'build'
@@ -53,13 +54,18 @@ class TurnService{
     const turn = (await TurnModel.findById(id)).toJSON() as IGameTurnJSON
     const turnAsApiJSON = gameToApiState(turn)
     const [err, res] = await to(axios.post('http://godip-adjudication.appspot.com/Classical', turnAsApiJSON))
+    if (err) {
+      console.log('Error updating turn:', err)
+      return Promise.reject(null)
+    }
+    const newTurnAsApiJSON = res.data as IApiStateJSON
     const conversionData: IConversionData = {
       phaseNumber: turn.info.phaseNumber + 1,
       timeStarted: null,
       timeEnds: null,
-      players: turn.players.map(({colour, empire, playerID}) => ({colour, empire, playerID}))
+      players: turn.players.map(({colour, empire, playerID, ownedTerritories}) => ({colour, empire, playerID, ownedTerritories}))
     }
-    const newTurn = await this.create(res.data, conversionData)
+    const newTurn = await this.create(newTurnAsApiJSON, conversionData)
     return newTurn
   }
 }

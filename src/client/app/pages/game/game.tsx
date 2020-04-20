@@ -1,6 +1,6 @@
 import to from 'await-to-js'
 import Axios from 'axios'
-import {Component, h} from 'preact'
+import {Component, h, Fragment} from 'preact'
 
 import Board from '@client/app/components/board/board';
 import boardData from '@client/assets/countryData'
@@ -35,6 +35,8 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   render(props: IGameProps, state: IGameState) {
     console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
+    let totalOrders = 0
+    if (state.turn) state.turn.players.forEach(p => totalOrders += p.moves.length)
     return (
       <div className='page'>
         <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1>
@@ -46,7 +48,10 @@ export default class Game extends Component <IGameProps, IGameState> {
           <button onClick={this.nextTurn}>Next Turn</button><br/>
         </div><br/>
         {!!state.turn && (
-          <h2>You are playing as {state.turn.players.find(p => p.playerID === props.userID).empire}</h2>
+          <Fragment>
+            <p>{`You are playing as ${state.turn.players.find(p => p.playerID === props.userID).empire}`}</p>
+            <p>{`${state.turn.info.season} ${state.turn.info.year}: ${state.turn.info.phase}. Current Orders: ${totalOrders}`}</p>
+          </Fragment>
         )}
         {/* Can extend in future to have a "showText" boolean for board previews? */}
         <Board

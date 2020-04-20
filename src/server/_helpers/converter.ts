@@ -5,6 +5,7 @@ import ProvinceId from '@shared/types/enums/ProvinceId'
 import OrderType from '@shared/types/enums/OrderType'
 import getLocationFromId from '@shared/helpers/getLocationFromId'
 import getIdFromLocation from '@shared/helpers/getIdFromLocation'
+import UnitType from '@shared/types/enums/UnitType'
 
 export interface IConversionData {
   phaseNumber: number,
@@ -15,6 +16,7 @@ export interface IConversionData {
     colour: string,
     empire: Nation,
     playerID: string
+    ownedTerritories: string[]
   }[]
 }
 
@@ -30,9 +32,32 @@ const getUnits = (empire: Nation, apiState: IApiStateJSON) => {
   return unitsInGameFormat
 }
 
+// Add functionality to change ownership of territories that aren't owned by anyone.
+const updateOwnedTerritories = (apiState: IApiStateJSON, players: IConversionData['players']): IConversionData['players'] => {
+  const units = Object.entries(apiState.Units) as ([ProvinceId, {Nation: Nation, Type: UnitType}])[]
+  const convertedUnits = units.map(([id, unit]) => ([getLocationFromId(id), unit])) as ([string, {Nation: Nation, Type: UnitType}])[]
+  const noUnitAtTerritory = (territory: string) => !convertedUnits.find(([location]) => location === territory)
+  const newPlayers = players.map(p => {
+    const playerUnits = convertedUnits
+      .filter(([, unit]) => unit.Nation === p.empire)
+      .map(([location]) => location)
+    return {
+      ...p,
+      ownedTerritories: p.ownedTerritories
+        .filter(noUnitAtTerritory) // Remove all territories that have a unit in them.
+        .concat(playerUnits) // Add back in the locations of the player's units.
+    }
+  })
+
+  return newPlayers
+}
+
 export const apiToGameState = (
   apiState: IApiStateJSON, data: IConversionData
 ): IGameTurnJSON => {
+  const players: IConversionData['players'] = apiState.Type === 'Adjustment'
+    ? updateOwnedTerritories(apiState, data.players)
+    : data.players
   // TODO Add key features from ApiState to game. i.e Dislodgeds, Resolutions, bounces?
   return {
     _id: data._id, // ! Maybe get from data, would need to create turn before doing conversion.
@@ -40,16 +65,16 @@ export const apiToGameState = (
       phaseNumber: data.phaseNumber,
       year: apiState.Year,
       season: apiState.Season,
-      phase: apiState.Type,
+      phase: apiState.Type.toLowerCase(),
       timeStarted: data.timeStarted,
       timeEnds: data.timeEnds,
       isComplete: false,
     },
-    players: data.players.map(p => ({
+    players: players.map(p => ({
       playerID: p.playerID,
       colour: p.colour,
       empire: p.empire,
-      ownedTerritories: [], // Will need to work out a way of storing ownedTerritories
+      ownedTerritories: p.ownedTerritories, // Will need to work out a way of storing ownedTerritories
       ownedUnits: getUnits(p.empire, apiState),
       moves: [], // Always starts empty
     })),
