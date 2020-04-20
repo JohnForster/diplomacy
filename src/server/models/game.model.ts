@@ -18,7 +18,7 @@ import TurnModel, { ITurnModel } from './turn.model'
 export interface IGameModel extends IGameDB, mongoose.Document {
   start: (this: IGameModel) => void,
   setTurn: (this: IGameModel, turn: string) => void,
-  advanceTurn: (this: IGameModel) => void,
+  // advanceTurn: (this: IGameModel) => void,
 }
 
 const gameSchema = new Schema({
@@ -81,21 +81,21 @@ gameSchema.methods.setTurn = function(turnID: string): void {
 
 // ? Move Turnservice calls into gameService and pass as args to avoid
 // ?   making this method async?
-gameSchema.methods.advanceTurn = async function(): Promise<ITurnModel> {
-  const turn = await TurnService.getByID(this.currentTurn)
-  // ! Phase is currently hard coded as 'Move'
-  const nextTurn = await TurnService.create({phase: 'movement'})
-  nextTurn.players = turn.players
-  nextTurn.players.forEach((player) => {
-    player.moves.forEach((move) => {
-      const unit = player.ownedUnits.find((u) => u.location === move.from)
-      if (unit) unit.location = move.to
-    })
-    player.moves = []
-  })
-  this.currentTurn = nextTurn.id
-  this.save()
-  return nextTurn
-}
+// gameSchema.methods.advanceTurn = async function(): Promise<ITurnModel> {
+//   const turn = await TurnService.getByID(this.currentTurn)
+//   // ! Phase is currently hard coded as 'Move'
+//   const nextTurn = await TurnService.create({phase: 'movement'})
+//   nextTurn.players = turn.players
+//   nextTurn.players.forEach((player) => {
+//     player.moves.forEach((move) => {
+//       const unit = player.ownedUnits.find((u) => u.location === move.from)
+//       if (unit) unit.location = move.to
+//     })
+//     player.moves = []
+//   })
+//   this.currentTurn = nextTurn.id
+//   this.save()
+//   return nextTurn
+// }
 
 export default mongoose.model<IGameModel>('Game', gameSchema)

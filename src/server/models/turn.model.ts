@@ -60,6 +60,7 @@ const turnSchema = new Schema({
     },
   },
   players: [playerSchema],
+  previousState: String,
 }, {toJSON: {virtuals: true}})
 
 turnSchema.methods.isReadyToStart = function(): boolean {

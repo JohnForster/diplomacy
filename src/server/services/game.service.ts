@@ -59,8 +59,12 @@ const GameService = {
 
   async processTurn(gameID: string): Promise<IGameModel> {
     const game = await GameModel.findById(gameID)
-    if (!game) throw Error('Game not found!')
-    await game.advanceTurn()
+    if (!game) throw Error(`Game not found with id ${gameID}`)
+    const newTurn = await TurnService.advanceById(game.currentTurn)
+    // game.history.push(game.currentTurn)
+    game.currentTurn= newTurn.id
+    await game.save()
+    // await game.advanceTurn()
     return game
   },
 }

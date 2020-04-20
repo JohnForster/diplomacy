@@ -14,7 +14,7 @@ export interface IConversionData {
   players: {
     colour: string,
     empire: Nation,
-    playerId: string
+    playerID: string
   }[]
 }
 
@@ -46,14 +46,14 @@ export const apiToGameState = (
       isComplete: false,
     },
     players: data.players.map(p => ({
-      playerID: p.playerId,
+      playerID: p.playerID,
       colour: p.colour,
       empire: p.empire,
       ownedTerritories: [], // Will need to work out a way of storing ownedTerritories
       ownedUnits: getUnits(p.empire, apiState),
       moves: [], // Always starts empty
     })),
-    previousState: JSON.stringify(apiState)
+    previousState: JSON.stringify(apiState),
   }
 }
 
@@ -83,7 +83,7 @@ const convertOrder = (move: IMove): ApiOrder => {
 //   }
 // }
 
-const getApiOrdersFromGame = (turn: IGameTurnDB): IApiStateJSON['Orders'] => {
+const getApiOrdersFromGame = (turn: IGameTurnJSON): IApiStateJSON['Orders'] => {
   const orders: IApiStateJSON['Orders'] = {}
   turn.players.forEach(p => {
     orders[p.empire] = {}
@@ -96,7 +96,9 @@ const getApiOrdersFromGame = (turn: IGameTurnDB): IApiStateJSON['Orders'] => {
   return orders
 }
 
-export const gameToApiState = (turn: IGameTurnDB): IApiStateJSON => {
+export const gameToApiState = (turn: IGameTurnJSON): IApiStateJSON => {
+  console.log(turn)
+  console.log(turn.previousState)
   const previousState = JSON.parse(turn.previousState) as IApiStateJSON
   return {
     ...previousState,

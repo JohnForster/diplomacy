@@ -1,6 +1,7 @@
 import ProvinceId from '@shared/types/enums/ProvinceId';
 
  const getIdFromLocation = (locationName: string): ProvinceId => {
+  if (!locationName) return null
   const id = abbreviations[locationName]
   if (!id) console.trace(`NO TILE FOUND WITH NAME ${locationName}`)
   return id
