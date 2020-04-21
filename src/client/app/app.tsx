@@ -29,8 +29,8 @@ export default class App extends Component <IAppProps, IAppState> {
   handleRoute = async (event: RouterOnChangeArgs) => {
     console.log(`Attempting to route to ${event.url}`)
     const isAuthed = await this.checkAuthentication()
-    if (isAuthed  && (event.url === '/' || event.url === '/register')) route('/game', true)
-    if (!isAuthed) route('/', true)
+    if (isAuthed  && (event.url === '/' || event.url === '/register')) return route('/game', true)
+    if (!isAuthed && (event.url === '/game' || event.url === '/lobby')) return route('/', true)
   }
 
   toggleLogIn = (isLoggedIn?: boolean) => {

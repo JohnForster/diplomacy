@@ -30,7 +30,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "h1 {\n  color: #102542;\n  font-size: 84px;\n  text-shadow: 5px 5px 0px #546A7B;\n  text-align: center; }\n  @media (max-width: 500px) {\n    h1 {\n      font-size: 50px;\n      text-shadow: 3px 3px 0px #546A7B; } }\n", ""]);
+exports.push([module.i, "h1 {\n  color: #102542;\n  font-size: 84px;\n  text-shadow: 5px 5px 0px #546A7B;\n  text-align: center; }\n  @media (max-width: 767px) {\n    h1 {\n      font-size: 44px;\n      text-shadow: 3px 3px 0px #546A7B; } }\n", ""]);
 // Exports
 module.exports = exports;
 

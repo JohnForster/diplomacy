@@ -11,7 +11,25 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".gameBoard {\n  position: relative;\n  border: 2px solid #102542;\n  border-radius: 4px;\n  background-image: url(/assets/paperTexture.jpg);\n  background-size: contain;\n  width: 100%;\n  max-width: 80vh; }\n  @media screen and (max-width: 767px) and (orientation: landscape) {\n    .gameBoard {\n      max-width: 100%; } }\n\n.unit {\n  pointer-events: none; }\n\n.orderBox {\n  width: 15%;\n  top: 0;\n  font: arial;\n  position: absolute;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255, 255, 255, 0.4);\n  padding: 5px; }\n", ""]);
+exports.push([module.i, ".gameBoard {\n  position: relative;\n  width: 100%;\n  max-width: 80vh; }\n  @media screen and (max-width: 767px) and (orientation: landscape) {\n    .gameBoard {\n      max-width: 100%; } }\n\n.sticky-container {\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 100px;\n  z-index: 5; }\n\n.unit {\n  pointer-events: none; }\n\n.territorySquare {\n  background-image: url(/assets/paperTexture.jpg);\n  background-size: contain;\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-100px);\n  border: 2px solid #102542;\n  border-radius: 4px; }\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/orderBox/orderBox.scss":
+/*!*********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/orderBox/orderBox.scss ***!
+  \*********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".orderBox {\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255, 255, 255, 0.4);\n  padding: 5px; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -155,6 +173,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _board_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_board_scss__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ordersLayer/ordersLayer */ "./src/client/app/components/ordersLayer/ordersLayer.tsx");
 /* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _orderBox_orderBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./orderBox/orderBox */ "./src/client/app/components/board/orderBox/orderBox.tsx");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -168,6 +187,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+
 
 
 
@@ -217,26 +237,100 @@ var Board = /** @class */ (function (_super) {
     });
     Board.prototype.render = function (props, state) {
         var _this = this;
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'gameBoard', id: 'gameBoard' },
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, className: "territorySquare ", width: '100%', ref: this.svg, onClick: this.alert_coords },
-                props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_1__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
-                props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_2__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData })),
-            props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'orderBox' },
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { className: 'orderTitle' }, props.activeTerritory),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('move') }, "Move"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('support') }, "Support"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('hold') }, "Hold"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect(null) }, "Cancel"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null)))));
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'gameBoard', id: 'gameBoard' },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'sticky-container' }, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_6__["default"], { onMoveSelect: props.onMoveSelect, activeTerritory: props.activeTerritory }))),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, className: "territorySquare", width: '100%', ref: this.svg, onClick: this.alert_coords },
+                    props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_1__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
+                    props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_2__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData })))));
     };
     return Board;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (Board);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/orderBox/orderBox.scss":
+/*!****************************************************************!*\
+  !*** ./src/client/app/components/board/orderBox/orderBox.scss ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../node_modules/sass-loader/dist/cjs.js!./orderBox.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/orderBox/orderBox.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+var exported = content.locals ? content.locals : {};
+
+
+
+module.exports = exported;
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/orderBox/orderBox.tsx":
+/*!***************************************************************!*\
+  !*** ./src/client/app/components/board/orderBox/orderBox.tsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _orderBox_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./orderBox.scss */ "./src/client/app/components/board/orderBox/orderBox.scss");
+/* harmony import */ var _orderBox_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_orderBox_scss__WEBPACK_IMPORTED_MODULE_1__);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var OrderBox = /** @class */ (function (_super) {
+    __extends(OrderBox, _super);
+    function OrderBox() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    OrderBox.prototype.render = function (props, state) {
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'orderBox' },
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { className: 'orderTitle' }, props.activeTerritory),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('move') }, "Move"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('support') }, "Support"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('hold') }, "Hold"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect(null) }, "Cancel"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null)));
+    };
+    return OrderBox;
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (OrderBox);
 
 
 /***/ }),

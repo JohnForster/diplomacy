@@ -1,10 +1,5 @@
 @import '@client/app/variables/colors.scss';
 
-.territorySquare {
-  width: 100%;
-  pointer-events: none
-}
-
 .l, .Unowned {
   pointer-events: all;
   fill: #FFFFDD;

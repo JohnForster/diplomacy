@@ -3365,9 +3365,9 @@ var App = /** @class */ (function (_super) {
                     case 1:
                         isAuthed = _a.sent();
                         if (isAuthed && (event.url === '/' || event.url === '/register'))
-                            Object(preact_router__WEBPACK_IMPORTED_MODULE_2__["route"])('/game', true);
-                        if (!isAuthed)
-                            Object(preact_router__WEBPACK_IMPORTED_MODULE_2__["route"])('/', true);
+                            return [2 /*return*/, Object(preact_router__WEBPACK_IMPORTED_MODULE_2__["route"])('/game', true)];
+                        if (!isAuthed && (event.url === '/game' || event.url === '/lobby'))
+                            return [2 /*return*/, Object(preact_router__WEBPACK_IMPORTED_MODULE_2__["route"])('/', true)];
                         return [2 /*return*/];
                 }
             });

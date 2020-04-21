@@ -2,10 +2,6 @@
 
 .gameBoard {
   position: relative;
-  border: 2px solid $shadow;
-  border-radius: 4px;
-  background-image: url(/assets/paperTexture.jpg);
-  background-size: contain;
   width: 100%;
   max-width: 80vh;
   @media screen and (max-width:767px) and (orientation:landscape) {
@@ -13,19 +9,26 @@
   }
 }
 
+.sticky-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  height: 100px;
+  z-index: 5;
+}
+
 .unit {
   pointer-events: none;
 }
 
-// Move to separate component
-.orderBox {
-  width: 15%;
-  top: 0;
-  font: arial;
-  position: absolute;
-  border: 1px solid black;
-  border-radius: 5px;
-  text-align: center;
-  background: rgba(255,255,255, .4);
-  padding: 5px;
+.territorySquare {
+  background-image: url(/assets/paperTexture.jpg);
+  background-size: contain;
+
+  width: 100%;
+  pointer-events: none;
+  transform: translateY(-100px);
+
+  border: 2px solid $shadow;
+  border-radius: 4px;
 }

@@ -1,4 +1,4 @@
-import {Component, h} from 'preact'
+import {Component, h, Fragment} from 'preact'
 
 import { IBoardTerritory, IGameBoard, IGameTurnJSON, IMove, OrderType } from '@shared/types'
 
@@ -9,6 +9,7 @@ import './board.scss'
 import Order from '../ordersLayer/order/order'
 import OrdersLayer from '../ordersLayer/ordersLayer'
 import { createRef } from 'preact/compat'
+import OrderBox from './orderBox/orderBox'
 
 // ? Recieve boardData as props or import?
 // ? Import is simpler, prop;s allows for extending in the future.
@@ -62,9 +63,16 @@ export default class Board extends Component <IBoardProps, IBoardState> {
 
   render(props: IBoardProps, state: IBoardState) {
     return (
+      <Fragment>
+        {/* Draw Order Box */}
       <div className='gameBoard' id='gameBoard'>
+        <div className='sticky-container'>
+          {props.activeTerritory && (
+            <OrderBox onMoveSelect={props.onMoveSelect} activeTerritory={props.activeTerritory}/>
+          )}
+        </div>
         {/* Draw Territories */}
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox={props.boardData.viewBox} className={`territorySquare `} width='100%' ref={this.svg} onClick={this.alert_coords}>
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox={props.boardData.viewBox} className={`territorySquare`} width='100%' ref={this.svg} onClick={this.alert_coords}>
           {props.boardData.territories.map(tile => (
             <Territory
               tile={tile}
@@ -90,17 +98,9 @@ export default class Board extends Component <IBoardProps, IBoardState> {
           {/* Extract later into separate component */}
           <OrdersLayer boardData={props.boardData} newOrders={props.newOrders} turnData={props.turnData}/>
         </svg>
-        {/* Draw Order Box */}
-        {props.activeTerritory && (
-          <div className='orderBox'>
-            <span className='orderTitle'>{props.activeTerritory}</span><br/>
-            <span onClick={props.onMoveSelect('move')}>Move</span><br/>
-            <span onClick={props.onMoveSelect('support')}>Support</span><br/>
-            <span onClick={props.onMoveSelect('hold')}>Hold</span><br/>
-            <span onClick={props.onMoveSelect(null)}>Cancel</span><br/>
-          </div>
-        )}
       </div>
+
+      </Fragment>
     )
   }
 }
