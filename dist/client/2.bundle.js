@@ -30,7 +30,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "h1 {\n  color: #102542;\n  font-size: 84px;\n  text-shadow: 5px 5px 0px #546A7B;\n  text-align: center; }\n", ""]);
+exports.push([module.i, "h1 {\n  color: #102542;\n  font-size: 84px;\n  text-shadow: 5px 5px 0px #546A7B;\n  text-align: center; }\n  @media (max-width: 500px) {\n    h1 {\n      font-size: 50px;\n      text-shadow: 3px 3px 0px #546A7B; } }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -281,8 +281,9 @@ var Login = /** @class */ (function (_super) {
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { ref: function (passwordInput) { return _this.passwordInput = passwordInput; }, type: 'text', name: 'password', onChange: this.handleChange('password') }),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { type: 'submit', value: 'Submit' })),
-                'New? Register ',
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact_router__WEBPACK_IMPORTED_MODULE_4__["Link"], { href: '/register' }, "here"))));
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null,
+                    "New? Register ",
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact_router__WEBPACK_IMPORTED_MODULE_4__["Link"], { href: '/register' }, "here")))));
     };
     return Login;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));

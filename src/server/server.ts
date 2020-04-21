@@ -74,7 +74,9 @@ const startServer = () => {
     res.sendFile(path.join(clientPath, '/index.html'))
   })
 
-  app.listen(config.LISTEN_PORT, () => {
+  const listenParam = isDev ? {port: config.LISTEN_PORT, host: '0.0.0.0'} : config.LISTEN_PORT
+
+  app.listen(listenParam, () => {
     console.log(`App listening to ${config.LISTEN_PORT}...`)
     console.log(`App available at http://localhost:${config.LISTEN_PORT}`)
     console.log('Press Ctrl+C to quit.')

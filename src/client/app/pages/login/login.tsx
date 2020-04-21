@@ -47,8 +47,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
               <input ref={passwordInput => this.passwordInput = passwordInput} type='text' name='password' onChange={this.handleChange('password')}/><br/>
               <input type='submit' value='Submit'/>
             </form>
-            {'New? Register '}
-          <Link href='/register'>here</Link>
+            <p>New? Register <Link href='/register'>here</Link></p>
         </FormBox>
       </Fragment>
     )
