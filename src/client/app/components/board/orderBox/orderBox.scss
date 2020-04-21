@@ -1,5 +1,9 @@
 // Move to separate component
 .orderBox {
+  @media screen and (max-width:500px){
+    font-size: 9px;
+  }
+
   width: 13%;
   font-family: monospace;
   border: 1px solid black;
@@ -7,4 +11,8 @@
   text-align: center;
   background: rgba(255,255,255, .4);
   padding: 5px;
+  pointer-events: all;
+  @media screen and (max-width:767px) and (orientation:landscape) {
+    max-width: 100%;
+  }
 }
