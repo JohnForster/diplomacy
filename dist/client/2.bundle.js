@@ -278,7 +278,7 @@ var Login = /** @class */ (function (_super) {
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
                     "Password",
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { ref: function (passwordInput) { return _this.passwordInput = passwordInput; }, type: 'text', name: 'password', onChange: this.handleChange('password') }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { ref: function (passwordInput) { return _this.passwordInput = passwordInput; }, type: 'password', name: 'password', onChange: this.handleChange('password') }),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { type: 'submit', value: 'Submit' })),
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null,

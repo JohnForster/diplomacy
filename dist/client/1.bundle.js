@@ -11,7 +11,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".gameBoard {\n  position: relative;\n  border: 2px solid #102542;\n  border-radius: 4px;\n  background-image: url(/assets/paperTexture.jpg);\n  background-size: contain;\n  width: 100%;\n  max-width: 80vh; }\n\n.unit {\n  pointer-events: none; }\n\n.orderBox {\n  width: 15%;\n  top: 0;\n  font: arial;\n  position: absolute;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255, 255, 255, 0.4);\n  padding: 5px; }\n", ""]);
+exports.push([module.i, ".gameBoard {\n  position: relative;\n  border: 2px solid #102542;\n  border-radius: 4px;\n  background-image: url(/assets/paperTexture.jpg);\n  background-size: contain;\n  width: 100%;\n  max-width: 80vh; }\n  @media screen and (max-width: 767px) and (orientation: landscape) {\n    .gameBoard {\n      max-width: 100%; } }\n\n.unit {\n  pointer-events: none; }\n\n.orderBox {\n  width: 15%;\n  top: 0;\n  font: arial;\n  position: absolute;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255, 255, 255, 0.4);\n  padding: 5px; }\n", ""]);
 // Exports
 module.exports = exports;
 

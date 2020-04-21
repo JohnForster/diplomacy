@@ -44,7 +44,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
               Username<br/>
               <input ref={usernameInput => this.usernameInput = usernameInput} type='text' name='username' onChange={this.handleChange('username')}/><br/>
               Password<br/>
-              <input ref={passwordInput => this.passwordInput = passwordInput} type='text' name='password' onChange={this.handleChange('password')}/><br/>
+              <input ref={passwordInput => this.passwordInput = passwordInput} type='password' name='password' onChange={this.handleChange('password')}/><br/>
               <input type='submit' value='Submit'/>
             </form>
             <p>New? Register <Link href='/register'>here</Link></p>
