@@ -22,11 +22,24 @@ export default class Order extends Component <IOrderProps, IOrderState> {
 
   getMarkerColour = <T extends string>(moveType: T) => {
     switch(moveType) {
-      case 'move': return 'black';
+      case 'move': return 'lightgray';
       case 'support': return 'brown';
       case 'retreat': return 'blue';
       default: return ''
     }
+  }
+
+  calculateLocation = (fromLocation: string, toLocation: string) => {
+    const distanceFromEnd = 10
+    const [fromX, fromY] = fromLocation.split(',').map(n => parseInt(n, 10))
+    const [toX, toY] = toLocation.split(',').map(n => parseInt(n, 10))
+    const lineLength = Math.sqrt(Math.pow((fromX-toX), 2) + Math.pow((fromY-toY), 2))
+    const t = distanceFromEnd / lineLength
+    console.log('fromLocation, toLocation:', fromLocation, toLocation)
+    console.log('fromX, fromY, toX, toY:', fromX, fromY, toX, toY)
+    const x = ((1 - t) * toX) + (t * fromX)
+    const y = ((1 - t) * toY) + (t * fromY)
+    return `${x},${y}`
   }
 
   render(props: IOrderProps, state: IOrderState) {
@@ -42,19 +55,19 @@ export default class Order extends Component <IOrderProps, IOrderState> {
             <path
               marker-end='url(#head-support)'
               stroke-width='2' fill='transparent' stroke={markerColour}
-              d={`M${fromLocation} Q${supportFromLocation} ${toLocation}`}
+              d={`M${this.calculateLocation(toLocation, fromLocation)} Q${supportFromLocation} ${this.calculateLocation(supportFromLocation, toLocation)}`}
             />
             <path
               stroke-width='4' fill='transparent' stroke='#FF000088'
-              d={`M${supportFromLocation} L ${toLocation}`}
+              d={`M${this.calculateLocation(toLocation, supportFromLocation)} L ${this.calculateLocation(supportFromLocation, toLocation)}`}
             />
           </ Fragment>
         )}
         {props.moveType === 'move' && (
           <path
             marker-end='url(#head-move)'
-            stroke-width='2' fill='black' stroke='black'
-            d={`M${fromLocation} L${toLocation}`}
+            stroke-width='2' stroke='lightgray'
+            d={`M${this.calculateLocation(toLocation, fromLocation)} L${this.calculateLocation(fromLocation, toLocation)}`}
           />
         )}
       </Fragment>

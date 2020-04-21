@@ -154,6 +154,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _board_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./board.scss */ "./src/client/app/components/board/board.scss");
 /* harmony import */ var _board_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_board_scss__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ordersLayer/ordersLayer */ "./src/client/app/components/ordersLayer/ordersLayer.tsx");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -167,6 +168,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+
 
 
 
@@ -189,6 +191,17 @@ var Board = /** @class */ (function (_super) {
                 return null;
             return player.colour;
         };
+        // Created once for document
+        _this.alert_coords = function (evt) {
+            var svg = _this.svg.current;
+            var pt = svg.createSVGPoint();
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+            // The cursor point, translated into svg coordinates
+            var cursorpt = pt.matrixTransform(svg.getScreenCTM().inverse());
+            console.log('(' + Math.round(cursorpt.x) + ', ' + Math.round(cursorpt.y) + ')');
+        };
+        _this.svg = Object(preact_compat__WEBPACK_IMPORTED_MODULE_5__["createRef"])();
         return _this;
     }
     Object.defineProperty(Board.prototype, "activeTileData", {
@@ -205,7 +218,7 @@ var Board = /** @class */ (function (_super) {
     Board.prototype.render = function (props, state) {
         var _this = this;
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'gameBoard', id: 'gameBoard' },
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, className: "territorySquare ", width: '100%' },
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, className: "territorySquare ", width: '100%', ref: this.svg, onClick: this.alert_coords },
                 props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_1__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
                 props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_2__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData })),
@@ -613,11 +626,23 @@ var Order = /** @class */ (function (_super) {
         };
         _this.getMarkerColour = function (moveType) {
             switch (moveType) {
-                case 'move': return 'black';
+                case 'move': return 'lightgray';
                 case 'support': return 'brown';
                 case 'retreat': return 'blue';
                 default: return '';
             }
+        };
+        _this.calculateLocation = function (fromLocation, toLocation) {
+            var distanceFromEnd = 10;
+            var _a = fromLocation.split(',').map(function (n) { return parseInt(n, 10); }), fromX = _a[0], fromY = _a[1];
+            var _b = toLocation.split(',').map(function (n) { return parseInt(n, 10); }), toX = _b[0], toY = _b[1];
+            var lineLength = Math.sqrt(Math.pow((fromX - toX), 2) + Math.pow((fromY - toY), 2));
+            var t = distanceFromEnd / lineLength;
+            console.log('fromLocation, toLocation:', fromLocation, toLocation);
+            console.log('fromX, fromY, toX, toY:', fromX, fromY, toX, toY);
+            var x = ((1 - t) * toX) + (t * fromX);
+            var y = ((1 - t) * toY) + (t * fromY);
+            return x + "," + y;
         };
         return _this;
     }
@@ -628,9 +653,9 @@ var Order = /** @class */ (function (_super) {
         var markerColour = this.getMarkerColour(props.moveType);
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
             props.moveType === 'support' && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "marker-end": 'url(#head-support)', "stroke-width": '2', fill: 'transparent', stroke: markerColour, d: "M" + fromLocation + " Q" + supportFromLocation + " " + toLocation }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "stroke-width": '4', fill: 'transparent', stroke: '#FF000088', d: "M" + supportFromLocation + " L " + toLocation }))),
-            props.moveType === 'move' && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "marker-end": 'url(#head-move)', "stroke-width": '2', fill: 'black', stroke: 'black', d: "M" + fromLocation + " L" + toLocation }))));
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "marker-end": 'url(#head-support)', "stroke-width": '2', fill: 'transparent', stroke: markerColour, d: "M" + this.calculateLocation(toLocation, fromLocation) + " Q" + supportFromLocation + " " + this.calculateLocation(supportFromLocation, toLocation) }),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "stroke-width": '4', fill: 'transparent', stroke: '#FF000088', d: "M" + this.calculateLocation(toLocation, supportFromLocation) + " L " + this.calculateLocation(supportFromLocation, toLocation) }))),
+            props.moveType === 'move' && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "marker-end": 'url(#head-move)', "stroke-width": '2', stroke: 'lightgray', d: "M" + this.calculateLocation(toLocation, fromLocation) + " L" + this.calculateLocation(fromLocation, toLocation) }))));
     };
     return Order;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
@@ -682,20 +707,29 @@ var OrdersLayer = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.markerColours = {
             support: 'brown',
-            move: 'black',
+            move: 'lightgray',
             retreat: 'blue',
+        };
+        _this.order = {
+            'move': 1,
+            'support': 0,
         };
         return _this;
     }
     OrdersLayer.prototype.render = function (props, state) {
+        var _this = this;
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("defs", null, Object.entries(this.markerColours).map(function (_a) {
                 var moveType = _a[0], colour = _a[1];
                 return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("marker", { id: "head-" + moveType, orient: 'auto', markerWidth: '2', markerHeight: '4', refX: '0.1', refY: '2' },
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { d: 'M0,0 V4 L2,2 Z', fill: colour })));
             })),
-            props.turnData && props.turnData.players.map(function (player) { return (player.moves.map(function (order) { return Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_order_order__WEBPACK_IMPORTED_MODULE_1__["default"], __assign({}, order, { boardData: props.boardData })); })); }),
-            props.newOrders && props.newOrders.map(function (order) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_order_order__WEBPACK_IMPORTED_MODULE_1__["default"], __assign({}, order, { boardData: props.boardData }))); })));
+            props.turnData && props.turnData.players.map(function (player) { return (player.moves
+                .sort(function (a, b) { return _this.order[a.moveType] - _this.order[b.moveType]; })
+                .map(function (order, i) { return Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_order_order__WEBPACK_IMPORTED_MODULE_1__["default"], __assign({ key: "order-a-" + i + "-" + Date.now() }, order, { boardData: props.boardData })); })); }),
+            props.newOrders && props.newOrders
+                .sort(function (a, b) { return _this.order[a.moveType] - _this.order[b.moveType]; })
+                .map(function (order, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_order_order__WEBPACK_IMPORTED_MODULE_1__["default"], __assign({ key: "order-b-" + i + "-" + Date.now() }, order, { boardData: props.boardData }))); })));
     };
     return OrdersLayer;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
@@ -1123,7 +1157,7 @@ __webpack_require__.r(__webpack_exports__);
             id: 'w',
             path: "M 311 220 L 314 209 L 322 206 L 328 203 L 331 193 L 326 183 L 320 182 L 321 161 L 330 146 L 343 138 L 351 128 L 347 121 L 349 112 L 355 104 L 362 107 L 368 108 L 372 120 L 366 121 L 359 136 L 345 151 L 347 160 L 350 165 L 348 178 L 349 184 L 357 186 L 365 191 L 384 185 L 402 177 L 403 183 L 411 184 L 414 187 L 408 187 L 400 192 L 399 197 L 387 196 L 371 198 L 369 202 L 365 204 L 368 210 L 372 213 L 373 221 L 377 227 L 373 229 L 366 228 L 359 220 L 311 220",
             textLocation: {
-                x: 348,
+                x: 344,
                 y: 183,
             },
         },
@@ -1379,8 +1413,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Berlin',
             path: "M 294 275 L 286 274 L 287 267 L 280 266 L 266 275 L 266 283 L 262 287 L 264 293 L 261 296 L 263 310 L 288 305 L 296 300 L 297 296 L 292 290 L 294 275",
             textLocation: {
-                x: 284,
-                y: 282,
+                x: 279,
+                y: 284,
             },
         },
         {
@@ -1478,7 +1512,7 @@ __webpack_require__.r(__webpack_exports__);
             path: "M 279 243 L 275 242 L 269 243 L 266 240 L 267 234 L 266 221 L 263 223 L 248 224 L 245 237 L 243 247 L 244 254 L 254 255 L 266 255 L 271 260 L 278 254 L 277 250 L 280 248  L 279 243",
             // <polygon class="w" points="L 269 243 L 268 246 L 263 247 L 266 255 L 254 255 L 257 247 L 266 240"/>
             textLocation: {
-                x: 252,
+                x: 259,
                 y: 235,
             },
         },
@@ -1645,8 +1679,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Naples',
             path: "M 271 464 L 276 474 L 290 487 L 294 502 L 289 511 L 290 514 L 295 515 L 308 500 L 311 491 L 304 484 L 293 481 L 279 458 L 271 464",
             textLocation: {
-                x: 306,
-                y: 488,
+                x: 296,
+                y: 496,
             },
         },
         {
@@ -1745,8 +1779,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Ruhr',
             path: "M 213 302 L 210 313 L 208 315 L 210 326 L 205 331 L 204 338 L 211 346 L 219 344 L 237 322 L 243 322 L 241 316 L 232 308 L 213 302",
             textLocation: {
-                x: 215,
-                y: 330,
+                x: 221,
+                y: 319,
             },
         },
         {
@@ -1767,8 +1801,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Serbia',
             path: "M 365 412 L 360 413 L 342 410 L 338 412 L 335 410 L 332 410 L 330 416 L 331 424 L 327 429 L 330 437 L 337 446 L 346 452 L 346 466 L 350 471 L 356 471 L 361 467 L 369 464 L 365 461 L 371 456 L 366 439 L 371 438 L 368 433 L 365 425 L 367 421 L 365 412",
             textLocation: {
-                x: 340,
-                y: 440,
+                x: 349,
+                y: 428,
             },
         },
         {
@@ -1778,8 +1812,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Sevastopol',
             path: "M 438 397 L 446 378 L 459 375 L 461 377 L 459 379 L 465 383 L 476 381 L 478 383 L 472 385 L 468 392 L 477 396 L 477 401 L 486 404 L 488 397 L 494 396 L 497 392 L 507 389 L 506 384 L 494 387 L 485 378 L 503 364 L 526 351 L 527 354 L 514 365 L 517 371 L 520 371 L 515 384 L 511 383 L 510 386 L 517 393 L 528 394 L 554 406 L 567 408 L 573 417 L 570 427 L 589 442 L 594 439 L 603 441 L 609 440 L 609 330 L 597 330 L 569 321 L 564 305 L 554 304 L 549 284 L 533 283 L 526 287 L 516 286 L 505 280 L 494 295 L 477 289 L 468 295 L 470 303 L 466 307 L 460 345 L 445 350 L 434 360 L 432 372 L 423 376 L 422 382 L 427 399 L 438 397",
             textLocation: {
-                x: 540,
-                y: 350,
+                x: 524,
+                y: 338,
             },
         },
         {
@@ -1789,8 +1823,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Silesia',
             path: "M 288 321 L 297 322 L 311 334 L 314 332 L 321 339 L 325 340 L 329 338 L 333 330 L 326 327 L 323 322 L 320 303 L 296 300 L 288 305 L 284 314 L 288 321",
             textLocation: {
-                x: 298,
-                y: 318,
+                x: 307,
+                y: 310,
             },
         },
         {
@@ -1874,8 +1908,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Trieste',
             path: "M 276 399 L 275 403 L 278 410 L 282 401 L 286 402 L 289 418 L 306 436 L 331 454 L 330 445 L 337 446 L 330 437 L 327 429 L 331 424 L 330 416 L 332 410 L 323 408 L 321 398 L 311 394 L 308 383 L 299 385 L 294 380 L 289 385 L 276 386 L 279 389 L 276 399",
             textLocation: {
-                x: 305,
-                y: 425,
+                x: 307,
+                y: 411,
             },
         },
         {
@@ -1885,8 +1919,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Tunis',
             path: "M 232 559 L 234 551 L 232 544 L 225 535 L 231 531 L 236 524 L 233 523 L 224 527 L 223 518 L 218 516 L 212 517 L 208 521 L 203 520 L 197 527 L 195 559 L 232 559",
             textLocation: {
-                x: 208,
-                y: 550,
+                x: 213,
+                y: 534,
             },
         },
         {
@@ -1918,8 +1952,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Ukraine',
             path: "M 383 327 L 385 332 L 399 338 L 404 354 L 403 360 L 411 361 L 414 372 L 423 376 L 432 372 L 434 360 L 445 350 L 460 345 L 466 307 L 470 303 L 468 295 L 456 292 L 390 306 L 386 309 L 383 327",
             textLocation: {
-                x: 420,
-                y: 340,
+                x: 425,
+                y: 327,
             },
         },
         {
@@ -1929,8 +1963,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Venice',
             path: "M 278 443 L 272 424 L 260 417 L 261 401 L 270 398 L 276 399 L 279 389 L 276 386 L 268 385 L 259 388 L 255 394 L 250 397 L 246 392 L 233 404 L 236 411 L 240 415 L 246 416 L 253 418 L 263 434 L 274 447 L 278 443",
             textLocation: {
-                x: 245,
-                y: 407,
+                x: 250,
+                y: 404,
             },
         },
         {
@@ -1962,8 +1996,8 @@ __webpack_require__.r(__webpack_exports__);
             id: 'l Warsaw',
             path: "M 333 330 L 326 327 L 323 322 L 320 303 L 324 299 L 326 292 L 341 287 L 345 289 L 359 286 L 365 281 L 372 283 L 379 290 L 386 309 L 383 327 L 379 324 L 374 327 L 367 329 L 361 324 L 356 323 L 353 327 L 344 332 L 341 330 L 333 330",
             textLocation: {
-                x: 345,
-                y: 316,
+                x: 354,
+                y: 305,
             },
         },
         {

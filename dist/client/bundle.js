@@ -2057,6 +2057,7 @@ module.exports = {
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap);"]);
 // Module
 exports.push([module.i, "body {\n  background-color: #EFEFEF;\n  margin: 8px 0; }\n\n.page {\n  animation: fadein 1s;\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; }\n\n@keyframes fadein {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\ninput, button {\n  font-family: 'Arvo', Calibri, sans-serif;\n  color: #102542;\n  font-size: 18px;\n  height: 24px;\n  border-radius: 3px;\n  background-color: #EFEFEF;\n  margin: 10px 0px;\n  box-sizing: border-box;\n  text-align: center; }\n", ""]);
 // Exports

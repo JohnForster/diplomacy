@@ -1,6 +1,6 @@
 import {Component, Fragment, h} from 'preact'
 
-import { IGame, IGameBoard, IGameTurnJSON, IMove } from '@shared/types'
+import { IGame, IGameBoard, IGameTurnJSON, IMove, OrderType } from '@shared/types'
 
 import Order from './order/order'
 
@@ -17,11 +17,18 @@ interface IOrdersLayerState {
 export default class OrdersLayer extends Component <IOrdersLayerProps, IOrdersLayerState> {
   markerColours = {
     support: 'brown',
-    move: 'black',
+    move: 'lightgray',
     retreat: 'blue',
   }
 
+  order: {[order in OrderType]?: number} = {
+    'move': 1,
+    'support': 0,
+  }
+
   render(props: IOrdersLayerProps, state: IOrdersLayerState) {
+
+
     return (
       <Fragment>
         <defs>
@@ -39,11 +46,16 @@ export default class OrdersLayer extends Component <IOrdersLayerProps, IOrdersLa
           ))}
         </defs>
         {props.turnData && props.turnData.players.map(player => (
-          player.moves.map(order => <Order {...order} boardData={props.boardData}/>)
+          player.moves
+            .sort((a, b) => this.order[a.moveType] - this.order[b.moveType])
+            .map((order, i) => <Order key={`order-a-${i}-${Date.now()}`} {...order} boardData={props.boardData}/>)
         ))}
-        {props.newOrders && props.newOrders.map(order => (
-          <Order {...order} boardData={props.boardData} />
-        ))}
+        {props.newOrders && props.newOrders
+          .sort((a, b) => this.order[a.moveType] - this.order[b.moveType])
+          .map((order, i) => (
+            <Order key={`order-b-${i}-${Date.now()}`}{...order} boardData={props.boardData} />
+          ))
+        }
       </Fragment>
     )
   }

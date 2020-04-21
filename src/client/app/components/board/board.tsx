@@ -8,6 +8,7 @@ import Unit from './unit/unit'
 import './board.scss'
 import Order from '../ordersLayer/order/order'
 import OrdersLayer from '../ordersLayer/ordersLayer'
+import { createRef } from 'preact/compat'
 
 // ? Recieve boardData as props or import?
 // ? Import is simpler, prop;s allows for extending in the future.
@@ -44,11 +45,26 @@ export default class Board extends Component <IBoardProps, IBoardState> {
     return player.colour
   }
 
-  render(props: IBoardProps, state: IBoardState) { 
+   // Created once for document
+
+  alert_coords = (evt: MouseEvent) => {
+    const svg = this.svg.current
+    const pt = svg.createSVGPoint()
+    pt.x = evt.clientX
+    pt.y = evt.clientY
+
+    // The cursor point, translated into svg coordinates
+    let cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse())
+    console.log('(' + Math.round(cursorpt.x) + ', ' + Math.round(cursorpt.y) + ')')
+  }
+
+  svg = createRef<SVGSVGElement>()
+
+  render(props: IBoardProps, state: IBoardState) {
     return (
       <div className='gameBoard' id='gameBoard'>
         {/* Draw Territories */}
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox={props.boardData.viewBox} className={`territorySquare `} width='100%'>
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox={props.boardData.viewBox} className={`territorySquare `} width='100%' ref={this.svg} onClick={this.alert_coords}>
           {props.boardData.territories.map(tile => (
             <Territory
               tile={tile}
