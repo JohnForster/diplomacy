@@ -13,7 +13,7 @@ interface IArmyState {
 }
 
 export default class Army extends Component<IArmyProps, IArmyState> {
-  public render(props: IArmyProps, state: IArmyState) {
+  render(props: IArmyProps, state: IArmyState) {
     const colours = {
       light: `${props.colour}-light`,
       medium: `${props.colour}-medium`,
@@ -41,7 +41,7 @@ export default class Army extends Component<IArmyProps, IArmyState> {
           <path style='fill:#FFFFFF' d='M233.099,174.515v14.151h-5.302H165.73v-14.151c0-6.758,5.476-12.233,12.233-12.233h42.903
             C227.624,162.282,233.099,167.757,233.099,174.515z'/>
           {/* <!-- Turret tip --> */}
-          <polygon class={colours.light} points='488.196,113.372 503.34,150.129 444.761,174.261 442.162,167.942 432.216,143.834 
+          <polygon class={colours.light} points='488.196,113.372 503.34,150.129 444.761,174.261 442.162,167.942 432.216,143.834
             429.617,137.515 	'/>
         </g>
         {/* <!-- Turret --> */}
@@ -63,9 +63,9 @@ export default class Army extends Component<IArmyProps, IArmyState> {
         <path class={colours.medium} d='M157.699,225.286c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374
           H165.73c-15.733,0-30.832,6.249-41.956,17.374c-5.556,5.568-9.9,12.118-12.857,19.245c-2.957,7.139-4.517,14.844-4.517,22.711
           v11.171h46.782v-11.171C153.182,240.129,154.742,232.424,157.699,225.286z'/>
-        <polygon class={colours.light} points='352.336,294.572 56.069,294.572 41.191,294.572 59.823,259.166 106.4,259.166 
+        <polygon class={colours.light} points='352.336,294.572 56.069,294.572 41.191,294.572 59.823,259.166 106.4,259.166
           287.127,259.166 307.619,259.166 '/>
-        <polygon class={colours.medium} points='106.4,259.166 59.823,259.166 41.191,294.573 56.069,294.573 101.835,294.573 
+        <polygon class={colours.medium} points='106.4,259.166 59.823,259.166 41.191,294.573 56.069,294.573 101.835,294.573
           120.468,259.166 '/>
         <g>
           <path style='fill: black;' d='M382.607,316.208c-0.006,0-343.907,0.684-343.907,0.684c-17.196,0.009-31.184,14.002-31.184,31.2

@@ -25,6 +25,7 @@
     "resolveJsonModule": true,
   },
   "exclude": [
-    "**/*.ignore.ts"
+    "**/*.ignore.ts",
+    "./dist/**/*"
   ]
 }

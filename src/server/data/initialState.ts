@@ -1,4 +1,4 @@
-import { IUnit } from "@shared/types";
+import { IUnit } from '@shared/types'
 
 export const startingTerritories: {[key: string]: string[]} = {
   England: ['London', 'Liverpool', 'Yorkshire', 'Clyde', 'Edinburgh', 'Wales'],

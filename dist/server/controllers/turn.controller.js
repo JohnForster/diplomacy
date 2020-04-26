@@ -99,13 +99,11 @@ var TurnController = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 // TODO Need some error handling/checking that user is part of this turnID
-                console.log('req.body.moves:', req.body.moves);
-
                 _turn["default"].addMove.apply(_turn["default"], [req.body.turnID, String(req.session.passport.user)].concat((0, _toConsumableArray2["default"])(req.body.moves)));
 
                 res.send('success');
 
-              case 3:
+              case 2:
               case "end":
                 return _context2.stop();
             }

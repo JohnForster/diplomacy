@@ -70,7 +70,8 @@ var turnSchema = new _mongoose.Schema({
       "default": false
     }
   },
-  players: [playerSchema]
+  players: [playerSchema],
+  previousState: String
 }, {
   toJSON: {
     virtuals: true

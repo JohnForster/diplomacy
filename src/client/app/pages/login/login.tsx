@@ -7,7 +7,7 @@ import clone from 'lodash.clone'
 import { Link, route } from 'preact-router'
 import './login.scss'
 
-import FormBox from '../../components/formBox/formBox';
+import FormBox from '../../components/formBox/formBox'
 
 export interface ILoginProps {
   toggleLogIn: (arg: boolean) => void

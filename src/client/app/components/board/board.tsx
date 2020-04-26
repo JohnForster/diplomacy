@@ -19,7 +19,8 @@ export interface IBoardProps {
   activeTerritory: string,
   onTileSelect: (title: string) => () => void,
   onMoveSelect: (move: OrderType) => () => void,
-  newOrders: IMove[]
+  newOrders: IMove[],
+  newOrder: Partial<IMove>,
 }
 
 interface IBoardState {
@@ -55,7 +56,7 @@ export default class Board extends Component <IBoardProps, IBoardState> {
     pt.y = evt.clientY
 
     // The cursor point, translated into svg coordinates
-    let cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse())
+    const cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse())
     console.log('(' + Math.round(cursorpt.x) + ', ' + Math.round(cursorpt.y) + ')')
   }
 

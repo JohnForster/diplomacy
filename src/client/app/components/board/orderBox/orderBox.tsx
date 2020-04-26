@@ -9,11 +9,11 @@ export interface IOrderBoxProps {
 }
 
 interface IOrderBoxState {
-  
+
 }
 
 export default class OrderBox extends Component <IOrderBoxProps, IOrderBoxState> {
-  public render(props: IOrderBoxProps, state: IOrderBoxState) {
+  render(props: IOrderBoxProps, state: IOrderBoxState) {
     return (
       <div className='orderBox'>
         <span className='orderTitle'>{props.activeTerritory}</span><br/>

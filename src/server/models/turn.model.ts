@@ -4,9 +4,9 @@ import {defaultColours, startingTerritories, startingUnits} from '../data/initia
 import { IGameTurnDB, IMove, IPlayerStateDB } from '@shared/types'
 
 import shuffle from 'lodash.shuffle'
-import validateMove from '@shared/helpers/validateMove';
-import toJSON from '@shared/helpers/toJSON';
-import Nation from '@shared/types/enums/Nation';
+import validateMove from '@shared/helpers/validateMove'
+import toJSON from '@shared/helpers/toJSON'
+import Nation from '@shared/types/enums/Nation'
 
 export interface ITurnModel extends mongoose.Document, IGameTurnDB {
   isReadyToStart: () => boolean,

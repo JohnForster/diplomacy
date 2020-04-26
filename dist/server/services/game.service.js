@@ -28,9 +28,7 @@ var GameService = {
               });
               Object.assign(game, gameConfig);
               _context.next = 4;
-              return _turn["default"].create({
-                phase: 'movement'
-              });
+              return _turn["default"].createFirstTurn();
 
             case 4:
               turn = _context.sent;
@@ -39,9 +37,10 @@ var GameService = {
               return game.save();
 
             case 8:
+              console.log("New game created with id ".concat(game._id));
               return _context.abrupt("return", game);
 
-            case 9:
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -217,7 +216,7 @@ var GameService = {
   },
   processTurn: function processTurn(gameID) {
     return (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7() {
-      var game;
+      var game, newTurn;
       return _regenerator["default"].wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
@@ -233,16 +232,23 @@ var GameService = {
                 break;
               }
 
-              throw Error('Game not found!');
+              throw Error("Game not found with id ".concat(gameID));
 
             case 5:
               _context7.next = 7;
-              return game.advanceTurn();
+              return _turn["default"].advanceById(game.currentTurn);
 
             case 7:
+              newTurn = _context7.sent;
+              // game.history.push(game.currentTurn)
+              game.currentTurn = newTurn.id;
+              _context7.next = 11;
+              return game.save();
+
+            case 11:
               return _context7.abrupt("return", game);
 
-            case 8:
+            case 12:
             case "end":
               return _context7.stop();
           }

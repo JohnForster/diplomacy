@@ -2,10 +2,10 @@ import to from 'await-to-js'
 import Axios from 'axios'
 import {Component, h, Fragment} from 'preact'
 
-import Board from '@client/app/components/board/board';
+import Board from '@client/app/components/board/board'
 import boardData from '@client/assets/countryData'
 import setupNewFullGame from '@client/devTools/setupGame'
-import validateMove from '@shared/helpers/validateMove';
+import validateMove from '@shared/helpers/validateMove'
 import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
 
 import './game.scss'
@@ -61,6 +61,7 @@ export default class Game extends Component <IGameProps, IGameState> {
           onMoveSelect={this.onMoveSelect}
           turnData={state.turn}
           newOrders={state.newOrders}
+          newOrder={state.newOrder}
         />
       </Fragment>
     )

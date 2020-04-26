@@ -10,7 +10,7 @@ export interface IOrderProps extends IMove {
 }
 
 interface IOrderState {
-  
+
 }
 
 export default class Order extends Component <IOrderProps, IOrderState> {
@@ -22,9 +22,9 @@ export default class Order extends Component <IOrderProps, IOrderState> {
 
   getMarkerColour = <T extends string>(moveType: T) => {
     switch(moveType) {
-      case 'move': return 'lightgray';
-      case 'support': return 'brown';
-      case 'retreat': return 'blue';
+      case 'move': return 'lightgray'
+      case 'support': return 'brown'
+      case 'retreat': return 'blue'
       default: return ''
     }
   }

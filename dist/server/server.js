@@ -88,7 +88,11 @@ var startServer = function startServer() {
   app.get('*', function (req, res) {
     res.sendFile(_path["default"].join(clientPath, '/index.html'));
   });
-  app.listen(_config["default"].LISTEN_PORT, function () {
+  var listenParam = isDev ? {
+    port: _config["default"].LISTEN_PORT,
+    host: '0.0.0.0'
+  } : _config["default"].LISTEN_PORT;
+  app.listen(listenParam, function () {
     console.log("App listening to ".concat(_config["default"].LISTEN_PORT, "..."));
     console.log("App available at http://localhost:".concat(_config["default"].LISTEN_PORT));
     console.log('Press Ctrl+C to quit.');

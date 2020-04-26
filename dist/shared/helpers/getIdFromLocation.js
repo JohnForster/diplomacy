@@ -1,17 +1,21 @@
-import ProvinceId from '@shared/types/enums/ProvinceId'
+"use strict";
 
- const getIdFromLocation = (locationName: string): ProvinceId => {
-  if (!locationName) return null
-  const id = abbreviations[locationName]
-  if (!id) console.trace(`NO TILE FOUND WITH NAME ${locationName}`)
-  return id
-}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
 
-export default getIdFromLocation
+var getIdFromLocation = function getIdFromLocation(locationName) {
+  if (!locationName) return null;
+  var id = abbreviations[locationName];
+  if (!id) console.trace("NO TILE FOUND WITH NAME ".concat(locationName));
+  return id;
+};
 
+var _default = getIdFromLocation; // ! If editing this object, make sure to edit the one in getLocationFromId as well!
 
-// ! If editing this object, make sure to edit the one in getLocationFromId as well!
-const abbreviations: {[key: string]: ProvinceId} = {
+exports["default"] = _default;
+var abbreviations = {
   'North_Atlantic_Ocean': 'nat',
   'Norwegian_Sea': 'nrg',
   'Barents_Sea': 'bar',
@@ -99,5 +103,5 @@ const abbreviations: {[key: string]: ProvinceId} = {
   'Sardinia': 'n/sar',
   'Mallorca': 'n/mal',
   'Sicily': 'n/sic',
-  'Crete': 'n/cre',
-}
+  'Crete': 'n/cre'
+};

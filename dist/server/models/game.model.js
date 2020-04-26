@@ -15,8 +15,6 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _mongoose = _interopRequireWildcard(require("mongoose"));
 
-var _turn = _interopRequireDefault(require("../services/turn.service"));
-
 var gameSchema = new _mongoose.Schema({
   timeStarted: {
     type: Date
@@ -104,47 +102,23 @@ gameSchema.methods.setTurn = function (turnID) {
   this.currentTurn = turnID;
 }; // ? Move Turnservice calls into gameService and pass as args to avoid
 // ?   making this method async?
+// gameSchema.methods.advanceTurn = async function(): Promise<ITurnModel> {
+//   const turn = await TurnService.getByID(this.currentTurn)
+//   // ! Phase is currently hard coded as 'Move'
+//   const nextTurn = await TurnService.create({phase: 'movement'})
+//   nextTurn.players = turn.players
+//   nextTurn.players.forEach((player) => {
+//     player.moves.forEach((move) => {
+//       const unit = player.ownedUnits.find((u) => u.location === move.from)
+//       if (unit) unit.location = move.to
+//     })
+//     player.moves = []
+//   })
+//   this.currentTurn = nextTurn.id
+//   this.save()
+//   return nextTurn
+// }
 
-
-gameSchema.methods.advanceTurn = /*#__PURE__*/(0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2() {
-  var turn, nextTurn;
-  return _regenerator["default"].wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return _turn["default"].getByID(this.currentTurn);
-
-        case 2:
-          turn = _context2.sent;
-          _context2.next = 5;
-          return _turn["default"].create({
-            phase: 'movement'
-          });
-
-        case 5:
-          nextTurn = _context2.sent;
-          nextTurn.players = turn.players;
-          nextTurn.players.forEach(function (player) {
-            player.moves.forEach(function (move) {
-              var unit = player.ownedUnits.find(function (u) {
-                return u.location === move.from;
-              });
-              if (unit) unit.location = move.to;
-            });
-            player.moves = [];
-          });
-          this.currentTurn = nextTurn.id;
-          this.save();
-          return _context2.abrupt("return", nextTurn);
-
-        case 11:
-        case "end":
-          return _context2.stop();
-      }
-    }
-  }, _callee2, this);
-}));
 
 var _default = _mongoose["default"].model('Game', gameSchema);
 

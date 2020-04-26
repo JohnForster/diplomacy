@@ -11,14 +11,14 @@ export interface IUnitProps {
 }
 
 interface IUnitState {
-  
+
 }
 
 export default class Unit extends Component <IUnitProps, IUnitState> {
-  public render(props: IUnitProps, state: IUnitState) {
+  render(props: IUnitProps, state: IUnitState) {
     return (
       <Fragment>
-        {props.unitType === 'Army' && 
+        {props.unitType === 'Army' &&
           <Army
             viewBox={props.viewBox}
             location={props.location}
@@ -26,7 +26,7 @@ export default class Unit extends Component <IUnitProps, IUnitState> {
             colour={props.colour}
           />
         }
-        {props.unitType === 'Fleet' && 
+        {props.unitType === 'Fleet' &&
           <Fleet
             viewBox={props.viewBox}
             location={props.location}

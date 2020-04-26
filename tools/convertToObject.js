@@ -18,12 +18,10 @@ const convertedArray = svgDataArray.map(group => {
 
 fs.writeFileSync('tools/territoryObject.js', '[\n' + convertedArray.join('\n') + '\n]')
 
-
 {/* <g title="Switzerland" class="landTile">>
 	<polygon class="s" points="209,363 208,367 194,382 197,385 203,379 207,386 213,387 221,385 227,390 229,385 243,388 245,384 241,378 234,374 234,366 232,363 225,362 222,365"/>
 	<text x="215" y="378"></text>
 </g> */}
-
 
 console.log(convertedArray[9])
 // svgData.replace(/<g title="(\w+)" class="(\w+)">.+<polygon class="(\w) (\w+)" points="(.+)"\/>.+<text x="(.+)" x="(.+)">(\w+)</gs,'')

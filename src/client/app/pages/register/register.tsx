@@ -4,7 +4,7 @@ import clone from 'lodash.clone'
 import {Component, h, Fragment} from 'preact'
 import { route } from 'preact-router'
 
-import FormBox from '../../components/formBox/formBox';
+import FormBox from '../../components/formBox/formBox'
 
 export interface IRegisterProps {
 

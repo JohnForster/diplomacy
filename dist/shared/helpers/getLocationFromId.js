@@ -1,16 +1,20 @@
-import ProvinceId from '@shared/types/enums/ProvinceId'
+"use strict";
 
- const getLocationFromId = (locationId: ProvinceId): string => {
-  const tileName = tileNames[locationId]
-  if (!tileName) console.trace(`NO TILE FOUND WITH ID ${locationId}`)
-  return tileName
-}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
 
-export default getLocationFromId
+var getLocationFromId = function getLocationFromId(locationId) {
+  var tileName = tileNames[locationId];
+  if (!tileName) console.trace("NO TILE FOUND WITH ID ".concat(locationId));
+  return tileName;
+};
 
+var _default = getLocationFromId; // ! If editing this object, make sure to edit the one in getIdFromLocation as well!
 
-// ! If editing this object, make sure to edit the one in getIdFromLocation as well!
-const tileNames: {[key in ProvinceId]: string} = {
+exports["default"] = _default;
+var tileNames = {
   'nat': 'North_Atlantic_Ocean',
   'nrg': 'Norwegian_Sea',
   'bar': 'Barents_Sea',
@@ -98,5 +102,5 @@ const tileNames: {[key in ProvinceId]: string} = {
   'n/sar': 'Sardinia',
   'n/mal': 'Mallorca',
   'n/sic': 'Sicily',
-  'n/cre': 'Crete',
-}
+  'n/cre': 'Crete'
+};

@@ -40,7 +40,7 @@ export default class Territory extends Component <ITerritoryProps, ITerritorySta
           {props.tile.textLocation && (
           <Fragment>
             {process.env.NODE_ENV === 'development' && (
-              <circle stroke='white' cx={props.tile.textLocation.x} cy={props.tile.textLocation.y} r="1"/>
+              <circle stroke='white' cx={props.tile.textLocation.x} cy={props.tile.textLocation.y} r='1'/>
             )}
             <g
               transform={`

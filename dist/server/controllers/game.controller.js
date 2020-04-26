@@ -201,7 +201,12 @@ var GameController = /*#__PURE__*/function () {
                 _yield$to8 = (0, _slicedToArray2["default"])(_yield$to7, 2);
                 err = _yield$to8[0];
                 game = _yield$to8[1];
-                if (err) res.status(400).send(err);
+
+                if (err) {
+                  console.log(err.message);
+                  res.status(400).send(err);
+                }
+
                 if (game) res.json(game);
 
               case 11:
