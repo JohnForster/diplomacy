@@ -26,6 +26,7 @@
   },
   "exclude": [
     "**/*.ignore.ts",
+    "**/*.ignore.tsx",
     "./dist/**/*"
   ]
 }

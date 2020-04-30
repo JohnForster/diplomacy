@@ -8,6 +8,7 @@ import checkAuthentication from './_helpers/checkAuthentication'
 import './app.scss'
 import './variables/colors.scss'
 import Lobby from './pages/lobby/lobby'
+// import Sandbox from './pages/sandbox/sandbox.ignore'
 
 const Game = lazy(() => import('./pages/game/game'))
 const Login = lazy(() => import('./pages/login/login'))
@@ -68,6 +69,7 @@ export default class App extends Component <IAppProps, IAppState> {
             <Register path='/register'/>
             <Login path='/' toggleLogIn={this.toggleLogIn}/>
             <Lobby path='/lobby'/>
+            {/* <Sandbox path='/sandbox'/> */}
           </Router>
         </div>
       </Suspense>
