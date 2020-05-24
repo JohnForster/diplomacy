@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[6],{
 
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/formBox/formBox.scss":
 /*!*************************************************************************************************************************************!*\
@@ -92,23 +92,24 @@ var FormBox = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./src/client/app/pages/register/register.tsx":
-/*!****************************************************!*\
-  !*** ./src/client/app/pages/register/register.tsx ***!
-  \****************************************************/
+/***/ "./src/client/app/pages/login/login.tsx":
+/*!**********************************************!*\
+  !*** ./src/client/app/pages/login/login.tsx ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lodash_clone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash.clone */ "./node_modules/lodash.clone/index.js");
-/* harmony import */ var lodash_clone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_clone__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash_clone__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash.clone */ "./node_modules/lodash.clone/index.js");
+/* harmony import */ var lodash_clone__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_clone__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var preact_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact-router */ "./node_modules/preact-router/dist/preact-router.es.js");
 /* harmony import */ var _components_formBox_formBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/formBox/formBox */ "./src/client/app/components/formBox/formBox.tsx");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/pages/login/styled.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -164,67 +165,126 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-var Register = /** @class */ (function (_super) {
-    __extends(Register, _super);
-    function Register() {
+
+var Login = /** @class */ (function (_super) {
+    __extends(Login, _super);
+    function Login() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            formFields: {},
-        };
-        _this.handleSubmit = function (evt) { return __awaiter(_this, void 0, void 0, function () {
+        _this.state = { formFields: {} };
+        _this.login = function (evt) { return __awaiter(_this, void 0, void 0, function () {
             var _a, err, res;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         evt.preventDefault();
-                        return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/user/register', this.state.formFields))];
+                        console.log('attempting to log in');
+                        console.log(this.state.formFields);
+                        return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_1__["default"])(axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('api/login', this.state.formFields))];
                     case 1:
                         _a = _b.sent(), err = _a[0], res = _a[1];
-                        if (err)
+                        if (err) {
+                            console.log('logging an err');
                             console.log(err);
-                        if (res)
-                            Object(preact_router__WEBPACK_IMPORTED_MODULE_4__["route"])('/', true);
-                        return [2 /*return*/];
+                        }
+                        if (!res) return [3 /*break*/, 3];
+                        console.log('success!');
+                        console.log(res.data);
+                        return [4 /*yield*/, this.props.toggleLogIn(true)];
+                    case 2:
+                        _b.sent();
+                        Object(preact_router__WEBPACK_IMPORTED_MODULE_4__["route"])('/game');
+                        _b.label = 3;
+                    case 3: return [2 /*return*/];
                 }
             });
         }); };
         _this.handleChange = function (field) {
-            return function (evt) {
-                var formFields = lodash_clone__WEBPACK_IMPORTED_MODULE_2___default()(_this.state.formFields);
-                formFields[field] = evt.target.value;
+            return function (event) {
+                var formFields = lodash_clone__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.formFields);
+                formFields[field] = event.target.value;
                 _this.setState({ formFields: formFields });
             };
         };
         return _this;
     }
-    Register.prototype.render = function (props, state) {
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])(preact__WEBPACK_IMPORTED_MODULE_3__["Fragment"], null,
-            Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])(_components_formBox_formBox__WEBPACK_IMPORTED_MODULE_5__["default"], null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("form", { action: '/user/register', method: 'post', onSubmit: this.handleSubmit },
-                    "Username:",
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("input", { type: 'text', name: 'username', value: state.formFields.username, onChange: this.handleChange('username') }),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    "Name:",
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("input", { type: 'text', name: 'name', value: state.formFields.name, onChange: this.handleChange('name') }),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    "Email:",
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("input", { type: 'text', name: 'email', value: state.formFields.email, onChange: this.handleChange('email') }),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    "Password:",
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("input", { type: 'password', name: 'password', value: state.formFields.password, onChange: this.handleChange('password') }),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("br", null),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_3__["h"])("input", { type: 'submit', value: 'Submit' })))));
+    Login.prototype.componentDidMount = function () {
+        this.setState({
+            formFields: {
+                username: this.usernameInput.value,
+                password: this.passwordInput.value,
+            }
+        });
     };
-    return Register;
-}(preact__WEBPACK_IMPORTED_MODULE_3__["Component"]));
-/* harmony default export */ __webpack_exports__["default"] = (Register);
+    Login.prototype.render = function (props, state) {
+        var _this = this;
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["Title"], null, "Diplomacy"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_components_formBox_formBox__WEBPACK_IMPORTED_MODULE_5__["default"], null,
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("form", { action: 'api/user/authenticate', method: 'post', onSubmit: this.login },
+                    "Username",
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { ref: function (usernameInput) { return _this.usernameInput = usernameInput; }, type: 'text', name: 'username', onChange: this.handleChange('username') }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+                    "Password",
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { ref: function (passwordInput) { return _this.passwordInput = passwordInput; }, type: 'password', name: 'password', onChange: this.handleChange('password') }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("input", { type: 'submit', value: 'Submit' })),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null,
+                    "New? Register ",
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact_router__WEBPACK_IMPORTED_MODULE_4__["Link"], { href: '/register' }, "here")))));
+    };
+    return Login;
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (Login);
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/login/styled.ts":
+/*!**********************************************!*\
+  !*** ./src/client/app/pages/login/styled.ts ***!
+  \**********************************************/
+/*! exports provided: Title */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Title", function() { return Title; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../variables/colors */ "./src/client/app/variables/colors.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: ", ";\n  font-size: 84px;\n  @media (max-width: 767px) {\n    font-size: 44px;\n    text-shadow: 3px 3px 0px ", ";\n  }\n  text-shadow: 5px 5px 0px ", ";\n  text-align: center;\n"], ["\n  color: ", ";\n  font-size: 84px;\n  @media (max-width: 767px) {\n    font-size: 44px;\n    text-shadow: 3px 3px 0px ", ";\n  }\n  text-shadow: 5px 5px 0px ", ";\n  text-align: center;\n"])), _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].mid, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].mid);
+var templateObject_1;
+
+
+/***/ }),
+
+/***/ "./src/client/app/variables/colors.ts":
+/*!********************************************!*\
+  !*** ./src/client/app/variables/colors.ts ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+    background: '#D7BEA8',
+    highlight: '#4972AB',
+    mid: '#546A7B',
+    shadow: '#102542',
+    offwhite: '#EFEFEF',
+});
 
 
 /***/ })
 
 }]);
-//# sourceMappingURL=4.bundle.js.map
+//# sourceMappingURL=6.bundle.js.map

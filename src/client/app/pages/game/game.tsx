@@ -8,7 +8,7 @@ import setupNewFullGame from '@client/devTools/setupGame'
 import validateMove from '@shared/helpers/validateMove'
 import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
 
-import './game.scss'
+import * as Styled from './styled'
 
 export interface IGameProps {
   userID: string,
@@ -40,13 +40,13 @@ export default class Game extends Component <IGameProps, IGameState> {
     return (
       <Fragment>
         <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1>
-        <div className='buttonsContainer' >
+        <Styled.ButtonsContainer>
           <button onClick={this.setupGame}>Set Up Game</button>
           <button onClick={this.getLatestGame}>Load Game</button>
           <button onClick={this.submitOrders}>Submit Orders</button>
           <button onClick={this.props.logOut}>Log out</button>
           <button onClick={this.nextTurn}>Next Turn</button><br/>
-        </div><br/>
+        </Styled.ButtonsContainer><br/>
         {!!state.turn && (
           <Fragment>
             <p>{`You are playing as ${state.turn.players.find(p => p.playerID === props.userID).empire}`}</p>

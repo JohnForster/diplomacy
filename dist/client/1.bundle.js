@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[5],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/board.scss":
 /*!*********************************************************************************************************************************!*\
@@ -2179,4 +2179,4 @@ var setupNewFullGame = function () { return __awaiter(void 0, void 0, void 0, fu
 /***/ })
 
 }]);
-//# sourceMappingURL=5.bundle.js.map
+//# sourceMappingURL=1.bundle.js.map
