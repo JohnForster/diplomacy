@@ -1,15 +1,15 @@
 import {Component, h, Fragment} from 'preact'
+import { createRef } from 'preact/compat'
 
 import { IBoardTerritory, IGameBoard, IGameTurnJSON, IMove, OrderType } from '@shared/types'
 
 import Territory from './territory/territory'
 import Unit from './unit/unit'
 
-import './board.scss'
-import Order from '../ordersLayer/order/order'
 import OrdersLayer from '../ordersLayer/ordersLayer'
-import { createRef } from 'preact/compat'
 import OrderBox from './orderBox/orderBox'
+
+import * as Styled from './styled'
 
 // ? Recieve boardData as props or import?
 // ? Import is simpler, prop;s allows for extending in the future.
@@ -66,41 +66,46 @@ export default class Board extends Component <IBoardProps, IBoardState> {
     return (
       <Fragment>
         {/* Draw Order Box */}
-      <div className='gameBoard' id='gameBoard'>
-        <div className='sticky-container'>
-          {props.activeTerritory && (
-            <OrderBox onMoveSelect={props.onMoveSelect} activeTerritory={props.activeTerritory}/>
-          )}
-        </div>
-        {/* Draw Territories */}
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox={props.boardData.viewBox} className={`territorySquare`} width='100%' ref={this.svg} onClick={this.alert_coords}>
-          {props.boardData.territories.map(tile => (
-            <Territory
-              tile={tile}
-              isSelected={tile.title === props.activeTerritory}
-              onSelect={props.onTileSelect(tile.title)}
-              viewBox={props.boardData.viewBox}
-              colour={this.getColour(tile.title)}
-            />
-          ))}
-          {/* Draw Units */}
-          {props.turnData && props.turnData.players.map(player => (
-            player.ownedUnits.map(unit => (
-              <Unit
-                unitType={unit.unitType}
+        <Styled.GameBoard id='gameBoard'>
+          <Styled.StickyContainer>
+            {props.activeTerritory && (
+              <OrderBox onMoveSelect={props.onMoveSelect} activeTerritory={props.activeTerritory}/>
+            )}
+          </Styled.StickyContainer>
+          {/* Draw Territories */}
+          <Styled.MapSvg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox={props.boardData.viewBox}
+            ref={() => this.svg}
+            // @ts-ignore
+            onClick={this.alert_coords}
+          >
+            {props.boardData.territories.map(tile => (
+              <Territory
+                tile={tile}
+                isSelected={tile.title === props.activeTerritory}
+                onSelect={props.onTileSelect(tile.title)}
                 viewBox={props.boardData.viewBox}
-                location={this.getLocation(unit.location)}
-                empire={player.empire}
-                colour={player.colour}
+                colour={this.getColour(tile.title)}
               />
-            ))
-          ))}
-          {/* Draw Orders */}
-          {/* Extract later into separate component */}
-          <OrdersLayer boardData={props.boardData} newOrders={props.newOrders} turnData={props.turnData}/>
-        </svg>
-      </div>
-
+            ))}
+            {/* Draw Units */}
+            {props.turnData && props.turnData.players.map(player => (
+              player.ownedUnits.map(unit => (
+                <Unit
+                  unitType={unit.unitType}
+                  viewBox={props.boardData.viewBox}
+                  location={this.getLocation(unit.location)}
+                  empire={player.empire}
+                  colour={player.colour}
+                />
+              ))
+            ))}
+            {/* Draw Orders */}
+            {/* Extract later into separate component */}
+            <OrdersLayer boardData={props.boardData} newOrders={props.newOrders} turnData={props.turnData}/>
+          </Styled.MapSvg>
+        </Styled.GameBoard>
       </Fragment>
     )
   }

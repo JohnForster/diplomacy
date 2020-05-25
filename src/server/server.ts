@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser'
+import chalk from 'chalk'
 import mongoDBStoreConstructor from 'connect-mongodb-session'
 import express, {Request, Response} from 'express'
 import session from 'express-session'
@@ -17,7 +18,10 @@ import config from './config'
 const isDev = process.env.NODE_ENV !== 'production'
 
 const startServer = () => {
-  mongoose.connect(config.MONGO_URI)
+  mongoose.connect(config.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   mongoose.connection.on('error', (err) => {
   console.log('Something went wrong connecting to mongoDB!')
   console.log(err)
@@ -65,9 +69,6 @@ const startServer = () => {
   // Front end routes
   const middlePath = '../../dist'
   const clientPath = path.join(__dirname, middlePath, '/client')
-  console.log('clientPath:', clientPath)
-  console.log('middlepath:', middlePath)
-  console.log('isDev, process.env.NODE_ENV:', isDev, process.env.NODE_ENV)
   app.use(express.static(clientPath))
 
   app.get('*', (req: Request, res: Response) => {
@@ -78,7 +79,7 @@ const startServer = () => {
 
   app.listen(listenParam, () => {
     console.log(`App listening to ${config.LISTEN_PORT}...`)
-    console.log(`App available at http://localhost:${config.LISTEN_PORT}`)
+    console.log(`App available at ${chalk.bold.blueBright(`http://localhost:${config.LISTEN_PORT}`)}`)
     console.log('Press Ctrl+C to quit.')
   })
 }

@@ -1,13 +1,11 @@
-import { Component, h } from 'preact'
+import { h } from 'preact'
 
-import './formBox.scss'
+import * as Styled from './styled'
 
-export default class FormBox extends Component {
-  render() {
-    return (
-      <div className='formBox'>
-        {this.props.children}
-      </div>
-    )
-  }
-}
+const FormBox: React.FC = ({children}) => (
+  <Styled.FormBox>
+    {children}
+  </Styled.FormBox>
+)
+
+export default FormBox

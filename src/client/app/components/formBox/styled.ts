@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');
-@import '../../variables/colors';
+import styled from 'styled-components'
+import Colours from '../../variables/colors'
 
-.formBox {
+export const FormBox = styled.div`
+  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');
+
   font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-align: center;
   font-size: 16px;
   border-radius: 20px;
   padding: 24px;
-  background-color: $highlight;
-  color: $offwhite;
+  background-color: ${Colours.highlight};
+  color: ${Colours.offwhite};
   letter-spacing:2px;
-  box-shadow: 5px 5px 0px $shadow;
+  box-shadow: 5px 5px 0px ${Colours.shadow};
   margin: auto;
 
   input[type=submit] {
@@ -19,8 +21,8 @@
     font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     letter-spacing: 1px;
   }
-}
 
-a {
-  color: $offwhite;
-}
+  a {
+    color: ${Colours.offwhite};
+  }
+`

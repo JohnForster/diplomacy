@@ -1,55 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/formBox/formBox.scss":
-/*!*************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/formBox/formBox.scss ***!
-  \*************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap);"]);
-// Module
-exports.push([module.i, ".formBox {\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n  text-align: center;\n  font-size: 16px;\n  border-radius: 20px;\n  padding: 24px;\n  background-color: #4972AB;\n  color: #EFEFEF;\n  letter-spacing: 2px;\n  box-shadow: 5px 5px 0px #102542;\n  margin: auto; }\n  .formBox input[type=submit] {\n    width: 50%;\n    font-size: 12px;\n    font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    letter-spacing: 1px; }\n\na {\n  color: #EFEFEF; }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./src/client/app/components/formBox/formBox.scss":
-/*!********************************************************!*\
-  !*** ./src/client/app/components/formBox/formBox.scss ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../node_modules/css-loader/dist/cjs.js!../../../../../node_modules/sass-loader/dist/cjs.js!./formBox.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/formBox/formBox.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
-
-
-
-module.exports = exported;
-
-/***/ }),
-
 /***/ "./src/client/app/components/formBox/formBox.tsx":
 /*!*******************************************************!*\
   !*** ./src/client/app/components/formBox/formBox.tsx ***!
@@ -60,34 +10,38 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _formBox_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formBox.scss */ "./src/client/app/components/formBox/formBox.scss");
-/* harmony import */ var _formBox_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_formBox_scss__WEBPACK_IMPORTED_MODULE_1__);
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/formBox/styled.ts");
 
 
-var FormBox = /** @class */ (function (_super) {
-    __extends(FormBox, _super);
-    function FormBox() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    FormBox.prototype.render = function () {
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'formBox' }, this.props.children));
-    };
-    return FormBox;
-}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+var FormBox = function (_a) {
+    var children = _a.children;
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["FormBox"], null, children));
+};
 /* harmony default export */ __webpack_exports__["default"] = (FormBox);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/formBox/styled.ts":
+/*!*****************************************************!*\
+  !*** ./src/client/app/components/formBox/styled.ts ***!
+  \*****************************************************/
+/*! exports provided: FormBox */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormBox", function() { return FormBox; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../variables/colors */ "./src/client/app/variables/colors.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var FormBox = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n  text-align: center;\n  font-size: 16px;\n  border-radius: 20px;\n  padding: 24px;\n  background-color: ", ";\n  color: ", ";\n  letter-spacing:2px;\n  box-shadow: 5px 5px 0px ", ";\n  margin: auto;\n\n  input[type=submit] {\n    width: 50%;\n    font-size: 12px;\n    font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    letter-spacing: 1px;\n  }\n\n  a {\n    color: ", ";\n  }\n"], ["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n  text-align: center;\n  font-size: 16px;\n  border-radius: 20px;\n  padding: 24px;\n  background-color: ", ";\n  color: ", ";\n  letter-spacing:2px;\n  box-shadow: 5px 5px 0px ", ";\n  margin: auto;\n\n  input[type=submit] {\n    width: 50%;\n    font-size: 12px;\n    font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    letter-spacing: 1px;\n  }\n\n  a {\n    color: ", ";\n  }\n"])), _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].highlight, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite);
+var templateObject_1;
 
 
 /***/ }),

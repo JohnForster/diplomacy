@@ -1,5 +1,4 @@
 import {Component, h, Fragment} from 'preact'
-import './fleet.scss'
 
 export interface IFleetProps {
   viewBox: string

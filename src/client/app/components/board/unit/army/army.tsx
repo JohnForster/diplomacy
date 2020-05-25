@@ -1,5 +1,4 @@
 import {h, Component} from 'preact'
-import './army.scss'
 
 export interface IArmyProps {
   viewBox: string

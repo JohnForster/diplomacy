@@ -1,41 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/board.scss":
-/*!*********************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/board.scss ***!
-  \*********************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".gameBoard {\n  position: relative;\n  width: 100%;\n  max-width: 80vh; }\n  @media screen and (max-width: 767px) and (orientation: landscape) {\n    .gameBoard {\n      max-width: 80%; } }\n\n.sticky-container {\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 100px;\n  z-index: 5;\n  pointer-events: none; }\n\n.unit {\n  pointer-events: none; }\n\n.territorySquare {\n  background-image: url(/assets/paperTexture.jpg);\n  background-size: contain;\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-100px);\n  border: 2px solid #102542;\n  border-radius: 4px; }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/orderBox/orderBox.scss":
-/*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/orderBox/orderBox.scss ***!
-  \*********************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".orderBox {\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255, 255, 255, 0.4);\n  padding: 5px;\n  pointer-events: all; }\n  @media screen and (max-width: 500px) {\n    .orderBox {\n      font-size: 9px; } }\n  @media screen and (max-width: 767px) and (orientation: landscape) {\n    .orderBox {\n      max-width: 100%; } }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/territory/territory.scss":
 /*!***********************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/territory/territory.scss ***!
@@ -47,43 +11,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".l, .Unowned {\n  pointer-events: all;\n  fill: #FFFFDD;\n  stroke: #444444;\n  stroke-linejoin: round;\n  fill-opacity: 0.2;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s; }\n\n.w {\n  pointer-events: all;\n  fill: #99CCFF;\n  stroke: #444444;\n  stroke-linejoin: round;\n  fill-opacity: 0.45;\n  stroke-width: 0.5;\n  transition: fill 0.2s; }\n\n.w:hover {\n  fill: #AADDFF; }\n\n.l:hover {\n  fill-opacity: 0.4; }\n\n.s {\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  stroke-linejoin: round;\n  opacity: 0.5; }\n\n.sc {\n  fill: #DDDDDD;\n  stroke: black; }\n\n#A, #F, #sc {\n  pointer-events: none;\n  stroke: black; }\n\ntext {\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none; }\n\n.orderTitle {\n  font-weight: bold; }\n\n.empire1 {\n  fill: #FFFF88; }\n\n.empire2 {\n  fill: #FFFF00; }\n\n.empire3 {\n  fill: #FF88FF; }\n\n.empire4 {\n  fill: #FF8888; }\n\n.empire5 {\n  fill: #FF8800; }\n\n.empire6 {\n  fill: #FF00FF; }\n\n.empire7 {\n  fill: #FF0088; }\n\n.empire8 {\n  fill: #FF0000; }\n\n.empire9 {\n  fill: #88FFFF; }\n\n.empire10 {\n  fill: #88FF88; }\n\n.empire11 {\n  fill: #88FF00; }\n\n.empire12 {\n  fill: #8888FF; }\n\n.empire13 {\n  fill: #888888; }\n\n.empire14 {\n  fill: #888800; }\n\n.empire15 {\n  fill: #8800FF; }\n\n.empire16 {\n  fill: #880088; }\n\n.empire17 {\n  fill: #880000; }\n\n.empire18 {\n  fill: #00FFFF; }\n\n.empire19 {\n  fill: #00FF88; }\n\n.empire20 {\n  fill: #00FF00; }\n\n.empire21 {\n  fill: #0088FF; }\n\n.empire22 {\n  fill: #008888; }\n\n.empire23 {\n  fill: #008800; }\n\n.empire24 {\n  fill: #0000FF; }\n\n.empire25 {\n  fill: #000088; }\n\n.success {\n  stroke: #1C1; }\n\n.bounce {\n  stroke: #D50; }\n\n.move {\n  stroke: #000; }\n\n/* .light {fill:#06B559;}\n.medium{fill:#0B9B53;}\n.shadow{fill:#088443;} */\nsvg text {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\nsvg text::selection {\n  background: none; }\n\n.e01-light {\n  fill: #00007f; }\n\n.e01-medium {\n  fill: #000065; }\n\n.e01-shadow {\n  fill: #00004c; }\n\n.e02-light {\n  fill: #0000ff; }\n\n.e02-medium {\n  fill: #0000cc; }\n\n.e02-shadow {\n  fill: #000099; }\n\n.e03-light {\n  fill: #007f00; }\n\n.e03-medium {\n  fill: #006500; }\n\n.e03-shadow {\n  fill: #004c00; }\n\n.e04-light {\n  fill: #007f7f; }\n\n.e04-medium {\n  fill: #006565; }\n\n.e04-shadow {\n  fill: #004c4c; }\n\n.e05-light {\n  fill: #007fff; }\n\n.e05-medium {\n  fill: #0065cc; }\n\n.e05-shadow {\n  fill: #004c99; }\n\n.e06-light {\n  fill: #00ff00; }\n\n.e06-medium {\n  fill: #00cc00; }\n\n.e06-shadow {\n  fill: #009900; }\n\n.e07-light {\n  fill: #00ff7f; }\n\n.e07-medium {\n  fill: #00cc65; }\n\n.e07-shadow {\n  fill: #00994c; }\n\n.e08-light {\n  fill: #00ffff; }\n\n.e08-medium {\n  fill: #00cccc; }\n\n.e08-shadow {\n  fill: #009999; }\n\n.e09-light {\n  fill: #7f0000; }\n\n.e09-medium {\n  fill: #650000; }\n\n.e09-shadow {\n  fill: #4c0000; }\n\n.e10-light {\n  fill: #7f007f; }\n\n.e10-medium {\n  fill: #650065; }\n\n.e10-shadow {\n  fill: #4c004c; }\n\n.e11-light {\n  fill: #7f00ff; }\n\n.e11-medium {\n  fill: #6500cc; }\n\n.e11-shadow {\n  fill: #4c0099; }\n\n.e12-light {\n  fill: #7f7f00; }\n\n.e12-medium {\n  fill: #656500; }\n\n.e12-shadow {\n  fill: #4c4c00; }\n\n.e13-light {\n  fill: #7f7f7f; }\n\n.e13-medium {\n  fill: #656565; }\n\n.e13-shadow {\n  fill: #4c4c4c; }\n\n.e14-light {\n  fill: #7f7fff; }\n\n.e14-medium {\n  fill: #6565cc; }\n\n.e14-shadow {\n  fill: #4c4c99; }\n\n.e15-light {\n  fill: #7fff00; }\n\n.e15-medium {\n  fill: #65cc00; }\n\n.e15-shadow {\n  fill: #4c9900; }\n\n.e16-light {\n  fill: #7fff7f; }\n\n.e16-medium {\n  fill: #65cc65; }\n\n.e16-shadow {\n  fill: #4c994c; }\n\n.e17-light {\n  fill: #7fffff; }\n\n.e17-medium {\n  fill: #65cccc; }\n\n.e17-shadow {\n  fill: #4c9999; }\n\n.e18-light {\n  fill: #ff0000; }\n\n.e18-medium {\n  fill: #cc0000; }\n\n.e18-shadow {\n  fill: #990000; }\n\n.e19-light {\n  fill: #ff007f; }\n\n.e19-medium {\n  fill: #cc0065; }\n\n.e19-shadow {\n  fill: #99004c; }\n\n.e20-light {\n  fill: #ff00ff; }\n\n.e20-medium {\n  fill: #cc00cc; }\n\n.e20-shadow {\n  fill: #990099; }\n\n.e21-light {\n  fill: #ff7f00; }\n\n.e21-medium {\n  fill: #cc6500; }\n\n.e21-shadow {\n  fill: #994c00; }\n\n.e22-light {\n  fill: #ff7f7f; }\n\n.e22-medium {\n  fill: #cc6565; }\n\n.e22-shadow {\n  fill: #994c4c; }\n\n.e23-light {\n  fill: #ff7fff; }\n\n.e23-medium {\n  fill: #cc65cc; }\n\n.e23-shadow {\n  fill: #994c99; }\n\n.e24-light {\n  fill: #ffff00; }\n\n.e24-medium {\n  fill: #cccc00; }\n\n.e24-shadow {\n  fill: #999900; }\n\n.e25-light {\n  fill: #ffff7f; }\n\n.e25-medium {\n  fill: #cccc65; }\n\n.e25-shadow {\n  fill: #99994c; }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/unit/army/army.scss":
-/*!******************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/unit/army/army.scss ***!
-  \******************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".armySquare {\n  position: absolute;\n  width: 100%;\n  left: 0;\n  pointer-events: none; }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/unit/fleet/fleet.scss":
-/*!********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/unit/fleet/fleet.scss ***!
-  \********************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".fleetSquare {\n  position: absolute;\n  width: 100%;\n  left: 0;\n  pointer-events: none; }\n", ""]);
+exports.push([module.i, ".l, .Unowned {\n  pointer-events: all;\n  fill: #FFFFDD;\n  stroke: #444444;\n  stroke-linejoin: round;\n  fill-opacity: 0.3;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s; }\n\n.w {\n  pointer-events: all;\n  fill: #99CCFF;\n  stroke: #444444;\n  stroke-linejoin: round;\n  fill-opacity: 0.45;\n  stroke-width: 0.5;\n  transition: fill 0.2s; }\n\n.w:hover {\n  fill: #AADDFF; }\n\n.l:hover {\n  fill-opacity: 0.4; }\n\n.s {\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  stroke-linejoin: round;\n  opacity: 0.5; }\n\n.sc {\n  fill: #DDDDDD;\n  stroke: black; }\n\n#A, #F, #sc {\n  pointer-events: none;\n  stroke: black; }\n\ntext {\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none; }\n\n.empire1 {\n  fill: #FFFF88; }\n\n.empire2 {\n  fill: #FFFF00; }\n\n.empire3 {\n  fill: #FF88FF; }\n\n.empire4 {\n  fill: #FF8888; }\n\n.empire5 {\n  fill: #FF8800; }\n\n.empire6 {\n  fill: #FF00FF; }\n\n.empire7 {\n  fill: #FF0088; }\n\n.empire8 {\n  fill: #FF0000; }\n\n.empire9 {\n  fill: #88FFFF; }\n\n.empire10 {\n  fill: #88FF88; }\n\n.empire11 {\n  fill: #88FF00; }\n\n.empire12 {\n  fill: #8888FF; }\n\n.empire13 {\n  fill: #888888; }\n\n.empire14 {\n  fill: #888800; }\n\n.empire15 {\n  fill: #8800FF; }\n\n.empire16 {\n  fill: #880088; }\n\n.empire17 {\n  fill: #880000; }\n\n.empire18 {\n  fill: #00FFFF; }\n\n.empire19 {\n  fill: #00FF88; }\n\n.empire20 {\n  fill: #00FF00; }\n\n.empire21 {\n  fill: #0088FF; }\n\n.empire22 {\n  fill: #008888; }\n\n.empire23 {\n  fill: #008800; }\n\n.empire24 {\n  fill: #0000FF; }\n\n.empire25 {\n  fill: #000088; }\n\n.success {\n  stroke: #1C1; }\n\n.bounce {\n  stroke: #D50; }\n\n.move {\n  stroke: #000; }\n\n/* .light {fill:#06B559;}\n.medium{fill:#0B9B53;}\n.shadow{fill:#088443;} */\nsvg text {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\nsvg text::selection {\n  background: none; }\n\n.e01-light {\n  fill: #00007f; }\n\n.e01-medium {\n  fill: #000065; }\n\n.e01-shadow {\n  fill: #00004c; }\n\n.e02-light {\n  fill: #0000ff; }\n\n.e02-medium {\n  fill: #0000cc; }\n\n.e02-shadow {\n  fill: #000099; }\n\n.e03-light {\n  fill: #007f00; }\n\n.e03-medium {\n  fill: #006500; }\n\n.e03-shadow {\n  fill: #004c00; }\n\n.e04-light {\n  fill: #007f7f; }\n\n.e04-medium {\n  fill: #006565; }\n\n.e04-shadow {\n  fill: #004c4c; }\n\n.e05-light {\n  fill: #007fff; }\n\n.e05-medium {\n  fill: #0065cc; }\n\n.e05-shadow {\n  fill: #004c99; }\n\n.e06-light {\n  fill: #00ff00; }\n\n.e06-medium {\n  fill: #00cc00; }\n\n.e06-shadow {\n  fill: #009900; }\n\n.e07-light {\n  fill: #00ff7f; }\n\n.e07-medium {\n  fill: #00cc65; }\n\n.e07-shadow {\n  fill: #00994c; }\n\n.e08-light {\n  fill: #00ffff; }\n\n.e08-medium {\n  fill: #00cccc; }\n\n.e08-shadow {\n  fill: #009999; }\n\n.e09-light {\n  fill: #7f0000; }\n\n.e09-medium {\n  fill: #650000; }\n\n.e09-shadow {\n  fill: #4c0000; }\n\n.e10-light {\n  fill: #7f007f; }\n\n.e10-medium {\n  fill: #650065; }\n\n.e10-shadow {\n  fill: #4c004c; }\n\n.e11-light {\n  fill: #7f00ff; }\n\n.e11-medium {\n  fill: #6500cc; }\n\n.e11-shadow {\n  fill: #4c0099; }\n\n.e12-light {\n  fill: #7f7f00; }\n\n.e12-medium {\n  fill: #656500; }\n\n.e12-shadow {\n  fill: #4c4c00; }\n\n.e13-light {\n  fill: #7f7f7f; }\n\n.e13-medium {\n  fill: #656565; }\n\n.e13-shadow {\n  fill: #4c4c4c; }\n\n.e14-light {\n  fill: #7f7fff; }\n\n.e14-medium {\n  fill: #6565cc; }\n\n.e14-shadow {\n  fill: #4c4c99; }\n\n.e15-light {\n  fill: #7fff00; }\n\n.e15-medium {\n  fill: #65cc00; }\n\n.e15-shadow {\n  fill: #4c9900; }\n\n.e16-light {\n  fill: #7fff7f; }\n\n.e16-medium {\n  fill: #65cc65; }\n\n.e16-shadow {\n  fill: #4c994c; }\n\n.e17-light {\n  fill: #7fffff; }\n\n.e17-medium {\n  fill: #65cccc; }\n\n.e17-shadow {\n  fill: #4c9999; }\n\n.e18-light {\n  fill: #ff0000; }\n\n.e18-medium {\n  fill: #cc0000; }\n\n.e18-shadow {\n  fill: #990000; }\n\n.e19-light {\n  fill: #ff007f; }\n\n.e19-medium {\n  fill: #cc0065; }\n\n.e19-shadow {\n  fill: #99004c; }\n\n.e20-light {\n  fill: #ff00ff; }\n\n.e20-medium {\n  fill: #cc00cc; }\n\n.e20-shadow {\n  fill: #990099; }\n\n.e21-light {\n  fill: #ff7f00; }\n\n.e21-medium {\n  fill: #cc6500; }\n\n.e21-shadow {\n  fill: #994c00; }\n\n.e22-light {\n  fill: #ff7f7f; }\n\n.e22-medium {\n  fill: #cc6565; }\n\n.e22-shadow {\n  fill: #994c4c; }\n\n.e23-light {\n  fill: #ff7fff; }\n\n.e23-medium {\n  fill: #cc65cc; }\n\n.e23-shadow {\n  fill: #994c99; }\n\n.e24-light {\n  fill: #ffff00; }\n\n.e24-medium {\n  fill: #cccc00; }\n\n.e24-shadow {\n  fill: #999900; }\n\n.e25-light {\n  fill: #ffff7f; }\n\n.e25-medium {\n  fill: #cccc65; }\n\n.e25-shadow {\n  fill: #99994c; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -108,37 +36,6 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "./src/client/app/components/board/board.scss":
-/*!****************************************************!*\
-  !*** ./src/client/app/components/board/board.scss ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../node_modules/css-loader/dist/cjs.js!../../../../../node_modules/sass-loader/dist/cjs.js!./board.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/board.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
-
-
-
-module.exports = exported;
-
-/***/ }),
-
 /***/ "./src/client/app/components/board/board.tsx":
 /*!***************************************************!*\
   !*** ./src/client/app/components/board/board.tsx ***!
@@ -149,13 +46,12 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _territory_territory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./territory/territory */ "./src/client/app/components/board/territory/territory.tsx");
-/* harmony import */ var _unit_unit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unit/unit */ "./src/client/app/components/board/unit/unit.tsx");
-/* harmony import */ var _board_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./board.scss */ "./src/client/app/components/board/board.scss");
-/* harmony import */ var _board_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_board_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _territory_territory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./territory/territory */ "./src/client/app/components/board/territory/territory.tsx");
+/* harmony import */ var _unit_unit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./unit/unit */ "./src/client/app/components/board/unit/unit.tsx");
 /* harmony import */ var _ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ordersLayer/ordersLayer */ "./src/client/app/components/ordersLayer/ordersLayer.tsx");
-/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
-/* harmony import */ var _orderBox_orderBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./orderBox/orderBox */ "./src/client/app/components/board/orderBox/orderBox.tsx");
+/* harmony import */ var _orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./orderBox/orderBox */ "./src/client/app/components/board/orderBox/orderBox.tsx");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/styled.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -203,7 +99,7 @@ var Board = /** @class */ (function (_super) {
             var cursorpt = pt.matrixTransform(svg.getScreenCTM().inverse());
             console.log('(' + Math.round(cursorpt.x) + ', ' + Math.round(cursorpt.y) + ')');
         };
-        _this.svg = Object(preact_compat__WEBPACK_IMPORTED_MODULE_5__["createRef"])();
+        _this.svg = Object(preact_compat__WEBPACK_IMPORTED_MODULE_1__["createRef"])();
         return _this;
     }
     Object.defineProperty(Board.prototype, "activeTileData", {
@@ -220,48 +116,19 @@ var Board = /** @class */ (function (_super) {
     Board.prototype.render = function (props, state) {
         var _this = this;
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'gameBoard', id: 'gameBoard' },
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'sticky-container' }, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_6__["default"], { onMoveSelect: props.onMoveSelect, activeTerritory: props.activeTerritory }))),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("svg", { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, className: "territorySquare", width: '100%', ref: this.svg, onClick: this.alert_coords },
-                    props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_1__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
-                    props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_2__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["GameBoard"], { id: 'gameBoard' },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["StickyContainer"], null, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__["default"], { onMoveSelect: props.onMoveSelect, activeTerritory: props.activeTerritory }))),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["MapSvg"], { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, ref: function () { return _this.svg; }, 
+                    // @ts-ignore
+                    onClick: this.alert_coords },
+                    props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_2__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
+                    props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_3__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData })))));
     };
     return Board;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (Board);
 
-
-/***/ }),
-
-/***/ "./src/client/app/components/board/orderBox/orderBox.scss":
-/*!****************************************************************!*\
-  !*** ./src/client/app/components/board/orderBox/orderBox.scss ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../node_modules/sass-loader/dist/cjs.js!./orderBox.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/orderBox/orderBox.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
-
-
-
-module.exports = exported;
 
 /***/ }),
 
@@ -275,8 +142,7 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _orderBox_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./orderBox.scss */ "./src/client/app/components/board/orderBox/orderBox.scss");
-/* harmony import */ var _orderBox_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_orderBox_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/orderBox/styled.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -298,8 +164,8 @@ var OrderBox = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     OrderBox.prototype.render = function (props, state) {
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { className: 'orderBox' },
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { className: 'orderTitle' }, props.activeTerritory),
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["OrderBox"], null,
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["OrderTitle"], null, props.activeTerritory),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("span", { onClick: props.onMoveSelect('move') }, "Move"),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
@@ -313,6 +179,59 @@ var OrderBox = /** @class */ (function (_super) {
     return OrderBox;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (OrderBox);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/orderBox/styled.ts":
+/*!************************************************************!*\
+  !*** ./src/client/app/components/board/orderBox/styled.ts ***!
+  \************************************************************/
+/*! exports provided: OrderBox, OrderTitle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrderBox", function() { return OrderBox; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrderTitle", function() { return OrderTitle; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var OrderBox = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  @media screen and (max-width:500px){\n    font-size: 9px;\n  }\n\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255,255,255, .4); /* Move to constants */\n  padding: 5px;\n  pointer-events: all;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 100%;\n  }\n"], ["\n  @media screen and (max-width:500px){\n    font-size: 9px;\n  }\n\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255,255,255, .4); /* Move to constants */\n  padding: 5px;\n  pointer-events: all;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 100%;\n  }\n"])));
+var OrderTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  font-weight: bold;\n"], ["\n  font-weight: bold;\n"])));
+var templateObject_1, templateObject_2;
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/styled.ts":
+/*!***************************************************!*\
+  !*** ./src/client/app/components/board/styled.ts ***!
+  \***************************************************/
+/*! exports provided: GameBoard, StickyContainer, MapSvg */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GameBoard", function() { return GameBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StickyContainer", function() { return StickyContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MapSvg", function() { return MapSvg; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../variables/colors */ "./src/client/app/variables/colors.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var GameBoard = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 80%;\n  }\n"], ["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 80%;\n  }\n"])));
+var StickyContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 100px;\n  z-index: 5;\n  pointer-events: none;\n"], ["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 100px;\n  z-index: 5;\n  pointer-events: none;\n"])));
+var PAPER_TEXTURE_URL = '/assets/paperTexture.jpg';
+var MapSvg = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].svg(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-100px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n"], ["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-100px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n"])), PAPER_TEXTURE_URL, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow);
+var templateObject_1, templateObject_2, templateObject_3;
 
 
 /***/ }),
@@ -385,49 +304,18 @@ var Territory = /** @class */ (function (_super) {
         return _this;
     }
     Territory.prototype.render = function (props, state) {
+        console.log('props.tile.id:', props.tile.id);
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { title: props.tile.title, class: props.tile.tileType },
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: props.tile.id + " " + props.colour + "-light", d: props.tile.path, onClick: props.onSelect }),
                 props.tile.textLocation && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-                     true && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("circle", { stroke: 'white', cx: props.tile.textLocation.x, cy: props.tile.textLocation.y, r: '1' })),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "\n              translate(" + props.tile.textLocation.x + " " + props.tile.textLocation.y + ")\n              rotate(" + (props.tile.textLocation.rotate || '0') + ")\n              " },
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "\n                translate(" + props.tile.textLocation.x + " " + props.tile.textLocation.y + ")\n                rotate(" + (props.tile.textLocation.rotate || '0') + ")\n                " },
                         Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("text", null, props.tile.name.split('\n').map(function (line, i) { return Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("tspan", { dy: i ? '8' : '0', x: '0', "text-anchor": 'middle' }, line); }))))))));
     };
     return Territory;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (Territory);
 
-
-/***/ }),
-
-/***/ "./src/client/app/components/board/unit/army/army.scss":
-/*!*************************************************************!*\
-  !*** ./src/client/app/components/board/unit/army/army.scss ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../../node_modules/sass-loader/dist/cjs.js!./army.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/unit/army/army.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
-
-
-
-module.exports = exported;
 
 /***/ }),
 
@@ -441,8 +329,6 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _army_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./army.scss */ "./src/client/app/components/board/unit/army/army.scss");
-/* harmony import */ var _army_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_army_scss__WEBPACK_IMPORTED_MODULE_1__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -456,7 +342,6 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
 
 var Army = /** @class */ (function (_super) {
     __extends(Army, _super);
@@ -496,37 +381,6 @@ var Army = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./src/client/app/components/board/unit/fleet/fleet.scss":
-/*!***************************************************************!*\
-  !*** ./src/client/app/components/board/unit/fleet/fleet.scss ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../../node_modules/sass-loader/dist/cjs.js!./fleet.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/unit/fleet/fleet.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
-
-
-
-module.exports = exported;
-
-/***/ }),
-
 /***/ "./src/client/app/components/board/unit/fleet/fleet.tsx":
 /*!**************************************************************!*\
   !*** ./src/client/app/components/board/unit/fleet/fleet.tsx ***!
@@ -537,8 +391,6 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _fleet_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fleet.scss */ "./src/client/app/components/board/unit/fleet/fleet.scss");
-/* harmony import */ var _fleet_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_fleet_scss__WEBPACK_IMPORTED_MODULE_1__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -552,7 +404,6 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
 
 var Fleet = /** @class */ (function (_super) {
     __extends(Fleet, _super);
@@ -1122,8 +973,7 @@ var templateObject_1;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* tslint:disable:max-line-length*/
-/* harmony default export */ __webpack_exports__["default"] = ({
+var countryData = {
     mapTitle: 'Classic',
     viewBox: '0 0 609 559',
     territories: [
@@ -1132,6 +982,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Adriatic Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 322 480 L 297 456 L 300 453 L 290 453 L 278 443 L 272 424 L 260 417 L 261 401 L 270 398 L 276 399 L 275 403 L 278 410 L 282 401 L 286 402 L 289 418 L 306 436 L 331 454 L 331 477 L 335 480 L 322 480",
             textLocation: {
                 x: 300,
@@ -1144,6 +995,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Aegean\nSea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 376 537 L 371 520 L 378 521 L 377 513 L 386 516 L 385 509 L 370 494 L 371 491 L 378 494 L 368 483 L 371 477 L 379 484 L 382 483 L 381 477 L 386 478 L 380 472 L 392 472 L 400 468 L 408 470 L 410 473 L 414 475 L 410 482 L 409 487 L 417 486 L 417 489 L 420 495 L 417 498 L 417 507 L 423 510 L 427 524 L 435 523 L 435 530 L 416 549 L 412 547 L 387 546 L 383 544 L 376 537",
             textLocation: {
                 x: 408,
@@ -1155,6 +1007,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Baltic Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 266 255 L 271 260 L 278 254 L 277 250 L 280 248 L 279 243 L 282 253 L 289 254 L 294 245 L 305 244 L 312 229 L 311 220 L 359 220 L 349 229 L 347 243 L 347 248 L 348 254 L 344 262 L 337 264 L 334 273 L 328 274 L 326 265 L 314 266 L 307 273 L 294 275 L 286 274 L 287 267 L 280 266 L 266 275 L 261 274 L 260 269 L 256 266 L 256 263 L 254 255 L 266 255",
             textLocation: {
                 x: 320,
@@ -1166,6 +1019,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Barents Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 540 0 L 535 9 L 530 6 L 517 19 L 516 33 L 513 38 L 513 23 L 507 20 L 505 26 L 499 33 L 492 48 L 495 58 L 488 60 L 479 57 L 477 55 L 481 50 L 473 43 L 466 45 L 472 62 L 478 66 L 478 74 L 472 72 L 468 74 L 457 91 L 469 100 L 467 106 L 462 109 L 444 101 L 442 110 L 447 115 L 454 119 L 452 122 L 434 118 L 426 103 L 426 94 L 414 88 L 412 83 L 445 84 L 457 79 L 459 66 L 453 61 L 417 47 L 405 49 L 401 45 L 397 48 L 391 47 L 395 41 L 394 38 L 384 33 L 382 40 L 380 33 L 377 31 L 374 38 L 371 33 L 366 42 L 366 33 L 362 33 L 362 0 L 540 0",
             textLocation: {
                 x: 440,
@@ -1177,6 +1031,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Black Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 440 458 L 430 455 L 426 450 L 422 441 L 425 427 L 429 426 L 430 423 L 432 409 L 439 404 L 438 397 L 446 378 L 459 375 L 461 377 L 459 379 L 465 383 L 476 381 L 478 383 L 472 385 L 468 392 L 477 396 L 477 401 L 486 404 L 488 397 L 494 396 L 497 392 L 507 389 L 506 384 L 494 387 L 485 378 L 503 364 L 526 351 L 527 354 L 514 365 L 517 371 L 520 371 L 515 384 L 511 383 L 510 386 L 517 393 L 528 394 L 554 406 L 567 408 L 573 417 L 570 427 L 555 438 L 551 437 L 520 441 L 514 438 L 511 440 L 502 433 L 481 438 L 470 447 L 464 457 L 442 460 L 440 458",
             textLocation: {
                 x: 495,
@@ -1188,6 +1043,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Eastern Mediterranean',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 435 530 L 441 526 L 447 528 L 453 534 L 464 531 L 466 521 L 475 520 L 485 528 L 491 530 L 505 526 L 511 514 L 520 517 L 527 508 L 530 509 L 525 518 L 526 530 L 532 535 L 528 559 L 400 559 L 400 554 L 414 552 L 416 549 L 435 530",
             textLocation: {
                 x: 478,
@@ -1199,6 +1055,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'English Channel',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 173 301 L 169 311 L 153 315 L 155 320 L 150 319 L 144 318 L 142 312 L 136 310 L 136 326 L 124 323 L 122 318 L 102 317 L 88 303 L 100 291 L 110 292 L 120 295 L 124 291 L 134 294 L 147 295 L 160 298 L 168 296 L 173 301",
             textLocation: {
                 x: 135,
@@ -1210,6 +1067,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Gulf of Lyon',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 115 469 L 110 461 L 124 444 L 131 439 L 146 438 L 157 432 L 158 425 L 158 418 L 169 412 L 176 417 L 188 422 L 198 421 L 211 416 L 222 410 L 233 415 L 238 431 L 224 431 L 221 434 L 211 436 L 213 451 L 218 454 L 218 458 L 214 461 L 206 462 L 205 466 L 154 466 L 148 463 L 142 469 L 115 469",
             textLocation: {
                 x: 180,
@@ -1221,6 +1079,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Gulf\nof\nBothnia',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 311 220 L 314 209 L 322 206 L 328 203 L 331 193 L 326 183 L 320 182 L 321 161 L 330 146 L 343 138 L 351 128 L 347 121 L 349 112 L 355 104 L 362 107 L 368 108 L 372 120 L 366 121 L 359 136 L 345 151 L 347 160 L 350 165 L 348 178 L 349 184 L 357 186 L 365 191 L 384 185 L 402 177 L 403 183 L 411 184 L 414 187 L 408 187 L 400 192 L 399 197 L 387 196 L 371 198 L 369 202 L 365 204 L 368 210 L 372 213 L 373 221 L 377 227 L 373 229 L 366 228 L 359 220 L 311 220",
             textLocation: {
                 x: 344,
@@ -1232,6 +1091,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Hel.',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 245 237 L 243 247 L 244 254 L 243 257 L 245 263 L 244 270 L 244 273 L 235 277 L 234 274 L 230 273 L 226 275 L 211 274 L 211 237 L 245 237",
             textLocation: {
                 x: 235,
@@ -1243,6 +1103,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Ionian Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 289 511 L 290 514 L 295 515 L 308 500 L 311 491 L 304 484 L 310 480 L 318 485 L 322 485 L 322 480 L 335 480 L 339 487 L 346 498 L 350 498 L 347 500 L 352 508 L 367 507 L 371 511 L 355 510 L 350 514 L 357 521 L 359 533 L 360 528 L 367 536 L 368 531 L 376 537 L 383 544 L 380 547 L 383 550 L 400 554 L 400 559 L 232 559 L 234 551 L 232 544 L 225 535 L 231 531 L 236 524 L 247 513 L 258 519 L 273 531 L 281 532 L 282 521 L 285 513 L 285 511 L 289 511",
             textLocation: {
                 x: 320,
@@ -1254,6 +1115,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Irish Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 100 291 L 112 287 L 122 281 L 130 282 L 127 276 L 119 272 L 116 272 L 115 265 L 128 262 L 126 256 L 121 257 L 132 250 L 135 250 L 139 240 L 136 229 L 130 227 L 120 227 L 110 232 L 109 246 L 98 259 L 87 257 L 70 261 L 58 273 L 88 303 L 100 291",
             textLocation: {
                 x: 95,
@@ -1265,6 +1127,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Mid\nAtlantic\nOcean',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 102 317 L 100 322 L 103 328 L 109 329 L 123 344 L 122 350 L 123 357 L 128 363 L 121 382 L 122 384 L 112 399 L 101 396 L 96 397 L 72 384 L 59 381 L 54 375 L 48 374 L 46 378 L 39 375 L 33 381 L 35 384 L 32 396 L 30 406 L 17 427 L 14 427 L 10 433 L 13 440 L 15 441 L 12 450 L 13 454 L 8 462 L 19 469 L 27 468 L 33 475 L 34 484 L 37 490 L 37 495 L 33 496 L 17 518 L 0 520 L 0 273 L 58 273 L 102 317",
             textLocation: {
                 x: 60,
@@ -1276,6 +1139,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'North Atlantic Ocean',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 70 261 L 64 250 L 67 242 L 71 245 L 81 234 L 74 228 L 80 225 L 78 218 L 82 217 L 89 220 L 94 220 L 95 218 L 94 216 L 97 216 L 101 212 L 110 212 L 119 217 L 120 227 L 130 227 L 130 223 L 138 217 L 138 214 L 130 208 L 129 197 L 139 189 L 140 182 L 148 177 L 148 0 L 0 0 L 0 273 L 58 273 L 70 261",
             textLocation: {
                 x: 75,
@@ -1287,6 +1151,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'North Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 168 296 L 172 294 L 165 293 L 176 283 L 178 274 L 177 270 L 171 268 L 168 270 L 166 269 L 169 265 L 170 252 L 168 246 L 163 239 L 163 226 L 161 218 L 157 216 L 151 215 L 158 214 L 165 210 L 170 202 L 171 197 L 171 181 L 198 154 L 236 154 L 237 160 L 233 167 L 231 180 L 233 186 L 229 192 L 231 201 L 241 209 L 241 224 L 248 224 L 245 237 L 211 237 L 211 274 L 207 279 L 205 279 L 205 276 L 198 289 L 191 299 L 173 301 L 168 296",
             textLocation: {
                 x: 210,
@@ -1298,6 +1163,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Norwegian Sea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 362 33 L 357 39 L 343 44 L 324 54 L 320 64 L 310 75 L 309 84 L 303 86 L 292 111 L 277 132 L 269 134 L 264 142 L 258 141 L 236 154 L 198 154 L 171 181 L 171 197 L 158 193 L 152 194 L 154 188 L 161 185 L 162 181 L 148 177 L 148 0 L 362 0 L 362 33",
             textLocation: {
                 x: 220,
@@ -1309,6 +1175,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Ska.',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 241 209 L 246 210 L 266 201 L 270 193 L 275 203 L 277 218 L 276 224 L 282 236 L 279 240 L 279 243 L 275 242 L 269 243 L 266 240 L 267 234 L 266 221 L 263 223 L 248 224 L 241 224 L 241 209",
             textLocation: {
                 x: 267,
@@ -1320,6 +1187,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Tyrrhenian\nSea',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 238 431 L 247 442 L 248 447 L 256 458 L 271 464 L 276 474 L 290 487 L 294 502 L 289 511 L 285 511 L 285 508 L 276 510 L 263 510 L 257 507 L 252 508 L 247 513 L 236 524 L 233 523 L 224 527 L 223 518 L 218 516 L 218 490 L 220 490 L 224 468 L 222 458 L 218 458 L 218 454 L 223 450 L 225 444 L 225 436 L 224 431 L 238 431",
             textLocation: {
                 x: 255,
@@ -1331,6 +1199,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Western Mediterranean',
             tileType: 'seaTile',
             id: 'w',
+            tags: ['sea'],
             path: "M 37 490 L 47 488 L 52 489 L 60 486 L 78 491 L 83 494 L 86 485 L 90 483 L 98 484 L 107 474 L 113 473 L 115 469 L 142 469 L 150 471 L 154 466 L 205 466 L 206 476 L 204 485 L 208 492 L 212 492 L 217 489 L 218 490 L 218 516 L 212 517 L 208 521 L 203 520 L 179 515 L 169 518 L 150 511 L 117 509 L 106 511 L 99 515 L 89 512 L 84 518 L 79 520 L 68 516 L 68 511 L 64 514 L 46 509 L 42 502 L 41 494 L 37 495 L 37 490",
             textLocation: {
                 x: 150,
@@ -1343,6 +1212,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "M 209 363 L 208 367 L 194 382 L 197 385 L 203 379 L 207 386 L 213 387 L 221 385 L 227 390 L 229 385 L 243 388 L 245 384 L 241 378 L 234 374 L 234 366 L 232 363 L 225 362 L 222 365 L 209 363",
             textLocation: {
                 x: 215,
@@ -1354,6 +1224,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "M 70 261 L 64 250 L 67 242 L 71 245 L 81 234 L 74 228 L 80 225 L 78 218 L 82 217 L 89 220 L 94 220 L 95 218 L 94 216 L 97 216 L 101 212 L 110 212 L 119 217 L 120 227 L 120 227 L 110 232 L 109 246 L 98 259 L 87 257 L 70 261",
             textLocation: {
                 x: 215,
@@ -1365,6 +1236,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "",
             textLocation: {
                 x: 215,
@@ -1376,6 +1248,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "",
             textLocation: {
                 x: 215,
@@ -1387,6 +1260,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "M 154 466 L 148 463 L 142 469 L 150 471 L 154 466",
             textLocation: {
                 x: 215,
@@ -1398,6 +1272,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "",
             textLocation: {
                 x: 215,
@@ -1409,6 +1284,7 @@ __webpack_require__.r(__webpack_exports__);
             name: '',
             tileType: 'landTile',
             id: 's',
+            tags: ['neutral'],
             path: "",
             textLocation: {
                 x: 215,
@@ -1421,6 +1297,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Alb.',
             tileType: 'landTile',
             id: 'l Albania',
+            tags: ['coastal'],
             path: "M 331 454 L 331 477 L 335 480 L 339 487 L 350 477 L 350 471 L 346 466 L 346 452 L 337 446 L 330 445 L 331 454",
             textLocation: {
                 x: 345,
@@ -1432,6 +1309,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Ankara',
             tileType: 'landTile',
             id: 'l Ankara',
+            tags: ['coastal', 'supply'],
             path: "M 555 438 L 551 437 L 520 441 L 514 438 L 511 440 L 502 433 L 481 438 L 470 447 L 464 457 L 468 461 L 468 479 L 466 491 L 473 491 L 490 480 L 501 482 L 508 480 L 531 460 L 546 462 L 555 460 L 557 449 L 555 438",
             textLocation: {
                 x: 505,
@@ -1443,6 +1321,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Apulia',
             tileType: 'landTile',
             id: 'l Apulia',
+            tags: ['coastal'],
             path: "M 304 484 L 310 480 L 318 485 L 322 485 L 322 480 L 297 456 L 300 453 L 290 453 L 278 443 L 274 447 L 279 451 L 280 455 L 279 458 L 293 481 L 304 484",
             textLocation: {
                 x: 305,
@@ -1455,6 +1334,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Armenia',
             tileType: 'landTile',
             id: 'l Armenia',
+            tags: ['coastal'],
             path: "M 609 493 L 584 478 L 563 479 L 562 471 L 556 467 L 555 460 L 557 449 L 555 438 L 570 427 L 589 442 L 594 439 L 603 441 L 609 440 L 609 493",
             textLocation: {
                 x: 587,
@@ -1466,6 +1346,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Bel.',
             tileType: 'landTile',
             id: 'l Belgium',
+            tags: ['coastal', 'supply'],
             path: "M 191 299 L 194 303 L 206 306 L 205 311 L 208 315 L 210 326 L 205 331 L 192 323 L 184 315 L 169 311 L 173 301 L 191 299",
             textLocation: {
                 x: 197,
@@ -1477,6 +1358,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Berlin',
             tileType: 'landTile',
             id: 'l Berlin',
+            tags: ['coastal', 'supply'],
             path: "M 294 275 L 286 274 L 287 267 L 280 266 L 266 275 L 266 283 L 262 287 L 264 293 L 261 296 L 263 310 L 288 305 L 296 300 L 297 296 L 292 290 L 294 275",
             textLocation: {
                 x: 279,
@@ -1488,6 +1370,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Bohemia',
             tileType: 'landTile',
             id: 'l Bohemia',
+            tags: ['landlocked'],
             path: "M 281 356 L 276 346 L 268 343 L 264 329 L 266 325 L 278 326 L 288 321 L 297 322 L 311 334 L 314 332 L 321 339 L 322 347 L 316 348 L 303 346 L 295 349 L 292 357 L 281 356",
             textLocation: {
                 x: 298,
@@ -1499,6 +1382,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Brest',
             tileType: 'landTile',
             id: 'l Brest',
+            tags: ['coastal', 'supply'],
             path: "M 150 319 L 144 318 L 142 312 L 136 310 L 136 326 L 124 323 L 122 318 L 102 317 L 100 322 L 103 328 L 109 329 L 123 344 L 122 350 L 123 357 L 128 363 L 146 365 L 146 337 L 148 329 L 150 319",
             textLocation: {
                 x: 135,
@@ -1510,16 +1394,32 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Budapest',
             tileType: 'landTile',
             id: 'l Budapest',
+            tags: ['landlocked', 'supply'],
             path: "M 394 376 L 395 382 L 401 385 L 406 396 L 401 402 L 387 402 L 367 406 L 365 412 L 360 413 L 342 410 L 338 412 L 335 410 L 332 410 L 323 408 L 321 398 L 311 394 L 308 383 L 311 375 L 322 370 L 335 354 L 337 350 L 350 347 L 360 351 L 368 353 L 377 360 L 378 363 L 384 365 L 394 376",
             textLocation: {
                 x: 360,
                 y: 375,
             },
         },
+        // ! NEEDS IMPLEMENTED PROPERLY
+        {
+            title: 'Bulgaria',
+            name: 'Bulgaria',
+            tileType: 'landTile',
+            tags: ['coastal', 'supply', 'dual'],
+            id: 'l',
+            // ? Have this territory have the full path?
+            path: "",
+            textLocation: {
+                x: 400,
+                y: 438,
+            },
+        },
         {
             title: 'Bulgaria__ec',
             name: 'Bulgaria',
             tileType: 'landTile',
+            tags: ['coast'],
             id: 'l',
             path: "M 413 464 L 412 454 L 420 451 L 426 450 L 422 441 L 425 427 L 429 426 L 430 423 L 422 420 L 410 420 L 404 422 L 398 427 L 390 425 L 382 427 L 375 423 L 370 425 L 367 421 L 365 425 L 368 433 L 371 438 ",
             textLocation: {
@@ -1531,6 +1431,7 @@ __webpack_require__.r(__webpack_exports__);
             title: 'Bulgaria__sc',
             name: '',
             tileType: 'landTile',
+            tags: ['coast'],
             id: 'l',
             path: "M 371 438 L 366 439 L 371 456 L 365 461 L 369 464 L 376 464 L 388 460 L 392 472 L 400 468 L 408 470 L 413 464",
         },
@@ -1539,6 +1440,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Burgundy',
             tileType: 'landTile',
             id: 'l Burgundy',
+            tags: ['landlocked'],
             path: "M 192 323 L 205 331 L 204 338 L 211 346 L 213 352 L 209 363 L 208 367 L 194 382 L 178 381 L 178 390 L 173 396 L 168 395 L 163 387 L 165 383 L 158 380 L 156 374 L 165 365 L 185 344 L 188 332 L 192 323",
             textLocation: {
                 x: 186,
@@ -1551,6 +1453,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Clyde',
             tileType: 'landTile',
             id: 'l Clyde',
+            tags: ['coastal'],
             path: "M 138 214 L 130 208 L 129 197 L 139 189 L 140 182 L 148 177 L 162 181 L 161 185 L 154 188 L 152 194 L 146 200 L 144 213 L 138 214",
             textLocation: {
                 x: 137,
@@ -1562,6 +1465,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Constantinople',
             tileType: 'landTile',
             id: 'l Constantinople',
+            tags: ['coastal', 'passage', 'supply'],
             path: "M 408 470 L 410 473 L 414 475 L 410 482 L 409 487 L 417 486 L 417 489 L 423 487 L 432 493 L 452 495 L 466 491 L 468 479 L 468 461 L 464 457 L 442 460 L 440 458 L 430 455 L 426 450 L 420 451 L 412 454 L 413 464 L 408 470",
             // <polygon class="w" points="L 414 475 L 421 467 L 435 463 L 440 458 L 442 460 L 439 463 L 448 464 L 425 475"/>
             textLocation: {
@@ -1575,6 +1479,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Den.',
             tileType: 'landTile',
             id: 'l Denmark',
+            tags: ['coastal', 'passage', 'supply'],
             path: "M 279 243 L 275 242 L 269 243 L 266 240 L 267 234 L 266 221 L 263 223 L 248 224 L 245 237 L 243 247 L 244 254 L 254 255 L 266 255 L 271 260 L 278 254 L 277 250 L 280 248  L 279 243",
             // <polygon class="w" points="L 269 243 L 268 246 L 263 247 L 266 255 L 254 255 L 257 247 L 266 240"/>
             textLocation: {
@@ -1598,6 +1503,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Edb.',
             tileType: 'landTile',
             id: 'l Edinburgh',
+            tags: ['coastal', 'supply'],
             path: "M 152 194 L 158 193 L 171 197  170 202 L 165 210 L 158 214 L 151 215 L 157 216 L 161 218 L 163 226 L 155 228 L 145 217 L 144 213 L 146 200 L 152 194",
             textLocation: {
                 x: 163,
@@ -1609,6 +1515,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Finland',
             tileType: 'landTile',
             id: 'l Finland',
+            tags: ['coastal'],
             path: "M 362 107 L 368 108 L 372 120 L 366 121 L 359 136 L 345 151 L 347 160 L 350 165 L 348 178 L 349 184 L 357 186 L 365 191 L 384 185 L 402 177 L 412 161 L 410 152 L 414 147 L 410 130 L 402 118 L 401 110 L 392 92 L 393 73 L 387 68 L 388 61 L 386 58 L 388 54 L 379 48 L 370 49 L 369 61 L 355 62 L 346 54 L 342 61 L 356 71 L 362 107",
             textLocation: {
                 x: 385,
@@ -1620,6 +1527,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Galicia',
             tileType: 'landTile',
             id: 'l Galicia',
+            tags: ['landlocked'],
             path: "M 333 330 L 341 330 L 344 332 L 353 327 L 356 323 L 361 324 L 367 329 L 374 327 L 379 324 L 383 327 L 385 332 L 399 338 L 404 354 L 403 360 L 404 371 L 394 376 L 384 365 L 378 363 L 377 360 L 368 353 L 360 351 L 350 347 L 337 350 L 329 346 L 322 347 L 321 339 L 322 347 L 321 339 L 325 340 L 329 338 L 333 330",
             textLocation: {
                 x: 375,
@@ -1632,6 +1540,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Gascony',
             tileType: 'landTile',
             id: 'l Gascony',
+            tags: ['coastal'],
             path: "M 128 363 L 121 382 L 122 384 L 112 399 L 113 407 L 123 412 L 134 417 L 135 414 L 142 417 L 149 403 L 157 397 L 168 395 L 163 387 L 165 383 L 158 380 L 156 374 L 149 372 L 146 365 L 128 363",
             textLocation: {
                 x: 144,
@@ -1643,6 +1552,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Greece',
             tileType: 'landTile',
             id: 'l Greece',
+            tags: ['coastal', 'supply'],
             path: "M 339 487 L 346 498 L 350 498 L 347 500 L 352 508 L 367 507 L 371 511 L 355 510 L 350 514 L 357 521 L 359 533 L 360 528 L 367 536 L 368 531 L 376 537 L 371 520 L 378 521 L 377 513 L 386 516 L 385 509 L 370 494 L 371 491 L 378 494 L 368 483 L 371 477 L 379 484 L 382 483 L 381 477 L 386 478 L 380 472 L 392 472 L 388 460 L 376 464 L 369 464 L 361 467 L 356 471 L 350 471 L 350 477 L 339 487",
             textLocation: {
                 x: 361,
@@ -1654,6 +1564,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Hol.',
             tileType: 'landTile',
             id: 'l Holland',
+            tags: ['coastal', 'supply'],
             path: "M 226 275 L 227 280 L 225 292 L 220 298 L 215 297 L 213 302 L 210 313 L 208 315 L 205 311 L 206 306 L 194 303 L 191 299 L 198 289 L 205 276 L 205 279 L 207 279 L 211 274 L 226 275",
             textLocation: {
                 x: 215,
@@ -1665,6 +1576,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Kiel',
             tileType: 'landTile',
             id: 'l Kiel',
+            tags: ['coastal', 'passage', 'supply'],
             path: "M 244 254 L 243 257 L 245 263 L 244 270 L 244 273 L 235 277 L 234 274 L 230 273 L 226 275 L 227 280 L 225 292 L 220 298 L 215 297 L 213 302 L 232 308 L 241 316 L 243 322 L 263 310 L 261 296 L 264 293 L 262 287 L 266 283 L 266 275 L 261 274 L 260 269 L 256 266 L 256 263 L 254 255 L 244 254",
             // <polygon class="w" points="L 244 270 L 244 273 L 256 266 L 256 263 "/>
             textLocation: {
@@ -1677,6 +1589,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Lvp.',
             tileType: 'landTile',
             id: 'l Liverpool',
+            tags: ['coastal', 'supply'],
             path: "M 128 262 L 126 256 L 121 257 L 132 250 L 135 250 L 139 240 L 136 229 L 130 227 L 130 223 L 138 217 L 138 214 L 144 213 L 145 217 L 155 228 L 155 239 L 151 248 L 150 264 L 143 262 L 128 262",
             textLocation: {
                 x: 143,
@@ -1688,6 +1601,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Livonia',
             tileType: 'landTile',
             id: 'l Livonia',
+            tags: ['coastal'],
             path: "M 369 202 L 365 204 L 368 210 L 372 213 L 373 221 L 377 227 L 373 229 L 366 228 L 359 220 L 349 229 L 347 243 L 354 251 L 356 261 L 362 260 L 367 265 L 365 281 L 372 283 L 379 290 L 389 285 L 392 278 L 404 275 L 405 239 L 409 228 L 405 217 L 394 205 L 382 206 L 372 205 L 369 202",
             textLocation: {
                 x: 385,
@@ -1699,6 +1613,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'London',
             tileType: 'landTile',
             id: 'l London',
+            tags: ['coastal', 'supply'],
             path: "M 166 269 L 168 270 L 171 268 L 177 270 L 178 274 L 176 283 L 165 293 L 172 294 L 168 296 L 160 298 L 147 295 L 145 281 L 150 277 L 153 271 L 166 269",
             textLocation: {
                 x: 170,
@@ -1710,6 +1625,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Marseilles',
             tileType: 'landTile',
             id: 'l Marseilles',
+            tags: ['coastal', 'supply'],
             path: "M 142 417 L 149 403 L 157 397 L 168 395 L 173 396 L 178 390 L 178 381 L 194 382 L 197 385 L 203 379 L 207 386 L 204 390 L 207 396 L 201 399 L 204 402 L 203 410 L 211 416 L 198 421 L 188 422 L 176 417 L 169 412 L 158 418 L 158 425 L 154 427 L 142 417",
             textLocation: {
                 x: 181,
@@ -1721,6 +1637,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Moscow',
             tileType: 'landTile',
             id: 'l Moscow',
+            tags: ['landlocked', 'supply'],
             path: "M 609 117 L 598 132 L 573 143 L 564 159 L 534 164 L 515 169 L 489 184 L 476 183 L 458 194 L 456 207 L 457 210 L 451 213 L 447 209 L 439 211 L 428 225 L 421 229 L 409 228 L 405 239 L 404 275 L 392 278 L 389 285 L 379 290 L 386 309 L 390 306 L 456 292 L 468 295 L 477 289 L 494 295 L 505 280 L 516 286 L 526 287 L 533 283 L 549 284 L 554 304 L 564 305 L 569 321 L 597 330 L 609 330 L 609 117",
             textLocation: {
                 x: 460,
@@ -1732,6 +1649,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Munich',
             tileType: 'landTile',
             id: 'l Munich',
+            tags: ['landlocked', 'supply'],
             path: "M 234 366 L 243 370 L 246 369 L 250 371 L 267 368 L 271 370 L 269 362 L 275 362 L 281 356 L 276 346 L 268 343 L 264 329 L 266 325 L 278 326 L 288 321 L 284 314 L 288 305 L 263 310 L 243 322 L 237 322 L 219 344 L 211 346 L 213 352 L 209 363 L 222 365 L 225 362 L 232 363 L 234 366",
             textLocation: {
                 x: 250,
@@ -1743,6 +1661,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Naples',
             tileType: 'landTile',
             id: 'l Naples',
+            tags: ['coastal', 'supply'],
             path: "M 271 464 L 276 474 L 290 487 L 294 502 L 289 511 L 290 514 L 295 515 L 308 500 L 311 491 L 304 484 L 293 481 L 279 458 L 271 464",
             textLocation: {
                 x: 296,
@@ -1753,7 +1672,8 @@ __webpack_require__.r(__webpack_exports__);
             title: 'North_Africa',
             name: 'North Africa',
             tileType: 'landTile',
-            id: 'l North Africa',
+            id: 'l North_Africa',
+            tags: ['coastal'],
             path: "M 203 520 L 179 515 L 169 518 L 150 511 L 117 509 L 106 511 L 99 515 L 89 512 L 84 518 L 79 520 L 68 516 L 68 511 L 64 514 L 46 509 L 42 502 L 41 494 L 37 495 L 33 496 L 17 518 L 0 520 L 0 559 L 195 559 L 197 527 L 203 520",
             textLocation: {
                 x: 105,
@@ -1765,6 +1685,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Norway',
             tileType: 'landTile',
             id: 'l Norway',
+            tags: ['coastal', 'supply'],
             path: "M 397 48 L 391 47 L 395 41 L 394 38 L 384 33 L 382 40 L 380 33 L 377 31 L 374 38 L 371 33 L 366 42 L 366 33 L 362 33 L 357 39 L 343 44 L 324 54 L 320 64 L 310 75 L 309 84 L 303 86 L 292 111 L 277 132 L 269 134 L 264 142 L 258 141 L 236 154 L 237 160 L 233 167 L 231 180 L 233 186 L 229 192 L 231 201 L 241 209 L 246 210 L 266 201 L 270 193 L 275 203 L 279 204 L 287 177 L 285 170 L 290 164 L 292 133 L 301 132 L 300 126 L 309 115 L 308 104 L 311 101 L 324 71 L 332 74 L 330 64 L 341 65 L 342 61 L 346 54 L 355 62 L 369 61 L 370 49 L 379 48 L 388 54 L 386 58 L 388 61 L 397 48",
             textLocation: {
                 x: 265,
@@ -1776,6 +1697,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Paris',
             tileType: 'landTile',
             id: 'l Paris',
+            tags: ['landlocked', 'supply'],
             path: "M 146 365 L 149 372 L 156 374 L 165 365 L 185 344 L 188 332 L 172 328 L 165 331 L 159 331 L 148 329 L 146 337 L 146 365",
             textLocation: {
                 x: 165,
@@ -1787,6 +1709,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Pic.',
             tileType: 'landTile',
             id: 'l Picardy',
+            tags: ['coastal'],
             path: "M 169 311 L 153 315 L 155 320 L 150 319 L 148 329 L 159 331 L 165 331 L 172 328 L 188 332 L 192 323 L 184 315 L 169 311",
             textLocation: {
                 x: 177,
@@ -1798,6 +1721,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Pied.',
             tileType: 'landTile',
             id: 'l Piedmont',
+            tags: ['coastal'],
             path: "M 207 386 L 204 390 L 207 396 L 201 399 L 204 402 L 203 410 L 211 416 L 222 410 L 233 415 L 236 411 L 233 404 L 246 392 L 243 388 L 229 385 L 227 390 L 221 385 L 213 387 L 207 386",
             textLocation: {
                 x: 224,
@@ -1809,6 +1733,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Portugal',
             tileType: 'landTile',
             id: 'l Portugal',
+            tags: ['coastal', 'supply'],
             path: "M 32 396 L 30 406 L 17 427 L 14 427 L 10 433 L 13 440 L 15 441 L 12 450 L 13 454 L 8 462 L 19 469 L 27 468 L 36 457 L 34 447 L 40 441 L 37 431 L 42 432 L 52 412 L 61 411 L 62 407 L 55 400 L 42 399 L 43 395 L 32 396",
             textLocation: {
                 x: 25,
@@ -1821,6 +1746,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Prussia',
             tileType: 'landTile',
             id: 'l Prussia',
+            tags: ['coastal'],
             path: "M 347 243 L 347 248 L 348 254 L 344 262 L 337 264 L 334 273 L 328 274 L 326 265 L 314 266 L 307 273 L 294 275 L 292 290 L 297 296 L 296 300 L 320 303 L 324 299 L 326 292 L 341 287 L 345 289 L 359 286 L 365 281 L 367 265 L 362 260 L 356 261 L 354 251 L 347 243",
             textLocation: {
                 x: 330,
@@ -1832,6 +1758,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Rome',
             tileType: 'landTile',
             id: 'l Rome',
+            tags: ['coastal', 'supply'],
             path: "M 247 442 L 248 447 L 256 458 L 271 464 L 279 458 L 280 455 L 279 451 L 274 447 L 263 434 L 250 438 L 247 442",
             textLocation: {
                 x: 257,
@@ -1843,6 +1770,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Ruhr',
             tileType: 'landTile',
             id: 'l Ruhr',
+            tags: ['landlocked'],
             path: "M 213 302 L 210 313 L 208 315 L 210 326 L 205 331 L 204 338 L 211 346 L 219 344 L 237 322 L 243 322 L 241 316 L 232 308 L 213 302",
             textLocation: {
                 x: 221,
@@ -1854,6 +1782,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Rumania',
             tileType: 'landTile',
             id: 'l Rumania',
+            tags: ['coastal', 'supply'],
             path: "M 403 360 L 404 371 L 394 376 L 395 382 L 401 385 L 406 396 L 401 402 L 387 402 L 367 406 L 365 412 L 367 421 L 370 425 L 375 423 L 382 427 L 390 425 L 398 427 L 404 422 L 410 420 L 422 420 L 430 423 L 432 409 L 439 404 L 438 397 L 427 399 L 422 382 L 423 376 L 414 372 L 411 361 L 403 360",
             textLocation: {
                 x: 390,
@@ -1865,6 +1794,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Serbia',
             tileType: 'landTile',
             id: 'l Serbia',
+            tags: ['landlocked', 'supply'],
             path: "M 365 412 L 360 413 L 342 410 L 338 412 L 335 410 L 332 410 L 330 416 L 331 424 L 327 429 L 330 437 L 337 446 L 346 452 L 346 466 L 350 471 L 356 471 L 361 467 L 369 464 L 365 461 L 371 456 L 366 439 L 371 438 L 368 433 L 365 425 L 367 421 L 365 412",
             textLocation: {
                 x: 349,
@@ -1876,6 +1806,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Sevastopol',
             tileType: 'landTile',
             id: 'l Sevastopol',
+            tags: ['coastal', 'supply'],
             path: "M 438 397 L 446 378 L 459 375 L 461 377 L 459 379 L 465 383 L 476 381 L 478 383 L 472 385 L 468 392 L 477 396 L 477 401 L 486 404 L 488 397 L 494 396 L 497 392 L 507 389 L 506 384 L 494 387 L 485 378 L 503 364 L 526 351 L 527 354 L 514 365 L 517 371 L 520 371 L 515 384 L 511 383 L 510 386 L 517 393 L 528 394 L 554 406 L 567 408 L 573 417 L 570 427 L 589 442 L 594 439 L 603 441 L 609 440 L 609 330 L 597 330 L 569 321 L 564 305 L 554 304 L 549 284 L 533 283 L 526 287 L 516 286 L 505 280 L 494 295 L 477 289 L 468 295 L 470 303 L 466 307 L 460 345 L 445 350 L 434 360 L 432 372 L 423 376 L 422 382 L 427 399 L 438 397",
             textLocation: {
                 x: 524,
@@ -1887,6 +1818,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Silesia',
             tileType: 'landTile',
             id: 'l Silesia',
+            tags: ['landlocked'],
             path: "M 288 321 L 297 322 L 311 334 L 314 332 L 321 339 L 325 340 L 329 338 L 333 330 L 326 327 L 323 322 L 320 303 L 296 300 L 288 305 L 284 314 L 288 321",
             textLocation: {
                 x: 307,
@@ -1898,16 +1830,27 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Smyrna',
             tileType: 'landTile',
             id: 'l Smyrna',
+            tags: ['coastal', 'supply'],
             path: "M 417 489 L 420 495 L 417 498 L 417 507 L 423 510 L 427 524 L 435 523 L 435 530 L 441 526 L 447 528 L 453 534 L 464 531 L 466 521 L 475 520 L 485 528 L 491 530 L 505 526 L 511 514 L 520 517 L 527 508 L 530 509 L 536 494 L 545 486 L 555 484 L 563 479 L 562 471 L 556 467 L 555 460 L 546 462 L 531 460 L 508 480 L 501 482 L 490 480 L 473 491 L 466 491 L 452 495 L 432 493 L 423 487 L 417 489",
             textLocation: {
                 x: 460,
                 y: 510,
             },
         },
+        // ! SORT THIS OUT AS WELL
+        {
+            title: 'Spain',
+            name: 'Spain',
+            tileType: 'landTile',
+            tags: ['coastal', 'supply', 'dual'],
+            id: 'l',
+            path: "",
+        },
         {
             title: 'Spain__nc',
             name: 'Spain',
             tileType: 'landTile',
+            tags: ['coast'],
             id: 'l',
             path: "M 134 417 L 123 412 L 113 407 L 112 399 L 101 396 L 96 397 L 72 384 L 59 381 L 54 375 L 48 374 L 46 378 L 39 375 L 33 381 L 35 384 L 32 396 L 43 395 L 42 399 L 55 400 L 62 407 L 61 411 L 52 412 L 42 432 L 37 431 L 40 441 L 134 417",
         },
@@ -1915,6 +1858,7 @@ __webpack_require__.r(__webpack_exports__);
             title: 'Spain__sc',
             name: 'Spain',
             tileType: 'landTile',
+            tags: ['coast'],
             id: 'l',
             path: "M 40 441 L 34 447 L 36 457 L 27 468 L 33 475 L 34 484 L 37 490 L 47 488 L 52 489 L 60 486 L 78 491 L 83 494 L 86 485 L 90 483 L 98 484 L 107 474 L 113 473 L 115 469 L 110 461 L 124 444 L 131 439 L 146 438 L 157 432 L 158 425 L 154 427 L 142 417 L 135 414 L 134 417 L 40 441",
             textLocation: {
@@ -1924,21 +1868,35 @@ __webpack_require__.r(__webpack_exports__);
         },
         // Maybe combine nc & sc into one svg?
         {
-            title: 'St_Petersburg__nc',
+            title: 'St_Petersburg',
             name: 'St Petersburg',
             tileType: 'landTile',
             id: 'l St_Petersburg',
-            path: "M 534 164 L 564 159 L 573 143 L 598 132 L 609 117 L 609 0 540 0 L 535 9 L 530 6 L 517 19 L 516 33 L 513 38 L 513 23 L 507 20 L 505 26 L 499 33 L 492 48 L 495 58 L 488 60 L 479 57 L 477 55 L 481 50 L 473 43 L 466 45 L 472 62 L 478 66 L 478 74 L 472 72 L 468 74 L 457 91 L 469 100 L 467 106 L 462 109 L 444 101 L 442 110 L 447 115 L 454 119 L 452 122 L 434 118 L 426 103 L 426 94 L 414 88 L 412 83 L 445 84 L 457 79 L 459 66 L 453 61 L 417 47 L 405 49 L 401 45 L 397 48 L 388 61 L 387 68 L 393 73 L 392 92 L 401 110 L 402 118 L 410 130 L 414 147 L 534 164",
+            tags: ['coast', 'supply', 'dual'],
+            path: "",
             textLocation: {
                 x: 460,
                 y: 149,
             },
         },
         {
-            title: 'St_Petersburg__sc',
-            name: 'St Petersburg',
+            title: 'St_Petersburg__nc',
+            name: '(nc)',
             tileType: 'landTile',
             id: 'l St_Petersburg',
+            tags: ['coast'],
+            path: "M 534 164 L 564 159 L 573 143 L 598 132 L 609 117 L 609 0 540 0 L 535 9 L 530 6 L 517 19 L 516 33 L 513 38 L 513 23 L 507 20 L 505 26 L 499 33 L 492 48 L 495 58 L 488 60 L 479 57 L 477 55 L 481 50 L 473 43 L 466 45 L 472 62 L 478 66 L 478 74 L 472 72 L 468 74 L 457 91 L 469 100 L 467 106 L 462 109 L 444 101 L 442 110 L 447 115 L 454 119 L 452 122 L 434 118 L 426 103 L 426 94 L 414 88 L 412 83 L 445 84 L 457 79 L 459 66 L 453 61 L 417 47 L 405 49 L 401 45 L 397 48 L 388 61 L 387 68 L 393 73 L 392 92 L 401 110 L 402 118 L 410 130 L 414 147 L 534 164",
+            textLocation: {
+                x: 475,
+                y: 90,
+            },
+        },
+        {
+            title: 'St_Petersburg__sc',
+            name: '(sc)',
+            tileType: 'landTile',
+            id: 'l St_Petersburg',
+            tags: ['coast'],
             path: "M 414 147 L 410 152 L 412 161 L 402 177 L 403 183 L 411 184 L 414 187 L 408 187 L 400 192 L 399 197 L 387 196 L 371 198 L 369 202 L 372 205 L 382 206 L 394 205 L 405 217 L 409 228 L 421 229 L 428 225 L 439 211 L 447 209 L 451 213 L 457 210 L 456 207 L 458 194 L 476 183 L 489 184 L 515 169 L 534 164 L 414 147",
             textLocation: {
                 x: 408,
@@ -1950,6 +1908,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Sweden',
             tileType: 'landTile',
             id: 'l Sweden',
+            tags: ['coastal', 'supply'],
             path: "M 275 203 L 277 218 L 276 224 L 282 236 L 279 240 L 279 243 L 282 253 L 289 254 L 294 245 L 305 244 L 312 229 L 311 220 L 314 209 L 322 206 L 328 203 L 331 193 L 326 183 L 320 182 L 321 161 L 330 146 L 343 138 L 351 128 L 347 121 L 349 112 L 355 104 L 362 107 L 356 71 L 342 61 L 341 65 L 330 64 L 332 74 L 324 71 L 311 101 L 308 104 L 309 115 L 300 126 L 301 132 L 292 133 L 290 164 L 285 170 L 287 177 L 279 204 L 275 203",
             textLocation: {
                 x: 305,
@@ -1961,6 +1920,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Syria',
             tileType: 'landTile',
             id: 'l Syria',
+            tags: ['coastal'],
             path: "M 530 509 L 536 494 L 545 486 L 555 484 L 563 479 L 584 478 L 609 493 L 609 559 L 528 559 L 532 535 L 526 530 L 525 518 L 530 509",
             textLocation: {
                 x: 570,
@@ -1972,6 +1932,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Trieste',
             tileType: 'landTile',
             id: 'l Trieste',
+            tags: ['coastal', 'supply'],
             path: "M 276 399 L 275 403 L 278 410 L 282 401 L 286 402 L 289 418 L 306 436 L 331 454 L 330 445 L 337 446 L 330 437 L 327 429 L 331 424 L 330 416 L 332 410 L 323 408 L 321 398 L 311 394 L 308 383 L 299 385 L 294 380 L 289 385 L 276 386 L 279 389 L 276 399",
             textLocation: {
                 x: 307,
@@ -1983,6 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Tunis',
             tileType: 'landTile',
             id: 'l Tunis',
+            tags: ['coastal', 'supply'],
             path: "M 232 559 L 234 551 L 232 544 L 225 535 L 231 531 L 236 524 L 233 523 L 224 527 L 223 518 L 218 516 L 212 517 L 208 521 L 203 520 L 197 527 L 195 559 L 232 559",
             textLocation: {
                 x: 213,
@@ -1994,6 +1956,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Tuscany',
             tileType: 'landTile',
             id: 'l Tuscany',
+            tags: ['coastal'],
             path: "M 233 415 L 238 431 L 247 442 L 250 438 L 263 434 L 253 418 L 246 416 L 240 415 L 236 411 L 233 415",
             textLocation: {
                 x: 240,
@@ -2005,6 +1968,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Tyrolia',
             tileType: 'landTile',
             id: 'l Tyrolia',
+            tags: ['landlocked'],
             path: "M 234 366 L 243 370 L 246 369 L 250 371 L 267 368 L 271 370 L 269 362 L 275 362 L 281 356 L 292 357 L 295 362 L 294 380 L 289 385 L 276 386 L 268 385 L 259 388 L 255 394 L 250 397 L 246 392 L 243 388 L 245 384 L 241 378 L 234 374 L 234 366",
             textLocation: {
                 x: 268,
@@ -2016,6 +1980,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Ukraine',
             tileType: 'landTile',
             id: 'l Ukraine',
+            tags: ['landlocked'],
             path: "M 383 327 L 385 332 L 399 338 L 404 354 L 403 360 L 411 361 L 414 372 L 423 376 L 432 372 L 434 360 L 445 350 L 460 345 L 466 307 L 470 303 L 468 295 L 456 292 L 390 306 L 386 309 L 383 327",
             textLocation: {
                 x: 425,
@@ -2027,6 +1992,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Venice',
             tileType: 'landTile',
             id: 'l Venice',
+            tags: ['coastal', 'supply'],
             path: "M 278 443 L 272 424 L 260 417 L 261 401 L 270 398 L 276 399 L 279 389 L 276 386 L 268 385 L 259 388 L 255 394 L 250 397 L 246 392 L 233 404 L 236 411 L 240 415 L 246 416 L 253 418 L 263 434 L 274 447 L 278 443",
             textLocation: {
                 x: 250,
@@ -2038,6 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Vienna',
             tileType: 'landTile',
             id: 'l Vienna',
+            tags: ['landlocked', 'supply'],
             path: "M 292 357 L 295 349 L 303 346 L 316 348 L 322 347 L 329 346 L 337 350 L 335 354 L 322 370 L 311 375 L 308 383 L 299 385 L 294 380 L 295 362 L 292 357",
             textLocation: {
                 x: 311,
@@ -2049,6 +2016,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Wales',
             tileType: 'landTile',
             id: 'l Wales',
+            tags: ['coastal'],
             path: "M 100 291 L 112 287 L 122 281 L 130 282 L 127 276 L 119 272 L 116 272 L 115 265 L 128 262 L 143 262 L 150 264 L 153 271 L 150 277 L 145 281 L 147 295 L 134 294 L 124 291 L 120 295 L 110 292 L 100 291",
             textLocation: {
                 x: 130,
@@ -2060,6 +2028,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Warsaw',
             tileType: 'landTile',
             id: 'l Warsaw',
+            tags: ['landlocked', 'supply'],
             path: "M 333 330 L 326 327 L 323 322 L 320 303 L 324 299 L 326 292 L 341 287 L 345 289 L 359 286 L 365 281 L 372 283 L 379 290 L 386 309 L 383 327 L 379 324 L 374 327 L 367 329 L 361 324 L 356 323 L 353 327 L 344 332 L 341 330 L 333 330",
             textLocation: {
                 x: 354,
@@ -2071,6 +2040,7 @@ __webpack_require__.r(__webpack_exports__);
             name: 'Yorkshire',
             tileType: 'landTile',
             id: 'l Yorkshire',
+            tags: ['coastal'],
             path: "M 163 226 L 163 239 L 168 246 L 170 252 L 169 265 L 166 269 L 153 271 L 150 264 L 151 248 L 155 239 L 155 228 L 163 226",
             textLocation: {
                 x: 160,
@@ -2078,7 +2048,8 @@ __webpack_require__.r(__webpack_exports__);
             },
         },
     ],
-});
+};
+/* harmony default export */ __webpack_exports__["default"] = (countryData);
 
 
 /***/ }),
