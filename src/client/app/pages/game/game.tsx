@@ -11,6 +11,7 @@ import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types
 
 import * as Styled from './styled'
 import scrollToElementById from '@client/utils/scrollToElement'
+import OrdersBox from '@client/app/components/ordersBox/ordersBox'
 
 export interface IGameProps {
   userID: string,
@@ -22,6 +23,7 @@ interface IGameState {
   turn?: IGameTurnJSON
   newOrders: IMove[]
   newOrder: Partial<IMove>
+  newNewOrders: Partial<IMove>[]
   gameIsRunning: boolean
   activeTerritory: string
 }
@@ -32,6 +34,7 @@ export default class Game extends Component <IGameProps, IGameState> {
     activeTerritory: null,
     turn: null,
     newOrders: [],
+    newNewOrders: [],
     newOrder: null,
   }
 
@@ -40,6 +43,20 @@ export default class Game extends Component <IGameProps, IGameState> {
       setTimeout(() => scrollToElementById('anchor'), 500)
       console.log('screen.orientation.angle', screen.orientation.angle )
     })
+  }
+
+  componentDidUpdate (prevProps: IGameProps, prevState: IGameState) {
+    const currentTurnId = this.state.game?.currentTurn
+    const prevTurnId = prevState.game?.currentTurn
+    console.log('prevTurnId, currentTurnId:', prevTurnId, currentTurnId )
+    if (currentTurnId && currentTurnId !== prevTurnId) {
+      this.setState({newOrders: []})
+    }
+  }
+
+  get currentPlayer() {
+    if (!this.state.turn) return null
+    return this.state.turn.players.find(p => p.playerID === this.props.userID)
   }
 
   render(props: IGameProps, state: IGameState) {
@@ -58,8 +75,9 @@ export default class Game extends Component <IGameProps, IGameState> {
         </Styled.ButtonsContainer><br/>
         {!!state.turn && (
           <Fragment>
-            <p>{`You are playing as ${state.turn.players.find(p => p.playerID === props.userID).empire}`}</p>
+            <p>{`You are playing as ${this.player.empire}`}</p>
             <p>{`${state.turn.info.season} ${state.turn.info.year}: ${state.turn.info.phase}. Current Orders: ${totalOrders}`}</p>
+            <OrdersBox playerData={this.player} newNewOrders={state.newNewOrders}/>
           </Fragment>
         )}
         {/* Can extend in future to have a "showText" boolean for board previews? */}
@@ -125,6 +143,7 @@ export default class Game extends Component <IGameProps, IGameState> {
     console.log('newOrder:', newOrder)
     this.setState({ newOrders, newOrder: null, activeTerritory: null })
   }
+
 
   get player() {
     if (!this.state.turn) return null

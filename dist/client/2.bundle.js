@@ -1,5 +1,29 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[2],{
 
+/***/ "./src/client/app/_helpers/checkTag.ts":
+/*!*********************************************!*\
+  !*** ./src/client/app/_helpers/checkTag.ts ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _client_assets_countryData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @client/assets/countryData */ "./src/client/assets/countryData.ts");
+
+var checkTag = function (territoryName, tag) {
+    var territory = _client_assets_countryData__WEBPACK_IMPORTED_MODULE_0__["default"].territories.find(function (t) { return t.title === territoryName; });
+    if (!territory) {
+        console.error("Error checking tags: No territory found '" + territoryName + "'");
+        return false;
+    }
+    return territory.tags.includes(tag);
+};
+/* harmony default export */ __webpack_exports__["default"] = (checkTag);
+
+
+/***/ }),
+
 /***/ "./src/client/app/components/board/board.tsx":
 /*!***************************************************!*\
   !*** ./src/client/app/components/board/board.tsx ***!
@@ -54,15 +78,6 @@ var Board = /** @class */ (function (_super) {
             return player.colour;
         };
         // Created once for document
-        _this.alert_coords = function (evt) {
-            var svg = _this.svg.current;
-            var pt = svg.createSVGPoint();
-            pt.x = evt.clientX;
-            pt.y = evt.clientY;
-            // The cursor point, translated into svg coordinates
-            var cursorpt = pt.matrixTransform(svg.getScreenCTM().inverse());
-            console.log('(' + Math.round(cursorpt.x) + ', ' + Math.round(cursorpt.y) + ')');
-        };
         _this.svg = Object(preact_compat__WEBPACK_IMPORTED_MODULE_1__["createRef"])();
         return _this;
     }
@@ -83,9 +98,7 @@ var Board = /** @class */ (function (_super) {
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["GameBoard"], { id: 'gameBoard' },
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["StickyContainer"], null, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__["default"], { onMoveSelect: props.onMoveSelect, currentMove: props.newOrder.moveType, activeTerritory: props.activeTerritory }))),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["MapSvg"], { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, ref: function () { return _this.svg; }, 
-                    // @ts-ignore
-                    onClick: this.alert_coords },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["MapSvg"], { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, ref: function () { return _this.svg; } },
                     props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_2__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
                     props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_3__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData }),
@@ -514,6 +527,48 @@ var Unit = /** @class */ (function (_super) {
 
 /***/ }),
 
+/***/ "./src/client/app/components/ordersBox/ordersBox.tsx":
+/*!***********************************************************!*\
+  !*** ./src/client/app/components/ordersBox/ordersBox.tsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _shared_types_enums_OrderType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shared/types/enums/OrderType */ "./src/shared/types/enums/OrderType.ts");
+/* harmony import */ var _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shared/types/enums/UnitType */ "./src/shared/types/enums/UnitType.ts");
+/* harmony import */ var _client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @client/app/_helpers/checkTag */ "./src/client/app/_helpers/checkTag.ts");
+
+
+
+
+var getOrderTypes = function (unit) {
+    var orderTypes = ['Hold', 'Move', 'Support',];
+    if (unit.unitType === _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_2__["default"].FLEET && Object(_client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_3__["default"])(unit.location, 'sea')) {
+        orderTypes.push(_shared_types_enums_OrderType__WEBPACK_IMPORTED_MODULE_1__["default"].CONVOY);
+    }
+    if (unit.unitType === _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_2__["default"].ARMY && Object(_client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_3__["default"])(unit.location, 'coastal')) {
+        orderTypes.push(_shared_types_enums_OrderType__WEBPACK_IMPORTED_MODULE_1__["default"].MOVEVIACONVOY);
+    }
+    return orderTypes;
+};
+var OrderDropdown = function (props) {
+    var orderTypes = getOrderTypes(props.unit);
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select' }, orderTypes.map(function (orderType, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { key: "ordertype-" + i }, orderType)); })));
+};
+var OrdersBox = function (props) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { style: "border: 1px black; font-family: 'palantino';" }, props.playerData.ownedUnits.map(function (unit, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { key: "ownedUnits-" + i },
+    unit.unitType,
+    " in ",
+    unit.location,
+    " will ",
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(OrderDropdown, { unit: unit }))); }))); };
+/* harmony default export */ __webpack_exports__["default"] = (OrdersBox);
+
+
+/***/ }),
+
 /***/ "./src/client/app/components/ordersLayer/order/order.tsx":
 /*!***************************************************************!*\
   !*** ./src/client/app/components/ordersLayer/order/order.tsx ***!
@@ -680,6 +735,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _client_devTools_setupGame__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @client/devTools/setupGame */ "./src/client/devTools/setupGame.ts");
 /* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/pages/game/styled.ts");
 /* harmony import */ var _client_utils_scrollToElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @client/utils/scrollToElement */ "./src/client/utils/scrollToElement.ts");
+/* harmony import */ var _client_app_components_ordersBox_ordersBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @client/app/components/ordersBox/ordersBox */ "./src/client/app/components/ordersBox/ordersBox.tsx");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -748,6 +804,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var Game = /** @class */ (function (_super) {
     __extends(Game, _super);
     function Game() {
@@ -757,6 +814,7 @@ var Game = /** @class */ (function (_super) {
             activeTerritory: null,
             turn: null,
             newOrders: [],
+            newNewOrders: [],
             newOrder: null,
         };
         _this.onTileSelect = function (territoryName) {
@@ -888,6 +946,25 @@ var Game = /** @class */ (function (_super) {
             console.log('screen.orientation.angle', screen.orientation.angle);
         });
     };
+    Game.prototype.componentDidUpdate = function (prevProps, prevState) {
+        var _a, _b;
+        var currentTurnId = (_a = this.state.game) === null || _a === void 0 ? void 0 : _a.currentTurn;
+        var prevTurnId = (_b = prevState.game) === null || _b === void 0 ? void 0 : _b.currentTurn;
+        console.log('prevTurnId, currentTurnId:', prevTurnId, currentTurnId);
+        if (currentTurnId && currentTurnId !== prevTurnId) {
+            this.setState({ newOrders: [] });
+        }
+    };
+    Object.defineProperty(Game.prototype, "currentPlayer", {
+        get: function () {
+            var _this = this;
+            if (!this.state.turn)
+                return null;
+            return this.state.turn.players.find(function (p) { return p.playerID === _this.props.userID; });
+        },
+        enumerable: true,
+        configurable: true
+    });
     Game.prototype.render = function (props, state) {
         var totalOrders = 0;
         if (state.turn)
@@ -903,8 +980,9 @@ var Game = /** @class */ (function (_super) {
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null)),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
             !!state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, "You are playing as " + state.turn.players.find(function (p) { return p.playerID === props.userID; }).empire),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, state.turn.info.season + " " + state.turn.info.year + ": " + state.turn.info.phase + ". Current Orders: " + totalOrders))),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, "You are playing as " + this.player.empire),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, state.turn.info.season + " " + state.turn.info.year + ": " + state.turn.info.phase + ". Current Orders: " + totalOrders),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_ordersBox_ordersBox__WEBPACK_IMPORTED_MODULE_8__["default"], { playerData: this.player, newNewOrders: state.newNewOrders }))),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { id: 'anchor' }, " "),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__["default"], activeTerritory: state.activeTerritory, onTileSelect: this.onTileSelect, onMoveSelect: this.onMoveSelect, turnData: state.turn, newOrders: state.newOrders, newOrder: state.newOrder })));
     };
@@ -2269,6 +2347,47 @@ function scrollToElementById(id) {
     react_scroll__WEBPACK_IMPORTED_MODULE_0__["animateScroll"].scrollTo(offset.top);
 }
 /* harmony default export */ __webpack_exports__["default"] = (scrollToElementById);
+
+
+/***/ }),
+
+/***/ "./src/shared/types/enums/OrderType.ts":
+/*!*********************************************!*\
+  !*** ./src/shared/types/enums/OrderType.ts ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var OrderType = {
+    BUILD: 'Build',
+    MOVE: 'Move',
+    MOVEVIACONVOY: 'MoveViaConvoy',
+    HOLD: 'Hold',
+    CONVOY: 'Convoy',
+    SUPPORT: 'Support',
+    DISBAND: 'Disband',
+};
+/* harmony default export */ __webpack_exports__["default"] = (OrderType);
+
+
+/***/ }),
+
+/***/ "./src/shared/types/enums/UnitType.ts":
+/*!********************************************!*\
+  !*** ./src/shared/types/enums/UnitType.ts ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var UnitType = {
+    FLEET: 'Fleet',
+    ARMY: 'Army',
+};
+/* harmony default export */ __webpack_exports__["default"] = (UnitType);
 
 
 /***/ })

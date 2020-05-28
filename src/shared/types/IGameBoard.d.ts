@@ -1,11 +1,11 @@
-type Tag = 'coastal' | 'coast' | 'dual' | 'landlocked' | 'passage' | 'supply' | 'passage' | 'neutral' | 'sea'
+export type ITag = 'coastal' | 'coast' | 'dual' | 'landlocked' | 'passage' | 'supply' | 'passage' | 'neutral' | 'sea'
 
 export interface IBoardTerritory {
   title: string
   name: string
   tileType: string
   id: string
-  tags: Tag[]
+  tags: ITag[]
   path: string
   textLocation?: {
     x: number,

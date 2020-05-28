@@ -47,19 +47,7 @@ export default class Board extends Component <IBoardProps, IBoardState> {
     return player.colour
   }
 
-   // Created once for document
-
-  alert_coords = (evt: MouseEvent) => {
-    const svg = this.svg.current
-    const pt = svg.createSVGPoint()
-    pt.x = evt.clientX
-    pt.y = evt.clientY
-
-    // The cursor point, translated into svg coordinates
-    const cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse())
-    console.log('(' + Math.round(cursorpt.x) + ', ' + Math.round(cursorpt.y) + ')')
-  }
-
+  // Created once for document
   svg = createRef<SVGSVGElement>()
 
   render(props: IBoardProps, state: IBoardState) {
@@ -82,8 +70,6 @@ export default class Board extends Component <IBoardProps, IBoardState> {
               xmlns='http://www.w3.org/2000/svg'
               viewBox={props.boardData.viewBox}
               ref={() => this.svg}
-              // @ts-ignore
-              onClick={this.alert_coords}
             >
               {props.boardData.territories.map(tile => (
                 <Territory
