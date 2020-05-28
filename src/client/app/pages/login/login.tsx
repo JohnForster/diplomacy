@@ -3,11 +3,11 @@ import {Component, h, Fragment} from 'preact'
 import to from 'await-to-js'
 import axios from 'axios'
 import clone from 'lodash.clone'
-
 import { Link, route } from 'preact-router'
-import './login.scss'
 
 import FormBox from '../../components/formBox/formBox'
+
+import * as Styled from './styled'
 
 export interface ILoginProps {
   toggleLogIn: (arg: boolean) => void
@@ -37,7 +37,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
   render(props: ILoginProps, state: ILoginState) {
     return (
       <Fragment>
-        <h1>Diplomacy</h1><br/>
+        <Styled.Title>Diplomacy</Styled.Title><br/>
         <FormBox>
             {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
             <form action='api/user/authenticate' method='post' onSubmit={this.login}>

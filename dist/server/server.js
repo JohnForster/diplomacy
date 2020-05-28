@@ -11,6 +11,8 @@ exports["default"] = void 0;
 
 var _bodyParser = _interopRequireDefault(require("body-parser"));
 
+var _chalk = _interopRequireDefault(require("chalk"));
+
 var _connectMongodbSession = _interopRequireDefault(require("connect-mongodb-session"));
 
 var _express = _interopRequireDefault(require("express"));
@@ -36,7 +38,10 @@ var _config = _interopRequireDefault(require("./config"));
 var isDev = process.env.NODE_ENV !== 'production';
 
 var startServer = function startServer() {
-  _mongoose["default"].connect(_config["default"].MONGO_URI);
+  _mongoose["default"].connect(_config["default"].MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
   _mongoose["default"].connection.on('error', function (err) {
     console.log('Something went wrong connecting to mongoDB!');
@@ -81,9 +86,6 @@ var startServer = function startServer() {
 
   var clientPath = _path["default"].join(__dirname, middlePath, '/client');
 
-  console.log('clientPath:', clientPath);
-  console.log('middlepath:', middlePath);
-  console.log('isDev, process.env.NODE_ENV:', isDev, process.env.NODE_ENV);
   app.use(_express["default"]["static"](clientPath));
   app.get('*', function (req, res) {
     res.sendFile(_path["default"].join(clientPath, '/index.html'));
@@ -94,7 +96,7 @@ var startServer = function startServer() {
   } : _config["default"].LISTEN_PORT;
   app.listen(listenParam, function () {
     console.log("App listening to ".concat(_config["default"].LISTEN_PORT, "..."));
-    console.log("App available at http://localhost:".concat(_config["default"].LISTEN_PORT));
+    console.log("App available at ".concat(_chalk["default"].bold.blueBright("http://localhost:".concat(_config["default"].LISTEN_PORT))));
     console.log('Press Ctrl+C to quit.');
   });
 }; // Connect to mongoDB

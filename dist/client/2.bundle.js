@@ -1,5 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[2],{
 
+<<<<<<< HEAD
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/formBox/formBox.scss":
 /*!*************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/formBox/formBox.scss ***!
@@ -68,6 +69,8 @@ module.exports = exported;
 
 /***/ }),
 
+=======
+>>>>>>> switch-to-styled-components
 /***/ "./src/client/app/components/formBox/formBox.tsx":
 /*!*******************************************************!*\
   !*** ./src/client/app/components/formBox/formBox.tsx ***!
@@ -78,6 +81,7 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+<<<<<<< HEAD
 /* harmony import */ var _formBox_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formBox.scss */ "./src/client/app/components/formBox/formBox.scss");
 /* harmony import */ var _formBox_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_formBox_scss__WEBPACK_IMPORTED_MODULE_1__);
 var __extends = (undefined && undefined.__extends) || (function () {
@@ -105,11 +109,21 @@ var FormBox = /** @class */ (function (_super) {
     };
     return FormBox;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+=======
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/formBox/styled.ts");
+
+
+var FormBox = function (_a) {
+    var children = _a.children;
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["FormBox"], null, children));
+};
+>>>>>>> switch-to-styled-components
 /* harmony default export */ __webpack_exports__["default"] = (FormBox);
 
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./src/client/app/pages/login/login.scss":
 /*!***********************************************!*\
   !*** ./src/client/app/pages/login/login.scss ***!
@@ -138,6 +152,29 @@ var exported = content.locals ? content.locals : {};
 
 
 module.exports = exported;
+=======
+/***/ "./src/client/app/components/formBox/styled.ts":
+/*!*****************************************************!*\
+  !*** ./src/client/app/components/formBox/styled.ts ***!
+  \*****************************************************/
+/*! exports provided: FormBox */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormBox", function() { return FormBox; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../variables/colors */ "./src/client/app/variables/colors.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var FormBox = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n  text-align: center;\n  font-size: 16px;\n  border-radius: 20px;\n  padding: 24px;\n  background-color: ", ";\n  color: ", ";\n  letter-spacing:2px;\n  box-shadow: 5px 5px 0px ", ";\n  margin: auto;\n\n  input[type=submit] {\n    width: 50%;\n    font-size: 12px;\n    font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    letter-spacing: 1px;\n  }\n\n  a {\n    color: ", ";\n  }\n"], ["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n  text-align: center;\n  font-size: 16px;\n  border-radius: 20px;\n  padding: 24px;\n  background-color: ", ";\n  color: ", ";\n  letter-spacing:2px;\n  box-shadow: 5px 5px 0px ", ";\n  margin: auto;\n\n  input[type=submit] {\n    width: 50%;\n    font-size: 12px;\n    font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n    letter-spacing: 1px;\n  }\n\n  a {\n    color: ", ";\n  }\n"])), _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].highlight, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite);
+var templateObject_1;
+
+>>>>>>> switch-to-styled-components
 
 /***/ }),
 
@@ -157,9 +194,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_clone__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash.clone */ "./node_modules/lodash.clone/index.js");
 /* harmony import */ var lodash_clone__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_clone__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var preact_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact-router */ "./node_modules/preact-router/dist/preact-router.es.js");
+<<<<<<< HEAD
 /* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./login.scss */ "./src/client/app/pages/login/login.scss");
 /* harmony import */ var _login_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_login_scss__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _components_formBox_formBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/formBox/formBox */ "./src/client/app/components/formBox/formBox.tsx");
+=======
+/* harmony import */ var _components_formBox_formBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/formBox/formBox */ "./src/client/app/components/formBox/formBox.tsx");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/pages/login/styled.ts");
+>>>>>>> switch-to-styled-components
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -268,9 +310,15 @@ var Login = /** @class */ (function (_super) {
     Login.prototype.render = function (props, state) {
         var _this = this;
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+<<<<<<< HEAD
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("h1", null, "Diplomacy"),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_components_formBox_formBox__WEBPACK_IMPORTED_MODULE_6__["default"], null,
+=======
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["Title"], null, "Diplomacy"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_components_formBox_formBox__WEBPACK_IMPORTED_MODULE_5__["default"], null,
+>>>>>>> switch-to-styled-components
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("form", { action: 'api/user/authenticate', method: 'post', onSubmit: this.login },
                     "Username",
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
@@ -290,6 +338,32 @@ var Login = /** @class */ (function (_super) {
 /* harmony default export */ __webpack_exports__["default"] = (Login);
 
 
+<<<<<<< HEAD
+=======
+/***/ }),
+
+/***/ "./src/client/app/pages/login/styled.ts":
+/*!**********************************************!*\
+  !*** ./src/client/app/pages/login/styled.ts ***!
+  \**********************************************/
+/*! exports provided: Title */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Title", function() { return Title; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+// import Colours from '../../variables/colors'
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h1(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n"], ["\n"])));
+var templateObject_1;
+
+
+>>>>>>> switch-to-styled-components
 /***/ })
 
 }]);

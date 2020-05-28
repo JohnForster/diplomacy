@@ -54,8 +54,8 @@ module.exports = {
   resolve: {
     extensions: [ ".tsx", ".ts", ".js" ],
     alias: {
-      "react": "preact-compat",
-      "react-dom": "preact-compat",
+      "react": "preact/compat",
+      "react-dom": "preact/compat",
       "@shared": path.resolve(__dirname, "src/shared/"),
       "@server": path.resolve(__dirname, "src/server/"),
       "@client": path.resolve(__dirname, "src/client/"),

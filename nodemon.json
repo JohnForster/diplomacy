@@ -1,5 +1,0 @@
-{
-  "watch": ["src/server", "src/shared"],
-  "ext": "ts",
-  "exec": "babel-node src/main.ts --extensions .ts --ignore src/client"
-}

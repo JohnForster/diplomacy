@@ -1,6 +1,7 @@
+import {Component, h, Fragment} from 'preact'
+
 import to from 'await-to-js'
 import Axios from 'axios'
-import {Component, h, Fragment} from 'preact'
 
 import Board from '@client/app/components/board/board'
 import boardData from '@client/assets/countryData'
@@ -8,7 +9,8 @@ import setupNewFullGame from '@client/devTools/setupGame'
 import validateMove from '@shared/helpers/validateMove'
 import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
 
-import './game.scss'
+import * as Styled from './styled'
+import scrollToElementById from '@client/utils/scrollToElement'
 
 export interface IGameProps {
   userID: string,
@@ -33,20 +35,27 @@ export default class Game extends Component <IGameProps, IGameState> {
     newOrder: null,
   }
 
+  componentDidMount(){
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => scrollToElementById('anchor'), 10)
+      console.log('screen.orientation.angle', screen.orientation.angle )
+    })
+  }
+
   render(props: IGameProps, state: IGameState) {
-    console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
     let totalOrders = 0
     if (state.turn) state.turn.players.forEach(p => totalOrders += p.moves.length)
     return (
       <Fragment>
-        <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1>
-        <div className='buttonsContainer' >
+        {/* <h1>{process.env.NODE_ENV !== 'production' ? 'Stop being a perfectionist!' : 'Diplomacy'}</h1> */}
+        <h1>Diplomacy</h1>
+        <Styled.ButtonsContainer>
           <button onClick={this.setupGame}>Set Up Game</button>
           <button onClick={this.getLatestGame}>Load Game</button>
           <button onClick={this.submitOrders}>Submit Orders</button>
           <button onClick={this.props.logOut}>Log out</button>
           <button onClick={this.nextTurn}>Next Turn</button><br/>
-        </div><br/>
+        </Styled.ButtonsContainer><br/>
         {!!state.turn && (
           <Fragment>
             <p>{`You are playing as ${state.turn.players.find(p => p.playerID === props.userID).empire}`}</p>
@@ -54,6 +63,7 @@ export default class Game extends Component <IGameProps, IGameState> {
           </Fragment>
         )}
         {/* Can extend in future to have a "showText" boolean for board previews? */}
+        <div id='anchor'> </div>
         <Board
           boardData={boardData}
           activeTerritory={state.activeTerritory}

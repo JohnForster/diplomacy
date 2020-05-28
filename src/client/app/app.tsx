@@ -1,13 +1,13 @@
 import Axios from 'axios'
-import {Component, h} from 'preact'
+import {Component, h, Fragment} from 'preact'
 import Router, { route, RouterOnChangeArgs } from 'preact-router'
 import {lazy, Suspense} from 'preact/compat'
 
-
 import checkAuthentication from './_helpers/checkAuthentication'
-import './app.scss'
-import './variables/colors.scss'
+
 import Lobby from './pages/lobby/lobby'
+
+import * as Styled from './styled'
 
 const Game = lazy(() => import('./pages/game/game'))
 const Login = lazy(() => import('./pages/login/login'))
@@ -60,17 +60,21 @@ export default class App extends Component <IAppProps, IAppState> {
   }
 
   render(props: IAppProps, state: IAppState) {
+    console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
     return (
-      <Suspense fallback={<h1>Loading!!!</h1>}>
-        <div className='page'>
-          <Router onChange={this.handleRoute}>
-            <Game path='/game' userID={state.userID} logOut={this.logOut}/>
-            <Register path='/register'/>
-            <Login path='/' toggleLogIn={this.toggleLogIn}/>
-            <Lobby path='/lobby'/>
-          </Router>
-        </div>
-      </Suspense>
+      <Fragment>
+        <Styled.GlobalStyle />
+        <Suspense fallback={<h1>Loading!!!</h1>}>
+          <Styled.Page>
+            <Router onChange={this.handleRoute}>
+              <Game path='/game' userID={state.userID} logOut={this.logOut}/>
+              <Register path='/register'/>
+              <Login path='/' toggleLogIn={this.toggleLogIn}/>
+              <Lobby path='/lobby'/>
+            </Router>
+          </Styled.Page>
+        </Suspense>
+      </Fragment>
     )
   }
 }
