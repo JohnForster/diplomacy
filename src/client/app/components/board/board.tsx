@@ -70,7 +70,11 @@ export default class Board extends Component <IBoardProps, IBoardState> {
         <Styled.GameBoard id='gameBoard'>
             <Styled.StickyContainer>
               {props.activeTerritory && (
-                <OrderBox onMoveSelect={props.onMoveSelect} activeTerritory={props.activeTerritory}/>
+                <OrderBox 
+                  onMoveSelect={props.onMoveSelect}
+                  currentMove={props.newOrder.moveType}
+                  activeTerritory={props.activeTerritory}
+                />
               )}
             </Styled.StickyContainer>
             {/* Draw Territories */}

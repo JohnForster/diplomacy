@@ -37,7 +37,7 @@ export default class Game extends Component <IGameProps, IGameState> {
 
   componentDidMount(){
     window.addEventListener('orientationchange', () => {
-      setTimeout(() => scrollToElementById('anchor'), 10)
+      setTimeout(() => scrollToElementById('anchor'), 500)
       console.log('screen.orientation.angle', screen.orientation.angle )
     })
   }

@@ -1,11 +1,11 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const OrderBox = styled.div`
   @media screen and (max-width:500px){
     font-size: 9px;
   }
 
-  font-size: xx-large;
+  font-size: large;
   width: 13%;
   font-family: monospace;
   border: 1px solid black;
@@ -21,4 +21,30 @@ export const OrderBox = styled.div`
 
 export const OrderTitle = styled.span`
   font-weight: bold;
+`
+
+const ButtonCss = css`
+  font-size: initial;
+  margin: 0;
+  width: 80%;
+  :focus {
+    outline: none;
+  }
+`
+
+interface OrderButtonProps {
+  selected: boolean
+}
+export const OrderButton = styled.button<OrderButtonProps>`
+  ${ButtonCss}
+  ${({selected}) => selected && `
+    background-color: lightgreen;
+  `}
+`
+
+export const CancelButton = styled.button`
+  ${ButtonCss}
+  background-color: lightcoral;
+  border-color: maroon;
+  color: black;
 `

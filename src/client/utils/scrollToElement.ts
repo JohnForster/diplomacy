@@ -11,7 +11,7 @@ function getOffset (el: HTMLElement) {
 function scrollToElementById (id:string) {
   const element = document.getElementById(id)
   const offset = getOffset(element)
-  animateScroll.scrollTo(190)
+  animateScroll.scrollTo(offset.top)
 }
 
 export default scrollToElementById
