@@ -10,7 +10,6 @@ import validateMove from '@shared/helpers/validateMove'
 import { IGameJSON , IGameTurnJSON, IMove, IUnit, OrderType} from '@shared/types'
 
 import * as Styled from './styled'
-import getOffset from '@client/utils/getOffset'
 import scrollToElementById from '@client/utils/scrollToElement'
 
 export interface IGameProps {
