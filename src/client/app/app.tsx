@@ -60,6 +60,7 @@ export default class App extends Component <IAppProps, IAppState> {
   }
 
   render(props: IAppProps, state: IAppState) {
+    console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
     return (
       <Fragment>
         <Styled.GlobalStyle />

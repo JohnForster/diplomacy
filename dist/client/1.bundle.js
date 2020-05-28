@@ -1,41 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/territory/territory.scss":
-/*!***********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/territory/territory.scss ***!
-  \***********************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".l, .Unowned {\n  pointer-events: all;\n  fill: #FFFFDD;\n  stroke: #444444;\n  stroke-linejoin: round;\n  fill-opacity: 0.3;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s; }\n\n.w {\n  pointer-events: all;\n  fill: #99CCFF;\n  stroke: #444444;\n  stroke-linejoin: round;\n  fill-opacity: 0.45;\n  stroke-width: 0.5;\n  transition: fill 0.2s; }\n\n.w:hover {\n  fill: #AADDFF; }\n\n.l:hover {\n  fill-opacity: 0.4; }\n\n.s {\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  stroke-linejoin: round;\n  opacity: 0.5; }\n\n.sc {\n  fill: #DDDDDD;\n  stroke: black; }\n\n#A, #F, #sc {\n  pointer-events: none;\n  stroke: black; }\n\ntext {\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none; }\n\n.empire1 {\n  fill: #FFFF88; }\n\n.empire2 {\n  fill: #FFFF00; }\n\n.empire3 {\n  fill: #FF88FF; }\n\n.empire4 {\n  fill: #FF8888; }\n\n.empire5 {\n  fill: #FF8800; }\n\n.empire6 {\n  fill: #FF00FF; }\n\n.empire7 {\n  fill: #FF0088; }\n\n.empire8 {\n  fill: #FF0000; }\n\n.empire9 {\n  fill: #88FFFF; }\n\n.empire10 {\n  fill: #88FF88; }\n\n.empire11 {\n  fill: #88FF00; }\n\n.empire12 {\n  fill: #8888FF; }\n\n.empire13 {\n  fill: #888888; }\n\n.empire14 {\n  fill: #888800; }\n\n.empire15 {\n  fill: #8800FF; }\n\n.empire16 {\n  fill: #880088; }\n\n.empire17 {\n  fill: #880000; }\n\n.empire18 {\n  fill: #00FFFF; }\n\n.empire19 {\n  fill: #00FF88; }\n\n.empire20 {\n  fill: #00FF00; }\n\n.empire21 {\n  fill: #0088FF; }\n\n.empire22 {\n  fill: #008888; }\n\n.empire23 {\n  fill: #008800; }\n\n.empire24 {\n  fill: #0000FF; }\n\n.empire25 {\n  fill: #000088; }\n\n.success {\n  stroke: #1C1; }\n\n.bounce {\n  stroke: #D50; }\n\n.move {\n  stroke: #000; }\n\n/* .light {fill:#06B559;}\n.medium{fill:#0B9B53;}\n.shadow{fill:#088443;} */\nsvg text {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\nsvg text::selection {\n  background: none; }\n\n.e01-light {\n  fill: #00007f; }\n\n.e01-medium {\n  fill: #000065; }\n\n.e01-shadow {\n  fill: #00004c; }\n\n.e02-light {\n  fill: #0000ff; }\n\n.e02-medium {\n  fill: #0000cc; }\n\n.e02-shadow {\n  fill: #000099; }\n\n.e03-light {\n  fill: #007f00; }\n\n.e03-medium {\n  fill: #006500; }\n\n.e03-shadow {\n  fill: #004c00; }\n\n.e04-light {\n  fill: #007f7f; }\n\n.e04-medium {\n  fill: #006565; }\n\n.e04-shadow {\n  fill: #004c4c; }\n\n.e05-light {\n  fill: #007fff; }\n\n.e05-medium {\n  fill: #0065cc; }\n\n.e05-shadow {\n  fill: #004c99; }\n\n.e06-light {\n  fill: #00ff00; }\n\n.e06-medium {\n  fill: #00cc00; }\n\n.e06-shadow {\n  fill: #009900; }\n\n.e07-light {\n  fill: #00ff7f; }\n\n.e07-medium {\n  fill: #00cc65; }\n\n.e07-shadow {\n  fill: #00994c; }\n\n.e08-light {\n  fill: #00ffff; }\n\n.e08-medium {\n  fill: #00cccc; }\n\n.e08-shadow {\n  fill: #009999; }\n\n.e09-light {\n  fill: #7f0000; }\n\n.e09-medium {\n  fill: #650000; }\n\n.e09-shadow {\n  fill: #4c0000; }\n\n.e10-light {\n  fill: #7f007f; }\n\n.e10-medium {\n  fill: #650065; }\n\n.e10-shadow {\n  fill: #4c004c; }\n\n.e11-light {\n  fill: #7f00ff; }\n\n.e11-medium {\n  fill: #6500cc; }\n\n.e11-shadow {\n  fill: #4c0099; }\n\n.e12-light {\n  fill: #7f7f00; }\n\n.e12-medium {\n  fill: #656500; }\n\n.e12-shadow {\n  fill: #4c4c00; }\n\n.e13-light {\n  fill: #7f7f7f; }\n\n.e13-medium {\n  fill: #656565; }\n\n.e13-shadow {\n  fill: #4c4c4c; }\n\n.e14-light {\n  fill: #7f7fff; }\n\n.e14-medium {\n  fill: #6565cc; }\n\n.e14-shadow {\n  fill: #4c4c99; }\n\n.e15-light {\n  fill: #7fff00; }\n\n.e15-medium {\n  fill: #65cc00; }\n\n.e15-shadow {\n  fill: #4c9900; }\n\n.e16-light {\n  fill: #7fff7f; }\n\n.e16-medium {\n  fill: #65cc65; }\n\n.e16-shadow {\n  fill: #4c994c; }\n\n.e17-light {\n  fill: #7fffff; }\n\n.e17-medium {\n  fill: #65cccc; }\n\n.e17-shadow {\n  fill: #4c9999; }\n\n.e18-light {\n  fill: #ff0000; }\n\n.e18-medium {\n  fill: #cc0000; }\n\n.e18-shadow {\n  fill: #990000; }\n\n.e19-light {\n  fill: #ff007f; }\n\n.e19-medium {\n  fill: #cc0065; }\n\n.e19-shadow {\n  fill: #99004c; }\n\n.e20-light {\n  fill: #ff00ff; }\n\n.e20-medium {\n  fill: #cc00cc; }\n\n.e20-shadow {\n  fill: #990099; }\n\n.e21-light {\n  fill: #ff7f00; }\n\n.e21-medium {\n  fill: #cc6500; }\n\n.e21-shadow {\n  fill: #994c00; }\n\n.e22-light {\n  fill: #ff7f7f; }\n\n.e22-medium {\n  fill: #cc6565; }\n\n.e22-shadow {\n  fill: #994c4c; }\n\n.e23-light {\n  fill: #ff7fff; }\n\n.e23-medium {\n  fill: #cc65cc; }\n\n.e23-shadow {\n  fill: #994c99; }\n\n.e24-light {\n  fill: #ffff00; }\n\n.e24-medium {\n  fill: #cccc00; }\n\n.e24-shadow {\n  fill: #999900; }\n\n.e25-light {\n  fill: #ffff7f; }\n\n.e25-medium {\n  fill: #cccc65; }\n\n.e25-shadow {\n  fill: #99994c; }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/ordersLayer/order/order.scss":
-/*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/ordersLayer/order/order.scss ***!
-  \*********************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".orderSquare {\n  position: absolute;\n  width: 100%;\n  pointer-events: none; }\n", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "./src/client/app/components/board/board.tsx":
 /*!***************************************************!*\
   !*** ./src/client/app/components/board/board.tsx ***!
@@ -115,6 +79,7 @@ var Board = /** @class */ (function (_super) {
     });
     Board.prototype.render = function (props, state) {
         var _this = this;
+        var stripe = 6;
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["GameBoard"], { id: 'gameBoard' },
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["StickyContainer"], null, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__["default"], { onMoveSelect: props.onMoveSelect, activeTerritory: props.activeTerritory }))),
@@ -123,7 +88,10 @@ var Board = /** @class */ (function (_super) {
                     onClick: this.alert_coords },
                     props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_2__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
                     props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_3__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData })))));
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData }),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("pattern", { id: 'diagonalHatch', patternUnits: 'userSpaceOnUse', width: stripe, height: stripe, patternTransform: 'rotate(45)' },
+                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: stripe / 2, y: '0', x2: stripe / 2, y2: stripe, stroke: 'black', "stroke-width": stripe }),
+                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: '0', y: '0', x2: '0', y2: stripe, stroke: 'maroon', "stroke-width": stripe }))))));
     };
     return Board;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
@@ -200,7 +168,7 @@ var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || func
     return cooked;
 };
 
-var OrderBox = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  @media screen and (max-width:500px){\n    font-size: 9px;\n  }\n\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255,255,255, .4); /* Move to constants */\n  padding: 5px;\n  pointer-events: all;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 100%;\n  }\n"], ["\n  @media screen and (max-width:500px){\n    font-size: 9px;\n  }\n\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255,255,255, .4); /* Move to constants */\n  padding: 5px;\n  pointer-events: all;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 100%;\n  }\n"])));
+var OrderBox = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  @media screen and (max-width:500px){\n    font-size: 9px;\n  }\n\n  font-size: xx-large;\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255,255,255, .4); /* Move to constants */\n  padding: 5px;\n  pointer-events: all;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 100%;\n  }\n"], ["\n  @media screen and (max-width:500px){\n    font-size: 9px;\n  }\n\n  font-size: xx-large;\n  width: 13%;\n  font-family: monospace;\n  border: 1px solid black;\n  border-radius: 5px;\n  text-align: center;\n  background: rgba(255,255,255, .4); /* Move to constants */\n  padding: 5px;\n  pointer-events: all;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 100%;\n  }\n"])));
 var OrderTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  font-weight: bold;\n"], ["\n  font-weight: bold;\n"])));
 var templateObject_1, templateObject_2;
 
@@ -227,43 +195,105 @@ var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || func
 };
 
 
-var GameBoard = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 80%;\n  }\n"], ["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n  @media screen and (max-width:767px) and (orientation:landscape) {\n    max-width: 80%;\n  }\n"])));
-var StickyContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 100px;\n  z-index: 5;\n  pointer-events: none;\n"], ["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 100px;\n  z-index: 5;\n  pointer-events: none;\n"])));
+var GameBoard = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n\n  @media\n    screen and (max-width:767px),\n    screen and (max-height: 767px) and (orientation:landscape)\n  {\n    max-width: 100%;\n  }\n"], ["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n\n  @media\n    screen and (max-width:767px),\n    screen and (max-height: 767px) and (orientation:landscape)\n  {\n    max-width: 100%;\n  }\n"])));
+var StickyContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 150px;\n  z-index: 5;\n  pointer-events: none;\n"], ["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 150px;\n  z-index: 5;\n  pointer-events: none;\n"])));
 var PAPER_TEXTURE_URL = '/assets/paperTexture.jpg';
-var MapSvg = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].svg(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-100px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n"], ["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-100px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n"])), PAPER_TEXTURE_URL, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow);
+var MapSvg = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].svg(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-150px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n  box-sizing: border-box;\n"], ["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-150px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n  box-sizing: border-box;\n"])), PAPER_TEXTURE_URL, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow);
 var templateObject_1, templateObject_2, templateObject_3;
 
 
 /***/ }),
 
-/***/ "./src/client/app/components/board/territory/territory.scss":
-/*!******************************************************************!*\
-  !*** ./src/client/app/components/board/territory/territory.scss ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/client/app/components/board/supplyStar/styled.ts":
+/*!**************************************************************!*\
+  !*** ./src/client/app/components/board/supplyStar/styled.ts ***!
+  \**************************************************************/
+/*! exports provided: StarPath */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var api = __webpack_require__(/*! ../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../node_modules/sass-loader/dist/cjs.js!./territory.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/board/territory/territory.scss");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StarPath", function() { return StarPath; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
 
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
+var StarPath = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].path(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  fill: white;\n  stroke: black;\n  transform:\n    translate(0px, 13px)\n    scale(0.8);\n"], ["\n  fill: white;\n  stroke: black;\n  transform:\n    translate(0px, 13px)\n    scale(0.8);\n"])));
+var templateObject_1;
 
 
+/***/ }),
 
-module.exports = exported;
+/***/ "./src/client/app/components/board/supplyStar/supplyStar.tsx":
+/*!*******************************************************************!*\
+  !*** ./src/client/app/components/board/supplyStar/supplyStar.tsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/supplyStar/styled.ts");
+
+
+var StarPath = _styled__WEBPACK_IMPORTED_MODULE_1__["StarPath"];
+var SupplyStar = function () {
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(StarPath, { d: '\n      M 0.000 3.000\n      L 3.527 4.854\n      L 2.853 0.927\n      L 5.706 -1.854\n      L 1.763 -2.427\n      L 0.000 -6.000\n      L -1.763 -2.427\n      L -5.706 -1.854\n      L -2.853 0.927\n      L -3.527 4.854\n      L 0.000 3.000\n    ' }));
+};
+/* harmony default export */ __webpack_exports__["default"] = (SupplyStar);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/territory/styled.ts":
+/*!*************************************************************!*\
+  !*** ./src/client/app/components/board/territory/styled.ts ***!
+  \*************************************************************/
+/*! exports provided: Path, TerritoryName, TerritoryTitle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Path", function() { return Path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TerritoryName", function() { return TerritoryName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TerritoryTitle", function() { return TerritoryTitle; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../variables/empireColours */ "./src/client/app/variables/empireColours.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var landCss = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  fill: #FFFFDD;\n  fill-opacity: 0.3;\n  :hover {\n    fill-opacity: 0.4;\n  }\n"], ["\n  fill: #FFFFDD;\n  fill-opacity: 0.3;\n  :hover {\n    fill-opacity: 0.4;\n  }\n"])));
+var seaCss = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  fill: #99CCFF;\n  fill-opacity: 0.45;\n  :hover {\n    fill: #AADDFF;\n  }\n"], ["\n  fill: #99CCFF;\n  fill-opacity: 0.45;\n  :hover {\n    fill: #AADDFF;\n  }\n"])));
+var neutralCss = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  opacity: 0.5;\n"], ["\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  opacity: 0.5;\n"])));
+var tileTypesCss = {
+    sea: seaCss,
+    land: landCss,
+    neutral: neutralCss,
+};
+var getLight = function (id) {
+    var key = id + "_light";
+    var colourHex = _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__["default"][key];
+    return colourHex || 'none';
+};
+var Path = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].path(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  pointer-events: all;\n  stroke: #444444;\n  stroke-linejoin: round;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s;\n  ", ";\n  ", "\n"], ["\n  pointer-events: all;\n  stroke: #444444;\n  stroke-linejoin: round;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s;\n  ", ";\n  ", "\n"])), function (p) { return tileTypesCss[p.tileType]; }, function (p) { return p.colourId ? Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_4 || (templateObject_4 = __makeTemplateObject(["fill: ", ";"], ["fill: ", ";"])), getLight(p.colourId)) : ''; });
+var getTranslate = function (textLocation) {
+    var x = textLocation.x, y = textLocation.y;
+    return x + "px, " + y + "px";
+};
+var getRotate = function (rotate) {
+    var rotation = rotate || '0';
+    return rotation + "deg";
+};
+var TerritoryName = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].g(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  transform:\n    translate(", ")\n    rotate(", ");\n"], ["\n  transform:\n    translate(", ")\n    rotate(", ");\n"])), function (p) { return getTranslate(p.textLocation); }, function (p) { return getRotate(p.textLocation.rotate); });
+var TerritoryTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].text(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none;\n"], ["\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none;\n"])));
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
+
 
 /***/ }),
 
@@ -277,8 +307,8 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _territory_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./territory.scss */ "./src/client/app/components/board/territory/territory.scss");
-/* harmony import */ var _territory_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_territory_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/territory/styled.ts");
+/* harmony import */ var _supplyStar_supplyStar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../supplyStar/supplyStar */ "./src/client/app/components/board/supplyStar/supplyStar.tsx");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -294,6 +324,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
 })();
 
 
+
 var Territory = /** @class */ (function (_super) {
     __extends(Territory, _super);
     function Territory() {
@@ -301,16 +332,24 @@ var Territory = /** @class */ (function (_super) {
         _this.handleClick = function (title) { return function () {
             console.log(title);
         }; };
+        _this.getTileType = function (tags) {
+            if (tags.includes('sea'))
+                return 'sea';
+            if (tags.includes('neutral'))
+                return 'neutral';
+            return 'land';
+        };
         return _this;
     }
-    Territory.prototype.render = function (props, state) {
-        console.log('props.tile.id:', props.tile.id);
+    Territory.prototype.render = function (props) {
+        var tileType = this.getTileType(props.tile.tags);
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { title: props.tile.title, class: props.tile.tileType },
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: props.tile.id + " " + props.colour + "-light", d: props.tile.path, onClick: props.onSelect }),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { title: props.tile.title },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Path"], { tileType: tileType, colourId: props.colour, d: props.tile.path, onClick: props.onSelect }),
                 props.tile.textLocation && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "\n                translate(" + props.tile.textLocation.x + " " + props.tile.textLocation.y + ")\n                rotate(" + (props.tile.textLocation.rotate || '0') + ")\n                " },
-                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("text", null, props.tile.name.split('\n').map(function (line, i) { return Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("tspan", { dy: i ? '8' : '0', x: '0', "text-anchor": 'middle' }, line); }))))))));
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["TerritoryName"], { textLocation: props.tile.textLocation },
+                        props.tile.tags.includes('supply') && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_supplyStar_supplyStar__WEBPACK_IMPORTED_MODULE_2__["default"], null)),
+                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["TerritoryTitle"], null, props.tile.name.split('\n').map(function (line, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("tspan", { dy: i ? '8' : '0', x: '0', "text-anchor": 'middle' }, line)); }))))))));
     };
     return Territory;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
@@ -329,53 +368,30 @@ var Territory = /** @class */ (function (_super) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../styled */ "./src/client/app/components/board/unit/styled.ts");
 
-var Army = /** @class */ (function (_super) {
-    __extends(Army, _super);
-    function Army() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Army.prototype.render = function (props, state) {
-        var colours = {
-            light: props.colour + "-light",
-            medium: props.colour + "-medium",
-            shadow: props.colour + "-shadow",
-        };
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "translate(" + (props.location.x - 11) + " " + (props.location.y - 20) + ") scale(0.055)" },
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M145.687,374.175c0-13.504-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455\n            s10.951,24.455,24.467,24.455C134.736,398.63,145.687,387.679,145.687,374.175z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M231.205,378.426c0-11.159-9.045-20.204-20.204-20.204c-11.147,0-20.192,9.045-20.192,20.204\n            s9.045,20.204,20.192,20.204C222.16,398.63,231.205,389.585,231.205,378.426z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M332.952,372.615c0-14.37-11.656-26.026-26.026-26.026c-14.359,0-26.014,11.656-26.014,26.026\n            c0,14.37,11.656,26.014,26.014,26.014C321.297,398.63,332.952,386.986,332.952,372.615z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M392.975,358.557c4.875-3.315,8.075-8.906,8.075-15.248c0-10.177-8.259-18.437-18.437-18.437\n            c-10.189,0-18.448,8.259-18.448,18.437c0,10.189,8.259,18.437,18.448,18.437C386.448,361.745,390.029,360.567,392.975,358.557z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M31.025,369.289c2.403,0.866,4.99,1.34,7.693,1.34c12.441,0,22.537-10.085,22.537-22.537\n            c0-12.441-10.096-22.537-22.537-22.537c-12.453,0-22.537,10.096-22.537,22.537c0,9.727,6.157,18.009,14.786,21.174\n            C30.99,369.265,31.002,369.277,31.025,369.289z' })),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#FFFFFF', d: 'M233.099,174.515v14.151h-5.302H165.73v-14.151c0-6.758,5.476-12.233,12.233-12.233h42.903\n            C227.624,162.282,233.099,167.757,233.099,174.515z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { class: colours.light, points: '488.196,113.372 503.34,150.129 444.761,174.261 442.162,167.942 432.216,143.834\n            429.617,137.515 \t' })),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: colours.medium, d: 'M432.216,143.834l9.946,24.108l-155.036,63.904l-2.16,0.289c-2.299-8.294-6.388-16.045-12.037-22.653\n          L432.216,143.834z' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: colours.shadow, d: 'M392.975,358.557l-29.445,28.244c-7.901,7.589-18.437,11.829-29.388,11.829h-27.216\n          c14.37,0,26.026-11.644,26.026-26.014c0-14.37-11.656-26.026-26.026-26.026c-14.359,0-26.014,11.656-26.014,26.026\n          c0,14.37,11.656,26.014,26.014,26.014h-95.926c11.159,0,20.204-9.045,20.204-20.204s-9.045-20.204-20.204-20.204\n          c-11.147,0-20.192,9.045-20.192,20.204s9.045,20.204,20.192,20.204h-89.768c13.504,0,24.455-10.951,24.455-24.455\n          s-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455s10.951,24.455,24.467,24.455h-18.102\n          c-6.457,0-12.846-1.259-18.829-3.685l-53.277-25.656c2.403,0.866,4.99,1.34,7.693,1.34c12.441,0,22.537-10.085,22.537-22.537\n          c0-12.441-10.096-22.537-22.537-22.537l343.895-0.682c-10.189,0-18.448,8.259-18.448,18.437c0,10.189,8.259,18.437,18.448,18.437\n          C386.448,361.745,390.029,360.567,392.975,358.557z' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: colours.light, d: 'M287.127,247.995v11.171H106.4v-11.171c0-7.867,1.559-15.572,4.517-22.711\n          c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374h62.067c7.867,0,15.572,1.559,22.711,4.517\n          c7.127,2.946,13.677,7.289,19.245,12.857c1.109,1.109,2.172,2.253,3.177,3.442c5.649,6.608,9.738,14.359,12.037,22.653\n          C286.387,237.252,287.127,242.589,287.127,247.995z' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: colours.medium, d: 'M157.699,225.286c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374\n          H165.73c-15.733,0-30.832,6.249-41.956,17.374c-5.556,5.568-9.9,12.118-12.857,19.245c-2.957,7.139-4.517,14.844-4.517,22.711\n          v11.171h46.782v-11.171C153.182,240.129,154.742,232.424,157.699,225.286z' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { class: colours.light, points: '352.336,294.572 56.069,294.572 41.191,294.572 59.823,259.166 106.4,259.166\n          287.127,259.166 307.619,259.166 ' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { class: colours.medium, points: '106.4,259.166 59.823,259.166 41.191,294.573 56.069,294.573 101.835,294.573\n          120.468,259.166 ' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M382.607,316.208c-0.006,0-343.907,0.684-343.907,0.684c-17.196,0.009-31.184,14.002-31.184,31.2\n            c0,13.229,8.28,24.554,19.928,29.085l53.095,25.569c0.163,0.079,0.329,0.152,0.497,0.221c7.063,2.869,14.497,4.325,22.097,4.325\n            h231.004c13.26,0,25.83-5.056,35.396-14.238l28.988-27.821c6.775-4.931,11.191-12.918,11.191-21.921\n            C409.711,328.367,397.552,316.208,382.607,316.208z M392.384,343.312c0,5.39-4.385,9.775-9.775,9.775\n            c-5.391,0-9.776-4.385-9.776-9.775c0-5.391,4.385-9.776,9.776-9.776C387.997,333.536,392.384,337.921,392.384,343.312z\n            M38.717,334.219c7.65,0,13.874,6.224,13.874,13.874s-6.224,13.874-13.874,13.874s-13.874-6.224-13.874-13.874\n            S31.068,334.219,38.717,334.219z M105.434,374.174c0-8.709,7.085-15.794,15.794-15.794s15.794,7.085,15.794,15.794\n            c0,8.694-7.062,15.766-15.748,15.79h-0.089C112.496,389.94,105.434,382.866,105.434,374.174z M199.469,378.428\n            c0-6.362,5.176-11.538,11.538-11.538s11.538,5.175,11.538,11.538c0,6.346-5.152,11.511-11.493,11.536h-0.089\n            C204.621,389.94,199.469,384.776,199.469,378.428z M289.577,372.611c0-9.569,7.786-17.355,17.355-17.355\n            c9.569,0,17.355,7.786,17.355,17.355c0,9.554-7.762,17.329-17.31,17.353h-0.089C297.338,389.94,289.577,382.165,289.577,372.611z\n            M357.534,380.554c-5.693,5.464-12.998,8.709-20.794,9.303c3.092-4.924,4.876-10.78,4.876-17.244\n            c0-19.124-15.559-34.683-34.683-34.683c-19.124,0-34.683,15.559-34.683,34.683c0,6.512,1.807,12.407,4.941,17.353h-39.867\n            c1.632-3.435,2.548-7.318,2.548-11.536c0-15.916-12.948-28.865-28.865-28.865s-28.865,12.948-28.865,28.865\n            c0,4.218,0.916,8.099,2.548,11.536h-34.373c2.561-4.698,4.032-10.073,4.032-15.79c0-18.263-14.858-33.121-33.121-33.121\n            s-33.12,14.857-33.12,33.12c0,5.018,1.138,9.77,3.144,14.038c-1.162-0.35-2.314-0.746-3.451-1.2l-29.852-14.376\n            c7.28-5.717,11.97-14.59,11.97-24.543c0-5.004-1.191-9.733-3.293-13.929l290.691-0.578c-1.166,3.021-1.811,6.299-1.811,9.725\n            c0,10.747,6.286,20.051,15.375,24.432L357.534,380.554z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M511.348,146.824l-15.147-36.751c-0.876-2.124-2.559-3.814-4.681-4.697\n            c-2.122-0.884-4.506-0.888-6.631-0.012l-58.573,24.14c-3.843,1.584-5.934,5.613-5.224,9.544l-145.962,60.159\n            c-9.356-9.084-20.866-15.17-33.372-17.767v-6.931c0-11.519-9.372-20.89-20.89-20.89h-42.912c-11.519,0-20.89,9.371-20.89,20.89\n            v6.055c-14.879,1.881-28.64,8.575-39.417,19.351c-12.843,12.843-19.916,29.918-19.916,48.081v2.509H59.819\n            c-3.217,0-6.169,1.782-7.667,4.629l-17.417,33.091c-6.136,1.343-12.155,3.248-18.008,5.756L5.253,298.9\n            c-4.398,1.885-6.435,6.978-4.55,11.376c1.885,4.399,6.978,6.434,11.376,4.55l11.474-4.918c10.334-4.429,21.275-6.675,32.519-6.675\n            H352.34h34.438l18.97,12.851c1.489,1.008,3.179,1.492,4.852,1.492c2.777,0,5.506-1.333,7.181-3.805\n            c2.683-3.962,1.647-9.349-2.314-12.032l-21.171-14.341c-1.435-0.971-3.127-1.491-4.86-1.491h-34.08l-42.353-33.53\n            c-1.531-1.212-3.425-1.871-5.377-1.871h-11.831v-2.509c0-3.395-0.248-6.752-0.734-10.05l142.596-58.769\n            c1.629,2.361,4.303,3.754,7.115,3.754c1.1,0,2.218-0.211,3.298-0.656l58.573-24.14c2.124-0.876,3.814-2.559,4.697-4.681\n            C512.22,151.333,512.224,148.949,511.348,146.824z M174.395,174.509c0-1.965,1.598-3.563,3.563-3.563h42.912\n            c1.965,0,3.563,1.598,3.563,3.563v5.492h-50.037L174.395,174.509L174.395,174.509z M327.44,285.907H56.075h-0.536l9.512-18.074\n            h239.561L327.44,285.907z M115.063,250.506v-2.509c0-13.534,5.271-26.257,14.84-35.828c9.569-9.569,22.294-14.84,35.828-14.84\n            h62.066c13.534,0,26.258,5.271,35.828,14.84c9.569,9.571,14.841,22.295,14.841,35.828v2.509H115.063z M286.322,213.337\n            l141.191-58.192l1.635,3.96l1.704,4.134l-140.552,57.928C289.144,218.478,287.822,215.862,286.322,213.337z M449.479,162.952\n            l-4.524-10.961l-4.025-9.767l42.552-17.538l8.544,20.731L449.479,162.952z' }))));
-    };
-    return Army;
-}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+
+var Polygon = _styled__WEBPACK_IMPORTED_MODULE_1__["Polygon"];
+var Path = _styled__WEBPACK_IMPORTED_MODULE_1__["Path"];
+var Army = function (props) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "translate(" + (props.location.x - 11) + " " + (props.location.y - 20) + ") scale(0.055)" },
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M145.687,374.175c0-13.504-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455\n        s10.951,24.455,24.467,24.455C134.736,398.63,145.687,387.679,145.687,374.175z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M231.205,378.426c0-11.159-9.045-20.204-20.204-20.204c-11.147,0-20.192,9.045-20.192,20.204\n        s9.045,20.204,20.192,20.204C222.16,398.63,231.205,389.585,231.205,378.426z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M332.952,372.615c0-14.37-11.656-26.026-26.026-26.026c-14.359,0-26.014,11.656-26.014,26.026\n        c0,14.37,11.656,26.014,26.014,26.014C321.297,398.63,332.952,386.986,332.952,372.615z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M392.975,358.557c4.875-3.315,8.075-8.906,8.075-15.248c0-10.177-8.259-18.437-18.437-18.437\n        c-10.189,0-18.448,8.259-18.448,18.437c0,10.189,8.259,18.437,18.448,18.437C386.448,361.745,390.029,360.567,392.975,358.557z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M31.025,369.289c2.403,0.866,4.99,1.34,7.693,1.34c12.441,0,22.537-10.085,22.537-22.537\n        c0-12.441-10.096-22.537-22.537-22.537c-12.453,0-22.537,10.096-22.537,22.537c0,9.727,6.157,18.009,14.786,21.174\n        C30.99,369.265,31.002,369.277,31.025,369.289z' })),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#FFFFFF', d: 'M233.099,174.515v14.151h-5.302H165.73v-14.151c0-6.758,5.476-12.233,12.233-12.233h42.903\n        C227.624,162.282,233.099,167.757,233.099,174.515z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Polygon, { colourId: props.colour, shade: 'light', points: '488.196,113.372 503.34,150.129 444.761,174.261 442.162,167.942 432.216,143.834\n        429.617,137.515 \t' })),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'medium', d: 'M432.216,143.834l9.946,24.108l-155.036,63.904l-2.16,0.289c-2.299-8.294-6.388-16.045-12.037-22.653\n      L432.216,143.834z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'shadow', d: 'M392.975,358.557l-29.445,28.244c-7.901,7.589-18.437,11.829-29.388,11.829h-27.216\n      c14.37,0,26.026-11.644,26.026-26.014c0-14.37-11.656-26.026-26.026-26.026c-14.359,0-26.014,11.656-26.014,26.026\n      c0,14.37,11.656,26.014,26.014,26.014h-95.926c11.159,0,20.204-9.045,20.204-20.204s-9.045-20.204-20.204-20.204\n      c-11.147,0-20.192,9.045-20.192,20.204s9.045,20.204,20.192,20.204h-89.768c13.504,0,24.455-10.951,24.455-24.455\n      s-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455s10.951,24.455,24.467,24.455h-18.102\n      c-6.457,0-12.846-1.259-18.829-3.685l-53.277-25.656c2.403,0.866,4.99,1.34,7.693,1.34c12.441,0,22.537-10.085,22.537-22.537\n      c0-12.441-10.096-22.537-22.537-22.537l343.895-0.682c-10.189,0-18.448,8.259-18.448,18.437c0,10.189,8.259,18.437,18.448,18.437\n      C386.448,361.745,390.029,360.567,392.975,358.557z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'light', d: 'M287.127,247.995v11.171H106.4v-11.171c0-7.867,1.559-15.572,4.517-22.711\n      c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374h62.067c7.867,0,15.572,1.559,22.711,4.517\n      c7.127,2.946,13.677,7.289,19.245,12.857c1.109,1.109,2.172,2.253,3.177,3.442c5.649,6.608,9.738,14.359,12.037,22.653\n      C286.387,237.252,287.127,242.589,287.127,247.995z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'medium', d: 'M157.699,225.286c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374\n      H165.73c-15.733,0-30.832,6.249-41.956,17.374c-5.556,5.568-9.9,12.118-12.857,19.245c-2.957,7.139-4.517,14.844-4.517,22.711\n      v11.171h46.782v-11.171C153.182,240.129,154.742,232.424,157.699,225.286z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Polygon, { colourId: props.colour, shade: 'light', points: '352.336,294.572 56.069,294.572 41.191,294.572 59.823,259.166 106.4,259.166\n      287.127,259.166 307.619,259.166 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Polygon, { colourId: props.colour, shade: 'medium', points: '106.4,259.166 59.823,259.166 41.191,294.573 56.069,294.573 101.835,294.573\n      120.468,259.166 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M382.607,316.208c-0.006,0-343.907,0.684-343.907,0.684c-17.196,0.009-31.184,14.002-31.184,31.2\n        c0,13.229,8.28,24.554,19.928,29.085l53.095,25.569c0.163,0.079,0.329,0.152,0.497,0.221c7.063,2.869,14.497,4.325,22.097,4.325\n        h231.004c13.26,0,25.83-5.056,35.396-14.238l28.988-27.821c6.775-4.931,11.191-12.918,11.191-21.921\n        C409.711,328.367,397.552,316.208,382.607,316.208z M392.384,343.312c0,5.39-4.385,9.775-9.775,9.775\n        c-5.391,0-9.776-4.385-9.776-9.775c0-5.391,4.385-9.776,9.776-9.776C387.997,333.536,392.384,337.921,392.384,343.312z\n        M38.717,334.219c7.65,0,13.874,6.224,13.874,13.874s-6.224,13.874-13.874,13.874s-13.874-6.224-13.874-13.874\n        S31.068,334.219,38.717,334.219z M105.434,374.174c0-8.709,7.085-15.794,15.794-15.794s15.794,7.085,15.794,15.794\n        c0,8.694-7.062,15.766-15.748,15.79h-0.089C112.496,389.94,105.434,382.866,105.434,374.174z M199.469,378.428\n        c0-6.362,5.176-11.538,11.538-11.538s11.538,5.175,11.538,11.538c0,6.346-5.152,11.511-11.493,11.536h-0.089\n        C204.621,389.94,199.469,384.776,199.469,378.428z M289.577,372.611c0-9.569,7.786-17.355,17.355-17.355\n        c9.569,0,17.355,7.786,17.355,17.355c0,9.554-7.762,17.329-17.31,17.353h-0.089C297.338,389.94,289.577,382.165,289.577,372.611z\n        M357.534,380.554c-5.693,5.464-12.998,8.709-20.794,9.303c3.092-4.924,4.876-10.78,4.876-17.244\n        c0-19.124-15.559-34.683-34.683-34.683c-19.124,0-34.683,15.559-34.683,34.683c0,6.512,1.807,12.407,4.941,17.353h-39.867\n        c1.632-3.435,2.548-7.318,2.548-11.536c0-15.916-12.948-28.865-28.865-28.865s-28.865,12.948-28.865,28.865\n        c0,4.218,0.916,8.099,2.548,11.536h-34.373c2.561-4.698,4.032-10.073,4.032-15.79c0-18.263-14.858-33.121-33.121-33.121\n        s-33.12,14.857-33.12,33.12c0,5.018,1.138,9.77,3.144,14.038c-1.162-0.35-2.314-0.746-3.451-1.2l-29.852-14.376\n        c7.28-5.717,11.97-14.59,11.97-24.543c0-5.004-1.191-9.733-3.293-13.929l290.691-0.578c-1.166,3.021-1.811,6.299-1.811,9.725\n        c0,10.747,6.286,20.051,15.375,24.432L357.534,380.554z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M511.348,146.824l-15.147-36.751c-0.876-2.124-2.559-3.814-4.681-4.697\n        c-2.122-0.884-4.506-0.888-6.631-0.012l-58.573,24.14c-3.843,1.584-5.934,5.613-5.224,9.544l-145.962,60.159\n        c-9.356-9.084-20.866-15.17-33.372-17.767v-6.931c0-11.519-9.372-20.89-20.89-20.89h-42.912c-11.519,0-20.89,9.371-20.89,20.89\n        v6.055c-14.879,1.881-28.64,8.575-39.417,19.351c-12.843,12.843-19.916,29.918-19.916,48.081v2.509H59.819\n        c-3.217,0-6.169,1.782-7.667,4.629l-17.417,33.091c-6.136,1.343-12.155,3.248-18.008,5.756L5.253,298.9\n        c-4.398,1.885-6.435,6.978-4.55,11.376c1.885,4.399,6.978,6.434,11.376,4.55l11.474-4.918c10.334-4.429,21.275-6.675,32.519-6.675\n        H352.34h34.438l18.97,12.851c1.489,1.008,3.179,1.492,4.852,1.492c2.777,0,5.506-1.333,7.181-3.805\n        c2.683-3.962,1.647-9.349-2.314-12.032l-21.171-14.341c-1.435-0.971-3.127-1.491-4.86-1.491h-34.08l-42.353-33.53\n        c-1.531-1.212-3.425-1.871-5.377-1.871h-11.831v-2.509c0-3.395-0.248-6.752-0.734-10.05l142.596-58.769\n        c1.629,2.361,4.303,3.754,7.115,3.754c1.1,0,2.218-0.211,3.298-0.656l58.573-24.14c2.124-0.876,3.814-2.559,4.697-4.681\n        C512.22,151.333,512.224,148.949,511.348,146.824z M174.395,174.509c0-1.965,1.598-3.563,3.563-3.563h42.912\n        c1.965,0,3.563,1.598,3.563,3.563v5.492h-50.037L174.395,174.509L174.395,174.509z M327.44,285.907H56.075h-0.536l9.512-18.074\n        h239.561L327.44,285.907z M115.063,250.506v-2.509c0-13.534,5.271-26.257,14.84-35.828c9.569-9.569,22.294-14.84,35.828-14.84\n        h62.066c13.534,0,26.258,5.271,35.828,14.84c9.569,9.571,14.841,22.295,14.841,35.828v2.509H115.063z M286.322,213.337\n        l141.191-58.192l1.635,3.96l1.704,4.134l-140.552,57.928C289.144,218.478,287.822,215.862,286.322,213.337z M449.479,162.952\n        l-4.524-10.961l-4.025-9.767l42.552-17.538l8.544,20.731L449.479,162.952z' })))); };
 /* harmony default export */ __webpack_exports__["default"] = (Army);
 
 
@@ -391,47 +407,54 @@ var Army = /** @class */ (function (_super) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../styled */ "./src/client/app/components/board/unit/styled.ts");
 
-var Fleet = /** @class */ (function (_super) {
-    __extends(Fleet, _super);
-    function Fleet() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Fleet.prototype.render = function (props, state) {
-        var colours = {
-            light: props.colour + "-light",
-            medium: props.colour + "-medium",
-            shadow: props.colour + "-shadow",
-        };
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "translate(" + (props.location.x - 10) + " " + (props.location.y - 20) + ") scale(0.05)" },
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: colours.light, d: 'M128.904,85.83v64.869H97.813c-9.197,0-16.655-7.458-16.655-16.655v-31.559\n          c0-9.197,7.458-16.655,16.655-16.655H128.904z' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { class: colours.light, d: 'M176.638,102.485v31.559c0,9.197-7.458,16.655-16.655,16.655h-31.079V85.83h31.079\n          C169.18,85.83,176.638,93.288,176.638,102.485z' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("rect", { x: '60.444', y: '182.688', style: 'fill:#CCCCCC;', width: '136.92', height: '47.866' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { style: 'fill:#CCCCCC;', points: '219.073,261.143 219.073,309.213 38.723,309.213 38.723,230.556 60.438,230.556\n            197.358,230.556 219.073,230.556 \t' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#CCCCCC;', d: 'M437.576,228.193c4.532,5.767,7.23,13.046,7.23,20.947v15.947h-101.68v-49.881h67.758\n            C421.725,215.208,431.365,220.292,437.576,228.193z' })),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { class: colours.medium, points: '497.253,265.088 447.876,391.276 26.241,391.276 26.229,391.276 8.987,309.213\n          38.723,309.213 219.073,309.213 286.22,309.213 309.242,265.088 343.127,265.088 444.806,265.088 ' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { class: colours.shadow, points: '447.876,391.276 428.187,441.589 36.805,441.589 26.229,391.276 26.241,391.276 ' }),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M512,228.19c0-4.966-4.025-8.993-8.993-8.993h-61.414c-7.801-7.999-18.682-12.979-30.711-12.979\n            h-67.75c-4.968,0-8.993,4.026-8.993,8.993v40.888h-24.901c-3.35,0-6.422,1.862-7.973,4.833l-20.5,39.293h-52.704v-60.673h4.685\n            c4.966,0,8.993-4.026,8.993-8.993c0-4.966-4.026-8.993-8.993-8.993h-13.678h-12.717V191.68h9.71c4.966,0,8.993-4.026,8.993-8.993\n            s-4.026-8.993-8.993-8.993h-78.169v-13.999h22.088c14.143,0,25.65-11.506,25.65-25.65v-31.557c0-14.143-11.506-25.65-25.65-25.65\n            h-22.088v-6.432c0-4.966-4.026-8.993-8.993-8.993c-4.966,0-8.993,4.026-8.993,8.993v6.432H97.819\n            c-14.143,0-25.65,11.506-25.65,25.65v31.555c0,14.143,11.506,25.65,25.65,25.65h22.088v13.999H41.738\n            c-4.966,0-8.993,4.026-8.993,8.993s4.026,8.993,8.993,8.993h9.71v29.886H38.729H25.053c-4.966,0-8.993,4.026-8.993,8.993\n            c0,4.966,4.026,8.993,8.993,8.993h4.683v60.673H8.993c-2.71,0-5.275,1.222-6.982,3.325c-1.707,2.103-2.375,4.866-1.819,7.517\n            L28.01,443.442c0.875,4.163,4.547,7.144,8.801,7.144h391.375c3.701,0,7.025-2.269,8.374-5.716l69.067-176.503\n            c1.083-2.767,0.728-5.892-0.947-8.347s-4.456-3.923-7.427-3.923h-43.448v-6.957c0-4.15-0.603-8.161-1.707-11.959h50.909\n            C507.975,237.183,512,233.156,512,228.19z M159.98,94.825c4.225,0,7.664,3.438,7.664,7.664v31.555c0,4.225-3.438,7.664-7.664,7.664\n            h-22.088V94.825H159.98z M97.819,141.708c-4.225,0-7.664-3.438-7.664-7.664v-31.555c0-4.225,3.438-7.664,7.664-7.664h22.088v46.884\n            H97.819z M69.434,191.68h118.932v29.886H69.434V191.68z M47.722,239.552h162.353v12.602H73.169c-4.966,0-8.993,4.026-8.993,8.993\n            s4.026,8.993,8.993,8.993h136.908v30.085H47.722V239.552z M422.048,432.602H44.111l-6.795-32.336h397.386L422.048,432.602z\n            M441.739,382.28H33.536l-13.464-64.069h266.145c3.35,0,6.422-1.862,7.973-4.833l20.501-39.293h169.386L441.739,382.28z\n            M352.124,256.099v-31.895h58.757c13.751,0,24.938,11.187,24.938,24.938v6.957H352.124z' }),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black', d: 'M411.239,336.676c-4.968,0-8.993,4.026-8.993,8.993c0,2.975-2.421,5.396-5.396,5.396\n            c-2.975,0-5.397-2.421-5.397-5.396v-35.492c0-4.966-4.025-8.993-8.993-8.993s-8.993,4.026-8.993,8.993v35.492\n            c0,2.975-2.421,5.396-5.396,5.396c-2.975,0-5.396-2.421-5.396-5.396c0-4.966-4.025-8.993-8.993-8.993s-8.993,4.026-8.993,8.993\n            c0,12.892,10.489,23.382,23.382,23.382c5.428,0,10.416-1.875,14.389-4.99c3.972,3.115,8.962,4.99,14.39,4.99\n            c12.892,0,23.382-10.489,23.382-23.382C420.232,340.703,416.207,336.676,411.239,336.676z' }))));
-    };
-    return Fleet;
-}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+
+var Fleet = function (props) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "translate(" + (props.location.x - 10) + " " + (props.location.y - 20) + ") scale(0.05)" },
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Path"], { colourId: props.colour, shade: 'light', d: 'M128.904,85.83v64.869H97.813c-9.197,0-16.655-7.458-16.655-16.655v-31.559\n      c0-9.197,7.458-16.655,16.655-16.655H128.904z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Path"], { colourId: props.colour, shade: 'light', d: 'M176.638,102.485v31.559c0,9.197-7.458,16.655-16.655,16.655h-31.079V85.83h31.079\n      C169.18,85.83,176.638,93.288,176.638,102.485z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("rect", { x: '60.444', y: '182.688', style: 'fill:#CCCCCC;', width: '136.92', height: '47.866' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { style: 'fill:#CCCCCC;', points: '219.073,261.143 219.073,309.213 38.723,309.213 38.723,230.556 60.438,230.556\n        197.358,230.556 219.073,230.556 \t' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#CCCCCC;', d: 'M437.576,228.193c4.532,5.767,7.23,13.046,7.23,20.947v15.947h-101.68v-49.881h67.758\n        C421.725,215.208,431.365,220.292,437.576,228.193z' })),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Polygon"], { colourId: props.colour, shade: 'medium', points: '497.253,265.088 447.876,391.276 26.241,391.276 26.229,391.276 8.987,309.213\n      38.723,309.213 219.073,309.213 286.22,309.213 309.242,265.088 343.127,265.088 444.806,265.088 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Polygon"], { colourId: props.colour, shade: 'shadow', points: '447.876,391.276 428.187,441.589 36.805,441.589 26.229,391.276 26.241,391.276 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M512,228.19c0-4.966-4.025-8.993-8.993-8.993h-61.414c-7.801-7.999-18.682-12.979-30.711-12.979\n        h-67.75c-4.968,0-8.993,4.026-8.993,8.993v40.888h-24.901c-3.35,0-6.422,1.862-7.973,4.833l-20.5,39.293h-52.704v-60.673h4.685\n        c4.966,0,8.993-4.026,8.993-8.993c0-4.966-4.026-8.993-8.993-8.993h-13.678h-12.717V191.68h9.71c4.966,0,8.993-4.026,8.993-8.993\n        s-4.026-8.993-8.993-8.993h-78.169v-13.999h22.088c14.143,0,25.65-11.506,25.65-25.65v-31.557c0-14.143-11.506-25.65-25.65-25.65\n        h-22.088v-6.432c0-4.966-4.026-8.993-8.993-8.993c-4.966,0-8.993,4.026-8.993,8.993v6.432H97.819\n        c-14.143,0-25.65,11.506-25.65,25.65v31.555c0,14.143,11.506,25.65,25.65,25.65h22.088v13.999H41.738\n        c-4.966,0-8.993,4.026-8.993,8.993s4.026,8.993,8.993,8.993h9.71v29.886H38.729H25.053c-4.966,0-8.993,4.026-8.993,8.993\n        c0,4.966,4.026,8.993,8.993,8.993h4.683v60.673H8.993c-2.71,0-5.275,1.222-6.982,3.325c-1.707,2.103-2.375,4.866-1.819,7.517\n        L28.01,443.442c0.875,4.163,4.547,7.144,8.801,7.144h391.375c3.701,0,7.025-2.269,8.374-5.716l69.067-176.503\n        c1.083-2.767,0.728-5.892-0.947-8.347s-4.456-3.923-7.427-3.923h-43.448v-6.957c0-4.15-0.603-8.161-1.707-11.959h50.909\n        C507.975,237.183,512,233.156,512,228.19z M159.98,94.825c4.225,0,7.664,3.438,7.664,7.664v31.555c0,4.225-3.438,7.664-7.664,7.664\n        h-22.088V94.825H159.98z M97.819,141.708c-4.225,0-7.664-3.438-7.664-7.664v-31.555c0-4.225,3.438-7.664,7.664-7.664h22.088v46.884\n        H97.819z M69.434,191.68h118.932v29.886H69.434V191.68z M47.722,239.552h162.353v12.602H73.169c-4.966,0-8.993,4.026-8.993,8.993\n        s4.026,8.993,8.993,8.993h136.908v30.085H47.722V239.552z M422.048,432.602H44.111l-6.795-32.336h397.386L422.048,432.602z\n        M441.739,382.28H33.536l-13.464-64.069h266.145c3.35,0,6.422-1.862,7.973-4.833l20.501-39.293h169.386L441.739,382.28z\n        M352.124,256.099v-31.895h58.757c13.751,0,24.938,11.187,24.938,24.938v6.957H352.124z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black', d: 'M411.239,336.676c-4.968,0-8.993,4.026-8.993,8.993c0,2.975-2.421,5.396-5.396,5.396\n        c-2.975,0-5.397-2.421-5.397-5.396v-35.492c0-4.966-4.025-8.993-8.993-8.993s-8.993,4.026-8.993,8.993v35.492\n        c0,2.975-2.421,5.396-5.396,5.396c-2.975,0-5.396-2.421-5.396-5.396c0-4.966-4.025-8.993-8.993-8.993s-8.993,4.026-8.993,8.993\n        c0,12.892,10.489,23.382,23.382,23.382c5.428,0,10.416-1.875,14.389-4.99c3.972,3.115,8.962,4.99,14.39,4.99\n        c12.892,0,23.382-10.489,23.382-23.382C420.232,340.703,416.207,336.676,411.239,336.676z' })))); };
 /* harmony default export */ __webpack_exports__["default"] = (Fleet);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/unit/styled.ts":
+/*!********************************************************!*\
+  !*** ./src/client/app/components/board/unit/styled.ts ***!
+  \********************************************************/
+/*! exports provided: Path, Polygon */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Path", function() { return Path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Polygon", function() { return Polygon; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../variables/empireColours */ "./src/client/app/variables/empireColours.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var Path = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].path(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  fill: ", "\n"], ["\n  fill: ", "\n"])), function (_a) {
+    var colourId = _a.colourId, shade = _a.shade;
+    return _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__["default"][colourId + "_" + shade];
+});
+var Polygon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].polygon(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  fill: ", "\n"], ["\n  fill: ", "\n"])), function (_a) {
+    var colourId = _a.colourId, shade = _a.shade;
+    return _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__["default"][colourId + "_" + shade];
+});
+var templateObject_1, templateObject_2;
 
 
 /***/ }),
@@ -483,37 +506,6 @@ var Unit = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./src/client/app/components/ordersLayer/order/order.scss":
-/*!****************************************************************!*\
-  !*** ./src/client/app/components/ordersLayer/order/order.scss ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../node_modules/sass-loader/dist/cjs.js!./order.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/client/app/components/ordersLayer/order/order.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-var exported = content.locals ? content.locals : {};
-
-
-
-module.exports = exported;
-
-/***/ }),
-
 /***/ "./src/client/app/components/ordersLayer/order/order.tsx":
 /*!***************************************************************!*\
   !*** ./src/client/app/components/ordersLayer/order/order.tsx ***!
@@ -524,8 +516,6 @@ module.exports = exported;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _order_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./order.scss */ "./src/client/app/components/ordersLayer/order/order.scss");
-/* harmony import */ var _order_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_order_scss__WEBPACK_IMPORTED_MODULE_1__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -539,7 +529,6 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
 
 var Order = /** @class */ (function (_super) {
     __extends(Order, _super);
@@ -674,14 +663,15 @@ var OrdersLayer = /** @class */ (function (_super) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @client/app/components/board/board */ "./src/client/app/components/board/board.tsx");
 /* harmony import */ var _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @client/assets/countryData */ "./src/client/assets/countryData.ts");
 /* harmony import */ var _client_devTools_setupGame__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @client/devTools/setupGame */ "./src/client/devTools/setupGame.ts");
 /* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/pages/game/styled.ts");
+/* harmony import */ var _client_utils_scrollToElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @client/utils/scrollToElement */ "./src/client/utils/scrollToElement.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -749,6 +739,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var Game = /** @class */ (function (_super) {
     __extends(Game, _super);
     function Game() {
@@ -808,14 +799,14 @@ var Game = /** @class */ (function (_super) {
             var _a, err, game, turn;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(_client_devTools_setupGame__WEBPACK_IMPORTED_MODULE_5__["default"])())];
+                    case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_client_devTools_setupGame__WEBPACK_IMPORTED_MODULE_5__["default"])())];
                     case 1:
                         _a = _b.sent(), err = _a[0], game = _a[1].data;
                         if (err) {
                             console.log("Error ocurred when setting up new full game: " + err.message);
                             return [2 /*return*/, Promise.reject(err)];
                         }
-                        return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/turn/" + game.currentTurn)];
+                        return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("api/turn/" + game.currentTurn)];
                     case 2:
                         turn = (_b.sent()).data;
                         this.setState({ game: game, turn: turn });
@@ -827,10 +818,10 @@ var Game = /** @class */ (function (_super) {
             var game, turn;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/game/latest')];
+                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/game/latest')];
                     case 1:
                         game = (_a.sent()).data;
-                        return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/turn/" + game.currentTurn)];
+                        return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/turn/" + game.currentTurn)];
                     case 2:
                         turn = (_a.sent()).data;
                         this.setState({ game: game, turn: turn });
@@ -845,7 +836,7 @@ var Game = /** @class */ (function (_super) {
         _this.submitOrders = function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch("/api/turn/" + this.state.game.currentTurn, {
+                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch("/api/turn/" + this.state.game.currentTurn, {
                             moves: this.state.newOrders,
                             turnID: this.state.game.currentTurn,
                         })];
@@ -860,7 +851,7 @@ var Game = /** @class */ (function (_super) {
             var _a, err, res;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/game/" + this.state.game._id + "/next"))];
+                    case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_1__["default"])(axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/game/" + this.state.game._id + "/next"))];
                     case 1:
                         _a = _b.sent(), err = _a[0], res = _a[1];
                         if (err)
@@ -883,25 +874,31 @@ var Game = /** @class */ (function (_super) {
         //   game.run()
         // }
     }
+    Game.prototype.componentDidMount = function () {
+        window.addEventListener('orientationchange', function () {
+            setTimeout(function () { return Object(_client_utils_scrollToElement__WEBPACK_IMPORTED_MODULE_7__["default"])('anchor'); }, 10);
+            console.log('screen.orientation.angle', screen.orientation.angle);
+        });
+    };
     Game.prototype.render = function (props, state) {
-        console.log('process.env.NODE_ENV:', "development");
         var totalOrders = 0;
         if (state.turn)
             state.turn.players.forEach(function (p) { return totalOrders += p.moves.length; });
-        return (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(preact__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null,
-            Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("h1", null,  true ? 'Stop being a perfectionist!' : undefined),
-            Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["ButtonsContainer"], null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.setupGame }, "Set Up Game"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.getLatestGame }, "Load Game"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.submitOrders }, "Submit Orders"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.props.logOut }, "Log out"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("button", { onClick: this.nextTurn }, "Next Turn"),
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("br", null)),
-            Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("br", null),
-            !!state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(preact__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null,
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("p", null, "You are playing as " + state.turn.players.find(function (p) { return p.playerID === props.userID; }).empire),
-                Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])("p", null, state.turn.info.season + " " + state.turn.info.year + ": " + state.turn.info.phase + ". Current Orders: " + totalOrders))),
-            Object(preact__WEBPACK_IMPORTED_MODULE_2__["h"])(_client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__["default"], activeTerritory: state.activeTerritory, onTileSelect: this.onTileSelect, onMoveSelect: this.onMoveSelect, turnData: state.turn, newOrders: state.newOrders, newOrder: state.newOrder })));
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("h1", null, "Diplomacy"),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["ButtonsContainer"], null,
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { onClick: this.setupGame }, "Set Up Game"),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { onClick: this.getLatestGame }, "Load Game"),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { onClick: this.submitOrders }, "Submit Orders"),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { onClick: this.props.logOut }, "Log out"),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("button", { onClick: this.nextTurn }, "Next Turn"),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null)),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("br", null),
+            !!state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, "You are playing as " + state.turn.players.find(function (p) { return p.playerID === props.userID; }).empire),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, state.turn.info.season + " " + state.turn.info.year + ": " + state.turn.info.phase + ". Current Orders: " + totalOrders))),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { id: 'anchor' }, " "),
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__["default"], activeTerritory: state.activeTerritory, onTileSelect: this.onTileSelect, onMoveSelect: this.onMoveSelect, turnData: state.turn, newOrders: state.newOrders, newOrder: state.newOrder })));
     };
     Game.prototype.beginMove = function (territoryName) {
         var unit = this.getUnitAt(territoryName);
@@ -936,7 +933,7 @@ var Game = /** @class */ (function (_super) {
         configurable: true
     });
     return Game;
-}(preact__WEBPACK_IMPORTED_MODULE_2__["Component"]));
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (Game);
 
 
@@ -960,6 +957,96 @@ var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || func
 
 var ButtonsContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  text-justify: center;\n"], ["\n  text-justify: center;\n"])));
 var templateObject_1;
+
+
+/***/ }),
+
+/***/ "./src/client/app/variables/empireColours.ts":
+/*!***************************************************!*\
+  !*** ./src/client/app/variables/empireColours.ts ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+    e01_light: '#00007f',
+    e01_medium: '#000065',
+    e01_shadow: '#00004c',
+    e02_light: '#0000ff',
+    e02_medium: '#0000cc',
+    e02_shadow: '#000099',
+    e03_light: '#007f00',
+    e03_medium: '#006500',
+    e03_shadow: '#004c00',
+    e04_light: '#007f7f',
+    e04_medium: '#006565',
+    e04_shadow: '#004c4c',
+    e05_light: '#007fff',
+    e05_medium: '#0065cc',
+    e05_shadow: '#004c99',
+    e06_light: '#00ff00',
+    e06_medium: '#00cc00',
+    e06_shadow: '#009900',
+    e07_light: '#00ff7f',
+    e07_medium: '#00cc65',
+    e07_shadow: '#00994c',
+    e08_light: '#00ffff',
+    e08_medium: '#00cccc',
+    e08_shadow: '#009999',
+    e09_light: '#7f0000',
+    e09_medium: '#650000',
+    e09_shadow: '#4c0000',
+    e10_light: '#7f007f',
+    e10_medium: '#650065',
+    e10_shadow: '#4c004c',
+    e11_light: '#7f00ff',
+    e11_medium: '#6500cc',
+    e11_shadow: '#4c0099',
+    e12_light: '#7f7f00',
+    e12_medium: '#656500',
+    e12_shadow: '#4c4c00',
+    e13_light: '#7f7f7f',
+    e13_medium: '#656565',
+    e13_shadow: '#4c4c4c',
+    e14_light: '#7f7fff',
+    e14_medium: '#6565cc',
+    e14_shadow: '#4c4c99',
+    e15_light: '#7fff00',
+    e15_medium: '#65cc00',
+    e15_shadow: '#4c9900',
+    e16_light: '#7fff7f',
+    e16_medium: '#65cc65',
+    e16_shadow: '#4c994c',
+    e17_light: '#7fffff',
+    e17_medium: '#65cccc',
+    e17_shadow: '#4c9999',
+    e18_light: '#ff0000',
+    e18_medium: '#cc0000',
+    e18_shadow: '#990000',
+    e19_light: '#ff007f',
+    e19_medium: '#cc0065',
+    e19_shadow: '#99004c',
+    e20_light: '#ff00ff',
+    e20_medium: '#cc00cc',
+    e20_shadow: '#990099',
+    e21_light: '#ff7f00',
+    e21_medium: '#cc6500',
+    e21_shadow: '#994c00',
+    e22_light: '#ff7f7f',
+    e22_medium: '#cc6565',
+    e22_shadow: '#994c4c',
+    e23_light: '#ff7fff',
+    e23_medium: '#cc65cc',
+    e23_shadow: '#994c99',
+    e24_light: '#ffff00',
+    e24_medium: '#cccc00',
+    e24_shadow: '#999900',
+    e25_light: '#ffff7f',
+    e25_medium: '#cccc65',
+    e25_shadow: '#99994c',
+});
 
 
 /***/ }),
@@ -2145,6 +2232,35 @@ var setupNewFullGame = function () { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 /* harmony default export */ __webpack_exports__["default"] = (setupNewFullGame);
+
+
+/***/ }),
+
+/***/ "./src/client/utils/scrollToElement.ts":
+/*!*********************************************!*\
+  !*** ./src/client/utils/scrollToElement.ts ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_scroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-scroll */ "./node_modules/react-scroll/modules/index.js");
+/* harmony import */ var react_scroll__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_scroll__WEBPACK_IMPORTED_MODULE_0__);
+
+function getOffset(el) {
+    var rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + window.scrollX,
+        top: rect.top + window.scrollY
+    };
+}
+function scrollToElementById(id) {
+    var element = document.getElementById(id);
+    var offset = getOffset(element);
+    react_scroll__WEBPACK_IMPORTED_MODULE_0__["animateScroll"].scrollTo(190);
+}
+/* harmony default export */ __webpack_exports__["default"] = (scrollToElementById);
 
 
 /***/ })

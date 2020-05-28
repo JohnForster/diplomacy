@@ -6,8 +6,12 @@ export const GameBoard = styled.div`
   position: relative;
   width: 100%;
   max-width: 100vh;
-  @media screen and (max-width:767px) and (orientation:landscape) {
-    max-width: 80%;
+
+  @media
+    screen and (max-width:767px),
+    screen and (max-height: 767px) and (orientation:landscape)
+  {
+    max-width: 100%;
   }
 `
 
@@ -15,7 +19,7 @@ export const StickyContainer = styled.div`
   width: 100%;
   position: sticky;
   top: 0;
-  height: 100px;
+  height: 150px;
   z-index: 5;
   pointer-events: none;
 `
@@ -27,8 +31,9 @@ export const MapSvg = styled.svg`
 
   width: 100%;
   pointer-events: none;
-  transform: translateY(-100px);
+  transform: translateY(-150px);
 
   border: 2px solid ${Colours.shadow};
   border-radius: 4px;
+  box-sizing: border-box;
 `

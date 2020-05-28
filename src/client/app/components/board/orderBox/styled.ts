@@ -5,6 +5,7 @@ export const OrderBox = styled.div`
     font-size: 9px;
   }
 
+  font-size: xx-large;
   width: 13%;
   font-family: monospace;
   border: 1px solid black;

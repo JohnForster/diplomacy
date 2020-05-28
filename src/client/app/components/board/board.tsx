@@ -63,48 +63,53 @@ export default class Board extends Component <IBoardProps, IBoardState> {
   svg = createRef<SVGSVGElement>()
 
   render(props: IBoardProps, state: IBoardState) {
+    const stripe = 6
     return (
       <Fragment>
         {/* Draw Order Box */}
         <Styled.GameBoard id='gameBoard'>
-          <Styled.StickyContainer>
-            {props.activeTerritory && (
-              <OrderBox onMoveSelect={props.onMoveSelect} activeTerritory={props.activeTerritory}/>
-            )}
-          </Styled.StickyContainer>
-          {/* Draw Territories */}
-          <Styled.MapSvg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox={props.boardData.viewBox}
-            ref={() => this.svg}
-            // @ts-ignore
-            onClick={this.alert_coords}
-          >
-            {props.boardData.territories.map(tile => (
-              <Territory
-                tile={tile}
-                isSelected={tile.title === props.activeTerritory}
-                onSelect={props.onTileSelect(tile.title)}
-                viewBox={props.boardData.viewBox}
-                colour={this.getColour(tile.title)}
-              />
-            ))}
-            {/* Draw Units */}
-            {props.turnData && props.turnData.players.map(player => (
-              player.ownedUnits.map(unit => (
-                <Unit
-                  unitType={unit.unitType}
+            <Styled.StickyContainer>
+              {props.activeTerritory && (
+                <OrderBox onMoveSelect={props.onMoveSelect} activeTerritory={props.activeTerritory}/>
+              )}
+            </Styled.StickyContainer>
+            {/* Draw Territories */}
+            <Styled.MapSvg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox={props.boardData.viewBox}
+              ref={() => this.svg}
+              // @ts-ignore
+              onClick={this.alert_coords}
+            >
+              {props.boardData.territories.map(tile => (
+                <Territory
+                  tile={tile}
+                  isSelected={tile.title === props.activeTerritory}
+                  onSelect={props.onTileSelect(tile.title)}
                   viewBox={props.boardData.viewBox}
-                  location={this.getLocation(unit.location)}
-                  empire={player.empire}
-                  colour={player.colour}
+                  colour={this.getColour(tile.title)}
                 />
-              ))
-            ))}
-            {/* Draw Orders */}
-            {/* Extract later into separate component */}
-            <OrdersLayer boardData={props.boardData} newOrders={props.newOrders} turnData={props.turnData}/>
-          </Styled.MapSvg>
+              ))}
+              {/* Draw Units */}
+              {props.turnData && props.turnData.players.map(player => (
+                player.ownedUnits.map(unit => (
+                  <Unit
+                    unitType={unit.unitType}
+                    viewBox={props.boardData.viewBox}
+                    location={this.getLocation(unit.location)}
+                    empire={player.empire}
+                    colour={player.colour}
+                  />
+                ))
+              ))}
+              {/* Draw Orders */}
+              {/* Extract later into separate component */}
+              <OrdersLayer boardData={props.boardData} newOrders={props.newOrders} turnData={props.turnData}/>
+              <pattern id='diagonalHatch' patternUnits='userSpaceOnUse' width={stripe} height={stripe} patternTransform='rotate(45)'>
+                <line x1={stripe/2} y='0' x2={stripe/2} y2={stripe} stroke='black' stroke-width={stripe} />
+                <line x1='0' y='0' x2='0' y2={stripe} stroke='maroon' stroke-width={stripe} />
+              </pattern>
+            </Styled.MapSvg>
         </Styled.GameBoard>
       </Fragment>
     )

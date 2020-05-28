@@ -5969,8 +5969,8 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./pages/game/game */ "./src/client/app/pages/game/game.tsx")); });
-var Login = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./pages/login/login */ "./src/client/app/pages/login/login.tsx")); });
+var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./pages/game/game */ "./src/client/app/pages/game/game.tsx")); });
+var Login = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./pages/login/login */ "./src/client/app/pages/login/login.tsx")); });
 var Register = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./pages/register/register */ "./src/client/app/pages/register/register.tsx")); });
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
@@ -6037,6 +6037,7 @@ var App = /** @class */ (function (_super) {
         return _this;
     }
     App.prototype.render = function (props, state) {
+        console.log('process.env.NODE_ENV:', "development");
         return (Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null,
             Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["GlobalStyle"], null),
             Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact_compat__WEBPACK_IMPORTED_MODULE_3__["Suspense"], { fallback: Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])("h1", null, "Loading!!!") },
