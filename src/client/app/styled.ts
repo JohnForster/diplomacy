@@ -3,9 +3,16 @@ import styled, { createGlobalStyle } from 'styled-components'
 import Colours from './variables/colors'
 
 export const GlobalStyle = createGlobalStyle`
+  html, #root {
+    height: 100%;
+  }
+
   body {
+    height: 100%;
     background-color: ${Colours.offwhite};
-    margin: 8px 0;
+    margin: 0;
+    padding: 8px;
+    box-sizing: border-box;
   }
 
   h1 {
@@ -35,15 +42,23 @@ export const GlobalStyle = createGlobalStyle`
 export const Page = styled.div`
   @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');
 
+  height: 100%;
   animation: fadein 1s;
   display: flex;
   align-items: center;
   align-content: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
   font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
   @keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
   }
+
+
+`
+
+export const BottomText = styled.text`
+  margin-top: auto;
 `

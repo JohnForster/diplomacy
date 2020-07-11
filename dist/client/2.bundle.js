@@ -9,10 +9,10 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _client_assets_countryData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @client/assets/countryData */ "./src/client/assets/countryData.ts");
+/* harmony import */ var _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shared/resources/countryData */ "./src/shared/resources/countryData.ts");
 
 var checkTag = function (territoryName, tag) {
-    var territory = _client_assets_countryData__WEBPACK_IMPORTED_MODULE_0__["default"].territories.find(function (t) { return t.title === territoryName; });
+    var territory = _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_0__["default"].territories.find(function (t) { return t.title === territoryName; });
     if (!territory) {
         console.error("Error checking tags: No territory found '" + territoryName + "'");
         return false;
@@ -39,7 +39,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _unit_unit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./unit/unit */ "./src/client/app/components/board/unit/unit.tsx");
 /* harmony import */ var _ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ordersLayer/ordersLayer */ "./src/client/app/components/ordersLayer/ordersLayer.tsx");
 /* harmony import */ var _orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./orderBox/orderBox */ "./src/client/app/components/board/orderBox/orderBox.tsx");
-/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/styled.ts");
+/* harmony import */ var _neutralPattern_neutralPattern__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./neutralPattern/neutralPattern */ "./src/client/app/components/board/neutralPattern/neutralPattern.tsx");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/styled.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -53,6 +54,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+
 
 
 
@@ -92,23 +94,41 @@ var Board = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Board.prototype.render = function (props, state) {
+    Board.prototype.render = function (props) {
         var _this = this;
-        var stripe = 6;
         return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["GameBoard"], { id: 'gameBoard' },
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["StickyContainer"], null, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__["default"], { onMoveSelect: props.onMoveSelect, currentMove: props.newOrder.moveType, activeTerritory: props.activeTerritory }))),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["MapSvg"], { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, ref: function () { return _this.svg; } },
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_7__["GameBoard"], { id: 'gameBoard' },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_7__["StickyContainer"], null, props.activeTerritory && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderBox_orderBox__WEBPACK_IMPORTED_MODULE_5__["default"], { onMoveSelect: props.onMoveSelect, currentMove: props.newOrder.moveType, activeTerritory: props.activeTerritory }))),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_7__["MapSvg"], { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, ref: function () { return _this.svg; } },
                     props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_2__["default"], { tile: tile, isSelected: tile.title === props.activeTerritory, onSelect: props.onTileSelect(tile.title), viewBox: props.boardData.viewBox, colour: _this.getColour(tile.title) })); }),
                     props.turnData && props.turnData.players.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_3__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: _this.getLocation(unit.location), empire: player.empire, colour: player.colour })); })); }),
                     Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_4__["default"], { boardData: props.boardData, newOrders: props.newOrders, turnData: props.turnData }),
-                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("pattern", { id: 'diagonalHatch', patternUnits: 'userSpaceOnUse', width: stripe, height: stripe, patternTransform: 'rotate(45)' },
-                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: stripe / 2, y: '0', x2: stripe / 2, y2: stripe, stroke: 'black', "stroke-width": stripe }),
-                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: '0', y: '0', x2: '0', y2: stripe, stroke: 'maroon', "stroke-width": stripe }))))));
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_neutralPattern_neutralPattern__WEBPACK_IMPORTED_MODULE_6__["default"], { stripe: 6 })))));
     };
     return Board;
 }(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
 /* harmony default export */ __webpack_exports__["default"] = (Board);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/neutralPattern/neutralPattern.tsx":
+/*!***************************************************************************!*\
+  !*** ./src/client/app/components/board/neutralPattern/neutralPattern.tsx ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var stripe = _a.stripe;
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("pattern", { id: 'diagonalHatch', patternUnits: 'userSpaceOnUse', width: stripe, height: stripe, patternTransform: 'rotate(45)' },
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: stripe / 2, y: '0', x2: stripe / 2, y2: stripe, stroke: 'black', "stroke-width": stripe }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: '0', y: '0', x2: '0', y2: stripe, stroke: 'maroon', "stroke-width": stripe })));
+});
 
 
 /***/ }),
@@ -537,33 +557,66 @@ var Unit = /** @class */ (function (_super) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _shared_types_enums_OrderType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shared/types/enums/OrderType */ "./src/shared/types/enums/OrderType.ts");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
 /* harmony import */ var _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shared/types/enums/UnitType */ "./src/shared/types/enums/UnitType.ts");
 /* harmony import */ var _client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @client/app/_helpers/checkTag */ "./src/client/app/_helpers/checkTag.ts");
+/* harmony import */ var _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @shared/resources/countryData */ "./src/shared/resources/countryData.ts");
+
+
+// ! import OrderType from '@shared/types/enums/OrderType'
 
 
 
-
+// ! This is using the Api Style OrderTypes. Use this when changing to that type.
+// const getOrderTypes = (unit: IUnit): OrderType[] => {
+//   const orderTypes: OrderType[] = ['Hold', 'Move', 'Support',]
+//   if (unit.unitType  === UnitType.FLEET && checkTag(unit.location, 'sea')) {
+//     orderTypes.push(OrderType.CONVOY)
+//   }
+//   if (unit.unitType  === UnitType.ARMY && checkTag(unit.location, 'coastal')) {
+//     orderTypes.push(OrderType.MOVEVIACONVOY)
+//   }
+//   return orderTypes
+// }
 var getOrderTypes = function (unit) {
-    var orderTypes = ['Hold', 'Move', 'Support',];
+    var orderTypes = ['hold', 'move', 'support',];
     if (unit.unitType === _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_2__["default"].FLEET && Object(_client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_3__["default"])(unit.location, 'sea')) {
-        orderTypes.push(_shared_types_enums_OrderType__WEBPACK_IMPORTED_MODULE_1__["default"].CONVOY);
+        orderTypes.push('convoy');
     }
     if (unit.unitType === _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_2__["default"].ARMY && Object(_client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_3__["default"])(unit.location, 'coastal')) {
-        orderTypes.push(_shared_types_enums_OrderType__WEBPACK_IMPORTED_MODULE_1__["default"].MOVEVIACONVOY);
+        orderTypes.push('moveViaConvoy');
     }
     return orderTypes;
 };
 var OrderDropdown = function (props) {
+    var _a = Object(preact_hooks__WEBPACK_IMPORTED_MODULE_1__["useState"])(props.order || { moveType: 'hold' }), order = _a[0], setOrder = _a[1];
     var orderTypes = getOrderTypes(props.unit);
-    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select' }, orderTypes.map(function (orderType, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { key: "ordertype-" + i }, orderType)); })));
+    var handleChange = function (fieldName) { return function (event) {
+        var _a;
+        var value = event.target.value;
+        var newOrder = (_a = {
+                unit: props.unit.unitType,
+                from: props.unit.location
+            },
+            _a[fieldName] = value,
+            _a);
+        setOrder(newOrder);
+        props.setOrder(newOrder);
+    }; };
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select', onChange: handleChange('moveType') }, orderTypes.map(function (orderType, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { value: orderType, key: "ordertype-" + i }, orderType)); })),
+        order.moveType !== 'hold' && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            "to",
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select', onChange: handleChange('to') }, _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_4__["provinces"].map(function (province, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { value: province, key: "ordertype-" + i }, province)); }))))));
 };
-var OrdersBox = function (props) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { style: "border: 1px black; font-family: 'palantino';" }, props.playerData.ownedUnits.map(function (unit, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { key: "ownedUnits-" + i },
-    unit.unitType,
-    " in ",
-    unit.location,
-    " will ",
-    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(OrderDropdown, { unit: unit }))); }))); };
+var OrdersBox = function (props) {
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { style: "border: 1px black; font-family: 'palantino';" }, props.playerData.ownedUnits.map(function (unit, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { key: "ownedUnits-" + i },
+        unit.unitType,
+        " in ",
+        unit.location,
+        " will ",
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(OrderDropdown, { unit: unit, setOrder: props.setOrder }))); })));
+};
 /* harmony default export */ __webpack_exports__["default"] = (OrdersBox);
 
 
@@ -717,10 +770,10 @@ var OrdersLayer = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./src/client/app/pages/game/game.tsx":
-/*!********************************************!*\
-  !*** ./src/client/app/pages/game/game.tsx ***!
-  \********************************************/
+/***/ "./src/client/app/pages/game/oldGame.tsx":
+/*!***********************************************!*\
+  !*** ./src/client/app/pages/game/oldGame.tsx ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -731,7 +784,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @client/app/components/board/board */ "./src/client/app/components/board/board.tsx");
-/* harmony import */ var _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @client/assets/countryData */ "./src/client/assets/countryData.ts");
+/* harmony import */ var _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @shared/resources/countryData */ "./src/shared/resources/countryData.ts");
 /* harmony import */ var _client_devTools_setupGame__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @client/devTools/setupGame */ "./src/client/devTools/setupGame.ts");
 /* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./src/client/app/pages/game/styled.ts");
 /* harmony import */ var _client_utils_scrollToElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @client/utils/scrollToElement */ "./src/client/utils/scrollToElement.ts");
@@ -810,12 +863,20 @@ var Game = /** @class */ (function (_super) {
     function Game() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
-            gameIsRunning: false,
             activeTerritory: null,
             turn: null,
             newOrders: [],
-            newNewOrders: [],
+            newNewOrders: {},
             newOrder: null,
+        };
+        // ! USE A REDUCER - STATE DEPENDS ON PREVIOUS STATE
+        // TODO ----- Move order creation logic into a reducer -----
+        _this.setNewOrder = function (newOrder) {
+            var _a;
+            var existingOrder = _this.state.newNewOrders[newOrder.from] || {};
+            var newNewOrders = __assign(__assign({}, _this.state.newNewOrders), (_a = {}, _a[newOrder.from] = __assign(__assign({}, existingOrder), newOrder), _a));
+            console.log('newNewOrders:', newNewOrders);
+            _this.setState({ newNewOrders: newNewOrders });
         };
         _this.onTileSelect = function (territoryName) {
             return function () {
@@ -847,10 +908,10 @@ var Game = /** @class */ (function (_super) {
         _this.playerHasUnitAt = function (territoryName) {
             if (!_this.state.turn)
                 return false;
-            var player = _this.state.turn.players.find(function (p) { return p.playerID === _this.props.userID; });
-            return !!player.ownedUnits.find(function (u) { return u.location === territoryName; });
+            return !!_this.player.ownedUnits.find(function (u) { return u.location === territoryName; });
         };
         _this.getUnitAt = function (territoryName) {
+            // ? What about retreat turns with multiple units in one location?
             var unit;
             _this.state.turn.players.forEach(function (p) {
                 p.ownedUnits.forEach(function (u) {
@@ -861,6 +922,39 @@ var Game = /** @class */ (function (_super) {
             return unit;
         };
         // ? Move axios requests into a helper service?
+        _this.submitOrders = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: 
+                    // await apiService.submitOrders(turnId, moves)
+                    return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch("/api/turn/" + this.state.game.currentTurn, {
+                            moves: this.state.newOrders,
+                            turnID: this.state.game.currentTurn,
+                        })];
+                    case 1:
+                        // await apiService.submitOrders(turnId, moves)
+                        _a.sent();
+                        console.log('Orders submitted!', this.state.newOrders);
+                        return [2 /*return*/];
+                }
+            });
+        }); };
+        // TODO ------ Move this functionality into a devtools component ------
+        _this.nextTurn = function () { return __awaiter(_this, void 0, void 0, function () {
+            var _a, err, res;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_1__["default"])(axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/game/" + this.state.game._id + "/next"))];
+                    case 1:
+                        _a = _b.sent(), err = _a[0], res = _a[1];
+                        if (err)
+                            console.log(err);
+                        if (res)
+                            this.getLatestGame();
+                        return [2 /*return*/];
+                }
+            });
+        }); };
         _this.setupGame = function () { return __awaiter(_this, void 0, void 0, function () {
             var _a, err, game, turn;
             return __generator(this, function (_b) {
@@ -895,52 +989,11 @@ var Game = /** @class */ (function (_super) {
                 }
             });
         }); };
-        // private refresh = () => {
-        //   game.clearMap()
-        //   this.runGame()
-        // }
-        _this.submitOrders = function () { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch("/api/turn/" + this.state.game.currentTurn, {
-                            moves: this.state.newOrders,
-                            turnID: this.state.game.currentTurn,
-                        })];
-                    case 1:
-                        _a.sent();
-                        console.log('Orders submitted!', this.state.newOrders);
-                        return [2 /*return*/];
-                }
-            });
-        }); };
-        _this.nextTurn = function () { return __awaiter(_this, void 0, void 0, function () {
-            var _a, err, res;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_1__["default"])(axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/game/" + this.state.game._id + "/next"))];
-                    case 1:
-                        _a = _b.sent(), err = _a[0], res = _a[1];
-                        if (err)
-                            console.log(err);
-                        if (res)
-                            this.getLatestGame();
-                        return [2 /*return*/];
-                }
-            });
-        }); };
         return _this;
-        // private getSvg = (label: string) => {
-        //   const svgObject = document.getElementById(label) as HTMLObjectElement
-        //   return svgObject.contentDocument.getElementById(`${label}Svg`)
-        // }
-        // private runGame() {
-        //   const [army, fleet] = ['army', 'fleet'].map(this.getSvg)
-        //   const map = document.getElementById('gameBoard') as HTMLObjectElement
-        //   game.setup({map, army, fleet}, this.state.turn, this.props.userID)
-        //   game.run()
-        // }
+        // TODO ----------------------------------------------------------------
     }
     Game.prototype.componentDidMount = function () {
+        // TODO Move game-loading logic here, based on id prop?
         window.addEventListener('orientationchange', function () {
             setTimeout(function () { return Object(_client_utils_scrollToElement__WEBPACK_IMPORTED_MODULE_7__["default"])('anchor'); }, 500);
             console.log('screen.orientation.angle', screen.orientation.angle);
@@ -982,9 +1035,9 @@ var Game = /** @class */ (function (_super) {
             !!state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, "You are playing as " + this.player.empire),
                 Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("p", null, state.turn.info.season + " " + state.turn.info.year + ": " + state.turn.info.phase + ". Current Orders: " + totalOrders),
-                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_ordersBox_ordersBox__WEBPACK_IMPORTED_MODULE_8__["default"], { playerData: this.player, newNewOrders: state.newNewOrders }))),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_ordersBox_ordersBox__WEBPACK_IMPORTED_MODULE_8__["default"], { playerData: this.player, newNewOrders: state.newNewOrders, setOrder: this.setNewOrder }))),
             Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { id: 'anchor' }, " "),
-            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _client_assets_countryData__WEBPACK_IMPORTED_MODULE_4__["default"], activeTerritory: state.activeTerritory, onTileSelect: this.onTileSelect, onMoveSelect: this.onMoveSelect, turnData: state.turn, newOrders: state.newOrders, newOrder: state.newOrder })));
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_board_board__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_4__["default"], activeTerritory: state.activeTerritory, onTileSelect: this.onTileSelect, onMoveSelect: this.onMoveSelect, turnData: state.turn, newOrders: state.newOrders, newOrder: state.newOrder })));
     };
     Game.prototype.beginMove = function (territoryName) {
         var unit = this.getUnitAt(territoryName);
@@ -1009,6 +1062,7 @@ var Game = /** @class */ (function (_super) {
         this.setState({ newOrders: newOrders, newOrder: null, activeTerritory: null });
     };
     Object.defineProperty(Game.prototype, "player", {
+        // TODO -----------------------------------------------------
         get: function () {
             var _this = this;
             if (!this.state.turn)
@@ -1137,15 +1191,140 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/client/assets/countryData.ts":
+/***/ "./src/client/devTools/setupGame.ts":
 /*!******************************************!*\
-  !*** ./src/client/assets/countryData.ts ***!
+  !*** ./src/client/devTools/setupGame.ts ***!
   \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash_range__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash.range */ "./node_modules/lodash.range/index.js");
+/* harmony import */ var lodash_range__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_range__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash_shuffle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash.shuffle */ "./node_modules/lodash.shuffle/index.js");
+/* harmony import */ var lodash_shuffle__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_shuffle__WEBPACK_IMPORTED_MODULE_3__);
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+var setupNewFullGame = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, err, res, game, numbers, devIDs, prodIDs, IDs;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                console.log('Creating a new game...');
+                return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game'))];
+            case 1:
+                _a = _b.sent(), err = _a[0], res = _a[1];
+                if (err)
+                    return [2 /*return*/, Promise.reject(err)];
+                game = res.data;
+                numbers = lodash_shuffle__WEBPACK_IMPORTED_MODULE_3___default()(lodash_range__WEBPACK_IMPORTED_MODULE_2___default()(1, 25)).map(function (x) { return x.toString().padStart(2, '0'); });
+                devIDs = ['5cd85783c26513e12f695ce2', '5cd8988c463115ffdbc672b3', '5ce28c5b63ca37c488983f92', '5ce28c7563ca37c488983f93', '5ce28c9663ca37c488983f94', '5ce28cbd63ca37c488983f95', '5ce28cd263ca37c488983f96'];
+                prodIDs = ['5e8a6040505fed0021be01eb', '5e8ad95766a29400215ebe2d', '5e8b206400462a0021d55454', '5e8b207600462a0021d55455', '5e8b208d00462a0021d55456', '5e8b20ab00462a0021d55457', '5e8b20ea00462a0021d55458'];
+                IDs =  false ? undefined : devIDs;
+                return [4 /*yield*/, Promise.all([
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
+                    ])];
+            case 2:
+                _b.sent();
+                return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/game/" + game.id + "/start")];
+            case 3:
+                _b.sent();
+                return [2 /*return*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/game/" + game.id)];
+        }
+    });
+}); };
+/* harmony default export */ __webpack_exports__["default"] = (setupNewFullGame);
+
+
+/***/ }),
+
+/***/ "./src/client/utils/scrollToElement.ts":
+/*!*********************************************!*\
+  !*** ./src/client/utils/scrollToElement.ts ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_scroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-scroll */ "./node_modules/react-scroll/modules/index.js");
+/* harmony import */ var react_scroll__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_scroll__WEBPACK_IMPORTED_MODULE_0__);
+
+function getOffset(el) {
+    var rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + window.scrollX,
+        top: rect.top + window.scrollY
+    };
+}
+function scrollToElementById(id) {
+    var element = document.getElementById(id);
+    var offset = getOffset(element);
+    react_scroll__WEBPACK_IMPORTED_MODULE_0__["animateScroll"].scrollTo(offset.top);
+}
+/* harmony default export */ __webpack_exports__["default"] = (scrollToElementById);
+
+
+/***/ }),
+
+/***/ "./src/shared/resources/countryData.ts":
+/*!*********************************************!*\
+  !*** ./src/shared/resources/countryData.ts ***!
+  \*********************************************/
+/*! exports provided: provinces, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "provinces", function() { return provinces; });
 var countryData = {
     mapTitle: 'Classic',
     viewBox: '0 0 609 559',
@@ -2222,154 +2401,10 @@ var countryData = {
         },
     ],
 };
+var provinces = countryData.territories
+    .filter(function (t) { return !t.tags.includes('neutral'); })
+    .map(function (t) { return t.title; });
 /* harmony default export */ __webpack_exports__["default"] = (countryData);
-
-
-/***/ }),
-
-/***/ "./src/client/devTools/setupGame.ts":
-/*!******************************************!*\
-  !*** ./src/client/devTools/setupGame.ts ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lodash_range__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash.range */ "./node_modules/lodash.range/index.js");
-/* harmony import */ var lodash_range__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_range__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash_shuffle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash.shuffle */ "./node_modules/lodash.shuffle/index.js");
-/* harmony import */ var lodash_shuffle__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_shuffle__WEBPACK_IMPORTED_MODULE_3__);
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-var setupNewFullGame = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, err, res, game, numbers, devIDs, prodIDs, IDs;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                console.log('Creating a new game...');
-                return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game'))];
-            case 1:
-                _a = _b.sent(), err = _a[0], res = _a[1];
-                if (err)
-                    return [2 /*return*/, Promise.reject(err)];
-                game = res.data;
-                numbers = lodash_shuffle__WEBPACK_IMPORTED_MODULE_3___default()(lodash_range__WEBPACK_IMPORTED_MODULE_2___default()(1, 25)).map(function (x) { return x.toString().padStart(2, '0'); });
-                devIDs = ['5cd85783c26513e12f695ce2', '5cd8988c463115ffdbc672b3', '5ce28c5b63ca37c488983f92', '5ce28c7563ca37c488983f93', '5ce28c9663ca37c488983f94', '5ce28cbd63ca37c488983f95', '5ce28cd263ca37c488983f96'];
-                prodIDs = ['5e8a6040505fed0021be01eb', '5e8ad95766a29400215ebe2d', '5e8b206400462a0021d55454', '5e8b207600462a0021d55455', '5e8b208d00462a0021d55456', '5e8b20ab00462a0021d55457', '5e8b20ea00462a0021d55458'];
-                IDs =  false ? undefined : devIDs;
-                return [4 /*yield*/, Promise.all([
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/game/join', { gameID: game.id, playerID: IDs.pop(), colour: 'e' + numbers.pop() }),
-                    ])];
-            case 2:
-                _b.sent();
-                return [4 /*yield*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/game/" + game.id + "/start")];
-            case 3:
-                _b.sent();
-                return [2 /*return*/, axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/game/" + game.id)];
-        }
-    });
-}); };
-/* harmony default export */ __webpack_exports__["default"] = (setupNewFullGame);
-
-
-/***/ }),
-
-/***/ "./src/client/utils/scrollToElement.ts":
-/*!*********************************************!*\
-  !*** ./src/client/utils/scrollToElement.ts ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_scroll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-scroll */ "./node_modules/react-scroll/modules/index.js");
-/* harmony import */ var react_scroll__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_scroll__WEBPACK_IMPORTED_MODULE_0__);
-
-function getOffset(el) {
-    var rect = el.getBoundingClientRect();
-    return {
-        left: rect.left + window.scrollX,
-        top: rect.top + window.scrollY
-    };
-}
-function scrollToElementById(id) {
-    var element = document.getElementById(id);
-    var offset = getOffset(element);
-    react_scroll__WEBPACK_IMPORTED_MODULE_0__["animateScroll"].scrollTo(offset.top);
-}
-/* harmony default export */ __webpack_exports__["default"] = (scrollToElementById);
-
-
-/***/ }),
-
-/***/ "./src/shared/types/enums/OrderType.ts":
-/*!*********************************************!*\
-  !*** ./src/shared/types/enums/OrderType.ts ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var OrderType = {
-    BUILD: 'Build',
-    MOVE: 'Move',
-    MOVEVIACONVOY: 'MoveViaConvoy',
-    HOLD: 'Hold',
-    CONVOY: 'Convoy',
-    SUPPORT: 'Support',
-    DISBAND: 'Disband',
-};
-/* harmony default export */ __webpack_exports__["default"] = (OrderType);
 
 
 /***/ }),

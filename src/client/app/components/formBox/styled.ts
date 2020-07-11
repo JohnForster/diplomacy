@@ -13,7 +13,6 @@ export const FormBox = styled.div`
   color: ${Colours.offwhite};
   letter-spacing:2px;
   box-shadow: 5px 5px 0px ${Colours.shadow};
-  margin: auto;
 
   input[type=submit] {
     width: 50%;

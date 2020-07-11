@@ -1,7 +1,7 @@
 import UnitType from './enums/UnitType';
 
 // TODO update moves to use api moveType
-export type OrderType = 'move' | 'hold' | 'support' | 'retreat' | 'disband' | 'build' | 'convoy' | 'moveViaConvoy'
+export type OrderType = 'move' | 'hold' | 'support' | 'retreat' | 'convoy' | 'moveViaConvoy' | 'disband' | 'build'
 
 export interface IMove {
   unit?: UnitType,

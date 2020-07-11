@@ -41,7 +41,7 @@ export default class Login extends Component <ILoginProps, ILoginState> {
         <FormBox>
             {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
             <form action='api/user/authenticate' method='post' onSubmit={this.login}>
-              Username<br/>
+              Username?<br/>
               <input ref={usernameInput => this.usernameInput = usernameInput} type='text' name='username' onChange={this.handleChange('username')}/><br/>
               Password<br/>
               <input ref={passwordInput => this.passwordInput = passwordInput} type='password' name='password' onChange={this.handleChange('password')}/><br/>

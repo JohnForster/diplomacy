@@ -9,7 +9,7 @@ import Lobby from './pages/lobby/lobby'
 
 import * as Styled from './styled'
 
-const Game = lazy(() => import('./pages/game/game'))
+const Game = lazy(() => import('./pages/game/oldGame'))
 const Login = lazy(() => import('./pages/login/login'))
 const Register = lazy(() => import('./pages/register/register'))
 
@@ -72,6 +72,7 @@ export default class App extends Component <IAppProps, IAppState> {
               <Login path='/' toggleLogIn={this.toggleLogIn}/>
               <Lobby path='/lobby'/>
             </Router>
+            <Styled.BottomText>Created by John Forster</Styled.BottomText>
           </Styled.Page>
         </Suspense>
       </Fragment>

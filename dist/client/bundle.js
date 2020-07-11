@@ -5969,7 +5969,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./pages/game/game */ "./src/client/app/pages/game/game.tsx")); });
+var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./pages/game/oldGame */ "./src/client/app/pages/game/oldGame.tsx")); });
 var Login = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./pages/login/login */ "./src/client/app/pages/login/login.tsx")); });
 var Register = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./pages/register/register */ "./src/client/app/pages/register/register.tsx")); });
 var App = /** @class */ (function (_super) {
@@ -6046,7 +6046,8 @@ var App = /** @class */ (function (_super) {
                         Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Game, { path: '/game', userID: state.userID, logOut: this.logOut }),
                         Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Register, { path: '/register' }),
                         Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Login, { path: '/', toggleLogIn: this.toggleLogIn }),
-                        Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_pages_lobby_lobby__WEBPACK_IMPORTED_MODULE_5__["default"], { path: '/lobby' }))))));
+                        Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_pages_lobby_lobby__WEBPACK_IMPORTED_MODULE_5__["default"], { path: '/lobby' })),
+                    Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["BottomText"], null, "Created by John Forster")))));
     };
     return App;
 }(preact__WEBPACK_IMPORTED_MODULE_1__["Component"]));
@@ -6098,13 +6099,14 @@ var Lobby = /** @class */ (function (_super) {
 /*!**********************************!*\
   !*** ./src/client/app/styled.ts ***!
   \**********************************/
-/*! exports provided: GlobalStyle, Page */
+/*! exports provided: GlobalStyle, Page, BottomText */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlobalStyle", function() { return GlobalStyle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Page", function() { return Page; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BottomText", function() { return BottomText; });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _variables_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./variables/colors */ "./src/client/app/variables/colors.ts");
 var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
@@ -6113,9 +6115,10 @@ var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || func
 };
 
 
-var GlobalStyle = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["createGlobalStyle"])(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  body {\n    background-color: ", ";\n    margin: 8px 0;\n  }\n\n  h1 {\n    color: ", ";\n    font-size: 84px;\n    @media (max-width: 767px) {\n      font-size: 44px;\n      text-shadow: 3px 3px 0px ", ";\n    }\n    text-shadow: 5px 5px 0px ", ";\n    text-align: center;\n  }\n\n  input,button {\n    font-family: 'Arvo', Calibri, sans-serif;\n    color: ", ";\n    font-size: 18px;\n    height: 24px;\n    border-radius: 3px;\n    background-color: ", ";\n    margin: 10px 0px;\n    box-sizing: border-box;\n    text-align: center;\n  }\n"], ["\n  body {\n    background-color: ", ";\n    margin: 8px 0;\n  }\n\n  h1 {\n    color: ", ";\n    font-size: 84px;\n    @media (max-width: 767px) {\n      font-size: 44px;\n      text-shadow: 3px 3px 0px ", ";\n    }\n    text-shadow: 5px 5px 0px ", ";\n    text-align: center;\n  }\n\n  input,button {\n    font-family: 'Arvo', Calibri, sans-serif;\n    color: ", ";\n    font-size: 18px;\n    height: 24px;\n    border-radius: 3px;\n    background-color: ", ";\n    margin: 10px 0px;\n    box-sizing: border-box;\n    text-align: center;\n  }\n"])), _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].mid, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].mid, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite);
-var Page = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  animation: fadein 1s;\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n\n  @keyframes fadein {\n    from { opacity: 0; }\n    to   { opacity: 1; }\n  }\n"], ["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  animation: fadein 1s;\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n\n  @keyframes fadein {\n    from { opacity: 0; }\n    to   { opacity: 1; }\n  }\n"])));
-var templateObject_1, templateObject_2;
+var GlobalStyle = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["createGlobalStyle"])(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  html, #root {\n    height: 100%;\n  }\n\n  body {\n    height: 100%;\n    background-color: ", ";\n    margin: 0;\n    padding: 8px;\n    box-sizing: border-box;\n  }\n\n  h1 {\n    color: ", ";\n    font-size: 84px;\n    @media (max-width: 767px) {\n      font-size: 44px;\n      text-shadow: 3px 3px 0px ", ";\n    }\n    text-shadow: 5px 5px 0px ", ";\n    text-align: center;\n  }\n\n  input,button {\n    font-family: 'Arvo', Calibri, sans-serif;\n    color: ", ";\n    font-size: 18px;\n    height: 24px;\n    border-radius: 3px;\n    background-color: ", ";\n    margin: 10px 0px;\n    box-sizing: border-box;\n    text-align: center;\n  }\n"], ["\n  html, #root {\n    height: 100%;\n  }\n\n  body {\n    height: 100%;\n    background-color: ", ";\n    margin: 0;\n    padding: 8px;\n    box-sizing: border-box;\n  }\n\n  h1 {\n    color: ", ";\n    font-size: 84px;\n    @media (max-width: 767px) {\n      font-size: 44px;\n      text-shadow: 3px 3px 0px ", ";\n    }\n    text-shadow: 5px 5px 0px ", ";\n    text-align: center;\n  }\n\n  input,button {\n    font-family: 'Arvo', Calibri, sans-serif;\n    color: ", ";\n    font-size: 18px;\n    height: 24px;\n    border-radius: 3px;\n    background-color: ", ";\n    margin: 10px 0px;\n    box-sizing: border-box;\n    text-align: center;\n  }\n"])), _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].mid, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].mid, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].offwhite);
+var Page = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  height: 100%;\n  animation: fadein 1s;\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  justify-content: flex-start;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n\n  @keyframes fadein {\n    from { opacity: 0; }\n    to   { opacity: 1; }\n  }\n\n\n"], ["\n  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');\n\n  height: 100%;\n  animation: fadein 1s;\n  display: flex;\n  align-items: center;\n  align-content: flex-start;\n  flex-direction: column;\n  justify-content: flex-start;\n  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n\n  @keyframes fadein {\n    from { opacity: 0; }\n    to   { opacity: 1; }\n  }\n\n\n"])));
+var BottomText = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].text(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  margin-top: auto;\n"], ["\n  margin-top: auto;\n"])));
+var templateObject_1, templateObject_2, templateObject_3;
 
 
 /***/ }),

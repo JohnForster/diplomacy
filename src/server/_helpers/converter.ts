@@ -6,6 +6,7 @@ import OrderType from '@shared/types/enums/OrderType'
 import getLocationFromId from '@shared/helpers/getLocationFromId'
 import getIdFromLocation from '@shared/helpers/getIdFromLocation'
 import UnitType from '@shared/types/enums/UnitType'
+import countryData from '@shared/resources/countryData'
 
 export interface IConversionData {
   phaseNumber: number,
@@ -37,15 +38,17 @@ const updateOwnedTerritories = (apiState: IApiStateJSON, players: IConversionDat
   const units = Object.entries(apiState.Units) as ([ProvinceId, {Nation: Nation, Type: UnitType}])[]
   const convertedUnits = units.map(([id, unit]) => ([getLocationFromId(id), unit])) as ([string, {Nation: Nation, Type: UnitType}])[]
   const noUnitAtTerritory = (territory: string) => !convertedUnits.find(([location]) => location === territory)
+  const notSeaTerritory = (territory: string) => countryData.territories.find(t => t.title === territory).tags.includes('sea')
   const newPlayers = players.map(p => {
     const playerUnits = convertedUnits
       .filter(([, unit]) => unit.Nation === p.empire)
       .map(([location]) => location)
     return {
       ...p,
-      ownedTerritories: p.ownedTerritories
-        .filter(noUnitAtTerritory) // Remove all territories that have a unit in them.
-        .concat(playerUnits) // Add back in the locations of the player's units.
+      ownedTerritories: p.ownedTerritories // 1. Start with the players territories.
+        .filter(noUnitAtTerritory)         // 2. Remove all territories that have a unit in them.
+        .concat(playerUnits)               // 3. Add back in the locations of the player's units.
+        .filter(notSeaTerritory)           // 4. Remove all sea territories.
     }
   })
 

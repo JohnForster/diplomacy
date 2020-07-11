@@ -8,26 +8,24 @@ import Unit from './unit/unit'
 
 import OrdersLayer from '../ordersLayer/ordersLayer'
 import OrderBox from './orderBox/orderBox'
+import NeutralPattern from './neutralPattern/neutralPattern'
 
 import * as Styled from './styled'
 
 // ? Recieve boardData as props or import?
 // ? Import is simpler, prop;s allows for extending in the future.
 export interface IBoardProps {
-  boardData: IGameBoard,
-  turnData: IGameTurnJSON,
-  activeTerritory: string,
+  boardData: IGameBoard, // Yes
+  turnData: IGameTurnJSON, // Yes
+  activeTerritory: string, // Yes
   onTileSelect: (title: string) => () => void,
-  onMoveSelect: (move: OrderType) => () => void,
-  newOrders: IMove[],
+  onMoveSelect: (move: OrderType) => () => void, // No, pass to OrderBox instead
+  newOrders: IMove[], // No, board should not distinguishh between existing and new orders
   newOrder: Partial<IMove>,
+  orders: Map<string, IMove> // Yes
 }
 
-interface IBoardState {
-
-}
-
-export default class Board extends Component <IBoardProps, IBoardState> {
+export default class Board extends Component <IBoardProps> {
   get activeTileData(): IBoardTerritory {
     if (!this.props.activeTerritory) return null
     return this.props.boardData.territories
@@ -50,11 +48,11 @@ export default class Board extends Component <IBoardProps, IBoardState> {
   // Created once for document
   svg = createRef<SVGSVGElement>()
 
-  render(props: IBoardProps, state: IBoardState) {
-    const stripe = 6
+  render(props: IBoardProps) {
     return (
       <Fragment>
         {/* Draw Order Box */}
+         {/* Remove OrderBox/Sticky container from board.tsx?  */}
         <Styled.GameBoard id='gameBoard'>
             <Styled.StickyContainer>
               {props.activeTerritory && (
@@ -93,12 +91,8 @@ export default class Board extends Component <IBoardProps, IBoardState> {
                 ))
               ))}
               {/* Draw Orders */}
-              {/* Extract later into separate component */}
               <OrdersLayer boardData={props.boardData} newOrders={props.newOrders} turnData={props.turnData}/>
-              <pattern id='diagonalHatch' patternUnits='userSpaceOnUse' width={stripe} height={stripe} patternTransform='rotate(45)'>
-                <line x1={stripe/2} y='0' x2={stripe/2} y2={stripe} stroke='black' stroke-width={stripe} />
-                <line x1='0' y='0' x2='0' y2={stripe} stroke='maroon' stroke-width={stripe} />
-              </pattern>
+              <NeutralPattern stripe={6}/>
             </Styled.MapSvg>
         </Styled.GameBoard>
       </Fragment>
