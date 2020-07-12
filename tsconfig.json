@@ -17,6 +17,7 @@
     "jsxFactory": "h",
     "allowJs": true,
     "lib": [
+      "ES2019",
       "dom",
       "es7"
     ],

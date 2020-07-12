@@ -9,7 +9,7 @@ import Lobby from './pages/lobby/lobby'
 
 import * as Styled from './styled'
 
-const Game = lazy(() => import('./pages/game/oldGame'))
+const Game = lazy(() => import('./pages/game/newGame'))
 const Login = lazy(() => import('./pages/login/login'))
 const Register = lazy(() => import('./pages/register/register'))
 
@@ -67,7 +67,7 @@ export default class App extends Component <IAppProps, IAppState> {
         <Suspense fallback={<h1>Loading!!!</h1>}>
           <Styled.Page>
             <Router onChange={this.handleRoute}>
-              <Game path='/game' userID={state.userID} logOut={this.logOut}/>
+              <Game path='/game' userID={state.userID} logOut={this.logOut} gameID={'5ecffb2455f50d62db12051e'}/>
               <Register path='/register'/>
               <Login path='/' toggleLogIn={this.toggleLogIn}/>
               <Lobby path='/lobby'/>

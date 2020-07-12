@@ -7,7 +7,6 @@ import SupplyStar from '../supplyStar/supplyStar'
 export interface ITerritoryProps {
   tile: IBoardTerritory
   // unit: 'army' | 'fleet' | null
-  isSelected: boolean
   viewBox: string
   onSelect: () => void
   colour: string
@@ -33,7 +32,7 @@ export default class Territory extends Component <ITerritoryProps> {
             tileType={tileType}
             colourId={props.colour}
             d={props.tile.path}
-            onClick={props.onSelect}
+            onClick={props.onSelect} 
           />
           {props.tile.textLocation && (
             <Fragment>

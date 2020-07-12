@@ -2,7 +2,8 @@ import {Component, Fragment, h} from 'preact'
 
 import { IGameBoard, IMove } from '@shared/types'
 
-export interface IOrderProps extends IMove {
+export interface IOrderProps {
+  order: Partial<IMove>
   boardData: IGameBoard
 }
 
@@ -12,7 +13,7 @@ interface IOrderState {
 
 export default class Order extends Component <IOrderProps, IOrderState> {
   getLocation = (property: 'from' | 'to' | 'supportFrom'): string => {
-    const territory = this.props.boardData.territories.find(t => t.title === this.props[property])
+    const territory = this.props.boardData.territories.find(t => t.title === this.props.order[property])
     if (!territory) return ''
     return `${territory.textLocation.x},${territory.textLocation.y}`
   }
@@ -43,11 +44,11 @@ export default class Order extends Component <IOrderProps, IOrderState> {
     const fromLocation = this.getLocation('from')
     const toLocation = this.getLocation('to')
     const supportFromLocation = this.getLocation('supportFrom')
-    const markerColour = this.getMarkerColour(props.moveType)
+    const markerColour = this.getMarkerColour(props.order.moveType)
 
     return (
       <Fragment>
-        {props.moveType === 'support' && (
+        {props.order.moveType === 'support' && (
           <Fragment>
             <path
               marker-end='url(#head-support)'
@@ -60,7 +61,7 @@ export default class Order extends Component <IOrderProps, IOrderState> {
             />
           </ Fragment>
         )}
-        {props.moveType === 'move' && (
+        {props.order.moveType === 'move' && (
           <path
             marker-end='url(#head-move)'
             stroke-width='2' stroke='lightgray'

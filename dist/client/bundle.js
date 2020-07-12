@@ -5969,9 +5969,9 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./pages/game/oldGame */ "./src/client/app/pages/game/oldGame.tsx")); });
-var Login = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./pages/login/login */ "./src/client/app/pages/login/login.tsx")); });
-var Register = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./pages/register/register */ "./src/client/app/pages/register/register.tsx")); });
+var Game = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./pages/game/newGame */ "./src/client/app/pages/game/newGame.tsx")); });
+var Login = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./pages/login/login */ "./src/client/app/pages/login/login.tsx")); });
+var Register = Object(preact_compat__WEBPACK_IMPORTED_MODULE_3__["lazy"])(function () { return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./pages/register/register */ "./src/client/app/pages/register/register.tsx")); });
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
@@ -6043,7 +6043,7 @@ var App = /** @class */ (function (_super) {
             Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact_compat__WEBPACK_IMPORTED_MODULE_3__["Suspense"], { fallback: Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])("h1", null, "Loading!!!") },
                 Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_styled__WEBPACK_IMPORTED_MODULE_6__["Page"], null,
                     Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(preact_router__WEBPACK_IMPORTED_MODULE_2__["default"], { onChange: this.handleRoute },
-                        Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Game, { path: '/game', userID: state.userID, logOut: this.logOut }),
+                        Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Game, { path: '/game', userID: state.userID, logOut: this.logOut, gameID: '5ecffb2455f50d62db12051e' }),
                         Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Register, { path: '/register' }),
                         Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(Login, { path: '/', toggleLogIn: this.toggleLogIn }),
                         Object(preact__WEBPACK_IMPORTED_MODULE_1__["h"])(_pages_lobby_lobby__WEBPACK_IMPORTED_MODULE_5__["default"], { path: '/lobby' })),

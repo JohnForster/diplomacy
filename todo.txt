@@ -1,23 +1,26 @@
+- Process
+  - Add prettier
+
 - Log in
   -FE
-    - Log in front end page
-  - BE 
-    - Back end user models
+    - Log in front end page ✅
+  - BE
+    - Back end user models ✅
 
 - Models
   - Game model
-    - Players
-    - Current State
-    - History
-    - Pending Moves?
+    - Players ✅
+    - Current State✅
+    - History ✅
+    - Pending Moves? ✅
 
 - Submit Moves
   - FE
-    - Classes (player, move, game)
-    - Submit button
+    - Classes (player, move, game)✅
+    - Submit button ✅
     - Finalise?
   - BE
-    - Moves models
+    - Moves models ✅
 
 - Rules 1
   - FE
@@ -56,6 +59,3 @@
   - Join games
   - Invites
   - Choose colour (25 options)
-
-- Deployment
-  - Docker?

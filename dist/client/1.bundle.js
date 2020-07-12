@@ -1,4775 +1,2293 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
-/***/ "./node_modules/lodash.range/index.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash.range/index.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0,
-    MAX_SAFE_INTEGER = 9007199254740991,
-    MAX_INTEGER = 1.7976931348623157e+308,
-    NAN = 0 / 0;
-
-/** `Object#toString` result references. */
-var funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
-    symbolTag = '[object Symbol]';
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeCeil = Math.ceil,
-    nativeMax = Math.max;
-
-/**
- * The base implementation of `_.range` and `_.rangeRight` which doesn't
- * coerce arguments.
- *
- * @private
- * @param {number} start The start of the range.
- * @param {number} end The end of the range.
- * @param {number} step The value to increment or decrement by.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {Array} Returns the range of numbers.
- */
-function baseRange(start, end, step, fromRight) {
-  var index = -1,
-      length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
-      result = Array(length);
-
-  while (length--) {
-    result[fromRight ? length : ++index] = start;
-    start += step;
-  }
-  return result;
-}
-
-/**
- * Creates a `_.range` or `_.rangeRight` function.
- *
- * @private
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {Function} Returns the new range function.
- */
-function createRange(fromRight) {
-  return function(start, end, step) {
-    if (step && typeof step != 'number' && isIterateeCall(start, end, step)) {
-      end = step = undefined;
-    }
-    // Ensure the sign of `-0` is preserved.
-    start = toFinite(start);
-    if (end === undefined) {
-      end = start;
-      start = 0;
-    } else {
-      end = toFinite(end);
-    }
-    step = step === undefined ? (start < end ? 1 : -1) : toFinite(step);
-    return baseRange(start, end, step, fromRight);
-  };
-}
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-
-/**
- * Checks if the given arguments are from an iteratee call.
- *
- * @private
- * @param {*} value The potential iteratee value argument.
- * @param {*} index The potential iteratee index or key argument.
- * @param {*} object The potential iteratee object argument.
- * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
- *  else `false`.
- */
-function isIterateeCall(value, index, object) {
-  if (!isObject(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-        ? (isArrayLike(object) && isIndex(index, object.length))
-        : (type == 'string' && index in object)
-      ) {
-    return eq(object[index], value);
-  }
-  return false;
-}
-
-/**
- * Performs a
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * comparison between two values to determine if they are equivalent.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to compare.
- * @param {*} other The other value to compare.
- * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
- * @example
- *
- * var object = { 'a': 1 };
- * var other = { 'a': 1 };
- *
- * _.eq(object, object);
- * // => true
- *
- * _.eq(object, other);
- * // => false
- *
- * _.eq('a', 'a');
- * // => true
- *
- * _.eq('a', Object('a'));
- * // => false
- *
- * _.eq(NaN, NaN);
- * // => true
- */
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-}
-
-/**
- * Converts `value` to a finite number.
- *
- * @static
- * @memberOf _
- * @since 4.12.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {number} Returns the converted number.
- * @example
- *
- * _.toFinite(3.2);
- * // => 3.2
- *
- * _.toFinite(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toFinite(Infinity);
- * // => 1.7976931348623157e+308
- *
- * _.toFinite('3.2');
- * // => 3.2
- */
-function toFinite(value) {
-  if (!value) {
-    return value === 0 ? value : 0;
-  }
-  value = toNumber(value);
-  if (value === INFINITY || value === -INFINITY) {
-    var sign = (value < 0 ? -1 : 1);
-    return sign * MAX_INTEGER;
-  }
-  return value === value ? value : 0;
-}
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = value.replace(reTrim, '');
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-/**
- * Creates an array of numbers (positive and/or negative) progressing from
- * `start` up to, but not including, `end`. A step of `-1` is used if a negative
- * `start` is specified without an `end` or `step`. If `end` is not specified,
- * it's set to `start` with `start` then set to `0`.
- *
- * **Note:** JavaScript follows the IEEE-754 standard for resolving
- * floating-point values which can produce unexpected results.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {number} [start=0] The start of the range.
- * @param {number} end The end of the range.
- * @param {number} [step=1] The value to increment or decrement by.
- * @returns {Array} Returns the range of numbers.
- * @see _.inRange, _.rangeRight
- * @example
- *
- * _.range(4);
- * // => [0, 1, 2, 3]
- *
- * _.range(-4);
- * // => [0, -1, -2, -3]
- *
- * _.range(1, 5);
- * // => [1, 2, 3, 4]
- *
- * _.range(0, 20, 5);
- * // => [0, 5, 10, 15]
- *
- * _.range(0, -4, -1);
- * // => [0, -1, -2, -3]
- *
- * _.range(1, 4, 0);
- * // => [1, 1, 1]
- *
- * _.range(0);
- * // => []
- */
-var range = createRange();
-
-module.exports = range;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash.shuffle/index.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash.shuffle/index.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0,
-    MAX_SAFE_INTEGER = 9007199254740991,
-    MAX_INTEGER = 1.7976931348623157e+308,
-    NAN = 0 / 0;
-
-/** Used as references for the maximum length and index of an array. */
-var MAX_ARRAY_LENGTH = 4294967295;
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
-    mapTag = '[object Map]',
-    objectTag = '[object Object]',
-    promiseTag = '[object Promise]',
-    setTag = '[object Set]',
-    stringTag = '[object String]',
-    symbolTag = '[object Symbol]',
-    weakMapTag = '[object WeakMap]';
-
-var dataViewTag = '[object DataView]';
-
-/**
- * Used to match `RegExp`
- * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
- */
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect host constructors (Safari). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/** Used to compose unicode character classes. */
-var rsAstralRange = '\\ud800-\\udfff',
-    rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
-    rsComboSymbolsRange = '\\u20d0-\\u20f0',
-    rsVarRange = '\\ufe0e\\ufe0f';
-
-/** Used to compose unicode capture groups. */
-var rsAstral = '[' + rsAstralRange + ']',
-    rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
-    rsFitz = '\\ud83c[\\udffb-\\udfff]',
-    rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
-    rsNonAstral = '[^' + rsAstralRange + ']',
-    rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-    rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-    rsZWJ = '\\u200d';
-
-/** Used to compose unicode regexes. */
-var reOptMod = rsModifier + '?',
-    rsOptVar = '[' + rsVarRange + ']?',
-    rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
-    rsSeq = rsOptVar + reOptMod + rsOptJoin,
-    rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-
-/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
-
-/** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/**
- * A specialized version of `_.map` for arrays without support for iteratee
- * shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- */
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array ? array.length : 0,
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-
-/**
- * Converts an ASCII `string` to an array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
- */
-function asciiToArray(string) {
-  return string.split('');
-}
-
-/**
- * The base implementation of `_.times` without support for iteratee shorthands
- * or max array length checks.
- *
- * @private
- * @param {number} n The number of times to invoke `iteratee`.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the array of results.
- */
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-
-/**
- * The base implementation of `_.values` and `_.valuesIn` which creates an
- * array of `object` property values corresponding to the property names
- * of `props`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {Array} props The property names to get values for.
- * @returns {Object} Returns the array of property values.
- */
-function baseValues(object, props) {
-  return arrayMap(props, function(key) {
-    return object[key];
-  });
-}
-
-/**
- * Gets the value at `key` of `object`.
- *
- * @private
- * @param {Object} [object] The object to query.
- * @param {string} key The key of the property to get.
- * @returns {*} Returns the property value.
- */
-function getValue(object, key) {
-  return object == null ? undefined : object[key];
-}
-
-/**
- * Checks if `string` contains Unicode symbols.
- *
- * @private
- * @param {string} string The string to inspect.
- * @returns {boolean} Returns `true` if a symbol is found, else `false`.
- */
-function hasUnicode(string) {
-  return reHasUnicode.test(string);
-}
-
-/**
- * Checks if `value` is a host object in IE < 9.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
- */
-function isHostObject(value) {
-  // Many host objects are `Object` objects that can coerce to strings
-  // despite having improperly defined `toString` methods.
-  var result = false;
-  if (value != null && typeof value.toString != 'function') {
-    try {
-      result = !!(value + '');
-    } catch (e) {}
-  }
-  return result;
-}
-
-/**
- * Converts `iterator` to an array.
- *
- * @private
- * @param {Object} iterator The iterator to convert.
- * @returns {Array} Returns the converted array.
- */
-function iteratorToArray(iterator) {
-  var data,
-      result = [];
-
-  while (!(data = iterator.next()).done) {
-    result.push(data.value);
-  }
-  return result;
-}
-
-/**
- * Converts `map` to its key-value pairs.
- *
- * @private
- * @param {Object} map The map to convert.
- * @returns {Array} Returns the key-value pairs.
- */
-function mapToArray(map) {
-  var index = -1,
-      result = Array(map.size);
-
-  map.forEach(function(value, key) {
-    result[++index] = [key, value];
-  });
-  return result;
-}
-
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-/**
- * Converts `set` to an array of its values.
- *
- * @private
- * @param {Object} set The set to convert.
- * @returns {Array} Returns the values.
- */
-function setToArray(set) {
-  var index = -1,
-      result = Array(set.size);
-
-  set.forEach(function(value) {
-    result[++index] = value;
-  });
-  return result;
-}
-
-/**
- * Converts `string` to an array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
- */
-function stringToArray(string) {
-  return hasUnicode(string)
-    ? unicodeToArray(string)
-    : asciiToArray(string);
-}
-
-/**
- * Converts a Unicode `string` to an array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
- */
-function unicodeToArray(string) {
-  return string.match(reUnicode) || [];
-}
-
-/** Used for built-in method references. */
-var funcProto = Function.prototype,
-    objectProto = Object.prototype;
-
-/** Used to detect overreaching core-js shims. */
-var coreJsData = root['__core-js_shared__'];
-
-/** Used to detect methods masquerading as native. */
-var maskSrcKey = (function() {
-  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-  return uid ? ('Symbol(src)_1.' + uid) : '';
-}());
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString = funcProto.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/** Used to detect if a method is native. */
-var reIsNative = RegExp('^' +
-  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-
-/** Built-in value references. */
-var Symbol = root.Symbol,
-    iteratorSymbol = Symbol ? Symbol.iterator : undefined,
-    propertyIsEnumerable = objectProto.propertyIsEnumerable;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeFloor = Math.floor,
-    nativeKeys = overArg(Object.keys, Object),
-    nativeRandom = Math.random;
-
-/* Built-in method references that are verified to be native. */
-var DataView = getNative(root, 'DataView'),
-    Map = getNative(root, 'Map'),
-    Promise = getNative(root, 'Promise'),
-    Set = getNative(root, 'Set'),
-    WeakMap = getNative(root, 'WeakMap');
-
-/** Used to detect maps, sets, and weakmaps. */
-var dataViewCtorString = toSource(DataView),
-    mapCtorString = toSource(Map),
-    promiseCtorString = toSource(Promise),
-    setCtorString = toSource(Set),
-    weakMapCtorString = toSource(WeakMap);
-
-/**
- * Creates an array of the enumerable property names of the array-like `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @param {boolean} inherited Specify returning inherited property names.
- * @returns {Array} Returns the array of property names.
- */
-function arrayLikeKeys(value, inherited) {
-  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  // Safari 9 makes `arguments.length` enumerable in strict mode.
-  var result = (isArray(value) || isArguments(value))
-    ? baseTimes(value.length, String)
-    : [];
-
-  var length = result.length,
-      skipIndexes = !!length;
-
-  for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) &&
-        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/**
- * The base implementation of `_.clamp` which doesn't coerce arguments.
- *
- * @private
- * @param {number} number The number to clamp.
- * @param {number} [lower] The lower bound.
- * @param {number} upper The upper bound.
- * @returns {number} Returns the clamped number.
- */
-function baseClamp(number, lower, upper) {
-  if (number === number) {
-    if (upper !== undefined) {
-      number = number <= upper ? number : upper;
-    }
-    if (lower !== undefined) {
-      number = number >= lower ? number : lower;
-    }
-  }
-  return number;
-}
-
-/**
- * The base implementation of `getTag`.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  return objectToString.call(value);
-}
-
-/**
- * The base implementation of `_.isNative` without bad shim checks.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a native function,
- *  else `false`.
- */
-function baseIsNative(value) {
-  if (!isObject(value) || isMasked(value)) {
-    return false;
-  }
-  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
-  return pattern.test(toSource(value));
-}
-
-/**
- * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- */
-function baseKeys(object) {
-  if (!isPrototype(object)) {
-    return nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (hasOwnProperty.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/**
- * The base implementation of `_.random` without support for returning
- * floating-point numbers.
- *
- * @private
- * @param {number} lower The lower bound.
- * @param {number} upper The upper bound.
- * @returns {number} Returns the random number.
- */
-function baseRandom(lower, upper) {
-  return lower + nativeFloor(nativeRandom() * (upper - lower + 1));
-}
-
-/**
- * Copies the values of `source` to `array`.
- *
- * @private
- * @param {Array} source The array to copy values from.
- * @param {Array} [array=[]] The array to copy values to.
- * @returns {Array} Returns `array`.
- */
-function copyArray(source, array) {
-  var index = -1,
-      length = source.length;
-
-  array || (array = Array(length));
-  while (++index < length) {
-    array[index] = source[index];
-  }
-  return array;
-}
-
-/**
- * Gets the native function at `key` of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {string} key The key of the method to get.
- * @returns {*} Returns the function if it's native, else `undefined`.
- */
-function getNative(object, key) {
-  var value = getValue(object, key);
-  return baseIsNative(value) ? value : undefined;
-}
-
-/**
- * Gets the `toStringTag` of `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-var getTag = baseGetTag;
-
-// Fallback for data views, maps, sets, and weak maps in IE 11,
-// for data views in Edge < 14, and promises in Node.js.
-if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
-    (Map && getTag(new Map) != mapTag) ||
-    (Promise && getTag(Promise.resolve()) != promiseTag) ||
-    (Set && getTag(new Set) != setTag) ||
-    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
-  getTag = function(value) {
-    var result = objectToString.call(value),
-        Ctor = result == objectTag ? value.constructor : undefined,
-        ctorString = Ctor ? toSource(Ctor) : undefined;
-
-    if (ctorString) {
-      switch (ctorString) {
-        case dataViewCtorString: return dataViewTag;
-        case mapCtorString: return mapTag;
-        case promiseCtorString: return promiseTag;
-        case setCtorString: return setTag;
-        case weakMapCtorString: return weakMapTag;
-      }
-    }
-    return result;
-  };
-}
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-
-/**
- * Checks if the given arguments are from an iteratee call.
- *
- * @private
- * @param {*} value The potential iteratee value argument.
- * @param {*} index The potential iteratee index or key argument.
- * @param {*} object The potential iteratee object argument.
- * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
- *  else `false`.
- */
-function isIterateeCall(value, index, object) {
-  if (!isObject(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-        ? (isArrayLike(object) && isIndex(index, object.length))
-        : (type == 'string' && index in object)
-      ) {
-    return eq(object[index], value);
-  }
-  return false;
-}
-
-/**
- * Checks if `func` has its source masked.
- *
- * @private
- * @param {Function} func The function to check.
- * @returns {boolean} Returns `true` if `func` is masked, else `false`.
- */
-function isMasked(func) {
-  return !!maskSrcKey && (maskSrcKey in func);
-}
-
-/**
- * Checks if `value` is likely a prototype object.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
- */
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
-
-  return value === proto;
-}
-
-/**
- * Converts `func` to its source code.
- *
- * @private
- * @param {Function} func The function to process.
- * @returns {string} Returns the source code.
- */
-function toSource(func) {
-  if (func != null) {
-    try {
-      return funcToString.call(func);
-    } catch (e) {}
-    try {
-      return (func + '');
-    } catch (e) {}
-  }
-  return '';
-}
-
-/**
- * Gets `n` random elements at unique keys from `collection` up to the
- * size of `collection`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Collection
- * @param {Array|Object} collection The collection to sample.
- * @param {number} [n=1] The number of elements to sample.
- * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
- * @returns {Array} Returns the random elements.
- * @example
- *
- * _.sampleSize([1, 2, 3], 2);
- * // => [3, 1]
- *
- * _.sampleSize([1, 2, 3], 4);
- * // => [2, 3, 1]
- */
-function sampleSize(collection, n, guard) {
-  var index = -1,
-      result = toArray(collection),
-      length = result.length,
-      lastIndex = length - 1;
-
-  if ((guard ? isIterateeCall(collection, n, guard) : n === undefined)) {
-    n = 1;
-  } else {
-    n = baseClamp(toInteger(n), 0, length);
-  }
-  while (++index < n) {
-    var rand = baseRandom(index, lastIndex),
-        value = result[rand];
-
-    result[rand] = result[index];
-    result[index] = value;
-  }
-  result.length = n;
-  return result;
-}
-
-/**
- * Creates an array of shuffled values, using a version of the
- * [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle).
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Collection
- * @param {Array|Object} collection The collection to shuffle.
- * @returns {Array} Returns the new shuffled array.
- * @example
- *
- * _.shuffle([1, 2, 3, 4]);
- * // => [4, 1, 3, 2]
- */
-function shuffle(collection) {
-  return sampleSize(collection, MAX_ARRAY_LENGTH);
-}
-
-/**
- * Performs a
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * comparison between two values to determine if they are equivalent.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to compare.
- * @param {*} other The other value to compare.
- * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
- * @example
- *
- * var object = { 'a': 1 };
- * var other = { 'a': 1 };
- *
- * _.eq(object, object);
- * // => true
- *
- * _.eq(object, other);
- * // => false
- *
- * _.eq('a', 'a');
- * // => true
- *
- * _.eq('a', Object('a'));
- * // => false
- *
- * _.eq(NaN, NaN);
- * // => true
- */
-function eq(value, other) {
-  return value === other || (value !== value && other !== other);
-}
-
-/**
- * Checks if `value` is likely an `arguments` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- *  else `false`.
- * @example
- *
- * _.isArguments(function() { return arguments; }());
- * // => true
- *
- * _.isArguments([1, 2, 3]);
- * // => false
- */
-function isArguments(value) {
-  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
-    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-}
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
-}
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
-}
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Checks if `value` is classified as a `String` primitive or object.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a string, else `false`.
- * @example
- *
- * _.isString('abc');
- * // => true
- *
- * _.isString(1);
- * // => false
- */
-function isString(value) {
-  return typeof value == 'string' ||
-    (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
-}
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-}
-
-/**
- * Converts `value` to an array.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {Array} Returns the converted array.
- * @example
- *
- * _.toArray({ 'a': 1, 'b': 2 });
- * // => [1, 2]
- *
- * _.toArray('abc');
- * // => ['a', 'b', 'c']
- *
- * _.toArray(1);
- * // => []
- *
- * _.toArray(null);
- * // => []
- */
-function toArray(value) {
-  if (!value) {
-    return [];
-  }
-  if (isArrayLike(value)) {
-    return isString(value) ? stringToArray(value) : copyArray(value);
-  }
-  if (iteratorSymbol && value[iteratorSymbol]) {
-    return iteratorToArray(value[iteratorSymbol]());
-  }
-  var tag = getTag(value),
-      func = tag == mapTag ? mapToArray : (tag == setTag ? setToArray : values);
-
-  return func(value);
-}
-
-/**
- * Converts `value` to a finite number.
- *
- * @static
- * @memberOf _
- * @since 4.12.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {number} Returns the converted number.
- * @example
- *
- * _.toFinite(3.2);
- * // => 3.2
- *
- * _.toFinite(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toFinite(Infinity);
- * // => 1.7976931348623157e+308
- *
- * _.toFinite('3.2');
- * // => 3.2
- */
-function toFinite(value) {
-  if (!value) {
-    return value === 0 ? value : 0;
-  }
-  value = toNumber(value);
-  if (value === INFINITY || value === -INFINITY) {
-    var sign = (value < 0 ? -1 : 1);
-    return sign * MAX_INTEGER;
-  }
-  return value === value ? value : 0;
-}
-
-/**
- * Converts `value` to an integer.
- *
- * **Note:** This method is loosely based on
- * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {number} Returns the converted integer.
- * @example
- *
- * _.toInteger(3.2);
- * // => 3
- *
- * _.toInteger(Number.MIN_VALUE);
- * // => 0
- *
- * _.toInteger(Infinity);
- * // => 1.7976931348623157e+308
- *
- * _.toInteger('3.2');
- * // => 3
- */
-function toInteger(value) {
-  var result = toFinite(value),
-      remainder = result % 1;
-
-  return result === result ? (remainder ? result - remainder : result) : 0;
-}
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = value.replace(reTrim, '');
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-}
-
-/**
- * Creates an array of the own enumerable string keyed property values of `object`.
- *
- * **Note:** Non-object values are coerced to objects.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property values.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.values(new Foo);
- * // => [1, 2] (iteration order is not guaranteed)
- *
- * _.values('hi');
- * // => ['h', 'i']
- */
-function values(object) {
-  return object ? baseValues(object, keys(object)) : [];
-}
-
-module.exports = shuffle;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/lodash.throttle/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/lodash.throttle/index.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-
-/** Used as the `TypeError` message for "Functions" methods. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/** Used as references for various `Number` constants. */
-var NAN = 0 / 0;
-
-/** `Object#toString` result references. */
-var symbolTag = '[object Symbol]';
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var objectToString = objectProto.toString;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max,
-    nativeMin = Math.min;
-
-/**
- * Gets the timestamp of the number of milliseconds that have elapsed since
- * the Unix epoch (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Date
- * @returns {number} Returns the timestamp.
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => Logs the number of milliseconds it took for the deferred invocation.
- */
-var now = function() {
-  return root.Date.now();
-};
-
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked. The debounced function comes with a `cancel` method to cancel
- * delayed `func` invocations and a `flush` method to immediately invoke them.
- * Provide `options` to indicate whether `func` should be invoked on the
- * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
- * with the last arguments provided to the debounced function. Subsequent
- * calls to the debounced function return the result of the last `func`
- * invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the debounced function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=false]
- *  Specify invoking on the leading edge of the timeout.
- * @param {number} [options.maxWait]
- *  The maximum time `func` is allowed to be delayed before it's invoked.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // Avoid costly calculations while the window size is in flux.
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // Invoke `sendMail` when clicked, debouncing subsequent calls.
- * jQuery(element).on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
- * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', debounced);
- *
- * // Cancel the trailing debounced invocation.
- * jQuery(window).on('popstate', debounced.cancel);
- */
-function debounce(func, wait, options) {
-  var lastArgs,
-      lastThis,
-      maxWait,
-      result,
-      timerId,
-      lastCallTime,
-      lastInvokeTime = 0,
-      leading = false,
-      maxing = false,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  wait = toNumber(wait) || 0;
-  if (isObject(options)) {
-    leading = !!options.leading;
-    maxing = 'maxWait' in options;
-    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-
-  function invokeFunc(time) {
-    var args = lastArgs,
-        thisArg = lastThis;
-
-    lastArgs = lastThis = undefined;
-    lastInvokeTime = time;
-    result = func.apply(thisArg, args);
-    return result;
-  }
-
-  function leadingEdge(time) {
-    // Reset any `maxWait` timer.
-    lastInvokeTime = time;
-    // Start the timer for the trailing edge.
-    timerId = setTimeout(timerExpired, wait);
-    // Invoke the leading edge.
-    return leading ? invokeFunc(time) : result;
-  }
-
-  function remainingWait(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime,
-        result = wait - timeSinceLastCall;
-
-    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
-  }
-
-  function shouldInvoke(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime;
-
-    // Either this is the first call, activity has stopped and we're at the
-    // trailing edge, the system time has gone backwards and we're treating
-    // it as the trailing edge, or we've hit the `maxWait` limit.
-    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
-      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
-  }
-
-  function timerExpired() {
-    var time = now();
-    if (shouldInvoke(time)) {
-      return trailingEdge(time);
-    }
-    // Restart the timer.
-    timerId = setTimeout(timerExpired, remainingWait(time));
-  }
-
-  function trailingEdge(time) {
-    timerId = undefined;
-
-    // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
-    if (trailing && lastArgs) {
-      return invokeFunc(time);
-    }
-    lastArgs = lastThis = undefined;
-    return result;
-  }
-
-  function cancel() {
-    if (timerId !== undefined) {
-      clearTimeout(timerId);
-    }
-    lastInvokeTime = 0;
-    lastArgs = lastCallTime = lastThis = timerId = undefined;
-  }
-
-  function flush() {
-    return timerId === undefined ? result : trailingEdge(now());
-  }
-
-  function debounced() {
-    var time = now(),
-        isInvoking = shouldInvoke(time);
-
-    lastArgs = arguments;
-    lastThis = this;
-    lastCallTime = time;
-
-    if (isInvoking) {
-      if (timerId === undefined) {
-        return leadingEdge(lastCallTime);
-      }
-      if (maxing) {
-        // Handle invocations in a tight loop.
-        timerId = setTimeout(timerExpired, wait);
-        return invokeFunc(lastCallTime);
-      }
-    }
-    if (timerId === undefined) {
-      timerId = setTimeout(timerExpired, wait);
-    }
-    return result;
-  }
-  debounced.cancel = cancel;
-  debounced.flush = flush;
-  return debounced;
-}
-
-/**
- * Creates a throttled function that only invokes `func` at most once per
- * every `wait` milliseconds. The throttled function comes with a `cancel`
- * method to cancel delayed `func` invocations and a `flush` method to
- * immediately invoke them. Provide `options` to indicate whether `func`
- * should be invoked on the leading and/or trailing edge of the `wait`
- * timeout. The `func` is invoked with the last arguments provided to the
- * throttled function. Subsequent calls to the throttled function return the
- * result of the last `func` invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the throttled function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.throttle` and `_.debounce`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to throttle.
- * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=true]
- *  Specify invoking on the leading edge of the timeout.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new throttled function.
- * @example
- *
- * // Avoid excessively updating the position while scrolling.
- * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
- *
- * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
- * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
- * jQuery(element).on('click', throttled);
- *
- * // Cancel the trailing throttled invocation.
- * jQuery(window).on('popstate', throttled.cancel);
- */
-function throttle(func, wait, options) {
-  var leading = true,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  if (isObject(options)) {
-    leading = 'leading' in options ? !!options.leading : leading;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-  return debounce(func, wait, {
-    'leading': leading,
-    'maxWait': wait,
-    'trailing': trailing
-  });
-}
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-}
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = value.replace(reTrim, '');
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-module.exports = throttle;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/object-assign/index.js":
+/***/ "./src/client/app/_helpers/checkTag.ts":
 /*!*********************************************!*\
-  !*** ./node_modules/object-assign/index.js ***!
+  !*** ./src/client/app/_helpers/checkTag.ts ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/checkPropTypes.js":
-/*!***************************************************!*\
-  !*** ./node_modules/prop-types/checkPropTypes.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var printWarning = function() {};
-
-if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
-  var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (true) {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (true) {
-    loggedTypeFailures = {};
-  }
-}
-
-module.exports = checkPropTypes;
-
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/factoryWithTypeCheckers.js":
-/*!************************************************************!*\
-  !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
-var assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
-
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
-
-var has = Function.call.bind(Object.prototype.hasOwnProperty);
-var printWarning = function() {};
-
-if (true) {
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-function emptyFunctionThatReturnsNull() {
-  return null;
-}
-
-module.exports = function(isValidElement, throwOnDirectAccess) {
-  /* global Symbol */
-  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-  /**
-   * Returns the iterator method function contained on the iterable object.
-   *
-   * Be sure to invoke the function with the iterable as context:
-   *
-   *     var iteratorFn = getIteratorFn(myIterable);
-   *     if (iteratorFn) {
-   *       var iterator = iteratorFn.call(myIterable);
-   *       ...
-   *     }
-   *
-   * @param {?object} maybeIterable
-   * @return {?function}
-   */
-  function getIteratorFn(maybeIterable) {
-    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-    if (typeof iteratorFn === 'function') {
-      return iteratorFn;
-    }
-  }
-
-  /**
-   * Collection of methods that allow declaration and validation of props that are
-   * supplied to React components. Example usage:
-   *
-   *   var Props = require('ReactPropTypes');
-   *   var MyArticle = React.createClass({
-   *     propTypes: {
-   *       // An optional string prop named "description".
-   *       description: Props.string,
-   *
-   *       // A required enum prop named "category".
-   *       category: Props.oneOf(['News','Photos']).isRequired,
-   *
-   *       // A prop named "dialog" that requires an instance of Dialog.
-   *       dialog: Props.instanceOf(Dialog).isRequired
-   *     },
-   *     render: function() { ... }
-   *   });
-   *
-   * A more formal specification of how these methods are used:
-   *
-   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-   *   decl := ReactPropTypes.{type}(.isRequired)?
-   *
-   * Each and every declaration produces a function with the same signature. This
-   * allows the creation of custom validation functions. For example:
-   *
-   *  var MyLink = React.createClass({
-   *    propTypes: {
-   *      // An optional string or URI prop named "href".
-   *      href: function(props, propName, componentName) {
-   *        var propValue = props[propName];
-   *        if (propValue != null && typeof propValue !== 'string' &&
-   *            !(propValue instanceof URI)) {
-   *          return new Error(
-   *            'Expected a string or an URI for ' + propName + ' in ' +
-   *            componentName
-   *          );
-   *        }
-   *      }
-   *    },
-   *    render: function() {...}
-   *  });
-   *
-   * @internal
-   */
-
-  var ANONYMOUS = '<<anonymous>>';
-
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-  var ReactPropTypes = {
-    array: createPrimitiveTypeChecker('array'),
-    bool: createPrimitiveTypeChecker('boolean'),
-    func: createPrimitiveTypeChecker('function'),
-    number: createPrimitiveTypeChecker('number'),
-    object: createPrimitiveTypeChecker('object'),
-    string: createPrimitiveTypeChecker('string'),
-    symbol: createPrimitiveTypeChecker('symbol'),
-
-    any: createAnyTypeChecker(),
-    arrayOf: createArrayOfTypeChecker,
-    element: createElementTypeChecker(),
-    elementType: createElementTypeTypeChecker(),
-    instanceOf: createInstanceTypeChecker,
-    node: createNodeChecker(),
-    objectOf: createObjectOfTypeChecker,
-    oneOf: createEnumTypeChecker,
-    oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker,
-  };
-
-  /**
-   * inlined Object.is polyfill to avoid requiring consumers ship their own
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-   */
-  /*eslint-disable no-self-compare*/
-  function is(x, y) {
-    // SameValue algorithm
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      return x !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-  /*eslint-enable no-self-compare*/
-
-  /**
-   * We use an Error-like object for backward compatibility as people may call
-   * PropTypes directly and inspect their output. However, we don't use real
-   * Errors anymore. We don't inspect their stack anyway, and creating them
-   * is prohibitively expensive if they are created too often, such as what
-   * happens in oneOfType() for any type before the one that matched.
-   */
-  function PropTypeError(message) {
-    this.message = message;
-    this.stack = '';
-  }
-  // Make `instanceof Error` still work for returned errors.
-  PropTypeError.prototype = Error.prototype;
-
-  function createChainableTypeChecker(validate) {
-    if (true) {
-      var manualPropTypeCallCache = {};
-      var manualPropTypeWarningCount = 0;
-    }
-    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-      componentName = componentName || ANONYMOUS;
-      propFullName = propFullName || propName;
-
-      if (secret !== ReactPropTypesSecret) {
-        if (throwOnDirectAccess) {
-          // New behavior only for users of `prop-types` package
-          var err = new Error(
-            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-            'Use `PropTypes.checkPropTypes()` to call them. ' +
-            'Read more at http://fb.me/use-check-prop-types'
-          );
-          err.name = 'Invariant Violation';
-          throw err;
-        } else if ( true && typeof console !== 'undefined') {
-          // Old behavior for people using React.PropTypes
-          var cacheKey = componentName + ':' + propName;
-          if (
-            !manualPropTypeCallCache[cacheKey] &&
-            // Avoid spamming the console because they are often not actionable except for lib authors
-            manualPropTypeWarningCount < 3
-          ) {
-            printWarning(
-              'You are manually calling a React.PropTypes validation ' +
-              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
-              'and will throw in the standalone `prop-types` package. ' +
-              'You may be seeing this warning due to a third-party PropTypes ' +
-              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
-            );
-            manualPropTypeCallCache[cacheKey] = true;
-            manualPropTypeWarningCount++;
-          }
-        }
-      }
-      if (props[propName] == null) {
-        if (isRequired) {
-          if (props[propName] === null) {
-            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-          }
-          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-        }
-        return null;
-      } else {
-        return validate(props, propName, componentName, location, propFullName);
-      }
-    }
-
-    var chainedCheckType = checkType.bind(null, false);
-    chainedCheckType.isRequired = checkType.bind(null, true);
-
-    return chainedCheckType;
-  }
-
-  function createPrimitiveTypeChecker(expectedType) {
-    function validate(props, propName, componentName, location, propFullName, secret) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== expectedType) {
-        // `propValue` being instance of, say, date/regexp, pass the 'object'
-        // check, but we can offer a more precise error message here rather than
-        // 'of type `object`'.
-        var preciseType = getPreciseType(propValue);
-
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
-  }
-
-  function createArrayOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-      }
-      var propValue = props[propName];
-      if (!Array.isArray(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-      }
-      for (var i = 0; i < propValue.length; i++) {
-        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-        if (error instanceof Error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!isValidElement(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!ReactIs.isValidElementType(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createInstanceTypeChecker(expectedClass) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!(props[propName] instanceof expectedClass)) {
-        var expectedClassName = expectedClass.name || ANONYMOUS;
-        var actualClassName = getClassName(props[propName]);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createEnumTypeChecker(expectedValues) {
-    if (!Array.isArray(expectedValues)) {
-      if (true) {
-        if (arguments.length > 1) {
-          printWarning(
-            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
-            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
-          );
-        } else {
-          printWarning('Invalid argument supplied to oneOf, expected an array.');
-        }
-      }
-      return emptyFunctionThatReturnsNull;
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      for (var i = 0; i < expectedValues.length; i++) {
-        if (is(propValue, expectedValues[i])) {
-          return null;
-        }
-      }
-
-      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
-        var type = getPreciseType(value);
-        if (type === 'symbol') {
-          return String(value);
-        }
-        return value;
-      });
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createObjectOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-      }
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-      }
-      for (var key in propValue) {
-        if (has(propValue, key)) {
-          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-          if (error instanceof Error) {
-            return error;
-          }
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createUnionTypeChecker(arrayOfTypeCheckers) {
-    if (!Array.isArray(arrayOfTypeCheckers)) {
-       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : undefined;
-      return emptyFunctionThatReturnsNull;
-    }
-
-    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-      var checker = arrayOfTypeCheckers[i];
-      if (typeof checker !== 'function') {
-        printWarning(
-          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
-          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
-        );
-        return emptyFunctionThatReturnsNull;
-      }
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-        var checker = arrayOfTypeCheckers[i];
-        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
-          return null;
-        }
-      }
-
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createNodeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!isNode(props[propName])) {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      for (var key in shapeTypes) {
-        var checker = shapeTypes[key];
-        if (!checker) {
-          continue;
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createStrictShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      // We need to check all keys in case some are required but missing from
-      // props.
-      var allKeys = assign({}, props[propName], shapeTypes);
-      for (var key in allKeys) {
-        var checker = shapeTypes[key];
-        if (!checker) {
-          return new PropTypeError(
-            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
-            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
-          );
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function isNode(propValue) {
-    switch (typeof propValue) {
-      case 'number':
-      case 'string':
-      case 'undefined':
-        return true;
-      case 'boolean':
-        return !propValue;
-      case 'object':
-        if (Array.isArray(propValue)) {
-          return propValue.every(isNode);
-        }
-        if (propValue === null || isValidElement(propValue)) {
-          return true;
-        }
-
-        var iteratorFn = getIteratorFn(propValue);
-        if (iteratorFn) {
-          var iterator = iteratorFn.call(propValue);
-          var step;
-          if (iteratorFn !== propValue.entries) {
-            while (!(step = iterator.next()).done) {
-              if (!isNode(step.value)) {
-                return false;
-              }
-            }
-          } else {
-            // Iterator will provide entry [k,v] tuples rather than values.
-            while (!(step = iterator.next()).done) {
-              var entry = step.value;
-              if (entry) {
-                if (!isNode(entry[1])) {
-                  return false;
-                }
-              }
-            }
-          }
-        } else {
-          return false;
-        }
-
-        return true;
-      default:
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shared/resources/countryData */ "./src/shared/resources/countryData.ts");
+
+var checkTag = function (territoryName, tag) {
+    var territory = _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_0__["default"].territories.find(function (t) { return t.title === territoryName; });
+    if (!territory) {
+        console.error("Error checking tags: No territory found '" + territoryName + "'");
         return false;
     }
-  }
+    return territory.tags.includes(tag);
+};
+/* harmony default export */ __webpack_exports__["default"] = (checkTag);
 
-  function isSymbol(propType, propValue) {
-    // Native Symbol.
-    if (propType === 'symbol') {
-      return true;
-    }
 
-    // falsy value can't be a Symbol
-    if (!propValue) {
-      return false;
-    }
+/***/ }),
 
-    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-    if (propValue['@@toStringTag'] === 'Symbol') {
-      return true;
-    }
+/***/ "./src/client/app/components/board/neutralPattern/neutralPattern.tsx":
+/*!***************************************************************************!*\
+  !*** ./src/client/app/components/board/neutralPattern/neutralPattern.tsx ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-    // Fallback for non-spec compliant Symbols which are polyfilled.
-    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-      return true;
-    }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 
-    return false;
-  }
+/* harmony default export */ __webpack_exports__["default"] = (function (_a) {
+    var stripe = _a.stripe;
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("pattern", { id: 'diagonalHatch', patternUnits: 'userSpaceOnUse', width: stripe, height: stripe, patternTransform: 'rotate(45)' },
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: stripe / 2, y: '0', x2: stripe / 2, y2: stripe, stroke: 'black', "stroke-width": stripe }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("line", { x1: '0', y: '0', x2: '0', y2: stripe, stroke: 'maroon', "stroke-width": stripe })));
+});
 
-  // Equivalent of `typeof` but with special handling for array and regexp.
-  function getPropType(propValue) {
-    var propType = typeof propValue;
-    if (Array.isArray(propValue)) {
-      return 'array';
-    }
-    if (propValue instanceof RegExp) {
-      // Old webkits (at least until Android 4.0) return 'function' rather than
-      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-      // passes PropTypes.object.
-      return 'object';
-    }
-    if (isSymbol(propType, propValue)) {
-      return 'symbol';
-    }
-    return propType;
-  }
 
-  // This handles more types than `getPropType`. Only used for error messages.
-  // See `createPrimitiveTypeChecker`.
-  function getPreciseType(propValue) {
-    if (typeof propValue === 'undefined' || propValue === null) {
-      return '' + propValue;
-    }
-    var propType = getPropType(propValue);
-    if (propType === 'object') {
-      if (propValue instanceof Date) {
-        return 'date';
-      } else if (propValue instanceof RegExp) {
-        return 'regexp';
-      }
-    }
-    return propType;
-  }
+/***/ }),
 
-  // Returns a string that is postfixed to a warning about an invalid type.
-  // For example, "undefined" or "of type array"
-  function getPostfixForTypeWarning(value) {
-    var type = getPreciseType(value);
-    switch (type) {
-      case 'array':
-      case 'object':
-        return 'an ' + type;
-      case 'boolean':
-      case 'date':
-      case 'regexp':
-        return 'a ' + type;
-      default:
-        return type;
-    }
-  }
+/***/ "./src/client/app/components/board/newBoard.tsx":
+/*!******************************************************!*\
+  !*** ./src/client/app/components/board/newBoard.tsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-  // Returns class name of the object, if any.
-  function getClassName(propValue) {
-    if (!propValue.constructor || !propValue.constructor.name) {
-      return ANONYMOUS;
-    }
-    return propValue.constructor.name;
-  }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _client_utils_getColour__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @client/utils/getColour */ "./src/client/utils/getColour.ts");
+/* harmony import */ var _client_utils_getLocation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @client/utils/getLocation */ "./src/client/utils/getLocation.ts");
+/* harmony import */ var _territory_territory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./territory/territory */ "./src/client/app/components/board/territory/territory.tsx");
+/* harmony import */ var _unit_unit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./unit/unit */ "./src/client/app/components/board/unit/unit.tsx");
+/* harmony import */ var _ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ordersLayer/ordersLayer */ "./src/client/app/components/ordersLayer/ordersLayer.tsx");
+/* harmony import */ var _neutralPattern_neutralPattern__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./neutralPattern/neutralPattern */ "./src/client/app/components/board/neutralPattern/neutralPattern.tsx");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/styled.ts");
 
-  ReactPropTypes.checkPropTypes = checkPropTypes;
-  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
-  ReactPropTypes.PropTypes = ReactPropTypes;
 
-  return ReactPropTypes;
+
+
+
+
+
+
+
+var Board = function (props) {
+    var _a, _b;
+    // Created once for document
+    var svgRef = Object(preact_compat__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
+    // const svgRef = createRef() // ! This might be required?
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_8__["GameBoard"], { id: 'gameBoard' },
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_8__["MapSvg"], { xmlns: 'http://www.w3.org/2000/svg', viewBox: props.boardData.viewBox, ref: function () { return svgRef; } },
+                props.boardData.territories.map(function (tile) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_territory_territory__WEBPACK_IMPORTED_MODULE_4__["default"], { tile: tile, onSelect: props.onTerritoryClick(tile.title), viewBox: props.boardData.viewBox, colour: Object(_client_utils_getColour__WEBPACK_IMPORTED_MODULE_2__["getColour"])(props.turnData, tile.title) })); }), (_b = (_a = props.turnData) === null || _a === void 0 ? void 0 : _a.players) === null || _b === void 0 ? void 0 :
+                _b.map(function (player) { return (player.ownedUnits.map(function (unit) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_unit_unit__WEBPACK_IMPORTED_MODULE_5__["default"], { unitType: unit.unitType, viewBox: props.boardData.viewBox, location: Object(_client_utils_getLocation__WEBPACK_IMPORTED_MODULE_3__["getLocation"])(props.boardData, unit.location), empire: player.empire, colour: player.colour })); })); }),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_ordersLayer_ordersLayer__WEBPACK_IMPORTED_MODULE_6__["default"], { boardData: props.boardData, orders: props.orders }),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_neutralPattern_neutralPattern__WEBPACK_IMPORTED_MODULE_7__["default"], { stripe: 6 })))));
+};
+/* harmony default export */ __webpack_exports__["default"] = (Board);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/styled.ts":
+/*!***************************************************!*\
+  !*** ./src/client/app/components/board/styled.ts ***!
+  \***************************************************/
+/*! exports provided: GameBoard, StickyContainer, MapSvg */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GameBoard", function() { return GameBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StickyContainer", function() { return StickyContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MapSvg", function() { return MapSvg; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../variables/colors */ "./src/client/app/variables/colors.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
 };
 
 
-/***/ }),
-
-/***/ "./node_modules/prop-types/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/prop-types/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
-} else {}
+var GameBoard = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n\n  @media\n    screen and (max-width:767px),\n    screen and (max-height: 767px) and (orientation:landscape)\n  {\n    max-width: 100%;\n  }\n"], ["\n  position: relative;\n  width: 100%;\n  max-width: 100vh;\n\n  @media\n    screen and (max-width:767px),\n    screen and (max-height: 767px) and (orientation:landscape)\n  {\n    max-width: 100%;\n  }\n"])));
+var StickyContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 150px;\n  z-index: 5;\n  pointer-events: none;\n"], ["\n  width: 100%;\n  position: sticky;\n  top: 0;\n  height: 150px;\n  z-index: 5;\n  pointer-events: none;\n"])));
+var PAPER_TEXTURE_URL = '/assets/paperTexture.jpg';
+var MapSvg = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].svg(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-150px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n  box-sizing: border-box;\n"], ["\n  background-image: url(", ");\n  background-size: contain;\n\n  width: 100%;\n  pointer-events: none;\n  transform: translateY(-150px);\n\n  border: 2px solid ", ";\n  border-radius: 4px;\n  box-sizing: border-box;\n"])), PAPER_TEXTURE_URL, _variables_colors__WEBPACK_IMPORTED_MODULE_1__["default"].shadow);
+var templateObject_1, templateObject_2, templateObject_3;
 
 
 /***/ }),
 
-/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/components/Button.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/components/Button.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _scrollLink = __webpack_require__(/*! ../mixins/scroll-link */ "./node_modules/react-scroll/modules/mixins/scroll-link.js");
-
-var _scrollLink2 = _interopRequireDefault(_scrollLink);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ButtonElement = function (_React$Component) {
-  _inherits(ButtonElement, _React$Component);
-
-  function ButtonElement() {
-    _classCallCheck(this, ButtonElement);
-
-    return _possibleConstructorReturn(this, (ButtonElement.__proto__ || Object.getPrototypeOf(ButtonElement)).apply(this, arguments));
-  }
-
-  _createClass(ButtonElement, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'input',
-        this.props,
-        this.props.children
-      );
-    }
-  }]);
-
-  return ButtonElement;
-}(_react2.default.Component);
-
-;
-
-exports.default = (0, _scrollLink2.default)(ButtonElement);
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/components/Element.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/components/Element.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _scrollElement = __webpack_require__(/*! ../mixins/scroll-element */ "./node_modules/react-scroll/modules/mixins/scroll-element.js");
-
-var _scrollElement2 = _interopRequireDefault(_scrollElement);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ElementWrapper = function (_React$Component) {
-  _inherits(ElementWrapper, _React$Component);
-
-  function ElementWrapper() {
-    _classCallCheck(this, ElementWrapper);
-
-    return _possibleConstructorReturn(this, (ElementWrapper.__proto__ || Object.getPrototypeOf(ElementWrapper)).apply(this, arguments));
-  }
-
-  _createClass(ElementWrapper, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      // Remove `parentBindings` from props
-      var newProps = _extends({}, this.props);
-      if (newProps.parentBindings) {
-        delete newProps.parentBindings;
-      }
-
-      return _react2.default.createElement(
-        'div',
-        _extends({}, newProps, { ref: function ref(el) {
-            _this2.props.parentBindings.domNode = el;
-          } }),
-        this.props.children
-      );
-    }
-  }]);
-
-  return ElementWrapper;
-}(_react2.default.Component);
-
-;
-
-ElementWrapper.propTypes = {
-  name: _propTypes2.default.string,
-  id: _propTypes2.default.string
-};
-
-exports.default = (0, _scrollElement2.default)(ElementWrapper);
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/components/Link.js":
+/***/ "./src/client/app/components/board/supplyStar/styled.ts":
 /*!**************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/components/Link.js ***!
+  !*** ./src/client/app/components/board/supplyStar/styled.ts ***!
   \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: StarPath */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StarPath", function() { return StarPath; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
 
+var StarPath = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].path(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  fill: white;\n  stroke: black;\n  transform:\n    translate(0px, 13px)\n    scale(0.8);\n"], ["\n  fill: white;\n  stroke: black;\n  transform:\n    translate(0px, 13px)\n    scale(0.8);\n"])));
+var templateObject_1;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(/*! react */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _scrollLink = __webpack_require__(/*! ../mixins/scroll-link */ "./node_modules/react-scroll/modules/mixins/scroll-link.js");
-
-var _scrollLink2 = _interopRequireDefault(_scrollLink);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var LinkElement = function (_React$Component) {
-  _inherits(LinkElement, _React$Component);
-
-  function LinkElement() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, LinkElement);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LinkElement.__proto__ || Object.getPrototypeOf(LinkElement)).call.apply(_ref, [this].concat(args))), _this), _this.render = function () {
-      return _react2.default.createElement(
-        'a',
-        _this.props,
-        _this.props.children
-      );
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  return LinkElement;
-}(_react2.default.Component);
-
-;
-
-exports.default = (0, _scrollLink2.default)(LinkElement);
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll/modules/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/react-scroll/modules/index.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/client/app/components/board/supplyStar/supplyStar.tsx":
+/*!*******************************************************************!*\
+  !*** ./src/client/app/components/board/supplyStar/supplyStar.tsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/supplyStar/styled.ts");
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Helpers = exports.ScrollElement = exports.ScrollLink = exports.animateScroll = exports.scrollSpy = exports.Events = exports.scroller = exports.Element = exports.Button = exports.Link = undefined;
+var StarPath = _styled__WEBPACK_IMPORTED_MODULE_1__["StarPath"];
+var SupplyStar = function () {
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(StarPath, { d: '\n      M 0.000 3.000\n      L 3.527 4.854\n      L 2.853 0.927\n      L 5.706 -1.854\n      L 1.763 -2.427\n      L 0.000 -6.000\n      L -1.763 -2.427\n      L -5.706 -1.854\n      L -2.853 0.927\n      L -3.527 4.854\n      L 0.000 3.000\n    ' }));
+};
+/* harmony default export */ __webpack_exports__["default"] = (SupplyStar);
 
-var _Link = __webpack_require__(/*! ./components/Link.js */ "./node_modules/react-scroll/modules/components/Link.js");
-
-var _Link2 = _interopRequireDefault(_Link);
-
-var _Button = __webpack_require__(/*! ./components/Button.js */ "./node_modules/react-scroll/modules/components/Button.js");
-
-var _Button2 = _interopRequireDefault(_Button);
-
-var _Element = __webpack_require__(/*! ./components/Element.js */ "./node_modules/react-scroll/modules/components/Element.js");
-
-var _Element2 = _interopRequireDefault(_Element);
-
-var _scroller = __webpack_require__(/*! ./mixins/scroller.js */ "./node_modules/react-scroll/modules/mixins/scroller.js");
-
-var _scroller2 = _interopRequireDefault(_scroller);
-
-var _scrollEvents = __webpack_require__(/*! ./mixins/scroll-events.js */ "./node_modules/react-scroll/modules/mixins/scroll-events.js");
-
-var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
-
-var _scrollSpy = __webpack_require__(/*! ./mixins/scroll-spy.js */ "./node_modules/react-scroll/modules/mixins/scroll-spy.js");
-
-var _scrollSpy2 = _interopRequireDefault(_scrollSpy);
-
-var _animateScroll = __webpack_require__(/*! ./mixins/animate-scroll.js */ "./node_modules/react-scroll/modules/mixins/animate-scroll.js");
-
-var _animateScroll2 = _interopRequireDefault(_animateScroll);
-
-var _scrollLink = __webpack_require__(/*! ./mixins/scroll-link.js */ "./node_modules/react-scroll/modules/mixins/scroll-link.js");
-
-var _scrollLink2 = _interopRequireDefault(_scrollLink);
-
-var _scrollElement = __webpack_require__(/*! ./mixins/scroll-element.js */ "./node_modules/react-scroll/modules/mixins/scroll-element.js");
-
-var _scrollElement2 = _interopRequireDefault(_scrollElement);
-
-var _Helpers = __webpack_require__(/*! ./mixins/Helpers.js */ "./node_modules/react-scroll/modules/mixins/Helpers.js");
-
-var _Helpers2 = _interopRequireDefault(_Helpers);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.Link = _Link2.default;
-exports.Button = _Button2.default;
-exports.Element = _Element2.default;
-exports.scroller = _scroller2.default;
-exports.Events = _scrollEvents2.default;
-exports.scrollSpy = _scrollSpy2.default;
-exports.animateScroll = _animateScroll2.default;
-exports.ScrollLink = _scrollLink2.default;
-exports.ScrollElement = _scrollElement2.default;
-exports.Helpers = _Helpers2.default;
-exports.default = { Link: _Link2.default, Button: _Button2.default, Element: _Element2.default, scroller: _scroller2.default, Events: _scrollEvents2.default, scrollSpy: _scrollSpy2.default, animateScroll: _animateScroll2.default, ScrollLink: _scrollLink2.default, ScrollElement: _scrollElement2.default, Helpers: _Helpers2.default };
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll/modules/mixins/Helpers.js":
+/***/ "./src/client/app/components/board/territory/styled.ts":
 /*!*************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/Helpers.js ***!
+  !*** ./src/client/app/components/board/territory/styled.ts ***!
   \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: Path, TerritoryName, TerritoryTitle */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-/* DEPRECATED */
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(/*! react */ "./node_modules/preact/compat/dist/compat.module.js");
-var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
-var scrollSpy = __webpack_require__(/*! ./scroll-spy */ "./node_modules/react-scroll/modules/mixins/scroll-spy.js");
-var defaultScroller = __webpack_require__(/*! ./scroller */ "./node_modules/react-scroll/modules/mixins/scroller.js");
-var PropTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-var scrollHash = __webpack_require__(/*! ./scroll-hash */ "./node_modules/react-scroll/modules/mixins/scroll-hash.js");
-
-var protoTypes = {
-  to: PropTypes.string.isRequired,
-  containerId: PropTypes.string,
-  container: PropTypes.object,
-  activeClass: PropTypes.string,
-  spy: PropTypes.bool,
-  smooth: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  offset: PropTypes.number,
-  delay: PropTypes.number,
-  isDynamic: PropTypes.bool,
-  onClick: PropTypes.func,
-  duration: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  absolute: PropTypes.bool,
-  onSetActive: PropTypes.func,
-  onSetInactive: PropTypes.func,
-  ignoreCancelEvents: PropTypes.bool,
-  hashSpy: PropTypes.bool
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Path", function() { return Path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TerritoryName", function() { return TerritoryName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TerritoryTitle", function() { return TerritoryTitle; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../variables/empireColours */ "./src/client/app/variables/empireColours.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
 };
 
-var Helpers = {
-  Scroll: function Scroll(Component, customScroller) {
 
-    console.warn("Helpers.Scroll is deprecated since v1.7.0");
-
-    var scroller = customScroller || defaultScroller;
-
-    var Scroll = function (_React$Component) {
-      _inherits(Scroll, _React$Component);
-
-      function Scroll(props) {
-        _classCallCheck(this, Scroll);
-
-        var _this = _possibleConstructorReturn(this, (Scroll.__proto__ || Object.getPrototypeOf(Scroll)).call(this, props));
-
-        _initialiseProps.call(_this);
-
-        _this.state = {
-          active: false
-        };
-        return _this;
-      }
-
-      _createClass(Scroll, [{
-        key: 'getScrollSpyContainer',
-        value: function getScrollSpyContainer() {
-          var containerId = this.props.containerId;
-          var container = this.props.container;
-
-          if (containerId) {
-            return document.getElementById(containerId);
-          }
-
-          if (container && container.nodeType) {
-            return container;
-          }
-
-          return document;
-        }
-      }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-          if (this.props.spy || this.props.hashSpy) {
-            var scrollSpyContainer = this.getScrollSpyContainer();
-
-            if (!scrollSpy.isMounted(scrollSpyContainer)) {
-              scrollSpy.mount(scrollSpyContainer);
-            }
-
-            if (this.props.hashSpy) {
-              if (!scrollHash.isMounted()) {
-                scrollHash.mount(scroller);
-              }
-              scrollHash.mapContainer(this.props.to, scrollSpyContainer);
-            }
-
-            if (this.props.spy) {
-              scrollSpy.addStateHandler(this.stateHandler);
-            }
-
-            scrollSpy.addSpyHandler(this.spyHandler, scrollSpyContainer);
-
-            this.setState({
-              container: scrollSpyContainer
-            });
-          }
-        }
-      }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-          scrollSpy.unmount(this.stateHandler, this.spyHandler);
-        }
-      }, {
-        key: 'render',
-        value: function render() {
-          var className = "";
-
-          if (this.state && this.state.active) {
-            className = ((this.props.className || "") + " " + (this.props.activeClass || "active")).trim();
-          } else {
-            className = this.props.className;
-          }
-
-          var props = _extends({}, this.props);
-
-          for (var prop in protoTypes) {
-            if (props.hasOwnProperty(prop)) {
-              delete props[prop];
-            }
-          }
-
-          props.className = className;
-          props.onClick = this.handleClick;
-
-          return React.createElement(Component, props);
-        }
-      }]);
-
-      return Scroll;
-    }(React.Component);
-
-    var _initialiseProps = function _initialiseProps() {
-      var _this2 = this;
-
-      this.scrollTo = function (to, props) {
-        scroller.scrollTo(to, _extends({}, _this2.state, props));
-      };
-
-      this.handleClick = function (event) {
-
-        /*
-         * give the posibility to override onClick
-         */
-
-        if (_this2.props.onClick) {
-          _this2.props.onClick(event);
-        }
-
-        /*
-         * dont bubble the navigation
-         */
-
-        if (event.stopPropagation) event.stopPropagation();
-        if (event.preventDefault) event.preventDefault();
-
-        /*
-         * do the magic!
-         */
-        _this2.scrollTo(_this2.props.to, _this2.props);
-      };
-
-      this.stateHandler = function () {
-        if (scroller.getActiveLink() !== _this2.props.to) {
-          if (_this2.state !== null && _this2.state.active && _this2.props.onSetInactive) {
-            _this2.props.onSetInactive();
-          }
-          _this2.setState({ active: false });
-        }
-      };
-
-      this.spyHandler = function (y) {
-
-        var scrollSpyContainer = _this2.getScrollSpyContainer();
-
-        if (scrollHash.isMounted() && !scrollHash.isInitialized()) {
-          return;
-        }
-
-        var to = _this2.props.to;
-        var element = null;
-        var elemTopBound = 0;
-        var elemBottomBound = 0;
-        var containerTop = 0;
-
-        if (scrollSpyContainer.getBoundingClientRect) {
-          var containerCords = scrollSpyContainer.getBoundingClientRect();
-          containerTop = containerCords.top;
-        }
-
-        if (!element || _this2.props.isDynamic) {
-          element = scroller.get(to);
-          if (!element) {
-            return;
-          }
-
-          var cords = element.getBoundingClientRect();
-          elemTopBound = cords.top - containerTop + y;
-          elemBottomBound = elemTopBound + cords.height;
-        }
-
-        var offsetY = y - _this2.props.offset;
-        var isInside = offsetY >= Math.floor(elemTopBound) && offsetY < Math.floor(elemBottomBound);
-        var isOutside = offsetY < Math.floor(elemTopBound) || offsetY >= Math.floor(elemBottomBound);
-        var activeLink = scroller.getActiveLink();
-
-        if (isOutside) {
-          if (to === activeLink) {
-            scroller.setActiveLink(void 0);
-          }
-
-          if (_this2.props.hashSpy && scrollHash.getHash() === to) {
-            scrollHash.changeHash();
-          }
-
-          if (_this2.props.spy && _this2.state.active) {
-            _this2.setState({ active: false });
-            _this2.props.onSetInactive && _this2.props.onSetInactive();
-          }
-
-          return scrollSpy.updateStates();
-        }
-
-        if (isInside && activeLink !== to) {
-          scroller.setActiveLink(to);
-
-          _this2.props.hashSpy && scrollHash.changeHash(to);
-
-          if (_this2.props.spy) {
-            _this2.setState({ active: true });
-            _this2.props.onSetActive && _this2.props.onSetActive(to);
-          }
-          return scrollSpy.updateStates();
-        }
-      };
-    };
-
-    ;
-
-    Scroll.propTypes = protoTypes;
-
-    Scroll.defaultProps = { offset: 0 };
-
-    return Scroll;
-  },
-  Element: function Element(Component) {
-
-    console.warn("Helpers.Element is deprecated since v1.7.0");
-
-    var Element = function (_React$Component2) {
-      _inherits(Element, _React$Component2);
-
-      function Element(props) {
-        _classCallCheck(this, Element);
-
-        var _this3 = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
-
-        _this3.childBindings = {
-          domNode: null
-        };
-        return _this3;
-      }
-
-      _createClass(Element, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-          if (typeof window === 'undefined') {
-            return false;
-          }
-          this.registerElems(this.props.name);
-        }
-      }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps) {
-          if (this.props.name !== prevProps.name) {
-            this.registerElems(this.props.name);
-          }
-        }
-      }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-          if (typeof window === 'undefined') {
-            return false;
-          }
-          defaultScroller.unregister(this.props.name);
-        }
-      }, {
-        key: 'registerElems',
-        value: function registerElems(name) {
-          defaultScroller.register(name, this.childBindings.domNode);
-        }
-      }, {
-        key: 'render',
-        value: function render() {
-          return React.createElement(Component, _extends({}, this.props, { parentBindings: this.childBindings }));
-        }
-      }]);
-
-      return Element;
-    }(React.Component);
-
-    ;
-
-    Element.propTypes = {
-      name: PropTypes.string,
-      id: PropTypes.string
-    };
-
-    return Element;
-  }
+var landCss = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  fill: #FFFFDD;\n  fill-opacity: 0.3;\n  :hover {\n    fill-opacity: 0.4;\n  }\n"], ["\n  fill: #FFFFDD;\n  fill-opacity: 0.3;\n  :hover {\n    fill-opacity: 0.4;\n  }\n"])));
+var seaCss = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  fill: #99CCFF;\n  fill-opacity: 0.45;\n  :hover {\n    fill: #AADDFF;\n  }\n"], ["\n  fill: #99CCFF;\n  fill-opacity: 0.45;\n  :hover {\n    fill: #AADDFF;\n  }\n"])));
+var neutralCss = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  opacity: 0.5;\n"], ["\n  fill: url(#diagonalHatch);\n  stroke: #220;\n  opacity: 0.5;\n"])));
+var tileTypesCss = {
+    sea: seaCss,
+    land: landCss,
+    neutral: neutralCss,
 };
+var getLight = function (id) {
+    var key = id + "_light";
+    var colourHex = _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__["default"][key];
+    return colourHex || 'none';
+};
+var Path = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].path(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  pointer-events: all;\n  stroke: #444444;\n  stroke-linejoin: round;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s;\n  ", ";\n  ", "\n"], ["\n  pointer-events: all;\n  stroke: #444444;\n  stroke-linejoin: round;\n  stroke-width: 0.5;\n  transition: fill-opacity 0.2s;\n  ", ";\n  ", "\n"])), function (p) { return tileTypesCss[p.tileType]; }, function (p) { return p.colourId ? Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(templateObject_4 || (templateObject_4 = __makeTemplateObject(["fill: ", ";"], ["fill: ", ";"])), getLight(p.colourId)) : ''; });
+var getTranslate = function (textLocation) {
+    var x = textLocation.x, y = textLocation.y;
+    return x + "px, " + y + "px";
+};
+var getRotate = function (rotate) {
+    var rotation = rotate || '0';
+    return rotation + "deg";
+};
+var TerritoryName = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].g(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  transform:\n    translate(", ")\n    rotate(", ");\n"], ["\n  transform:\n    translate(", ")\n    rotate(", ");\n"])), function (p) { return getTranslate(p.textLocation); }, function (p) { return getRotate(p.textLocation.rotate); });
+var TerritoryTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].text(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none;\n"], ["\n  font-family: Palatino;\n  fill: #222;\n  font-size: 9px;\n  transform: translate(0, 8px);\n  pointer-events: none;\n"])));
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
 
-module.exports = Helpers;
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll/modules/mixins/animate-scroll.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/animate-scroll.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _smooth = __webpack_require__(/*! ./smooth */ "./node_modules/react-scroll/modules/mixins/smooth.js");
-
-var _smooth2 = _interopRequireDefault(_smooth);
-
-var _cancelEvents = __webpack_require__(/*! ./cancel-events */ "./node_modules/react-scroll/modules/mixins/cancel-events.js");
-
-var _cancelEvents2 = _interopRequireDefault(_cancelEvents);
-
-var _scrollEvents = __webpack_require__(/*! ./scroll-events */ "./node_modules/react-scroll/modules/mixins/scroll-events.js");
-
-var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*
- * Gets the easing type from the smooth prop within options.
- */
-var getAnimationType = function getAnimationType(options) {
-  return _smooth2.default[options.smooth] || _smooth2.default.defaultEasing;
-};
-/*
- * Function helper
- */
-var functionWrapper = function functionWrapper(value) {
-  return typeof value === 'function' ? value : function () {
-    return value;
-  };
-};
-/*
- * Wraps window properties to allow server side rendering
- */
-var currentWindowProperties = function currentWindowProperties() {
-  if (typeof window !== 'undefined') {
-    return window.requestAnimationFrame || window.webkitRequestAnimationFrame;
-  }
-};
-
-/*
- * Helper function to never extend 60fps on the webpage.
- */
-var requestAnimationFrameHelper = function () {
-  return currentWindowProperties() || function (callback, element, delay) {
-    window.setTimeout(callback, delay || 1000 / 60, new Date().getTime());
-  };
-}();
-
-var makeData = function makeData() {
-  return {
-    currentPositionY: 0,
-    startPositionY: 0,
-    targetPositionY: 0,
-    progress: 0,
-    duration: 0,
-    cancel: false,
-
-    target: null,
-    containerElement: null,
-    to: null,
-    start: null,
-    deltaTop: null,
-    percent: null,
-    delayTimeout: null
-  };
-};
-
-var currentPositionY = function currentPositionY(options) {
-  var containerElement = options.data.containerElement;
-  if (containerElement && containerElement !== document && containerElement !== document.body) {
-    return containerElement.scrollTop;
-  } else {
-    var supportPageOffset = window.pageXOffset !== undefined;
-    var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
-    return supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-  }
-};
-
-var scrollContainerHeight = function scrollContainerHeight(options) {
-  var containerElement = options.data.containerElement;
-  if (containerElement && containerElement !== document && containerElement !== document.body) {
-    return containerElement.scrollHeight - containerElement.offsetHeight;
-  } else {
-    var body = document.body;
-    var html = document.documentElement;
-
-    return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-  }
-};
-
-var animateScroll = function animateScroll(easing, options, timestamp) {
-  var data = options.data;
-
-  // Cancel on specific events
-  if (!options.ignoreCancelEvents && data.cancel) {
-    if (_scrollEvents2.default.registered['end']) {
-      _scrollEvents2.default.registered['end'](data.to, data.target, data.currentPositionY);
-    }
-    return;
-  };
-
-  data.deltaTop = Math.round(data.targetPositionY - data.startPositionY);
-
-  if (data.start === null) {
-    data.start = timestamp;
-  }
-
-  data.progress = timestamp - data.start;
-
-  data.percent = data.progress >= data.duration ? 1 : easing(data.progress / data.duration);
-
-  data.currentPositionY = data.startPositionY + Math.ceil(data.deltaTop * data.percent);
-
-  if (data.containerElement && data.containerElement !== document && data.containerElement !== document.body) {
-    data.containerElement.scrollTop = data.currentPositionY;
-  } else {
-    window.scrollTo(0, data.currentPositionY);
-  }
-
-  if (data.percent < 1) {
-    var easedAnimate = animateScroll.bind(null, easing, options);
-    requestAnimationFrameHelper.call(window, easedAnimate);
-    return;
-  }
-
-  if (_scrollEvents2.default.registered['end']) {
-    _scrollEvents2.default.registered['end'](data.to, data.target, data.currentPositionY);
-  }
-};
-
-var setContainer = function setContainer(options) {
-  options.data.containerElement = !options ? null : options.containerId ? document.getElementById(options.containerId) : options.container && options.container.nodeType ? options.container : document;
-};
-
-var animateTopScroll = function animateTopScroll(y, options, to, target) {
-  options.data = options.data || makeData();
-
-  window.clearTimeout(options.data.delayTimeout);
-
-  _cancelEvents2.default.subscribe(function () {
-    options.data.cancel = true;
-  });
-
-  setContainer(options);
-
-  options.data.start = null;
-  options.data.cancel = false;
-  options.data.startPositionY = currentPositionY(options);
-  options.data.targetPositionY = options.absolute ? y : y + options.data.startPositionY;
-
-  if (options.data.startPositionY === options.data.targetPositionY) {
-    if (_scrollEvents2.default.registered['end']) {
-      _scrollEvents2.default.registered['end'](options.data.to, options.data.target, options.data.currentPositionY);
-    }
-    return;
-  }
-
-  options.data.deltaTop = Math.round(options.data.targetPositionY - options.data.startPositionY);
-
-  options.data.duration = functionWrapper(options.duration)(options.data.deltaTop);
-  options.data.duration = isNaN(parseFloat(options.data.duration)) ? 1000 : parseFloat(options.data.duration);
-  options.data.to = to;
-  options.data.target = target;
-
-  var easing = getAnimationType(options);
-  var easedAnimate = animateScroll.bind(null, easing, options);
-
-  if (options && options.delay > 0) {
-    options.data.delayTimeout = window.setTimeout(function () {
-      if (_scrollEvents2.default.registered['begin']) {
-        _scrollEvents2.default.registered['begin'](options.data.to, options.data.target);
-      }
-      requestAnimationFrameHelper.call(window, easedAnimate);
-    }, options.delay);
-    return;
-  }
-
-  if (_scrollEvents2.default.registered['begin']) {
-    _scrollEvents2.default.registered['begin'](options.data.to, options.data.target);
-  }
-  requestAnimationFrameHelper.call(window, easedAnimate);
-};
-
-var proceedOptions = function proceedOptions(options) {
-  options = _extends({}, options);
-  options.data = options.data || makeData();
-  options.absolute = true;
-  return options;
-};
-
-var scrollToTop = function scrollToTop(options) {
-  animateTopScroll(0, proceedOptions(options));
-};
-
-var scrollTo = function scrollTo(toY, options) {
-  animateTopScroll(toY, proceedOptions(options));
-};
-
-var scrollToBottom = function scrollToBottom(options) {
-  options = proceedOptions(options);
-  setContainer(options);
-  animateTopScroll(scrollContainerHeight(options), options);
-};
-
-var scrollMore = function scrollMore(toY, options) {
-  options = proceedOptions(options);
-  setContainer(options);
-  animateTopScroll(currentPositionY(options) + toY, options);
-};
-
-exports.default = {
-  animateTopScroll: animateTopScroll,
-  getAnimationType: getAnimationType,
-  scrollToTop: scrollToTop,
-  scrollToBottom: scrollToBottom,
-  scrollTo: scrollTo,
-  scrollMore: scrollMore
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/cancel-events.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/cancel-events.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _passiveEventListeners = __webpack_require__(/*! ./passive-event-listeners */ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js");
-
-var events = ['mousedown', 'mousewheel', 'touchmove', 'keydown'];
-
-exports.default = {
-  subscribe: function subscribe(cancelEvent) {
-    return typeof document !== 'undefined' && events.forEach(function (event) {
-      return (0, _passiveEventListeners.addPassiveEventListener)(document, event, cancelEvent);
-    });
-  }
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/passive-event-listeners.js ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/*
- * Tell the browser that the event listener won't prevent a scroll.
- * Allowing the browser to continue scrolling without having to
- * to wait for the listener to return.
- */
-var addPassiveEventListener = exports.addPassiveEventListener = function addPassiveEventListener(target, eventName, listener) {
-  var supportsPassiveOption = function () {
-    var supportsPassiveOption = false;
-    try {
-      var opts = Object.defineProperty({}, 'passive', {
-        get: function get() {
-          supportsPassiveOption = true;
-        }
-      });
-      window.addEventListener('test', null, opts);
-    } catch (e) {}
-    return supportsPassiveOption;
-  }();
-  target.addEventListener(eventName, listener, supportsPassiveOption ? { passive: true } : false);
-};
-
-var removePassiveEventListener = exports.removePassiveEventListener = function removePassiveEventListener(target, eventName, listener) {
-  target.removeEventListener(eventName, listener);
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/scroll-element.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/scroll-element.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _scroller = __webpack_require__(/*! ./scroller */ "./node_modules/react-scroll/modules/mixins/scroller.js");
-
-var _scroller2 = _interopRequireDefault(_scroller);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-exports.default = function (Component) {
-  var Element = function (_React$Component) {
-    _inherits(Element, _React$Component);
-
-    function Element(props) {
-      _classCallCheck(this, Element);
-
-      var _this = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
-
-      _this.childBindings = {
-        domNode: null
-      };
-      return _this;
-    }
-
-    _createClass(Element, [{
-      key: 'componentDidMount',
-      value: function componentDidMount() {
-        if (typeof window === 'undefined') {
-          return false;
-        }
-        this.registerElems(this.props.name);
-      }
-    }, {
-      key: 'componentDidUpdate',
-      value: function componentDidUpdate(prevProps) {
-        if (this.props.name !== prevProps.name) {
-          this.registerElems(this.props.name);
-        }
-      }
-    }, {
-      key: 'componentWillUnmount',
-      value: function componentWillUnmount() {
-        if (typeof window === 'undefined') {
-          return false;
-        }
-        _scroller2.default.unregister(this.props.name);
-      }
-    }, {
-      key: 'registerElems',
-      value: function registerElems(name) {
-        _scroller2.default.register(name, this.childBindings.domNode);
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        return _react2.default.createElement(Component, _extends({}, this.props, { parentBindings: this.childBindings }));
-      }
-    }]);
-
-    return Element;
-  }(_react2.default.Component);
-
-  ;
-
-  Element.propTypes = {
-    name: _propTypes2.default.string,
-    id: _propTypes2.default.string
-  };
-
-  return Element;
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/scroll-events.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/scroll-events.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var Events = {
-	registered: {},
-	scrollEvent: {
-		register: function register(evtName, callback) {
-			Events.registered[evtName] = callback;
-		},
-		remove: function remove(evtName) {
-			Events.registered[evtName] = null;
-		}
-	}
-};
-
-exports.default = Events;
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/scroll-hash.js":
+/***/ "./src/client/app/components/board/territory/territory.tsx":
 /*!*****************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/scroll-hash.js ***!
+  !*** ./src/client/app/components/board/territory/territory.tsx ***!
   \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _passiveEventListeners = __webpack_require__(/*! ./passive-event-listeners */ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js");
-
-var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
-
-var _utils2 = _interopRequireDefault(_utils);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var scrollHash = {
-  mountFlag: false,
-  initialized: false,
-  scroller: null,
-  containers: {},
-
-  mount: function mount(scroller) {
-    this.scroller = scroller;
-
-    this.handleHashChange = this.handleHashChange.bind(this);
-    window.addEventListener('hashchange', this.handleHashChange);
-
-    this.initStateFromHash();
-    this.mountFlag = true;
-  },
-  mapContainer: function mapContainer(to, container) {
-    this.containers[to] = container;
-  },
-  isMounted: function isMounted() {
-    return this.mountFlag;
-  },
-  isInitialized: function isInitialized() {
-    return this.initialized;
-  },
-  initStateFromHash: function initStateFromHash() {
-    var _this = this;
-
-    var hash = this.getHash();
-    if (hash) {
-      window.setTimeout(function () {
-        _this.scrollTo(hash, true);
-        _this.initialized = true;
-      }, 10);
-    } else {
-      this.initialized = true;
-    }
-  },
-  scrollTo: function scrollTo(to, isInit) {
-    var scroller = this.scroller;
-    var element = scroller.get(to);
-    if (element && (isInit || to !== scroller.getActiveLink())) {
-      var container = this.containers[to] || document;
-      scroller.scrollTo(to, { container: container });
-    }
-  },
-  getHash: function getHash() {
-    return _utils2.default.getHash();
-  },
-  changeHash: function changeHash(to) {
-    if (this.isInitialized() && _utils2.default.getHash() !== to) {
-      _utils2.default.pushHash(to);
-    }
-  },
-  handleHashChange: function handleHashChange() {
-    this.scrollTo(this.getHash());
-  },
-  unmount: function unmount() {
-    this.scroller = null;
-    this.containers = null;
-    window.removeEventListener('hashchange', this.handleHashChange);
-  }
-};
-
-exports.default = scrollHash;
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/scroll-link.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/scroll-link.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/preact/compat/dist/compat.module.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _scrollSpy = __webpack_require__(/*! ./scroll-spy */ "./node_modules/react-scroll/modules/mixins/scroll-spy.js");
-
-var _scrollSpy2 = _interopRequireDefault(_scrollSpy);
-
-var _scroller = __webpack_require__(/*! ./scroller */ "./node_modules/react-scroll/modules/mixins/scroller.js");
-
-var _scroller2 = _interopRequireDefault(_scroller);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _scrollHash = __webpack_require__(/*! ./scroll-hash */ "./node_modules/react-scroll/modules/mixins/scroll-hash.js");
-
-var _scrollHash2 = _interopRequireDefault(_scrollHash);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var protoTypes = {
-  to: _propTypes2.default.string.isRequired,
-  containerId: _propTypes2.default.string,
-  container: _propTypes2.default.object,
-  activeClass: _propTypes2.default.string,
-  spy: _propTypes2.default.bool,
-  smooth: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
-  offset: _propTypes2.default.number,
-  delay: _propTypes2.default.number,
-  isDynamic: _propTypes2.default.bool,
-  onClick: _propTypes2.default.func,
-  duration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.func]),
-  absolute: _propTypes2.default.bool,
-  onSetActive: _propTypes2.default.func,
-  onSetInactive: _propTypes2.default.func,
-  ignoreCancelEvents: _propTypes2.default.bool,
-  hashSpy: _propTypes2.default.bool
-};
-
-exports.default = function (Component, customScroller) {
-
-  var scroller = customScroller || _scroller2.default;
-
-  var Link = function (_React$PureComponent) {
-    _inherits(Link, _React$PureComponent);
-
-    function Link(props) {
-      _classCallCheck(this, Link);
-
-      var _this = _possibleConstructorReturn(this, (Link.__proto__ || Object.getPrototypeOf(Link)).call(this, props));
-
-      _initialiseProps.call(_this);
-
-      _this.state = {
-        active: false
-      };
-      return _this;
-    }
-
-    _createClass(Link, [{
-      key: 'getScrollSpyContainer',
-      value: function getScrollSpyContainer() {
-        var containerId = this.props.containerId;
-        var container = this.props.container;
-
-        if (containerId && !container) {
-          return document.getElementById(containerId);
-        }
-
-        if (container && container.nodeType) {
-          return container;
-        }
-
-        return document;
-      }
-    }, {
-      key: 'componentDidMount',
-      value: function componentDidMount() {
-        if (this.props.spy || this.props.hashSpy) {
-          var scrollSpyContainer = this.getScrollSpyContainer();
-
-          if (!_scrollSpy2.default.isMounted(scrollSpyContainer)) {
-            _scrollSpy2.default.mount(scrollSpyContainer);
-          }
-
-          if (this.props.hashSpy) {
-            if (!_scrollHash2.default.isMounted()) {
-              _scrollHash2.default.mount(scroller);
-            }
-            _scrollHash2.default.mapContainer(this.props.to, scrollSpyContainer);
-          }
-
-          _scrollSpy2.default.addSpyHandler(this.spyHandler, scrollSpyContainer);
-
-          this.setState({
-            container: scrollSpyContainer
-          });
-        }
-      }
-    }, {
-      key: 'componentWillUnmount',
-      value: function componentWillUnmount() {
-        _scrollSpy2.default.unmount(this.stateHandler, this.spyHandler);
-      }
-    }, {
-      key: 'render',
-      value: function render() {
-        var className = "";
-
-        if (this.state && this.state.active) {
-          className = ((this.props.className || "") + " " + (this.props.activeClass || "active")).trim();
-        } else {
-          className = this.props.className;
-        }
-
-        var props = _extends({}, this.props);
-
-        for (var prop in protoTypes) {
-          if (props.hasOwnProperty(prop)) {
-            delete props[prop];
-          }
-        }
-
-        props.className = className;
-        props.onClick = this.handleClick;
-
-        return _react2.default.createElement(Component, props);
-      }
-    }]);
-
-    return Link;
-  }(_react2.default.PureComponent);
-
-  var _initialiseProps = function _initialiseProps() {
-    var _this2 = this;
-
-    this.scrollTo = function (to, props) {
-      scroller.scrollTo(to, _extends({}, _this2.state, props));
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styled */ "./src/client/app/components/board/territory/styled.ts");
+/* harmony import */ var _supplyStar_supplyStar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../supplyStar/supplyStar */ "./src/client/app/components/board/supplyStar/supplyStar.tsx");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
     };
-
-    this.handleClick = function (event) {
-
-      /*
-       * give the posibility to override onClick
-       */
-
-      if (_this2.props.onClick) {
-        _this2.props.onClick(event);
-      }
-
-      /*
-       * dont bubble the navigation
-       */
-
-      if (event.stopPropagation) event.stopPropagation();
-      if (event.preventDefault) event.preventDefault();
-
-      /*
-       * do the magic!
-       */
-      _this2.scrollTo(_this2.props.to, _this2.props);
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-
-    this.spyHandler = function (y) {
-
-      var scrollSpyContainer = _this2.getScrollSpyContainer();
-
-      if (_scrollHash2.default.isMounted() && !_scrollHash2.default.isInitialized()) {
-        return;
-      }
-
-      var to = _this2.props.to;
-      var element = null;
-      var elemTopBound = 0;
-      var elemBottomBound = 0;
-      var containerTop = 0;
-
-      if (scrollSpyContainer.getBoundingClientRect) {
-        var containerCords = scrollSpyContainer.getBoundingClientRect();
-        containerTop = containerCords.top;
-      }
-
-      if (!element || _this2.props.isDynamic) {
-        element = scroller.get(to);
-        if (!element) {
-          return;
-        }
-
-        var cords = element.getBoundingClientRect();
-        elemTopBound = cords.top - containerTop + y;
-        elemBottomBound = elemTopBound + cords.height;
-      }
-
-      var offsetY = y - _this2.props.offset;
-      var isInside = offsetY >= Math.floor(elemTopBound) && offsetY < Math.floor(elemBottomBound);
-      var isOutside = offsetY < Math.floor(elemTopBound) || offsetY >= Math.floor(elemBottomBound);
-      var activeLink = scroller.getActiveLink();
-
-      if (isOutside) {
-        if (to === activeLink) {
-          scroller.setActiveLink(void 0);
-        }
-
-        if (_this2.props.hashSpy && _scrollHash2.default.getHash() === to) {
-          _scrollHash2.default.changeHash();
-        }
-
-        if (_this2.props.spy && _this2.state.active) {
-          _this2.setState({ active: false });
-          _this2.props.onSetInactive && _this2.props.onSetInactive(to, element);
-        }
-      }
-
-      if (isInside && (activeLink !== to || _this2.state.active === false)) {
-        scroller.setActiveLink(to);
-
-        _this2.props.hashSpy && _scrollHash2.default.changeHash(to);
-
-        if (_this2.props.spy) {
-          _this2.setState({ active: true });
-          _this2.props.onSetActive && _this2.props.onSetActive(to, element);
-        }
-      }
-    };
-  };
-
-  ;
-
-  Link.propTypes = protoTypes;
-
-  Link.defaultProps = { offset: 0 };
-
-  return Link;
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/scroll-spy.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/scroll-spy.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _lodash = __webpack_require__(/*! lodash.throttle */ "./node_modules/lodash.throttle/index.js");
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _passiveEventListeners = __webpack_require__(/*! ./passive-event-listeners */ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// The eventHandler will execute at a rate of 15fps
-var eventThrottler = function eventThrottler(eventHandler) {
-  return (0, _lodash2.default)(eventHandler, 66);
-};
-
-var scrollSpy = {
-
-  spyCallbacks: [],
-  spySetState: [],
-  scrollSpyContainers: [],
-
-  mount: function mount(scrollSpyContainer) {
-    if (scrollSpyContainer) {
-      var eventHandler = eventThrottler(function (event) {
-        scrollSpy.scrollHandler(scrollSpyContainer);
-      });
-      scrollSpy.scrollSpyContainers.push(scrollSpyContainer);
-      (0, _passiveEventListeners.addPassiveEventListener)(scrollSpyContainer, 'scroll', eventHandler);
-    }
-  },
-  isMounted: function isMounted(scrollSpyContainer) {
-    return scrollSpy.scrollSpyContainers.indexOf(scrollSpyContainer) !== -1;
-  },
-  currentPositionY: function currentPositionY(scrollSpyContainer) {
-    if (scrollSpyContainer === document) {
-      var supportPageOffset = window.pageXOffset !== undefined;
-      var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
-      return supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
-    } else {
-      return scrollSpyContainer.scrollTop;
-    }
-  },
-  scrollHandler: function scrollHandler(scrollSpyContainer) {
-    var callbacks = scrollSpy.scrollSpyContainers[scrollSpy.scrollSpyContainers.indexOf(scrollSpyContainer)].spyCallbacks || [];
-    callbacks.forEach(function (c) {
-      return c(scrollSpy.currentPositionY(scrollSpyContainer));
-    });
-  },
-  addStateHandler: function addStateHandler(handler) {
-    scrollSpy.spySetState.push(handler);
-  },
-  addSpyHandler: function addSpyHandler(handler, scrollSpyContainer) {
-    var container = scrollSpy.scrollSpyContainers[scrollSpy.scrollSpyContainers.indexOf(scrollSpyContainer)];
-
-    if (!container.spyCallbacks) {
-      container.spyCallbacks = [];
-    }
-
-    container.spyCallbacks.push(handler);
-
-    handler(scrollSpy.currentPositionY(scrollSpyContainer));
-  },
-  updateStates: function updateStates() {
-    scrollSpy.spySetState.forEach(function (s) {
-      return s();
-    });
-  },
-  unmount: function unmount(stateHandler, spyHandler) {
-    scrollSpy.scrollSpyContainers.forEach(function (c) {
-      return c.spyCallbacks && c.spyCallbacks.length && c.spyCallbacks.splice(c.spyCallbacks.indexOf(spyHandler), 1);
-    });
-
-    if (scrollSpy.spySetState && scrollSpy.spySetState.length) {
-      scrollSpy.spySetState.splice(scrollSpy.spySetState.indexOf(stateHandler), 1);
-    }
-
-    document.removeEventListener('scroll', scrollSpy.scrollHandler);
-  },
-
-
-  update: function update() {
-    return scrollSpy.scrollSpyContainers.forEach(function (c) {
-      return scrollSpy.scrollHandler(c);
-    });
-  }
-};
-
-exports.default = scrollSpy;
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/scroller.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/scroller.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _animateScroll = __webpack_require__(/*! ./animate-scroll */ "./node_modules/react-scroll/modules/mixins/animate-scroll.js");
-
-var _animateScroll2 = _interopRequireDefault(_animateScroll);
-
-var _scrollEvents = __webpack_require__(/*! ./scroll-events */ "./node_modules/react-scroll/modules/mixins/scroll-events.js");
-
-var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var __mapped = {};
-var __activeLink = void 0;
-
-exports.default = {
-
-  unmount: function unmount() {
-    __mapped = {};
-  },
-
-  register: function register(name, element) {
-    __mapped[name] = element;
-  },
-
-  unregister: function unregister(name) {
-    delete __mapped[name];
-  },
-
-  get: function get(name) {
-    return __mapped[name] || document.getElementById(name) || document.getElementsByName(name)[0] || document.getElementsByClassName(name)[0];
-  },
-
-  setActiveLink: function setActiveLink(link) {
-    return __activeLink = link;
-  },
-
-  getActiveLink: function getActiveLink() {
-    return __activeLink;
-  },
-
-  scrollTo: function scrollTo(to, props) {
-
-    var target = this.get(to);
-
-    if (!target) {
-      console.warn("target Element not found");
-      return;
-    }
-
-    props = _extends({}, props, { absolute: false });
-
-    var containerId = props.containerId;
-    var container = props.container;
-
-    var containerElement = void 0;
-    if (containerId) {
-      containerElement = document.getElementById(containerId);
-    } else if (container && container.nodeType) {
-      containerElement = container;
-    } else {
-      containerElement = document;
-    }
-
-    props.absolute = true;
-
-    var scrollOffset = _utils2.default.scrollOffset(containerElement, target) + (props.offset || 0);
-
-    /*
-     * if animate is not provided just scroll into the view
-     */
-    if (!props.smooth) {
-      if (_scrollEvents2.default.registered['begin']) {
-        _scrollEvents2.default.registered['begin'](to, target);
-      }
-
-      if (containerElement === document) {
-        window.scrollTo(0, scrollOffset);
-      } else {
-        containerElement.scrollTop = scrollOffset;
-      }
-
-      if (_scrollEvents2.default.registered['end']) {
-        _scrollEvents2.default.registered['end'](to, target);
-      }
-
-      return;
-    }
-
-    /*
-     * Animate scrolling
-     */
-
-    _animateScroll2.default.animateTopScroll(scrollOffset, props, to, target);
-  }
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/smooth.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/smooth.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  /*
-   * https://github.com/oblador/angular-scroll (duScrollDefaultEasing)
-   */
-  defaultEasing: function defaultEasing(x) {
-    if (x < 0.5) {
-      return Math.pow(x * 2, 2) / 2;
-    }
-    return 1 - Math.pow((1 - x) * 2, 2) / 2;
-  },
-  /*
-   * https://gist.github.com/gre/1650294
-   */
-  // no easing, no acceleration
-  linear: function linear(x) {
-    return x;
-  },
-  // accelerating from zero velocity
-  easeInQuad: function easeInQuad(x) {
-    return x * x;
-  },
-  // decelerating to zero velocity
-  easeOutQuad: function easeOutQuad(x) {
-    return x * (2 - x);
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function easeInOutQuad(x) {
-    return x < .5 ? 2 * x * x : -1 + (4 - 2 * x) * x;
-  },
-  // accelerating from zero velocity 
-  easeInCubic: function easeInCubic(x) {
-    return x * x * x;
-  },
-  // decelerating to zero velocity π
-  easeOutCubic: function easeOutCubic(x) {
-    return --x * x * x + 1;
-  },
-  // acceleration until halfway, then deceleration 
-  easeInOutCubic: function easeInOutCubic(x) {
-    return x < .5 ? 4 * x * x * x : (x - 1) * (2 * x - 2) * (2 * x - 2) + 1;
-  },
-  // accelerating from zero velocity 
-  easeInQuart: function easeInQuart(x) {
-    return x * x * x * x;
-  },
-  // decelerating to zero velocity 
-  easeOutQuart: function easeOutQuart(x) {
-    return 1 - --x * x * x * x;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function easeInOutQuart(x) {
-    return x < .5 ? 8 * x * x * x * x : 1 - 8 * --x * x * x * x;
-  },
-  // accelerating from zero velocity
-  easeInQuint: function easeInQuint(x) {
-    return x * x * x * x * x;
-  },
-  // decelerating to zero velocity
-  easeOutQuint: function easeOutQuint(x) {
-    return 1 + --x * x * x * x * x;
-  },
-  // acceleration until halfway, then deceleration 
-  easeInOutQuint: function easeInOutQuint(x) {
-    return x < .5 ? 16 * x * x * x * x * x : 1 + 16 * --x * x * x * x * x;
-  }
-};
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll/modules/mixins/utils.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/react-scroll/modules/mixins/utils.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var pushHash = function pushHash(hash) {
-  hash = hash ? hash.indexOf("#") === 0 ? hash : "#" + hash : "";
-
-  if (history.pushState) {
-    var loc = window.location;
-    history.pushState(null, null, hash ? loc.pathname + loc.search + hash : // remove hash
-    loc.pathname + loc.search);
-  } else {
-    location.hash = hash;
-  }
-};
-
-var getHash = function getHash() {
-  return window.location.hash.replace(/^#/, "");
-};
-
-var filterElementInContainer = function filterElementInContainer(container) {
-  return function (element) {
-    return container.contains ? container != element && container.contains(element) : !!(container.compareDocumentPosition(element) & 16);
-  };
-};
-
-var scrollOffset = function scrollOffset(c, t) {
-  return c === document ? t.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) : getComputedStyle(c).position !== "static" ? t.offsetTop : t.offsetTop - c.offsetTop;
-};
-exports.default = {
-  pushHash: pushHash,
-  getHash: getHash,
-  filterElementInContainer: filterElementInContainer,
-  scrollOffset: scrollOffset
-};
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
 })();
 
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
 
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
 
-module.exports = g;
+var Territory = /** @class */ (function (_super) {
+    __extends(Territory, _super);
+    function Territory() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.handleClick = function (title) { return function () {
+            console.log(title);
+        }; };
+        _this.getTileType = function (tags) {
+            if (tags.includes('sea'))
+                return 'sea';
+            if (tags.includes('neutral'))
+                return 'neutral';
+            return 'land';
+        };
+        return _this;
+    }
+    Territory.prototype.render = function (props) {
+        var tileType = this.getTileType(props.tile.tags);
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { title: props.tile.title },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Path"], { tileType: tileType, colourId: props.colour, d: props.tile.path, onClick: props.onSelect }),
+                props.tile.textLocation && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+                    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["TerritoryName"], { textLocation: props.tile.textLocation },
+                        props.tile.tags.includes('supply') && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_supplyStar_supplyStar__WEBPACK_IMPORTED_MODULE_2__["default"], null)),
+                        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["TerritoryTitle"], null, props.tile.name.split('\n').map(function (line, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("tspan", { dy: i ? '8' : '0', x: '0', "text-anchor": 'middle' }, line)); }))))))));
+    };
+    return Territory;
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (Territory);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/unit/army/army.tsx":
+/*!************************************************************!*\
+  !*** ./src/client/app/components/board/unit/army/army.tsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../styled */ "./src/client/app/components/board/unit/styled.ts");
+
+
+var Polygon = _styled__WEBPACK_IMPORTED_MODULE_1__["Polygon"];
+var Path = _styled__WEBPACK_IMPORTED_MODULE_1__["Path"];
+var Army = function (props) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "translate(" + (props.location.x - 11) + " " + (props.location.y - 20) + ") scale(0.055)" },
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M145.687,374.175c0-13.504-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455\n        s10.951,24.455,24.467,24.455C134.736,398.63,145.687,387.679,145.687,374.175z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M231.205,378.426c0-11.159-9.045-20.204-20.204-20.204c-11.147,0-20.192,9.045-20.192,20.204\n        s9.045,20.204,20.192,20.204C222.16,398.63,231.205,389.585,231.205,378.426z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M332.952,372.615c0-14.37-11.656-26.026-26.026-26.026c-14.359,0-26.014,11.656-26.014,26.026\n        c0,14.37,11.656,26.014,26.014,26.014C321.297,398.63,332.952,386.986,332.952,372.615z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M392.975,358.557c4.875-3.315,8.075-8.906,8.075-15.248c0-10.177-8.259-18.437-18.437-18.437\n        c-10.189,0-18.448,8.259-18.448,18.437c0,10.189,8.259,18.437,18.448,18.437C386.448,361.745,390.029,360.567,392.975,358.557z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#999999;', d: 'M31.025,369.289c2.403,0.866,4.99,1.34,7.693,1.34c12.441,0,22.537-10.085,22.537-22.537\n        c0-12.441-10.096-22.537-22.537-22.537c-12.453,0-22.537,10.096-22.537,22.537c0,9.727,6.157,18.009,14.786,21.174\n        C30.99,369.265,31.002,369.277,31.025,369.289z' })),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#FFFFFF', d: 'M233.099,174.515v14.151h-5.302H165.73v-14.151c0-6.758,5.476-12.233,12.233-12.233h42.903\n        C227.624,162.282,233.099,167.757,233.099,174.515z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Polygon, { colourId: props.colour, shade: 'light', points: '488.196,113.372 503.34,150.129 444.761,174.261 442.162,167.942 432.216,143.834\n        429.617,137.515 \t' })),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'medium', d: 'M432.216,143.834l9.946,24.108l-155.036,63.904l-2.16,0.289c-2.299-8.294-6.388-16.045-12.037-22.653\n      L432.216,143.834z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'shadow', d: 'M392.975,358.557l-29.445,28.244c-7.901,7.589-18.437,11.829-29.388,11.829h-27.216\n      c14.37,0,26.026-11.644,26.026-26.014c0-14.37-11.656-26.026-26.026-26.026c-14.359,0-26.014,11.656-26.014,26.026\n      c0,14.37,11.656,26.014,26.014,26.014h-95.926c11.159,0,20.204-9.045,20.204-20.204s-9.045-20.204-20.204-20.204\n      c-11.147,0-20.192,9.045-20.192,20.204s9.045,20.204,20.192,20.204h-89.768c13.504,0,24.455-10.951,24.455-24.455\n      s-10.951-24.455-24.455-24.455c-13.516,0-24.467,10.951-24.467,24.455s10.951,24.455,24.467,24.455h-18.102\n      c-6.457,0-12.846-1.259-18.829-3.685l-53.277-25.656c2.403,0.866,4.99,1.34,7.693,1.34c12.441,0,22.537-10.085,22.537-22.537\n      c0-12.441-10.096-22.537-22.537-22.537l343.895-0.682c-10.189,0-18.448,8.259-18.448,18.437c0,10.189,8.259,18.437,18.448,18.437\n      C386.448,361.745,390.029,360.567,392.975,358.557z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'light', d: 'M287.127,247.995v11.171H106.4v-11.171c0-7.867,1.559-15.572,4.517-22.711\n      c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374h62.067c7.867,0,15.572,1.559,22.711,4.517\n      c7.127,2.946,13.677,7.289,19.245,12.857c1.109,1.109,2.172,2.253,3.177,3.442c5.649,6.608,9.738,14.359,12.037,22.653\n      C286.387,237.252,287.127,242.589,287.127,247.995z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Path, { colourId: props.colour, shade: 'medium', d: 'M157.699,225.286c2.957-7.127,7.301-13.677,12.857-19.245c11.124-11.124,26.222-17.374,41.956-17.374\n      H165.73c-15.733,0-30.832,6.249-41.956,17.374c-5.556,5.568-9.9,12.118-12.857,19.245c-2.957,7.139-4.517,14.844-4.517,22.711\n      v11.171h46.782v-11.171C153.182,240.129,154.742,232.424,157.699,225.286z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Polygon, { colourId: props.colour, shade: 'light', points: '352.336,294.572 56.069,294.572 41.191,294.572 59.823,259.166 106.4,259.166\n      287.127,259.166 307.619,259.166 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(Polygon, { colourId: props.colour, shade: 'medium', points: '106.4,259.166 59.823,259.166 41.191,294.573 56.069,294.573 101.835,294.573\n      120.468,259.166 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M382.607,316.208c-0.006,0-343.907,0.684-343.907,0.684c-17.196,0.009-31.184,14.002-31.184,31.2\n        c0,13.229,8.28,24.554,19.928,29.085l53.095,25.569c0.163,0.079,0.329,0.152,0.497,0.221c7.063,2.869,14.497,4.325,22.097,4.325\n        h231.004c13.26,0,25.83-5.056,35.396-14.238l28.988-27.821c6.775-4.931,11.191-12.918,11.191-21.921\n        C409.711,328.367,397.552,316.208,382.607,316.208z M392.384,343.312c0,5.39-4.385,9.775-9.775,9.775\n        c-5.391,0-9.776-4.385-9.776-9.775c0-5.391,4.385-9.776,9.776-9.776C387.997,333.536,392.384,337.921,392.384,343.312z\n        M38.717,334.219c7.65,0,13.874,6.224,13.874,13.874s-6.224,13.874-13.874,13.874s-13.874-6.224-13.874-13.874\n        S31.068,334.219,38.717,334.219z M105.434,374.174c0-8.709,7.085-15.794,15.794-15.794s15.794,7.085,15.794,15.794\n        c0,8.694-7.062,15.766-15.748,15.79h-0.089C112.496,389.94,105.434,382.866,105.434,374.174z M199.469,378.428\n        c0-6.362,5.176-11.538,11.538-11.538s11.538,5.175,11.538,11.538c0,6.346-5.152,11.511-11.493,11.536h-0.089\n        C204.621,389.94,199.469,384.776,199.469,378.428z M289.577,372.611c0-9.569,7.786-17.355,17.355-17.355\n        c9.569,0,17.355,7.786,17.355,17.355c0,9.554-7.762,17.329-17.31,17.353h-0.089C297.338,389.94,289.577,382.165,289.577,372.611z\n        M357.534,380.554c-5.693,5.464-12.998,8.709-20.794,9.303c3.092-4.924,4.876-10.78,4.876-17.244\n        c0-19.124-15.559-34.683-34.683-34.683c-19.124,0-34.683,15.559-34.683,34.683c0,6.512,1.807,12.407,4.941,17.353h-39.867\n        c1.632-3.435,2.548-7.318,2.548-11.536c0-15.916-12.948-28.865-28.865-28.865s-28.865,12.948-28.865,28.865\n        c0,4.218,0.916,8.099,2.548,11.536h-34.373c2.561-4.698,4.032-10.073,4.032-15.79c0-18.263-14.858-33.121-33.121-33.121\n        s-33.12,14.857-33.12,33.12c0,5.018,1.138,9.77,3.144,14.038c-1.162-0.35-2.314-0.746-3.451-1.2l-29.852-14.376\n        c7.28-5.717,11.97-14.59,11.97-24.543c0-5.004-1.191-9.733-3.293-13.929l290.691-0.578c-1.166,3.021-1.811,6.299-1.811,9.725\n        c0,10.747,6.286,20.051,15.375,24.432L357.534,380.554z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M511.348,146.824l-15.147-36.751c-0.876-2.124-2.559-3.814-4.681-4.697\n        c-2.122-0.884-4.506-0.888-6.631-0.012l-58.573,24.14c-3.843,1.584-5.934,5.613-5.224,9.544l-145.962,60.159\n        c-9.356-9.084-20.866-15.17-33.372-17.767v-6.931c0-11.519-9.372-20.89-20.89-20.89h-42.912c-11.519,0-20.89,9.371-20.89,20.89\n        v6.055c-14.879,1.881-28.64,8.575-39.417,19.351c-12.843,12.843-19.916,29.918-19.916,48.081v2.509H59.819\n        c-3.217,0-6.169,1.782-7.667,4.629l-17.417,33.091c-6.136,1.343-12.155,3.248-18.008,5.756L5.253,298.9\n        c-4.398,1.885-6.435,6.978-4.55,11.376c1.885,4.399,6.978,6.434,11.376,4.55l11.474-4.918c10.334-4.429,21.275-6.675,32.519-6.675\n        H352.34h34.438l18.97,12.851c1.489,1.008,3.179,1.492,4.852,1.492c2.777,0,5.506-1.333,7.181-3.805\n        c2.683-3.962,1.647-9.349-2.314-12.032l-21.171-14.341c-1.435-0.971-3.127-1.491-4.86-1.491h-34.08l-42.353-33.53\n        c-1.531-1.212-3.425-1.871-5.377-1.871h-11.831v-2.509c0-3.395-0.248-6.752-0.734-10.05l142.596-58.769\n        c1.629,2.361,4.303,3.754,7.115,3.754c1.1,0,2.218-0.211,3.298-0.656l58.573-24.14c2.124-0.876,3.814-2.559,4.697-4.681\n        C512.22,151.333,512.224,148.949,511.348,146.824z M174.395,174.509c0-1.965,1.598-3.563,3.563-3.563h42.912\n        c1.965,0,3.563,1.598,3.563,3.563v5.492h-50.037L174.395,174.509L174.395,174.509z M327.44,285.907H56.075h-0.536l9.512-18.074\n        h239.561L327.44,285.907z M115.063,250.506v-2.509c0-13.534,5.271-26.257,14.84-35.828c9.569-9.569,22.294-14.84,35.828-14.84\n        h62.066c13.534,0,26.258,5.271,35.828,14.84c9.569,9.571,14.841,22.295,14.841,35.828v2.509H115.063z M286.322,213.337\n        l141.191-58.192l1.635,3.96l1.704,4.134l-140.552,57.928C289.144,218.478,287.822,215.862,286.322,213.337z M449.479,162.952\n        l-4.524-10.961l-4.025-9.767l42.552-17.538l8.544,20.731L449.479,162.952z' })))); };
+/* harmony default export */ __webpack_exports__["default"] = (Army);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/unit/fleet/fleet.tsx":
+/*!**************************************************************!*\
+  !*** ./src/client/app/components/board/unit/fleet/fleet.tsx ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../styled */ "./src/client/app/components/board/unit/styled.ts");
+
+
+var Fleet = function (props) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", { transform: "translate(" + (props.location.x - 10) + " " + (props.location.y - 20) + ") scale(0.05)" },
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Path"], { colourId: props.colour, shade: 'light', d: 'M128.904,85.83v64.869H97.813c-9.197,0-16.655-7.458-16.655-16.655v-31.559\n      c0-9.197,7.458-16.655,16.655-16.655H128.904z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Path"], { colourId: props.colour, shade: 'light', d: 'M176.638,102.485v31.559c0,9.197-7.458,16.655-16.655,16.655h-31.079V85.83h31.079\n      C169.18,85.83,176.638,93.288,176.638,102.485z' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("rect", { x: '60.444', y: '182.688', style: 'fill:#CCCCCC;', width: '136.92', height: '47.866' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("polygon", { style: 'fill:#CCCCCC;', points: '219.073,261.143 219.073,309.213 38.723,309.213 38.723,230.556 60.438,230.556\n        197.358,230.556 219.073,230.556 \t' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill:#CCCCCC;', d: 'M437.576,228.193c4.532,5.767,7.23,13.046,7.23,20.947v15.947h-101.68v-49.881h67.758\n        C421.725,215.208,431.365,220.292,437.576,228.193z' })),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Polygon"], { colourId: props.colour, shade: 'medium', points: '497.253,265.088 447.876,391.276 26.241,391.276 26.229,391.276 8.987,309.213\n      38.723,309.213 219.073,309.213 286.22,309.213 309.242,265.088 343.127,265.088 444.806,265.088 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_styled__WEBPACK_IMPORTED_MODULE_1__["Polygon"], { colourId: props.colour, shade: 'shadow', points: '447.876,391.276 428.187,441.589 36.805,441.589 26.229,391.276 26.241,391.276 ' }),
+    Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("g", null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black;', d: 'M512,228.19c0-4.966-4.025-8.993-8.993-8.993h-61.414c-7.801-7.999-18.682-12.979-30.711-12.979\n        h-67.75c-4.968,0-8.993,4.026-8.993,8.993v40.888h-24.901c-3.35,0-6.422,1.862-7.973,4.833l-20.5,39.293h-52.704v-60.673h4.685\n        c4.966,0,8.993-4.026,8.993-8.993c0-4.966-4.026-8.993-8.993-8.993h-13.678h-12.717V191.68h9.71c4.966,0,8.993-4.026,8.993-8.993\n        s-4.026-8.993-8.993-8.993h-78.169v-13.999h22.088c14.143,0,25.65-11.506,25.65-25.65v-31.557c0-14.143-11.506-25.65-25.65-25.65\n        h-22.088v-6.432c0-4.966-4.026-8.993-8.993-8.993c-4.966,0-8.993,4.026-8.993,8.993v6.432H97.819\n        c-14.143,0-25.65,11.506-25.65,25.65v31.555c0,14.143,11.506,25.65,25.65,25.65h22.088v13.999H41.738\n        c-4.966,0-8.993,4.026-8.993,8.993s4.026,8.993,8.993,8.993h9.71v29.886H38.729H25.053c-4.966,0-8.993,4.026-8.993,8.993\n        c0,4.966,4.026,8.993,8.993,8.993h4.683v60.673H8.993c-2.71,0-5.275,1.222-6.982,3.325c-1.707,2.103-2.375,4.866-1.819,7.517\n        L28.01,443.442c0.875,4.163,4.547,7.144,8.801,7.144h391.375c3.701,0,7.025-2.269,8.374-5.716l69.067-176.503\n        c1.083-2.767,0.728-5.892-0.947-8.347s-4.456-3.923-7.427-3.923h-43.448v-6.957c0-4.15-0.603-8.161-1.707-11.959h50.909\n        C507.975,237.183,512,233.156,512,228.19z M159.98,94.825c4.225,0,7.664,3.438,7.664,7.664v31.555c0,4.225-3.438,7.664-7.664,7.664\n        h-22.088V94.825H159.98z M97.819,141.708c-4.225,0-7.664-3.438-7.664-7.664v-31.555c0-4.225,3.438-7.664,7.664-7.664h22.088v46.884\n        H97.819z M69.434,191.68h118.932v29.886H69.434V191.68z M47.722,239.552h162.353v12.602H73.169c-4.966,0-8.993,4.026-8.993,8.993\n        s4.026,8.993,8.993,8.993h136.908v30.085H47.722V239.552z M422.048,432.602H44.111l-6.795-32.336h397.386L422.048,432.602z\n        M441.739,382.28H33.536l-13.464-64.069h266.145c3.35,0,6.422-1.862,7.973-4.833l20.501-39.293h169.386L441.739,382.28z\n        M352.124,256.099v-31.895h58.757c13.751,0,24.938,11.187,24.938,24.938v6.957H352.124z' }),
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { style: 'fill: black', d: 'M411.239,336.676c-4.968,0-8.993,4.026-8.993,8.993c0,2.975-2.421,5.396-5.396,5.396\n        c-2.975,0-5.397-2.421-5.397-5.396v-35.492c0-4.966-4.025-8.993-8.993-8.993s-8.993,4.026-8.993,8.993v35.492\n        c0,2.975-2.421,5.396-5.396,5.396c-2.975,0-5.396-2.421-5.396-5.396c0-4.966-4.025-8.993-8.993-8.993s-8.993,4.026-8.993,8.993\n        c0,12.892,10.489,23.382,23.382,23.382c5.428,0,10.416-1.875,14.389-4.99c3.972,3.115,8.962,4.99,14.39,4.99\n        c12.892,0,23.382-10.489,23.382-23.382C420.232,340.703,416.207,336.676,411.239,336.676z' })))); };
+/* harmony default export */ __webpack_exports__["default"] = (Fleet);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/unit/styled.ts":
+/*!********************************************************!*\
+  !*** ./src/client/app/components/board/unit/styled.ts ***!
+  \********************************************************/
+/*! exports provided: Path, Polygon */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Path", function() { return Path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Polygon", function() { return Polygon; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../variables/empireColours */ "./src/client/app/variables/empireColours.ts");
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+var Path = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].path(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  fill: ", "\n"], ["\n  fill: ", "\n"])), function (_a) {
+    var colourId = _a.colourId, shade = _a.shade;
+    return _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__["default"][colourId + "_" + shade];
+});
+var Polygon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].polygon(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  fill: ", "\n"], ["\n  fill: ", "\n"])), function (_a) {
+    var colourId = _a.colourId, shade = _a.shade;
+    return _variables_empireColours__WEBPACK_IMPORTED_MODULE_1__["default"][colourId + "_" + shade];
+});
+var templateObject_1, templateObject_2;
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/board/unit/unit.tsx":
+/*!*******************************************************!*\
+  !*** ./src/client/app/components/board/unit/unit.tsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _army_army__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./army/army */ "./src/client/app/components/board/unit/army/army.tsx");
+/* harmony import */ var _fleet_fleet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./fleet/fleet */ "./src/client/app/components/board/unit/fleet/fleet.tsx");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+var Unit = /** @class */ (function (_super) {
+    __extends(Unit, _super);
+    function Unit() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Unit.prototype.render = function (props, state) {
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            props.unitType === 'Army' &&
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_army_army__WEBPACK_IMPORTED_MODULE_1__["default"], { viewBox: props.viewBox, location: props.location, empire: props.empire, colour: props.colour }),
+            props.unitType === 'Fleet' &&
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_fleet_fleet__WEBPACK_IMPORTED_MODULE_2__["default"], { viewBox: props.viewBox, location: props.location, empire: props.empire, colour: props.colour })));
+    };
+    return Unit;
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (Unit);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/ordersBox/orderDropdown.tsx":
+/*!***************************************************************!*\
+  !*** ./src/client/app/components/ordersBox/orderDropdown.tsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @client/app/_helpers/checkTag */ "./src/client/app/_helpers/checkTag.ts");
+/* harmony import */ var _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @shared/resources/countryData */ "./src/shared/resources/countryData.ts");
+/* harmony import */ var _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @shared/types/enums/UnitType */ "./src/shared/types/enums/UnitType.ts");
+
+
+
+
+
+var getOrderTypes = function (unit) {
+    var orderTypes = ['hold', 'move', 'support',];
+    if (unit.unitType === _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_4__["default"].FLEET && Object(_client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_2__["default"])(unit.location, 'sea')) {
+        orderTypes.push('convoy');
+    }
+    if (unit.unitType === _shared_types_enums_UnitType__WEBPACK_IMPORTED_MODULE_4__["default"].ARMY && Object(_client_app_helpers_checkTag__WEBPACK_IMPORTED_MODULE_2__["default"])(unit.location, 'coastal')) {
+        orderTypes.push('moveViaConvoy');
+    }
+    return orderTypes;
+};
+var OrderDropdown = function (props) {
+    var _a = Object(preact_hooks__WEBPACK_IMPORTED_MODULE_1__["useState"])(props.order || { moveType: 'hold' }), order = _a[0], setOrder = _a[1];
+    var orderTypes = getOrderTypes(props.unit);
+    var handleMoveTypeChange = function (event) {
+        props.removeOrder(props.unit.location);
+        var orderType = event.target.value;
+        props.updateOrderType(props.unit.location, orderType);
+        console.log('orderType:', orderType);
+        if (['hold', 'disband'].includes(orderType)) {
+            props.completeOrder(props.unit.location);
+        }
+    };
+    var handleDestinationChange = function (destinationType) { return function (event) {
+        var destination = event.target.value;
+        props.updateLocation(props.unit.location, destination, destinationType);
+        if (destinationType === 'to') {
+            props.completeOrder(props.unit.location);
+        }
+    }; };
+    var text = {
+        support: 'support unit at',
+        convoy: 'convoy unit at',
+    };
+    var fromType = {
+        support: 'supportFrom',
+        convoy: 'convoyFrom',
+    };
+    console.log('Rendering Order Dropdown. order.moveType:', order.moveType);
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, props.unit.unitType + " in " + props.unit.location + " will ",
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select', onChange: handleMoveTypeChange }, orderTypes.map(function (orderType, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { value: orderType, key: "ordertype-" + i }, orderType)); })),
+        ['move', 'retreat', 'moveViaConvoy'].includes(order.moveType) && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            "to",
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select', onChange: handleDestinationChange('to') }, _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_3__["provinces"].map(function (province, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { value: province, key: "ordertype-" + i }, province)); })))),
+        (order.moveType === 'support' || order.moveType === 'convoy') && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            text[order.moveType],
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select', onChange: handleDestinationChange(fromType[order.moveType]) }, _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_3__["provinces"].map(function (province, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { value: province, key: "ordertype-" + i }, province)); })),
+            "to",
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("select", { type: 'select', onChange: handleDestinationChange(fromType[order.moveType]) }, _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_3__["provinces"].map(function (province, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("option", { value: province, key: "ordertype-" + i }, province)); }))))));
+};
+/* harmony default export */ __webpack_exports__["default"] = (OrderDropdown);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/ordersBox/ordersBox.tsx":
+/*!***********************************************************!*\
+  !*** ./src/client/app/components/ordersBox/ordersBox.tsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _orderDropdown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./orderDropdown */ "./src/client/app/components/ordersBox/orderDropdown.tsx");
+
+
+var OrdersBox = function (props) {
+    console.log('props.playerOrders:', props.playerOrders);
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { style: "border: 1px black; font-family: 'palantino';" },
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("h3", null, "THE PROBLEM IS THAT THE PLAYERORDERS AREN'T BEING SET WHEN THE MOVES ARE BEING LOADED"),
+        props.playerUnits.map(function (unit, i) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("div", { key: "ownedUnits-" + i },
+            Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_orderDropdown__WEBPACK_IMPORTED_MODULE_1__["default"], { unit: unit, order: props.playerOrders.get(unit.location), updateLocation: props.updateLocation, updateOrderType: props.updateOrderType, completeOrder: props.completeOrder, removeOrder: props.removeOrder }))); })));
+};
+/* harmony default export */ __webpack_exports__["default"] = (OrdersBox);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/ordersLayer/order/order.tsx":
+/*!***************************************************************!*\
+  !*** ./src/client/app/components/ordersLayer/order/order.tsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var Order = /** @class */ (function (_super) {
+    __extends(Order, _super);
+    function Order() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.getLocation = function (property) {
+            var territory = _this.props.boardData.territories.find(function (t) { return t.title === _this.props.order[property]; });
+            if (!territory)
+                return '';
+            return territory.textLocation.x + "," + territory.textLocation.y;
+        };
+        _this.getMarkerColour = function (moveType) {
+            switch (moveType) {
+                case 'move': return 'lightgray';
+                case 'support': return 'brown';
+                case 'retreat': return 'blue';
+                default: return '';
+            }
+        };
+        _this.calculateLocation = function (fromLocation, toLocation) {
+            var distanceFromEnd = 10;
+            var _a = fromLocation.split(',').map(function (n) { return parseInt(n, 10); }), fromX = _a[0], fromY = _a[1];
+            var _b = toLocation.split(',').map(function (n) { return parseInt(n, 10); }), toX = _b[0], toY = _b[1];
+            var lineLength = Math.sqrt(Math.pow((fromX - toX), 2) + Math.pow((fromY - toY), 2));
+            var t = distanceFromEnd / lineLength;
+            console.log('fromLocation, toLocation:', fromLocation, toLocation);
+            console.log('fromX, fromY, toX, toY:', fromX, fromY, toX, toY);
+            var x = ((1 - t) * toX) + (t * fromX);
+            var y = ((1 - t) * toY) + (t * fromY);
+            return x + "," + y;
+        };
+        return _this;
+    }
+    Order.prototype.render = function (props, state) {
+        var fromLocation = this.getLocation('from');
+        var toLocation = this.getLocation('to');
+        var supportFromLocation = this.getLocation('supportFrom');
+        var markerColour = this.getMarkerColour(props.order.moveType);
+        return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+            props.order.moveType === 'support' && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "marker-end": 'url(#head-support)', "stroke-width": '2', fill: 'transparent', stroke: markerColour, d: "M" + this.calculateLocation(toLocation, fromLocation) + " Q" + supportFromLocation + " " + this.calculateLocation(supportFromLocation, toLocation) }),
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "stroke-width": '4', fill: 'transparent', stroke: '#FF000088', d: "M" + this.calculateLocation(toLocation, supportFromLocation) + " L " + this.calculateLocation(supportFromLocation, toLocation) }))),
+            props.order.moveType === 'move' && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { "marker-end": 'url(#head-move)', "stroke-width": '2', stroke: 'lightgray', d: "M" + this.calculateLocation(toLocation, fromLocation) + " L" + this.calculateLocation(fromLocation, toLocation) }))));
+    };
+    return Order;
+}(preact__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (Order);
+
+
+/***/ }),
+
+/***/ "./src/client/app/components/ordersLayer/ordersLayer.tsx":
+/*!***************************************************************!*\
+  !*** ./src/client/app/components/ordersLayer/ordersLayer.tsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _order_order__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./order/order */ "./src/client/app/components/ordersLayer/order/order.tsx");
+
+
+var OrdersLayer = function (props) {
+    var markerColours = {
+        support: 'brown',
+        move: 'lightgray',
+        retreat: 'blue',
+    };
+    var orders = Array.from(props.orders.values());
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("defs", null, Object.entries(markerColours).map(function (_a) {
+            var moveType = _a[0], colour = _a[1];
+            return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("marker", { id: "head-" + moveType, orient: 'auto', markerWidth: '2', markerHeight: '4', refX: '0.1', refY: '2' },
+                Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])("path", { d: 'M0,0 V4 L2,2 Z', fill: colour })));
+        })),
+        orders.map(function (order) { return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_order_order__WEBPACK_IMPORTED_MODULE_1__["default"], { key: "order-from-" + order.from, order: order, boardData: props.boardData })); })));
+};
+/* harmony default export */ __webpack_exports__["default"] = (OrdersLayer);
+
+
+/***/ }),
+
+/***/ "./src/client/app/hooks/useFetchGame.ts":
+/*!**********************************************!*\
+  !*** ./src/client/app/hooks/useFetchGame.ts ***!
+  \**********************************************/
+/*! exports provided: useFetchGame */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useFetchGame", function() { return useFetchGame; });
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _pages_game_state_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pages/game/state/actions */ "./src/client/app/pages/game/state/actions.ts");
+/* harmony import */ var _services_gameService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/gameService */ "./src/client/app/services/gameService.ts");
+
+
+
+var useFetchGame = function (gameID, dispatch) { return Object(preact_hooks__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    Object(_services_gameService__WEBPACK_IMPORTED_MODULE_2__["getGame"])(gameID)
+        .then(function (game) {
+        dispatch({ type: _pages_game_state_actions__WEBPACK_IMPORTED_MODULE_1__["ActionType"].setGame, payload: game });
+        return game;
+    })
+        .then(function (game) { return Object(_services_gameService__WEBPACK_IMPORTED_MODULE_2__["getTurn"])(game.currentTurn); })
+        .then(function (turn) {
+        dispatch({ type: _pages_game_state_actions__WEBPACK_IMPORTED_MODULE_1__["ActionType"].setTurn, payload: turn });
+        return turn;
+    })
+        .then(function (turn) { return dispatch({ type: _pages_game_state_actions__WEBPACK_IMPORTED_MODULE_1__["ActionType"].loadMoves, payload: turn }); })
+        .catch(function (error) { return console.error(error); });
+}, [gameID]); };
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/game/newGame.tsx":
+/*!***********************************************!*\
+  !*** ./src/client/app/pages/game/newGame.tsx ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shared/resources/countryData */ "./src/shared/resources/countryData.ts");
+/* harmony import */ var _client_app_components_board_newBoard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @client/app/components/board/newBoard */ "./src/client/app/components/board/newBoard.tsx");
+/* harmony import */ var _state_gameReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./state/gameReducer */ "./src/client/app/pages/game/state/gameReducer.ts");
+/* harmony import */ var _state_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./state/actions */ "./src/client/app/pages/game/state/actions.ts");
+/* harmony import */ var _client_app_hooks_useFetchGame__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @client/app/hooks/useFetchGame */ "./src/client/app/hooks/useFetchGame.ts");
+/* harmony import */ var _client_app_components_ordersBox_ordersBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @client/app/components/ordersBox/ordersBox */ "./src/client/app/components/ordersBox/ordersBox.tsx");
+/* harmony import */ var _client_utils_getPlayer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @client/utils/getPlayer */ "./src/client/utils/getPlayer.ts");
+
+
+
+
+
+
+
+
+
+var initialState = {
+    game: null,
+    turn: null,
+    isInteractive: true,
+    orders: new Map(),
+    playerOrders: new Map()
+};
+var Game = function (props) {
+    var _a = Object(preact_hooks__WEBPACK_IMPORTED_MODULE_1__["useReducer"])(_state_gameReducer__WEBPACK_IMPORTED_MODULE_4__["gameReducer"], initialState), state = _a[0], dispatch = _a[1];
+    Object(_client_app_hooks_useFetchGame__WEBPACK_IMPORTED_MODULE_6__["useFetchGame"])(props.gameID, dispatch);
+    var onTerritoryClick = function (t) { return function () { return console.log(t + " was clicked"); }; };
+    var updateLocation = function (location, destination, destinationType) {
+        return dispatch({ type: _state_actions__WEBPACK_IMPORTED_MODULE_5__["ActionType"].setLocation, payload: { location: location, destination: destination, destinationType: destinationType } });
+    };
+    var updateOrderType = function (location, orderType) {
+        return dispatch({ type: _state_actions__WEBPACK_IMPORTED_MODULE_5__["ActionType"].setOrderType, payload: { location: location, orderType: orderType } });
+    };
+    var completeOrder = function (location) {
+        return dispatch({ type: _state_actions__WEBPACK_IMPORTED_MODULE_5__["ActionType"].addMove, payload: { location: location } });
+    };
+    var removeOrder = function (location) {
+        return dispatch({ type: _state_actions__WEBPACK_IMPORTED_MODULE_5__["ActionType"].deleteMove, payload: { location: location } });
+    };
+    return (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(preact__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null,
+        Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_board_newBoard__WEBPACK_IMPORTED_MODULE_3__["default"], { boardData: _shared_resources_countryData__WEBPACK_IMPORTED_MODULE_2__["default"], turnData: state.turn, orders: state.orders, onTerritoryClick: onTerritoryClick }),
+        state.turn && (Object(preact__WEBPACK_IMPORTED_MODULE_0__["h"])(_client_app_components_ordersBox_ordersBox__WEBPACK_IMPORTED_MODULE_7__["default"], { updateLocation: updateLocation, updateOrderType: updateOrderType, completeOrder: completeOrder, removeOrder: removeOrder, playerUnits: Object(_client_utils_getPlayer__WEBPACK_IMPORTED_MODULE_8__["getPlayer"])(state.turn, props.userID).ownedUnits, playerOrders: state.playerOrders }))));
+};
+/* harmony default export */ __webpack_exports__["default"] = (Game);
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/game/state/actions.ts":
+/*!****************************************************!*\
+  !*** ./src/client/app/pages/game/state/actions.ts ***!
+  \****************************************************/
+/*! exports provided: ActionType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActionType", function() { return ActionType; });
+var ActionType;
+(function (ActionType) {
+    ActionType[ActionType["setOrderType"] = 0] = "setOrderType";
+    ActionType[ActionType["setLocation"] = 1] = "setLocation";
+    ActionType[ActionType["loadMoves"] = 2] = "loadMoves";
+    ActionType[ActionType["addMove"] = 3] = "addMove";
+    ActionType[ActionType["deleteMove"] = 4] = "deleteMove";
+    ActionType[ActionType["setGame"] = 5] = "setGame";
+    ActionType[ActionType["setTurn"] = 6] = "setTurn";
+})(ActionType || (ActionType = {}));
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/game/state/gameReducer.ts":
+/*!********************************************************!*\
+  !*** ./src/client/app/pages/game/state/gameReducer.ts ***!
+  \********************************************************/
+/*! exports provided: gameReducer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "gameReducer", function() { return gameReducer; });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./src/client/app/pages/game/state/actions.ts");
+/* harmony import */ var _ordersReducer_ordersReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ordersReducer/ordersReducer */ "./src/client/app/pages/game/state/ordersReducer/ordersReducer.ts");
+/* harmony import */ var _playerOrdersReducer_playerOrdersReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./playerOrdersReducer/playerOrdersReducer */ "./src/client/app/pages/game/state/playerOrdersReducer/playerOrdersReducer.ts");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+
+
+var miscReducer = function (state, action) {
+    switch (action.type) {
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].setGame: {
+            var game = action.payload;
+            return __assign(__assign({}, state), { game: game });
+        }
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].setTurn: {
+            var turn = action.payload;
+            return __assign(__assign({}, state), { turn: turn });
+        }
+        default: {
+            return state;
+        }
+    }
+};
+var gameReducer = function (state, action) {
+    var newState = __assign(__assign(__assign(__assign({}, state), Object(_ordersReducer_ordersReducer__WEBPACK_IMPORTED_MODULE_1__["ordersReducer"])(state, action)), Object(_playerOrdersReducer_playerOrdersReducer__WEBPACK_IMPORTED_MODULE_2__["playerOrdersReducer"])(state, action)), miscReducer(state, action));
+    return newState;
+};
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/game/state/ordersReducer/ordersReducer.ts":
+/*!************************************************************************!*\
+  !*** ./src/client/app/pages/game/state/ordersReducer/ordersReducer.ts ***!
+  \************************************************************************/
+/*! exports provided: ordersReducer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ordersReducer", function() { return ordersReducer; });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions */ "./src/client/app/pages/game/state/actions.ts");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+var ordersReducer = function (state, action) {
+    var orders = new Map(state.orders);
+    switch (action.type) {
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].loadMoves: {
+            var moves = action.payload.players.map(function (p) { return p.moves; }).flat(1);
+            moves.forEach(function (m) { return orders.set(m.from, m); });
+            return __assign(__assign({}, state), { orders: orders });
+        }
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].addMove: {
+            var location_1 = action.payload.location;
+            var newMove = state.playerOrders.get(location_1);
+            orders.set(newMove.from, newMove);
+            return __assign(__assign({}, state), { orders: orders });
+        }
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].deleteMove: {
+            orders.delete(action.payload.location);
+            return __assign(__assign({}, state), { orders: orders });
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/game/state/playerOrdersReducer/changeMoveType.ts":
+/*!*******************************************************************************!*\
+  !*** ./src/client/app/pages/game/state/playerOrdersReducer/changeMoveType.ts ***!
+  \*******************************************************************************/
+/*! exports provided: changeMoveType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeMoveType", function() { return changeMoveType; });
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var changeMoveType = function (moveType, move) {
+    var newMove = __assign(__assign({}, move), { moveType: moveType });
+    switch (moveType) {
+        case 'hold':
+        case 'disband':
+            return (__assign(__assign({}, newMove), { to: null, supportFrom: null, convoyFrom: null, buildType: null, wasSuccessful: null }));
+        case 'move':
+        case 'moveViaConvoy':
+        case 'retreat':
+            return (__assign(__assign({}, newMove), { supportFrom: null, convoyFrom: null, buildType: null, wasSuccessful: null }));
+        case 'support': return (__assign(__assign({}, newMove), { convoyFrom: null, buildType: null, wasSuccessful: null }));
+        case 'convoy': return (__assign(__assign({}, newMove), { to: null, supportFrom: null, buildType: null, wasSuccessful: null }));
+        case 'build': return (__assign(__assign({}, newMove), { to: null, supportFrom: null, convoyFrom: null, wasSuccessful: null }));
+    }
+};
+
+
+/***/ }),
+
+/***/ "./src/client/app/pages/game/state/playerOrdersReducer/playerOrdersReducer.ts":
+/*!************************************************************************************!*\
+  !*** ./src/client/app/pages/game/state/playerOrdersReducer/playerOrdersReducer.ts ***!
+  \************************************************************************************/
+/*! exports provided: playerOrdersReducer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playerOrdersReducer", function() { return playerOrdersReducer; });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions */ "./src/client/app/pages/game/state/actions.ts");
+/* harmony import */ var _changeMoveType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./changeMoveType */ "./src/client/app/pages/game/state/playerOrdersReducer/changeMoveType.ts");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+
+var playerOrdersReducer = function (state, action) {
+    var _a;
+    var newPlayerOrders = new Map(state.playerOrders);
+    switch (action.type) {
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].setOrderType: {
+            var order = newPlayerOrders.get(action.payload.location);
+            var newMove = Object(_changeMoveType__WEBPACK_IMPORTED_MODULE_1__["changeMoveType"])(action.payload.orderType, order);
+            newPlayerOrders.set(newMove.from, newMove);
+            return __assign(__assign({}, state), { playerOrders: newPlayerOrders });
+        }
+        case _actions__WEBPACK_IMPORTED_MODULE_0__["ActionType"].setLocation: {
+            var order = newPlayerOrders.get(action.payload.location) || {};
+            var newOrder = __assign(__assign({}, order), (_a = {}, _a[action.payload.destinationType] = action.payload.destination, _a));
+            newPlayerOrders.set(order.from, newOrder);
+            return __assign(__assign({}, state), { playerOrders: newPlayerOrders });
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+
+/***/ }),
+
+/***/ "./src/client/app/services/gameService.ts":
+/*!************************************************!*\
+  !*** ./src/client/app/services/gameService.ts ***!
+  \************************************************/
+/*! exports provided: getGame, getTurn, getLatestTurn */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGame", function() { return getGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTurn", function() { return getTurn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLatestTurn", function() { return getLatestTurn; });
+/* harmony import */ var await_to_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! await-to-js */ "./node_modules/await-to-js/dist/await-to-js.es5.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+var getGame = function (gameID) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, err, res;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/game/" + gameID))];
+            case 1:
+                _a = _b.sent(), err = _a[0], res = _a[1];
+                if (err)
+                    throw new Error("Error fetching game with ID '" + gameID + "'");
+                return [2 /*return*/, res.data];
+        }
+    });
+}); };
+var getTurn = function (turnID) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, err, res;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, Object(await_to_js__WEBPACK_IMPORTED_MODULE_0__["default"])(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/turn/" + turnID))];
+            case 1:
+                _a = _b.sent(), err = _a[0], res = _a[1];
+                if (err)
+                    throw new Error("Error fetching game with ID '" + turnID + "'");
+                return [2 /*return*/, res.data];
+        }
+    });
+}); };
+var getLatestTurn = function (gameID) { return __awaiter(void 0, void 0, void 0, function () {
+    var game, turn;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, getGame(gameID)];
+            case 1:
+                game = _a.sent();
+                if (!game)
+                    return [2 /*return*/, null];
+                return [4 /*yield*/, getTurn(game.currentTurn)];
+            case 2:
+                turn = _a.sent();
+                return [2 /*return*/, turn || null];
+        }
+    });
+}); };
+
+
+/***/ }),
+
+/***/ "./src/client/app/variables/empireColours.ts":
+/*!***************************************************!*\
+  !*** ./src/client/app/variables/empireColours.ts ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+    e01_light: '#00007f',
+    e01_medium: '#000065',
+    e01_shadow: '#00004c',
+    e02_light: '#0000ff',
+    e02_medium: '#0000cc',
+    e02_shadow: '#000099',
+    e03_light: '#007f00',
+    e03_medium: '#006500',
+    e03_shadow: '#004c00',
+    e04_light: '#007f7f',
+    e04_medium: '#006565',
+    e04_shadow: '#004c4c',
+    e05_light: '#007fff',
+    e05_medium: '#0065cc',
+    e05_shadow: '#004c99',
+    e06_light: '#00ff00',
+    e06_medium: '#00cc00',
+    e06_shadow: '#009900',
+    e07_light: '#00ff7f',
+    e07_medium: '#00cc65',
+    e07_shadow: '#00994c',
+    e08_light: '#00ffff',
+    e08_medium: '#00cccc',
+    e08_shadow: '#009999',
+    e09_light: '#7f0000',
+    e09_medium: '#650000',
+    e09_shadow: '#4c0000',
+    e10_light: '#7f007f',
+    e10_medium: '#650065',
+    e10_shadow: '#4c004c',
+    e11_light: '#7f00ff',
+    e11_medium: '#6500cc',
+    e11_shadow: '#4c0099',
+    e12_light: '#7f7f00',
+    e12_medium: '#656500',
+    e12_shadow: '#4c4c00',
+    e13_light: '#7f7f7f',
+    e13_medium: '#656565',
+    e13_shadow: '#4c4c4c',
+    e14_light: '#7f7fff',
+    e14_medium: '#6565cc',
+    e14_shadow: '#4c4c99',
+    e15_light: '#7fff00',
+    e15_medium: '#65cc00',
+    e15_shadow: '#4c9900',
+    e16_light: '#7fff7f',
+    e16_medium: '#65cc65',
+    e16_shadow: '#4c994c',
+    e17_light: '#7fffff',
+    e17_medium: '#65cccc',
+    e17_shadow: '#4c9999',
+    e18_light: '#ff0000',
+    e18_medium: '#cc0000',
+    e18_shadow: '#990000',
+    e19_light: '#ff007f',
+    e19_medium: '#cc0065',
+    e19_shadow: '#99004c',
+    e20_light: '#ff00ff',
+    e20_medium: '#cc00cc',
+    e20_shadow: '#990099',
+    e21_light: '#ff7f00',
+    e21_medium: '#cc6500',
+    e21_shadow: '#994c00',
+    e22_light: '#ff7f7f',
+    e22_medium: '#cc6565',
+    e22_shadow: '#994c4c',
+    e23_light: '#ff7fff',
+    e23_medium: '#cc65cc',
+    e23_shadow: '#994c99',
+    e24_light: '#ffff00',
+    e24_medium: '#cccc00',
+    e24_shadow: '#999900',
+    e25_light: '#ffff7f',
+    e25_medium: '#cccc65',
+    e25_shadow: '#99994c',
+});
+
+
+/***/ }),
+
+/***/ "./src/client/utils/getColour.ts":
+/*!***************************************!*\
+  !*** ./src/client/utils/getColour.ts ***!
+  \***************************************/
+/*! exports provided: getColour */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getColour", function() { return getColour; });
+var getColour = function (turnData, territoryName) {
+    if (!turnData)
+        return null;
+    var player = turnData.players.find(function (p) { return p.ownedTerritories.includes(territoryName); });
+    if (!player)
+        return null;
+    return player.colour;
+};
+
+
+/***/ }),
+
+/***/ "./src/client/utils/getLocation.ts":
+/*!*****************************************!*\
+  !*** ./src/client/utils/getLocation.ts ***!
+  \*****************************************/
+/*! exports provided: getLocation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLocation", function() { return getLocation; });
+var getLocation = function (boardData, territoryName) {
+    var territory = boardData.territories.find(function (t) { return t.title === territoryName; });
+    var _a = territory.textLocation, x = _a.x, y = _a.y;
+    return { x: x, y: y };
+};
+
+
+/***/ }),
+
+/***/ "./src/client/utils/getPlayer.ts":
+/*!***************************************!*\
+  !*** ./src/client/utils/getPlayer.ts ***!
+  \***************************************/
+/*! exports provided: getPlayer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPlayer", function() { return getPlayer; });
+var getPlayer = function (gameTurn, playerID) {
+    return gameTurn.players.find(function (p) { return p.playerID === playerID; });
+};
+
+
+/***/ }),
+
+/***/ "./src/shared/resources/countryData.ts":
+/*!*********************************************!*\
+  !*** ./src/shared/resources/countryData.ts ***!
+  \*********************************************/
+/*! exports provided: provinces, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "provinces", function() { return provinces; });
+var countryData = {
+    mapTitle: 'Classic',
+    viewBox: '0 0 609 559',
+    territories: [
+        {
+            title: 'Adriatic_Sea',
+            name: 'Adriatic Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 322 480 L 297 456 L 300 453 L 290 453 L 278 443 L 272 424 L 260 417 L 261 401 L 270 398 L 276 399 L 275 403 L 278 410 L 282 401 L 286 402 L 289 418 L 306 436 L 331 454 L 331 477 L 335 480 L 322 480",
+            textLocation: {
+                x: 300,
+                y: 435,
+                rotate: 48,
+            },
+        },
+        {
+            title: 'Aegean_Sea',
+            name: 'Aegean\nSea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 376 537 L 371 520 L 378 521 L 377 513 L 386 516 L 385 509 L 370 494 L 371 491 L 378 494 L 368 483 L 371 477 L 379 484 L 382 483 L 381 477 L 386 478 L 380 472 L 392 472 L 400 468 L 408 470 L 410 473 L 414 475 L 410 482 L 409 487 L 417 486 L 417 489 L 420 495 L 417 498 L 417 507 L 423 510 L 427 524 L 435 523 L 435 530 L 416 549 L 412 547 L 387 546 L 383 544 L 376 537",
+            textLocation: {
+                x: 408,
+                y: 505,
+            },
+        },
+        {
+            title: 'Baltic_Sea',
+            name: 'Baltic Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 266 255 L 271 260 L 278 254 L 277 250 L 280 248 L 279 243 L 282 253 L 289 254 L 294 245 L 305 244 L 312 229 L 311 220 L 359 220 L 349 229 L 347 243 L 347 248 L 348 254 L 344 262 L 337 264 L 334 273 L 328 274 L 326 265 L 314 266 L 307 273 L 294 275 L 286 274 L 287 267 L 280 266 L 266 275 L 261 274 L 260 269 L 256 266 L 256 263 L 254 255 L 266 255",
+            textLocation: {
+                x: 320,
+                y: 247,
+            },
+        },
+        {
+            title: 'Barents_Sea',
+            name: 'Barents Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 540 0 L 535 9 L 530 6 L 517 19 L 516 33 L 513 38 L 513 23 L 507 20 L 505 26 L 499 33 L 492 48 L 495 58 L 488 60 L 479 57 L 477 55 L 481 50 L 473 43 L 466 45 L 472 62 L 478 66 L 478 74 L 472 72 L 468 74 L 457 91 L 469 100 L 467 106 L 462 109 L 444 101 L 442 110 L 447 115 L 454 119 L 452 122 L 434 118 L 426 103 L 426 94 L 414 88 L 412 83 L 445 84 L 457 79 L 459 66 L 453 61 L 417 47 L 405 49 L 401 45 L 397 48 L 391 47 L 395 41 L 394 38 L 384 33 L 382 40 L 380 33 L 377 31 L 374 38 L 371 33 L 366 42 L 366 33 L 362 33 L 362 0 L 540 0",
+            textLocation: {
+                x: 440,
+                y: 15,
+            },
+        },
+        {
+            title: 'Black_Sea',
+            name: 'Black Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 440 458 L 430 455 L 426 450 L 422 441 L 425 427 L 429 426 L 430 423 L 432 409 L 439 404 L 438 397 L 446 378 L 459 375 L 461 377 L 459 379 L 465 383 L 476 381 L 478 383 L 472 385 L 468 392 L 477 396 L 477 401 L 486 404 L 488 397 L 494 396 L 497 392 L 507 389 L 506 384 L 494 387 L 485 378 L 503 364 L 526 351 L 527 354 L 514 365 L 517 371 L 520 371 L 515 384 L 511 383 L 510 386 L 517 393 L 528 394 L 554 406 L 567 408 L 573 417 L 570 427 L 555 438 L 551 437 L 520 441 L 514 438 L 511 440 L 502 433 L 481 438 L 470 447 L 464 457 L 442 460 L 440 458",
+            textLocation: {
+                x: 495,
+                y: 410,
+            },
+        },
+        {
+            title: 'Eastern_Mediterranean',
+            name: 'Eastern Mediterranean',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 435 530 L 441 526 L 447 528 L 453 534 L 464 531 L 466 521 L 475 520 L 485 528 L 491 530 L 505 526 L 511 514 L 520 517 L 527 508 L 530 509 L 525 518 L 526 530 L 532 535 L 528 559 L 400 559 L 400 554 L 414 552 L 416 549 L 435 530",
+            textLocation: {
+                x: 478,
+                y: 538,
+            },
+        },
+        {
+            title: 'English_Channel',
+            name: 'English Channel',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 173 301 L 169 311 L 153 315 L 155 320 L 150 319 L 144 318 L 142 312 L 136 310 L 136 326 L 124 323 L 122 318 L 102 317 L 88 303 L 100 291 L 110 292 L 120 295 L 124 291 L 134 294 L 147 295 L 160 298 L 168 296 L 173 301",
+            textLocation: {
+                x: 135,
+                y: 298,
+            },
+        },
+        {
+            title: 'Gulf_of_Lyon',
+            name: 'Gulf of Lyon',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 115 469 L 110 461 L 124 444 L 131 439 L 146 438 L 157 432 L 158 425 L 158 418 L 169 412 L 176 417 L 188 422 L 198 421 L 211 416 L 222 410 L 233 415 L 238 431 L 224 431 L 221 434 L 211 436 L 213 451 L 218 454 L 218 458 L 214 461 L 206 462 L 205 466 L 154 466 L 148 463 L 142 469 L 115 469",
+            textLocation: {
+                x: 180,
+                y: 440,
+            },
+        },
+        {
+            title: 'Gulf_of_Bothnia',
+            name: 'Gulf\nof\nBothnia',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 311 220 L 314 209 L 322 206 L 328 203 L 331 193 L 326 183 L 320 182 L 321 161 L 330 146 L 343 138 L 351 128 L 347 121 L 349 112 L 355 104 L 362 107 L 368 108 L 372 120 L 366 121 L 359 136 L 345 151 L 347 160 L 350 165 L 348 178 L 349 184 L 357 186 L 365 191 L 384 185 L 402 177 L 403 183 L 411 184 L 414 187 L 408 187 L 400 192 L 399 197 L 387 196 L 371 198 L 369 202 L 365 204 L 368 210 L 372 213 L 373 221 L 377 227 L 373 229 L 366 228 L 359 220 L 311 220",
+            textLocation: {
+                x: 344,
+                y: 183,
+            },
+        },
+        {
+            title: 'Helgoland_Bight',
+            name: 'Hel.',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 245 237 L 243 247 L 244 254 L 243 257 L 245 263 L 244 270 L 244 273 L 235 277 L 234 274 L 230 273 L 226 275 L 211 274 L 211 237 L 245 237",
+            textLocation: {
+                x: 235,
+                y: 248,
+            },
+        },
+        {
+            title: 'Ionian_Sea',
+            name: 'Ionian Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 289 511 L 290 514 L 295 515 L 308 500 L 311 491 L 304 484 L 310 480 L 318 485 L 322 485 L 322 480 L 335 480 L 339 487 L 346 498 L 350 498 L 347 500 L 352 508 L 367 507 L 371 511 L 355 510 L 350 514 L 357 521 L 359 533 L 360 528 L 367 536 L 368 531 L 376 537 L 383 544 L 380 547 L 383 550 L 400 554 L 400 559 L 232 559 L 234 551 L 232 544 L 225 535 L 231 531 L 236 524 L 247 513 L 258 519 L 273 531 L 281 532 L 282 521 L 285 513 L 285 511 L 289 511",
+            textLocation: {
+                x: 320,
+                y: 525,
+            },
+        },
+        {
+            title: 'Irish_Sea',
+            name: 'Irish Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 100 291 L 112 287 L 122 281 L 130 282 L 127 276 L 119 272 L 116 272 L 115 265 L 128 262 L 126 256 L 121 257 L 132 250 L 135 250 L 139 240 L 136 229 L 130 227 L 120 227 L 110 232 L 109 246 L 98 259 L 87 257 L 70 261 L 58 273 L 88 303 L 100 291",
+            textLocation: {
+                x: 95,
+                y: 265,
+            },
+        },
+        {
+            title: 'Mid_Atlantic_Ocean',
+            name: 'Mid\nAtlantic\nOcean',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 102 317 L 100 322 L 103 328 L 109 329 L 123 344 L 122 350 L 123 357 L 128 363 L 121 382 L 122 384 L 112 399 L 101 396 L 96 397 L 72 384 L 59 381 L 54 375 L 48 374 L 46 378 L 39 375 L 33 381 L 35 384 L 32 396 L 30 406 L 17 427 L 14 427 L 10 433 L 13 440 L 15 441 L 12 450 L 13 454 L 8 462 L 19 469 L 27 468 L 33 475 L 34 484 L 37 490 L 37 495 L 33 496 L 17 518 L 0 520 L 0 273 L 58 273 L 102 317",
+            textLocation: {
+                x: 60,
+                y: 315,
+            },
+        },
+        {
+            title: 'North_Atlantic_Ocean',
+            name: 'North Atlantic Ocean',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 70 261 L 64 250 L 67 242 L 71 245 L 81 234 L 74 228 L 80 225 L 78 218 L 82 217 L 89 220 L 94 220 L 95 218 L 94 216 L 97 216 L 101 212 L 110 212 L 119 217 L 120 227 L 130 227 L 130 223 L 138 217 L 138 214 L 130 208 L 129 197 L 139 189 L 140 182 L 148 177 L 148 0 L 0 0 L 0 273 L 58 273 L 70 261",
+            textLocation: {
+                x: 75,
+                y: 120,
+            },
+        },
+        {
+            title: 'North_Sea',
+            name: 'North Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 168 296 L 172 294 L 165 293 L 176 283 L 178 274 L 177 270 L 171 268 L 168 270 L 166 269 L 169 265 L 170 252 L 168 246 L 163 239 L 163 226 L 161 218 L 157 216 L 151 215 L 158 214 L 165 210 L 170 202 L 171 197 L 171 181 L 198 154 L 236 154 L 237 160 L 233 167 L 231 180 L 233 186 L 229 192 L 231 201 L 241 209 L 241 224 L 248 224 L 245 237 L 211 237 L 211 274 L 207 279 L 205 279 L 205 276 L 198 289 L 191 299 L 173 301 L 168 296",
+            textLocation: {
+                x: 210,
+                y: 210,
+            },
+        },
+        {
+            title: 'Norwegian_Sea',
+            name: 'Norwegian Sea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 362 33 L 357 39 L 343 44 L 324 54 L 320 64 L 310 75 L 309 84 L 303 86 L 292 111 L 277 132 L 269 134 L 264 142 L 258 141 L 236 154 L 198 154 L 171 181 L 171 197 L 158 193 L 152 194 L 154 188 L 161 185 L 162 181 L 148 177 L 148 0 L 362 0 L 362 33",
+            textLocation: {
+                x: 220,
+                y: 70,
+            },
+        },
+        {
+            title: 'Skagerrak',
+            name: 'Ska.',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 241 209 L 246 210 L 266 201 L 270 193 L 275 203 L 277 218 L 276 224 L 282 236 L 279 240 L 279 243 L 275 242 L 269 243 L 266 240 L 267 234 L 266 221 L 263 223 L 248 224 L 241 224 L 241 209",
+            textLocation: {
+                x: 267,
+                y: 207,
+            },
+        },
+        {
+            title: 'Tyrrhenian_Sea',
+            name: 'Tyrrhenian\nSea',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 238 431 L 247 442 L 248 447 L 256 458 L 271 464 L 276 474 L 290 487 L 294 502 L 289 511 L 285 511 L 285 508 L 276 510 L 263 510 L 257 507 L 252 508 L 247 513 L 236 524 L 233 523 L 224 527 L 223 518 L 218 516 L 218 490 L 220 490 L 224 468 L 222 458 L 218 458 L 218 454 L 223 450 L 225 444 L 225 436 L 224 431 L 238 431",
+            textLocation: {
+                x: 255,
+                y: 475,
+            },
+        },
+        {
+            title: 'Western_Mediterranean',
+            name: 'Western Mediterranean',
+            tileType: 'seaTile',
+            id: 'w',
+            tags: ['sea'],
+            path: "M 37 490 L 47 488 L 52 489 L 60 486 L 78 491 L 83 494 L 86 485 L 90 483 L 98 484 L 107 474 L 113 473 L 115 469 L 142 469 L 150 471 L 154 466 L 205 466 L 206 476 L 204 485 L 208 492 L 212 492 L 217 489 L 218 490 L 218 516 L 212 517 L 208 521 L 203 520 L 179 515 L 169 518 L 150 511 L 117 509 L 106 511 L 99 515 L 89 512 L 84 518 L 79 520 L 68 516 L 68 511 L 64 514 L 46 509 L 42 502 L 41 494 L 37 495 L 37 490",
+            textLocation: {
+                x: 150,
+                y: 485,
+            },
+        },
+        //  Neutral Territories
+        {
+            title: 'Switzerland',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "M 209 363 L 208 367 L 194 382 L 197 385 L 203 379 L 207 386 L 213 387 L 221 385 L 227 390 L 229 385 L 243 388 L 245 384 L 241 378 L 234 374 L 234 366 L 232 363 L 225 362 L 222 365 L 209 363",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        {
+            title: 'Ireland',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "M 70 261 L 64 250 L 67 242 L 71 245 L 81 234 L 74 228 L 80 225 L 78 218 L 82 217 L 89 220 L 94 220 L 95 218 L 94 216 L 97 216 L 101 212 L 110 212 L 119 217 L 120 227 L 120 227 L 110 232 L 109 246 L 98 259 L 87 257 L 70 261",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        {
+            title: 'Corsica',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        {
+            title: 'Sardinia',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        {
+            title: 'Mallorca',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "M 154 466 L 148 463 L 142 469 L 150 471 L 154 466",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        {
+            title: 'Sicily',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        {
+            title: 'Crete',
+            name: '',
+            tileType: 'landTile',
+            id: 's',
+            tags: ['neutral'],
+            path: "",
+            textLocation: {
+                x: 215,
+                y: 378,
+            },
+        },
+        //  Land Territories
+        {
+            title: 'Albania',
+            name: 'Alb.',
+            tileType: 'landTile',
+            id: 'l Albania',
+            tags: ['coastal'],
+            path: "M 331 454 L 331 477 L 335 480 L 339 487 L 350 477 L 350 471 L 346 466 L 346 452 L 337 446 L 330 445 L 331 454",
+            textLocation: {
+                x: 345,
+                y: 461,
+            },
+        },
+        {
+            title: 'Ankara',
+            name: 'Ankara',
+            tileType: 'landTile',
+            id: 'l Ankara',
+            tags: ['coastal', 'supply'],
+            path: "M 555 438 L 551 437 L 520 441 L 514 438 L 511 440 L 502 433 L 481 438 L 470 447 L 464 457 L 468 461 L 468 479 L 466 491 L 473 491 L 490 480 L 501 482 L 508 480 L 531 460 L 546 462 L 555 460 L 557 449 L 555 438",
+            textLocation: {
+                x: 505,
+                y: 450,
+            },
+        },
+        {
+            title: 'Apulia',
+            name: 'Apulia',
+            tileType: 'landTile',
+            id: 'l Apulia',
+            tags: ['coastal'],
+            path: "M 304 484 L 310 480 L 318 485 L 322 485 L 322 480 L 297 456 L 300 453 L 290 453 L 278 443 L 274 447 L 279 451 L 280 455 L 279 458 L 293 481 L 304 484",
+            textLocation: {
+                x: 305,
+                y: 465,
+                rotate: 48,
+            },
+        },
+        {
+            title: 'Armenia',
+            name: 'Armenia',
+            tileType: 'landTile',
+            id: 'l Armenia',
+            tags: ['coastal'],
+            path: "M 609 493 L 584 478 L 563 479 L 562 471 L 556 467 L 555 460 L 557 449 L 555 438 L 570 427 L 589 442 L 594 439 L 603 441 L 609 440 L 609 493",
+            textLocation: {
+                x: 587,
+                y: 453,
+            },
+        },
+        {
+            title: 'Belgium',
+            name: 'Bel.',
+            tileType: 'landTile',
+            id: 'l Belgium',
+            tags: ['coastal', 'supply'],
+            path: "M 191 299 L 194 303 L 206 306 L 205 311 L 208 315 L 210 326 L 205 331 L 192 323 L 184 315 L 169 311 L 173 301 L 191 299",
+            textLocation: {
+                x: 197,
+                y: 303,
+            },
+        },
+        {
+            title: 'Berlin',
+            name: 'Berlin',
+            tileType: 'landTile',
+            id: 'l Berlin',
+            tags: ['coastal', 'supply'],
+            path: "M 294 275 L 286 274 L 287 267 L 280 266 L 266 275 L 266 283 L 262 287 L 264 293 L 261 296 L 263 310 L 288 305 L 296 300 L 297 296 L 292 290 L 294 275",
+            textLocation: {
+                x: 279,
+                y: 284,
+            },
+        },
+        {
+            title: 'Bohemia',
+            name: 'Bohemia',
+            tileType: 'landTile',
+            id: 'l Bohemia',
+            tags: ['landlocked'],
+            path: "M 281 356 L 276 346 L 268 343 L 264 329 L 266 325 L 278 326 L 288 321 L 297 322 L 311 334 L 314 332 L 321 339 L 322 347 L 316 348 L 303 346 L 295 349 L 292 357 L 281 356",
+            textLocation: {
+                x: 298,
+                y: 331,
+            },
+        },
+        {
+            title: 'Brest',
+            name: 'Brest',
+            tileType: 'landTile',
+            id: 'l Brest',
+            tags: ['coastal', 'supply'],
+            path: "M 150 319 L 144 318 L 142 312 L 136 310 L 136 326 L 124 323 L 122 318 L 102 317 L 100 322 L 103 328 L 109 329 L 123 344 L 122 350 L 123 357 L 128 363 L 146 365 L 146 337 L 148 329 L 150 319",
+            textLocation: {
+                x: 135,
+                y: 330,
+            },
+        },
+        {
+            title: 'Budapest',
+            name: 'Budapest',
+            tileType: 'landTile',
+            id: 'l Budapest',
+            tags: ['landlocked', 'supply'],
+            path: "M 394 376 L 395 382 L 401 385 L 406 396 L 401 402 L 387 402 L 367 406 L 365 412 L 360 413 L 342 410 L 338 412 L 335 410 L 332 410 L 323 408 L 321 398 L 311 394 L 308 383 L 311 375 L 322 370 L 335 354 L 337 350 L 350 347 L 360 351 L 368 353 L 377 360 L 378 363 L 384 365 L 394 376",
+            textLocation: {
+                x: 360,
+                y: 375,
+            },
+        },
+        // ! NEEDS IMPLEMENTED PROPERLY
+        {
+            title: 'Bulgaria',
+            name: 'Bulgaria',
+            tileType: 'landTile',
+            tags: ['coastal', 'supply', 'dual'],
+            id: 'l',
+            // ? Have this territory have the full path?
+            path: "",
+            textLocation: {
+                x: 400,
+                y: 438,
+            },
+        },
+        {
+            title: 'Bulgaria__ec',
+            name: 'Bulgaria',
+            tileType: 'landTile',
+            tags: ['coast'],
+            id: 'l',
+            path: "M 413 464 L 412 454 L 420 451 L 426 450 L 422 441 L 425 427 L 429 426 L 430 423 L 422 420 L 410 420 L 404 422 L 398 427 L 390 425 L 382 427 L 375 423 L 370 425 L 367 421 L 365 425 L 368 433 L 371 438 ",
+            textLocation: {
+                x: 400,
+                y: 438,
+            },
+        },
+        {
+            title: 'Bulgaria__sc',
+            name: '',
+            tileType: 'landTile',
+            tags: ['coast'],
+            id: 'l',
+            path: "M 371 438 L 366 439 L 371 456 L 365 461 L 369 464 L 376 464 L 388 460 L 392 472 L 400 468 L 408 470 L 413 464",
+        },
+        {
+            title: 'Burgundy',
+            name: 'Burgundy',
+            tileType: 'landTile',
+            id: 'l Burgundy',
+            tags: ['landlocked'],
+            path: "M 192 323 L 205 331 L 204 338 L 211 346 L 213 352 L 209 363 L 208 367 L 194 382 L 178 381 L 178 390 L 173 396 L 168 395 L 163 387 L 165 383 L 158 380 L 156 374 L 165 365 L 185 344 L 188 332 L 192 323",
+            textLocation: {
+                x: 186,
+                y: 352,
+                rotate: -50
+            },
+        },
+        {
+            title: 'Clyde',
+            name: 'Clyde',
+            tileType: 'landTile',
+            id: 'l Clyde',
+            tags: ['coastal'],
+            path: "M 138 214 L 130 208 L 129 197 L 139 189 L 140 182 L 148 177 L 162 181 L 161 185 L 154 188 L 152 194 L 146 200 L 144 213 L 138 214",
+            textLocation: {
+                x: 137,
+                y: 194,
+            },
+        },
+        {
+            title: 'Constantinople',
+            name: 'Constantinople',
+            tileType: 'landTile',
+            id: 'l Constantinople',
+            tags: ['coastal', 'passage', 'supply'],
+            path: "M 408 470 L 410 473 L 414 475 L 410 482 L 409 487 L 417 486 L 417 489 L 423 487 L 432 493 L 452 495 L 466 491 L 468 479 L 468 461 L 464 457 L 442 460 L 440 458 L 430 455 L 426 450 L 420 451 L 412 454 L 413 464 L 408 470",
+            // <polygon class="w" points="L 414 475 L 421 467 L 435 463 L 440 458 L 442 460 L 439 463 L 448 464 L 425 475"/>
+            textLocation: {
+                x: 444,
+                y: 468,
+                rotate: -28,
+            },
+        },
+        {
+            title: 'Denmark',
+            name: 'Den.',
+            tileType: 'landTile',
+            id: 'l Denmark',
+            tags: ['coastal', 'passage', 'supply'],
+            path: "M 279 243 L 275 242 L 269 243 L 266 240 L 267 234 L 266 221 L 263 223 L 248 224 L 245 237 L 243 247 L 244 254 L 254 255 L 266 255 L 271 260 L 278 254 L 277 250 L 280 248  L 279 243",
+            // <polygon class="w" points="L 269 243 L 268 246 L 263 247 L 266 255 L 254 255 L 257 247 L 266 240"/>
+            textLocation: {
+                x: 259,
+                y: 235,
+            },
+        },
+        // {
+        //   title: 'Denmark__w',
+        //   name: '',
+        //   tileType: 'waterTile',
+        //   id: 'w Denmark',
+        //   path: `M 269 243 L 268 246 L 263 247 L 266 255 L 254 255 L 257 247 L 266 240 L 269 243`,
+        //   textLocation: {
+        //     x: 252,
+        //     y: 235,
+        //   },
+        // },
+        {
+            title: 'Edinburgh',
+            name: 'Edb.',
+            tileType: 'landTile',
+            id: 'l Edinburgh',
+            tags: ['coastal', 'supply'],
+            path: "M 152 194 L 158 193 L 171 197  170 202 L 165 210 L 158 214 L 151 215 L 157 216 L 161 218 L 163 226 L 155 228 L 145 217 L 144 213 L 146 200 L 152 194",
+            textLocation: {
+                x: 163,
+                y: 198,
+            },
+        },
+        {
+            title: 'Finland',
+            name: 'Finland',
+            tileType: 'landTile',
+            id: 'l Finland',
+            tags: ['coastal'],
+            path: "M 362 107 L 368 108 L 372 120 L 366 121 L 359 136 L 345 151 L 347 160 L 350 165 L 348 178 L 349 184 L 357 186 L 365 191 L 384 185 L 402 177 L 412 161 L 410 152 L 414 147 L 410 130 L 402 118 L 401 110 L 392 92 L 393 73 L 387 68 L 388 61 L 386 58 L 388 54 L 379 48 L 370 49 L 369 61 L 355 62 L 346 54 L 342 61 L 356 71 L 362 107",
+            textLocation: {
+                x: 385,
+                y: 135,
+            },
+        },
+        {
+            title: 'Galicia',
+            name: 'Galicia',
+            tileType: 'landTile',
+            id: 'l Galicia',
+            tags: ['landlocked'],
+            path: "M 333 330 L 341 330 L 344 332 L 353 327 L 356 323 L 361 324 L 367 329 L 374 327 L 379 324 L 383 327 L 385 332 L 399 338 L 404 354 L 403 360 L 404 371 L 394 376 L 384 365 L 378 363 L 377 360 L 368 353 L 360 351 L 350 347 L 337 350 L 329 346 L 322 347 L 321 339 L 322 347 L 321 339 L 325 340 L 329 338 L 333 330",
+            textLocation: {
+                x: 375,
+                y: 338,
+                rotate: 20,
+            },
+        },
+        {
+            title: 'Gascony',
+            name: 'Gascony',
+            tileType: 'landTile',
+            id: 'l Gascony',
+            tags: ['coastal'],
+            path: "M 128 363 L 121 382 L 122 384 L 112 399 L 113 407 L 123 412 L 134 417 L 135 414 L 142 417 L 149 403 L 157 397 L 168 395 L 163 387 L 165 383 L 158 380 L 156 374 L 149 372 L 146 365 L 128 363",
+            textLocation: {
+                x: 144,
+                y: 383,
+            },
+        },
+        {
+            title: 'Greece',
+            name: 'Greece',
+            tileType: 'landTile',
+            id: 'l Greece',
+            tags: ['coastal', 'supply'],
+            path: "M 339 487 L 346 498 L 350 498 L 347 500 L 352 508 L 367 507 L 371 511 L 355 510 L 350 514 L 357 521 L 359 533 L 360 528 L 367 536 L 368 531 L 376 537 L 371 520 L 378 521 L 377 513 L 386 516 L 385 509 L 370 494 L 371 491 L 378 494 L 368 483 L 371 477 L 379 484 L 382 483 L 381 477 L 386 478 L 380 472 L 392 472 L 388 460 L 376 464 L 369 464 L 361 467 L 356 471 L 350 471 L 350 477 L 339 487",
+            textLocation: {
+                x: 361,
+                y: 481,
+            },
+        },
+        {
+            title: 'Holland',
+            name: 'Hol.',
+            tileType: 'landTile',
+            id: 'l Holland',
+            tags: ['coastal', 'supply'],
+            path: "M 226 275 L 227 280 L 225 292 L 220 298 L 215 297 L 213 302 L 210 313 L 208 315 L 205 311 L 206 306 L 194 303 L 191 299 L 198 289 L 205 276 L 205 279 L 207 279 L 211 274 L 226 275",
+            textLocation: {
+                x: 215,
+                y: 285,
+            },
+        },
+        {
+            title: 'Kiel',
+            name: 'Kiel',
+            tileType: 'landTile',
+            id: 'l Kiel',
+            tags: ['coastal', 'passage', 'supply'],
+            path: "M 244 254 L 243 257 L 245 263 L 244 270 L 244 273 L 235 277 L 234 274 L 230 273 L 226 275 L 227 280 L 225 292 L 220 298 L 215 297 L 213 302 L 232 308 L 241 316 L 243 322 L 263 310 L 261 296 L 264 293 L 262 287 L 266 283 L 266 275 L 261 274 L 260 269 L 256 266 L 256 263 L 254 255 L 244 254",
+            // <polygon class="w" points="L 244 270 L 244 273 L 256 266 L 256 263 "/>
+            textLocation: {
+                x: 247,
+                y: 283,
+            },
+        },
+        {
+            title: 'Liverpool',
+            name: 'Lvp.',
+            tileType: 'landTile',
+            id: 'l Liverpool',
+            tags: ['coastal', 'supply'],
+            path: "M 128 262 L 126 256 L 121 257 L 132 250 L 135 250 L 139 240 L 136 229 L 130 227 L 130 223 L 138 217 L 138 214 L 144 213 L 145 217 L 155 228 L 155 239 L 151 248 L 150 264 L 143 262 L 128 262",
+            textLocation: {
+                x: 143,
+                y: 230,
+            },
+        },
+        {
+            title: 'Livonia',
+            name: 'Livonia',
+            tileType: 'landTile',
+            id: 'l Livonia',
+            tags: ['coastal'],
+            path: "M 369 202 L 365 204 L 368 210 L 372 213 L 373 221 L 377 227 L 373 229 L 366 228 L 359 220 L 349 229 L 347 243 L 354 251 L 356 261 L 362 260 L 367 265 L 365 281 L 372 283 L 379 290 L 389 285 L 392 278 L 404 275 L 405 239 L 409 228 L 405 217 L 394 205 L 382 206 L 372 205 L 369 202",
+            textLocation: {
+                x: 385,
+                y: 240,
+            },
+        },
+        {
+            title: 'London',
+            name: 'London',
+            tileType: 'landTile',
+            id: 'l London',
+            tags: ['coastal', 'supply'],
+            path: "M 166 269 L 168 270 L 171 268 L 177 270 L 178 274 L 176 283 L 165 293 L 172 294 L 168 296 L 160 298 L 147 295 L 145 281 L 150 277 L 153 271 L 166 269",
+            textLocation: {
+                x: 170,
+                y: 275,
+            },
+        },
+        {
+            title: 'Marseilles',
+            name: 'Marseilles',
+            tileType: 'landTile',
+            id: 'l Marseilles',
+            tags: ['coastal', 'supply'],
+            path: "M 142 417 L 149 403 L 157 397 L 168 395 L 173 396 L 178 390 L 178 381 L 194 382 L 197 385 L 203 379 L 207 386 L 204 390 L 207 396 L 201 399 L 204 402 L 203 410 L 211 416 L 198 421 L 188 422 L 176 417 L 169 412 L 158 418 L 158 425 L 154 427 L 142 417",
+            textLocation: {
+                x: 181,
+                y: 397,
+            },
+        },
+        {
+            title: 'Moscow',
+            name: 'Moscow',
+            tileType: 'landTile',
+            id: 'l Moscow',
+            tags: ['landlocked', 'supply'],
+            path: "M 609 117 L 598 132 L 573 143 L 564 159 L 534 164 L 515 169 L 489 184 L 476 183 L 458 194 L 456 207 L 457 210 L 451 213 L 447 209 L 439 211 L 428 225 L 421 229 L 409 228 L 405 239 L 404 275 L 392 278 L 389 285 L 379 290 L 386 309 L 390 306 L 456 292 L 468 295 L 477 289 L 494 295 L 505 280 L 516 286 L 526 287 L 533 283 L 549 284 L 554 304 L 564 305 L 569 321 L 597 330 L 609 330 L 609 117",
+            textLocation: {
+                x: 460,
+                y: 245,
+            },
+        },
+        {
+            title: 'Munich',
+            name: 'Munich',
+            tileType: 'landTile',
+            id: 'l Munich',
+            tags: ['landlocked', 'supply'],
+            path: "M 234 366 L 243 370 L 246 369 L 250 371 L 267 368 L 271 370 L 269 362 L 275 362 L 281 356 L 276 346 L 268 343 L 264 329 L 266 325 L 278 326 L 288 321 L 284 314 L 288 305 L 263 310 L 243 322 L 237 322 L 219 344 L 211 346 L 213 352 L 209 363 L 222 365 L 225 362 L 232 363 L 234 366",
+            textLocation: {
+                x: 250,
+                y: 337,
+            },
+        },
+        {
+            title: 'Naples',
+            name: 'Naples',
+            tileType: 'landTile',
+            id: 'l Naples',
+            tags: ['coastal', 'supply'],
+            path: "M 271 464 L 276 474 L 290 487 L 294 502 L 289 511 L 290 514 L 295 515 L 308 500 L 311 491 L 304 484 L 293 481 L 279 458 L 271 464",
+            textLocation: {
+                x: 296,
+                y: 496,
+            },
+        },
+        {
+            title: 'North_Africa',
+            name: 'North Africa',
+            tileType: 'landTile',
+            id: 'l North_Africa',
+            tags: ['coastal'],
+            path: "M 203 520 L 179 515 L 169 518 L 150 511 L 117 509 L 106 511 L 99 515 L 89 512 L 84 518 L 79 520 L 68 516 L 68 511 L 64 514 L 46 509 L 42 502 L 41 494 L 37 495 L 33 496 L 17 518 L 0 520 L 0 559 L 195 559 L 197 527 L 203 520",
+            textLocation: {
+                x: 105,
+                y: 530,
+            },
+        },
+        {
+            title: 'Norway',
+            name: 'Norway',
+            tileType: 'landTile',
+            id: 'l Norway',
+            tags: ['coastal', 'supply'],
+            path: "M 397 48 L 391 47 L 395 41 L 394 38 L 384 33 L 382 40 L 380 33 L 377 31 L 374 38 L 371 33 L 366 42 L 366 33 L 362 33 L 357 39 L 343 44 L 324 54 L 320 64 L 310 75 L 309 84 L 303 86 L 292 111 L 277 132 L 269 134 L 264 142 L 258 141 L 236 154 L 237 160 L 233 167 L 231 180 L 233 186 L 229 192 L 231 201 L 241 209 L 246 210 L 266 201 L 270 193 L 275 203 L 279 204 L 287 177 L 285 170 L 290 164 L 292 133 L 301 132 L 300 126 L 309 115 L 308 104 L 311 101 L 324 71 L 332 74 L 330 64 L 341 65 L 342 61 L 346 54 L 355 62 L 369 61 L 370 49 L 379 48 L 388 54 L 386 58 L 388 61 L 397 48",
+            textLocation: {
+                x: 265,
+                y: 163,
+            },
+        },
+        {
+            title: 'Paris',
+            name: 'Paris',
+            tileType: 'landTile',
+            id: 'l Paris',
+            tags: ['landlocked', 'supply'],
+            path: "M 146 365 L 149 372 L 156 374 L 165 365 L 185 344 L 188 332 L 172 328 L 165 331 L 159 331 L 148 329 L 146 337 L 146 365",
+            textLocation: {
+                x: 165,
+                y: 341,
+            },
+        },
+        {
+            title: 'Picardy',
+            name: 'Pic.',
+            tileType: 'landTile',
+            id: 'l Picardy',
+            tags: ['coastal'],
+            path: "M 169 311 L 153 315 L 155 320 L 150 319 L 148 329 L 159 331 L 165 331 L 172 328 L 188 332 L 192 323 L 184 315 L 169 311",
+            textLocation: {
+                x: 177,
+                y: 314,
+            },
+        },
+        {
+            title: 'Piedmont',
+            name: 'Pied.',
+            tileType: 'landTile',
+            id: 'l Piedmont',
+            tags: ['coastal'],
+            path: "M 207 386 L 204 390 L 207 396 L 201 399 L 204 402 L 203 410 L 211 416 L 222 410 L 233 415 L 236 411 L 233 404 L 246 392 L 243 388 L 229 385 L 227 390 L 221 385 L 213 387 L 207 386",
+            textLocation: {
+                x: 224,
+                y: 393,
+            },
+        },
+        {
+            title: 'Portugal',
+            name: 'Portugal',
+            tileType: 'landTile',
+            id: 'l Portugal',
+            tags: ['coastal', 'supply'],
+            path: "M 32 396 L 30 406 L 17 427 L 14 427 L 10 433 L 13 440 L 15 441 L 12 450 L 13 454 L 8 462 L 19 469 L 27 468 L 36 457 L 34 447 L 40 441 L 37 431 L 42 432 L 52 412 L 61 411 L 62 407 L 55 400 L 42 399 L 43 395 L 32 396",
+            textLocation: {
+                x: 25,
+                y: 420,
+                rotate: -63,
+            },
+        },
+        {
+            title: 'Prussia',
+            name: 'Prussia',
+            tileType: 'landTile',
+            id: 'l Prussia',
+            tags: ['coastal'],
+            path: "M 347 243 L 347 248 L 348 254 L 344 262 L 337 264 L 334 273 L 328 274 L 326 265 L 314 266 L 307 273 L 294 275 L 292 290 L 297 296 L 296 300 L 320 303 L 324 299 L 326 292 L 341 287 L 345 289 L 359 286 L 365 281 L 367 265 L 362 260 L 356 261 L 354 251 L 347 243",
+            textLocation: {
+                x: 330,
+                y: 275,
+            },
+        },
+        {
+            title: 'Rome',
+            name: 'Rome',
+            tileType: 'landTile',
+            id: 'l Rome',
+            tags: ['coastal', 'supply'],
+            path: "M 247 442 L 248 447 L 256 458 L 271 464 L 279 458 L 280 455 L 279 451 L 274 447 L 263 434 L 250 438 L 247 442",
+            textLocation: {
+                x: 257,
+                y: 444,
+            },
+        },
+        {
+            title: 'Ruhr',
+            name: 'Ruhr',
+            tileType: 'landTile',
+            id: 'l Ruhr',
+            tags: ['landlocked'],
+            path: "M 213 302 L 210 313 L 208 315 L 210 326 L 205 331 L 204 338 L 211 346 L 219 344 L 237 322 L 243 322 L 241 316 L 232 308 L 213 302",
+            textLocation: {
+                x: 221,
+                y: 319,
+            },
+        },
+        {
+            title: 'Rumania',
+            name: 'Rumania',
+            tileType: 'landTile',
+            id: 'l Rumania',
+            tags: ['coastal', 'supply'],
+            path: "M 403 360 L 404 371 L 394 376 L 395 382 L 401 385 L 406 396 L 401 402 L 387 402 L 367 406 L 365 412 L 367 421 L 370 425 L 375 423 L 382 427 L 390 425 L 398 427 L 404 422 L 410 420 L 422 420 L 430 423 L 432 409 L 439 404 L 438 397 L 427 399 L 422 382 L 423 376 L 414 372 L 411 361 L 403 360",
+            textLocation: {
+                x: 390,
+                y: 410,
+            },
+        },
+        {
+            title: 'Serbia',
+            name: 'Serbia',
+            tileType: 'landTile',
+            id: 'l Serbia',
+            tags: ['landlocked', 'supply'],
+            path: "M 365 412 L 360 413 L 342 410 L 338 412 L 335 410 L 332 410 L 330 416 L 331 424 L 327 429 L 330 437 L 337 446 L 346 452 L 346 466 L 350 471 L 356 471 L 361 467 L 369 464 L 365 461 L 371 456 L 366 439 L 371 438 L 368 433 L 365 425 L 367 421 L 365 412",
+            textLocation: {
+                x: 349,
+                y: 428,
+            },
+        },
+        {
+            title: 'Sevastopol',
+            name: 'Sevastopol',
+            tileType: 'landTile',
+            id: 'l Sevastopol',
+            tags: ['coastal', 'supply'],
+            path: "M 438 397 L 446 378 L 459 375 L 461 377 L 459 379 L 465 383 L 476 381 L 478 383 L 472 385 L 468 392 L 477 396 L 477 401 L 486 404 L 488 397 L 494 396 L 497 392 L 507 389 L 506 384 L 494 387 L 485 378 L 503 364 L 526 351 L 527 354 L 514 365 L 517 371 L 520 371 L 515 384 L 511 383 L 510 386 L 517 393 L 528 394 L 554 406 L 567 408 L 573 417 L 570 427 L 589 442 L 594 439 L 603 441 L 609 440 L 609 330 L 597 330 L 569 321 L 564 305 L 554 304 L 549 284 L 533 283 L 526 287 L 516 286 L 505 280 L 494 295 L 477 289 L 468 295 L 470 303 L 466 307 L 460 345 L 445 350 L 434 360 L 432 372 L 423 376 L 422 382 L 427 399 L 438 397",
+            textLocation: {
+                x: 524,
+                y: 338,
+            },
+        },
+        {
+            title: 'Silesia',
+            name: 'Silesia',
+            tileType: 'landTile',
+            id: 'l Silesia',
+            tags: ['landlocked'],
+            path: "M 288 321 L 297 322 L 311 334 L 314 332 L 321 339 L 325 340 L 329 338 L 333 330 L 326 327 L 323 322 L 320 303 L 296 300 L 288 305 L 284 314 L 288 321",
+            textLocation: {
+                x: 307,
+                y: 310,
+            },
+        },
+        {
+            title: 'Smyrna',
+            name: 'Smyrna',
+            tileType: 'landTile',
+            id: 'l Smyrna',
+            tags: ['coastal', 'supply'],
+            path: "M 417 489 L 420 495 L 417 498 L 417 507 L 423 510 L 427 524 L 435 523 L 435 530 L 441 526 L 447 528 L 453 534 L 464 531 L 466 521 L 475 520 L 485 528 L 491 530 L 505 526 L 511 514 L 520 517 L 527 508 L 530 509 L 536 494 L 545 486 L 555 484 L 563 479 L 562 471 L 556 467 L 555 460 L 546 462 L 531 460 L 508 480 L 501 482 L 490 480 L 473 491 L 466 491 L 452 495 L 432 493 L 423 487 L 417 489",
+            textLocation: {
+                x: 460,
+                y: 510,
+            },
+        },
+        // ! SORT THIS OUT AS WELL
+        {
+            title: 'Spain',
+            name: 'Spain',
+            tileType: 'landTile',
+            tags: ['coastal', 'supply', 'dual'],
+            id: 'l',
+            path: "",
+        },
+        {
+            title: 'Spain__nc',
+            name: 'Spain',
+            tileType: 'landTile',
+            tags: ['coast'],
+            id: 'l',
+            path: "M 134 417 L 123 412 L 113 407 L 112 399 L 101 396 L 96 397 L 72 384 L 59 381 L 54 375 L 48 374 L 46 378 L 39 375 L 33 381 L 35 384 L 32 396 L 43 395 L 42 399 L 55 400 L 62 407 L 61 411 L 52 412 L 42 432 L 37 431 L 40 441 L 134 417",
+        },
+        {
+            title: 'Spain__sc',
+            name: 'Spain',
+            tileType: 'landTile',
+            tags: ['coast'],
+            id: 'l',
+            path: "M 40 441 L 34 447 L 36 457 L 27 468 L 33 475 L 34 484 L 37 490 L 47 488 L 52 489 L 60 486 L 78 491 L 83 494 L 86 485 L 90 483 L 98 484 L 107 474 L 113 473 L 115 469 L 110 461 L 124 444 L 131 439 L 146 438 L 157 432 L 158 425 L 154 427 L 142 417 L 135 414 L 134 417 L 40 441",
+            textLocation: {
+                x: 85,
+                y: 450,
+            },
+        },
+        // Maybe combine nc & sc into one svg?
+        {
+            title: 'St_Petersburg',
+            name: 'St Petersburg',
+            tileType: 'landTile',
+            id: 'l St_Petersburg',
+            tags: ['coast', 'supply', 'dual'],
+            path: "",
+            textLocation: {
+                x: 460,
+                y: 149,
+            },
+        },
+        {
+            title: 'St_Petersburg__nc',
+            name: '(nc)',
+            tileType: 'landTile',
+            id: 'l St_Petersburg',
+            tags: ['coast'],
+            path: "M 534 164 L 564 159 L 573 143 L 598 132 L 609 117 L 609 0 540 0 L 535 9 L 530 6 L 517 19 L 516 33 L 513 38 L 513 23 L 507 20 L 505 26 L 499 33 L 492 48 L 495 58 L 488 60 L 479 57 L 477 55 L 481 50 L 473 43 L 466 45 L 472 62 L 478 66 L 478 74 L 472 72 L 468 74 L 457 91 L 469 100 L 467 106 L 462 109 L 444 101 L 442 110 L 447 115 L 454 119 L 452 122 L 434 118 L 426 103 L 426 94 L 414 88 L 412 83 L 445 84 L 457 79 L 459 66 L 453 61 L 417 47 L 405 49 L 401 45 L 397 48 L 388 61 L 387 68 L 393 73 L 392 92 L 401 110 L 402 118 L 410 130 L 414 147 L 534 164",
+            textLocation: {
+                x: 475,
+                y: 90,
+            },
+        },
+        {
+            title: 'St_Petersburg__sc',
+            name: '(sc)',
+            tileType: 'landTile',
+            id: 'l St_Petersburg',
+            tags: ['coast'],
+            path: "M 414 147 L 410 152 L 412 161 L 402 177 L 403 183 L 411 184 L 414 187 L 408 187 L 400 192 L 399 197 L 387 196 L 371 198 L 369 202 L 372 205 L 382 206 L 394 205 L 405 217 L 409 228 L 421 229 L 428 225 L 439 211 L 447 209 L 451 213 L 457 210 L 456 207 L 458 194 L 476 183 L 489 184 L 515 169 L 534 164 L 414 147",
+            textLocation: {
+                x: 408,
+                y: 200,
+            },
+        },
+        {
+            title: 'Sweden',
+            name: 'Sweden',
+            tileType: 'landTile',
+            id: 'l Sweden',
+            tags: ['coastal', 'supply'],
+            path: "M 275 203 L 277 218 L 276 224 L 282 236 L 279 240 L 279 243 L 282 253 L 289 254 L 294 245 L 305 244 L 312 229 L 311 220 L 314 209 L 322 206 L 328 203 L 331 193 L 326 183 L 320 182 L 321 161 L 330 146 L 343 138 L 351 128 L 347 121 L 349 112 L 355 104 L 362 107 L 356 71 L 342 61 L 341 65 L 330 64 L 332 74 L 324 71 L 311 101 L 308 104 L 309 115 L 300 126 L 301 132 L 292 133 L 290 164 L 285 170 L 287 177 L 279 204 L 275 203",
+            textLocation: {
+                x: 305,
+                y: 187,
+            },
+        },
+        {
+            title: 'Syria',
+            name: 'Syria',
+            tileType: 'landTile',
+            id: 'l Syria',
+            tags: ['coastal'],
+            path: "M 530 509 L 536 494 L 545 486 L 555 484 L 563 479 L 584 478 L 609 493 L 609 559 L 528 559 L 532 535 L 526 530 L 525 518 L 530 509",
+            textLocation: {
+                x: 570,
+                y: 535,
+            },
+        },
+        {
+            title: 'Trieste',
+            name: 'Trieste',
+            tileType: 'landTile',
+            id: 'l Trieste',
+            tags: ['coastal', 'supply'],
+            path: "M 276 399 L 275 403 L 278 410 L 282 401 L 286 402 L 289 418 L 306 436 L 331 454 L 330 445 L 337 446 L 330 437 L 327 429 L 331 424 L 330 416 L 332 410 L 323 408 L 321 398 L 311 394 L 308 383 L 299 385 L 294 380 L 289 385 L 276 386 L 279 389 L 276 399",
+            textLocation: {
+                x: 307,
+                y: 411,
+            },
+        },
+        {
+            title: 'Tunis',
+            name: 'Tunis',
+            tileType: 'landTile',
+            id: 'l Tunis',
+            tags: ['coastal', 'supply'],
+            path: "M 232 559 L 234 551 L 232 544 L 225 535 L 231 531 L 236 524 L 233 523 L 224 527 L 223 518 L 218 516 L 212 517 L 208 521 L 203 520 L 197 527 L 195 559 L 232 559",
+            textLocation: {
+                x: 213,
+                y: 534,
+            },
+        },
+        {
+            title: 'Tuscany',
+            name: 'Tuscany',
+            tileType: 'landTile',
+            id: 'l Tuscany',
+            tags: ['coastal'],
+            path: "M 233 415 L 238 431 L 247 442 L 250 438 L 263 434 L 253 418 L 246 416 L 240 415 L 236 411 L 233 415",
+            textLocation: {
+                x: 240,
+                y: 425,
+            },
+        },
+        {
+            title: 'Tyrolia',
+            name: 'Tyrolia',
+            tileType: 'landTile',
+            id: 'l Tyrolia',
+            tags: ['landlocked'],
+            path: "M 234 366 L 243 370 L 246 369 L 250 371 L 267 368 L 271 370 L 269 362 L 275 362 L 281 356 L 292 357 L 295 362 L 294 380 L 289 385 L 276 386 L 268 385 L 259 388 L 255 394 L 250 397 L 246 392 L 243 388 L 245 384 L 241 378 L 234 374 L 234 366",
+            textLocation: {
+                x: 268,
+                y: 373,
+            },
+        },
+        {
+            title: 'Ukraine',
+            name: 'Ukraine',
+            tileType: 'landTile',
+            id: 'l Ukraine',
+            tags: ['landlocked'],
+            path: "M 383 327 L 385 332 L 399 338 L 404 354 L 403 360 L 411 361 L 414 372 L 423 376 L 432 372 L 434 360 L 445 350 L 460 345 L 466 307 L 470 303 L 468 295 L 456 292 L 390 306 L 386 309 L 383 327",
+            textLocation: {
+                x: 425,
+                y: 327,
+            },
+        },
+        {
+            title: 'Venice',
+            name: 'Venice',
+            tileType: 'landTile',
+            id: 'l Venice',
+            tags: ['coastal', 'supply'],
+            path: "M 278 443 L 272 424 L 260 417 L 261 401 L 270 398 L 276 399 L 279 389 L 276 386 L 268 385 L 259 388 L 255 394 L 250 397 L 246 392 L 233 404 L 236 411 L 240 415 L 246 416 L 253 418 L 263 434 L 274 447 L 278 443",
+            textLocation: {
+                x: 250,
+                y: 404,
+            },
+        },
+        {
+            title: 'Vienna',
+            name: 'Vienna',
+            tileType: 'landTile',
+            id: 'l Vienna',
+            tags: ['landlocked', 'supply'],
+            path: "M 292 357 L 295 349 L 303 346 L 316 348 L 322 347 L 329 346 L 337 350 L 335 354 L 322 370 L 311 375 L 308 383 L 299 385 L 294 380 L 295 362 L 292 357",
+            textLocation: {
+                x: 311,
+                y: 356,
+            },
+        },
+        {
+            title: 'Wales',
+            name: 'Wales',
+            tileType: 'landTile',
+            id: 'l Wales',
+            tags: ['coastal'],
+            path: "M 100 291 L 112 287 L 122 281 L 130 282 L 127 276 L 119 272 L 116 272 L 115 265 L 128 262 L 143 262 L 150 264 L 153 271 L 150 277 L 145 281 L 147 295 L 134 294 L 124 291 L 120 295 L 110 292 L 100 291",
+            textLocation: {
+                x: 130,
+                y: 275,
+            },
+        },
+        {
+            title: 'Warsaw',
+            name: 'Warsaw',
+            tileType: 'landTile',
+            id: 'l Warsaw',
+            tags: ['landlocked', 'supply'],
+            path: "M 333 330 L 326 327 L 323 322 L 320 303 L 324 299 L 326 292 L 341 287 L 345 289 L 359 286 L 365 281 L 372 283 L 379 290 L 386 309 L 383 327 L 379 324 L 374 327 L 367 329 L 361 324 L 356 323 L 353 327 L 344 332 L 341 330 L 333 330",
+            textLocation: {
+                x: 354,
+                y: 305,
+            },
+        },
+        {
+            title: 'Yorkshire',
+            name: 'Yorkshire',
+            tileType: 'landTile',
+            id: 'l Yorkshire',
+            tags: ['coastal'],
+            path: "M 163 226 L 163 239 L 168 246 L 170 252 L 169 265 L 166 269 L 153 271 L 150 264 L 151 248 L 155 239 L 155 228 L 163 226",
+            textLocation: {
+                x: 160,
+                y: 248,
+            },
+        },
+    ],
+};
+var provinces = countryData.territories
+    .filter(function (t) { return !t.tags.includes('neutral'); })
+    .map(function (t) { return t.title; });
+/* harmony default export */ __webpack_exports__["default"] = (countryData);
+
+
+/***/ }),
+
+/***/ "./src/shared/types/enums/UnitType.ts":
+/*!********************************************!*\
+  !*** ./src/shared/types/enums/UnitType.ts ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var UnitType = {
+    FLEET: 'Fleet',
+    ARMY: 'Army',
+};
+/* harmony default export */ __webpack_exports__["default"] = (UnitType);
 
 
 /***/ })

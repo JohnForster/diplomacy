@@ -1,100 +1,33 @@
-import {Component, h, FunctionalComponent, Fragment} from 'preact'
-import {useState} from 'preact/hooks'
-import { IUnit, IPlayerStateJSON, IMove, OrderType } from '@shared/types'
-// ! import OrderType from '@shared/types/enums/OrderType'
-import UnitType from '@shared/types/enums/UnitType'
+import { FunctionalComponent , h} from 'preact'
 
-import checkTag from '@client/app/_helpers/checkTag'
-import { EventHandler, FormEvent } from 'react'
-import Order from '../ordersLayer/order/order'
-import Unit from '../board/unit/unit'
-import { provinces } from '@shared/resources/countryData'
-
-
-// ! This is using the Api Style OrderTypes. Use this when changing to that type.
-// const getOrderTypes = (unit: IUnit): OrderType[] => {
-//   const orderTypes: OrderType[] = ['Hold', 'Move', 'Support',]
-
-//   if (unit.unitType  === UnitType.FLEET && checkTag(unit.location, 'sea')) {
-//     orderTypes.push(OrderType.CONVOY)
-//   }
-
-//   if (unit.unitType  === UnitType.ARMY && checkTag(unit.location, 'coastal')) {
-//     orderTypes.push(OrderType.MOVEVIACONVOY)
-//   }
-//   return orderTypes
-// }
-
-const getOrderTypes = (unit: IUnit): OrderType[] => {
-  const orderTypes: OrderType[] = ['hold', 'move', 'support',]
-
-  if (unit.unitType  === UnitType.FLEET && checkTag(unit.location, 'sea')) {
-    orderTypes.push('convoy')
-  }
-
-  if (unit.unitType  === UnitType.ARMY && checkTag(unit.location, 'coastal')) {
-    orderTypes.push('moveViaConvoy')
-  }
-  return orderTypes
-}
-
-interface IOrderDropdownProps {
-  unit: IUnit
-  order?: IMove
-  setOrder: (order:Partial<IMove>) => void
-}
-
-const OrderDropdown = (props: IOrderDropdownProps) => {
-  const [order, setOrder] = useState<Partial<IMove>>(props.order || {moveType: 'hold'})
-  const orderTypes = getOrderTypes(props.unit)
-
-  const handleChange = (fieldName: keyof IMove) => (event: Event) => {
-    const value = (event.target as HTMLSelectElement).value
-    const newOrder = {
-      unit: props.unit.unitType,
-      from: props.unit.location,
-      [fieldName]: value
-    }
-    setOrder(newOrder)
-    props.setOrder(newOrder)
-  }
-
-
-  return (
-    <Fragment>
-      <select type='select' onChange={handleChange('moveType')}>
-        {orderTypes.map((orderType, i) => (
-          <option value={orderType} key={`ordertype-${i}`} >
-            {orderType}
-          </option>
-        ))}
-      </select>
-      {order.moveType !== 'hold' && (
-        <Fragment>
-          to
-          <select type='select' onChange={handleChange('to')}>
-            {provinces.map((province, i) => (
-              <option value={province} key={`ordertype-${i}`} >
-                {province}
-              </option>
-            ))}
-          </select>
-        </Fragment>
-      )}
-    </Fragment>
-  )
-}
+import { IMove, IUnit } from '@shared/types'
+import OrderDropdown from './orderDropdown'
 
 interface IOrdersBoxProps {
-  playerData: IPlayerStateJSON
-  newNewOrders: {[key: string]: Partial<IMove>}
-  setOrder: (order: Partial<IMove>) => void
+  playerUnits: IUnit[]
+  playerOrders: Map<string, Partial<IMove>>
+  updateLocation: (location: string, destination: string, destinationType: 'to' | 'supportFrom' | 'convoyFrom') => void
+  updateOrderType: (location: string, moveType: string) => void
+  completeOrder: (location: string) => void
+  removeOrder: (location: string) => void
 }
+
 const OrdersBox: FunctionalComponent<IOrdersBoxProps> = (props) => {
+  console.log('props.playerOrders:', props.playerOrders)
   return (
     <div style="border: 1px black; font-family: 'palantino';">
-      {props.playerData.ownedUnits.map((unit, i) => (
-        <div key={`ownedUnits-${i}`}>{unit.unitType} in {unit.location} will <OrderDropdown unit={unit} setOrder={props.setOrder}/></div>
+      <h3>THE PROBLEM IS THAT THE PLAYERORDERS AREN'T BEING SET WHEN THE MOVES ARE BEING LOADED</h3>
+      {props.playerUnits.map((unit, i) => (
+        <div key={`ownedUnits-${i}`}>
+          <OrderDropdown
+            unit={unit}
+            order={props.playerOrders.get(unit.location)}
+            updateLocation={props.updateLocation}
+            updateOrderType={props.updateOrderType}
+            completeOrder={props.completeOrder}
+            removeOrder={props.removeOrder}
+          />
+        </div>
       ))}
     </div>
   )
