@@ -1,6 +1,6 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from "styled-components";
 
-import Colours from './variables/colors'
+import Colours from "./variables/colors";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -30,20 +30,25 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     text-align: center;
   }
-`
+`;
 
 export const Page = styled.div`
-  @import url('https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap');
+  @import url("https://fonts.googleapis.com/css?family=Notable|Arvo&display=swap");
 
   animation: fadein 1s;
   display: flex;
   align-items: center;
   align-content: flex-start;
   flex-direction: column;
-  font-family: 'Notable', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Notable", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    sans-serif;
 
   @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
-`
+`;

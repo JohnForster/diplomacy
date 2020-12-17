@@ -1,80 +1,101 @@
-import {Component, h, Fragment} from 'preact'
+import { Component, h, Fragment } from "preact";
 
-import to from 'await-to-js'
-import axios from 'axios'
-import clone from 'lodash.clone'
-import { Link, route } from 'preact-router'
+import to from "await-to-js";
+import axios from "axios";
+import clone from "lodash.clone";
+import { Link, route } from "preact-router";
 
-import FormBox from '../../components/formBox/formBox'
+import FormBox from "../../components/formBox/formBox";
 
-import * as Styled from './styled'
+import * as Styled from "./styled";
 
 export interface ILoginProps {
-  toggleLogIn: (arg: boolean) => void
+  toggleLogIn: (arg: boolean) => void;
 }
 
 interface ILoginState {
   formFields?: {
-    username?: string,
-    password?: string,
-  }
+    username?: string;
+    password?: string;
+  };
 }
 
-export default class Login extends Component <ILoginProps, ILoginState> {
-  state: ILoginState = { formFields: {} }
-  usernameInput: HTMLInputElement
-  passwordInput: HTMLInputElement
+export default class Login extends Component<ILoginProps, ILoginState> {
+  state: ILoginState = { formFields: {} };
+  usernameInput: HTMLInputElement;
+  passwordInput: HTMLInputElement;
 
-  componentDidMount () {
+  componentDidMount() {
     this.setState({
       formFields: {
         username: this.usernameInput.value,
         password: this.passwordInput.value,
-      }
-    })
+      },
+    });
   }
 
   render(props: ILoginProps, state: ILoginState) {
     return (
       <Fragment>
-        <Styled.Title>Diplomacy</Styled.Title><br/>
+        <Styled.Title>Diplomacy</Styled.Title>
+        <br />
         <FormBox>
-            {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
-            <form action='api/user/authenticate' method='post' onSubmit={this.login}>
-              Username<br/>
-              <input ref={usernameInput => this.usernameInput = usernameInput} type='text' name='username' onChange={this.handleChange('username')}/><br/>
-              Password<br/>
-              <input ref={passwordInput => this.passwordInput = passwordInput} type='password' name='password' onChange={this.handleChange('password')}/><br/>
-              <input type='submit' value='Submit'/>
-            </form>
-            <p>New? Register <Link href='/register'>here</Link></p>
+          {/* <button onClick={() => {route('/game', true)}}> Game </button> */}
+          <form
+            action="api/user/authenticate"
+            method="post"
+            onSubmit={this.login}
+          >
+            Username
+            <br />
+            <input
+              ref={(usernameInput) => (this.usernameInput = usernameInput)}
+              type="text"
+              name="username"
+              onChange={this.handleChange("username")}
+            />
+            <br />
+            Password
+            <br />
+            <input
+              ref={(passwordInput) => (this.passwordInput = passwordInput)}
+              type="password"
+              name="password"
+              onChange={this.handleChange("password")}
+            />
+            <br />
+            <input type="submit" value="Submit" />
+          </form>
+          <p>
+            New? Register <Link href="/register">here</Link>
+          </p>
         </FormBox>
       </Fragment>
-    )
+    );
   }
 
   login = async (evt: Event) => {
-    evt.preventDefault()
-    console.log('attempting to log in')
-    console.log(this.state.formFields)
-    const [err, res] = await to(axios.post('api/login', this.state.formFields))
+    evt.preventDefault();
+    console.log("attempting to log in");
+    console.log(this.state.formFields);
+    const [err, res] = await to(axios.post("api/login", this.state.formFields));
     if (err) {
-      console.log('logging an err')
-      console.log(err)
+      console.log("logging an err");
+      console.log(err);
     }
     if (res) {
-      console.log('success!')
-      console.log(res.data)
-      await this.props.toggleLogIn(true)
-      route('/game')
+      console.log("success!");
+      console.log(res.data);
+      await this.props.toggleLogIn(true);
+      route("/game");
     }
-  }
+  };
 
-  handleChange = (field: 'username' | 'password') => {
+  handleChange = (field: "username" | "password") => {
     return (event: Event) => {
-      const formFields = clone(this.state.formFields)
-      formFields[field] = (event.target as HTMLInputElement).value
-      this.setState({formFields})
-    }
-  }
+      const formFields = clone(this.state.formFields);
+      formFields[field] = (event.target as HTMLInputElement).value;
+      this.setState({ formFields });
+    };
+  };
 }

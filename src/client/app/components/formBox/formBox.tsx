@@ -1,11 +1,9 @@
-import { h } from 'preact'
+import { h } from "preact";
 
-import * as Styled from './styled'
+import * as Styled from "./styled";
 
-const FormBox: React.FC = ({children}) => (
-  <Styled.FormBox>
-    {children}
-  </Styled.FormBox>
-)
+const FormBox: React.FC = ({ children }) => (
+  <Styled.FormBox>{children}</Styled.FormBox>
+);
 
-export default FormBox
+export default FormBox;

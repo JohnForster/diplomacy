@@ -1,5 +1,5 @@
-import { IGameTurnDB, IGameTurnJSON } from '@shared/types'
+import { IGameTurnDB, IGameTurnJSON } from "@shared/types";
 
 export default (turn: IGameTurnDB): IGameTurnJSON => {
-  return JSON.parse(JSON.stringify(turn))
-}
+  return JSON.parse(JSON.stringify(turn));
+};

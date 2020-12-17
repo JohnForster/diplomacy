@@ -1,8 +1,8 @@
-import mongoose, {Schema, Types} from 'mongoose'
+import mongoose, { Schema, Types } from "mongoose";
 
-import TurnService from '@server/services/turn.service'
-import {IGameDB} from '@shared/types'
-import TurnModel, { ITurnModel } from './turn.model'
+import TurnService from "@server/services/turn.service";
+import { IGameDB } from "@shared/types";
+import TurnModel, { ITurnModel } from "./turn.model";
 
 // export interface IGame {
 //   timeStarted: Date,
@@ -16,68 +16,73 @@ import TurnModel, { ITurnModel } from './turn.model'
 //   randomEmpires: boolean,
 // }
 export interface IGameModel extends IGameDB, mongoose.Document {
-  start: (this: IGameModel) => void,
-  setTurn: (this: IGameModel, turn: string) => void,
+  start: (this: IGameModel) => void;
+  setTurn: (this: IGameModel, turn: string) => void;
   // advanceTurn: (this: IGameModel) => void,
 }
 
-const gameSchema = new Schema({
-  timeStarted: {
-    type: Date,
+const gameSchema = new Schema(
+  {
+    timeStarted: {
+      type: Date,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    isPaused: {
+      type: Boolean,
+      default: true,
+    },
+    isComplete: {
+      type: Boolean,
+      default: false,
+    },
+    winner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    turnLengthMinutes: {
+      type: Number,
+      default: 2880, // 48 hours
+    },
+    randomEmpires: {
+      type: Boolean,
+      default: true,
+    },
+    currentTurn: {
+      type: Schema.Types.ObjectId,
+      ref: "Turn",
+    }, // gameStateID
+    history: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Turn",
+      },
+    ], // array of past gameStateIDs
   },
-  createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  isPaused: {
-    type: Boolean,
-    default: true,
-  },
-  isComplete: {
-    type: Boolean,
-    default: false,
-  },
-  winner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  turnLengthMinutes: {
-    type: Number,
-    default: 2880, // 48 hours
-  },
-  randomEmpires: {
-    type: Boolean,
-    default: true,
-  },
-  currentTurn: {
-    type: Schema.Types.ObjectId,
-    ref: 'Turn',
-  }, // gameStateID
-  history: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Turn',
-  }], // array of past gameStateIDs
-}, {timestamps: true, toJSON: {virtuals: true}})
+  { timestamps: true, toJSON: { virtuals: true } }
+);
 
 // Duplicate the ID field.
-gameSchema.virtual('id').get(function() {
-  return this._id.toHexString()
-})
+gameSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
 
-gameSchema.methods.start = async function(turn: ITurnModel): Promise<boolean> {
+gameSchema.methods.start = async function (turn: ITurnModel): Promise<boolean> {
   if (turn.isReadyToStart()) {
-    this.isPaused = false
-    this.currentTurn = turn.id
-    this.timeStarted = Date.now()
-    return true
+    this.isPaused = false;
+    this.currentTurn = turn.id;
+    this.timeStarted = Date.now();
+    return true;
   }
-  throw new Error('Game is not ready to start')
-}
+  throw new Error("Game is not ready to start");
+};
 
-gameSchema.methods.setTurn = function(turnID: string): void {
-  if (this.currentTurn) throw new Error('Game already has a turn in progress')
-  this.currentTurn = turnID
-}
+gameSchema.methods.setTurn = function (turnID: string): void {
+  if (this.currentTurn) throw new Error("Game already has a turn in progress");
+  this.currentTurn = turnID;
+};
 
 // ? Move Turnservice calls into gameService and pass as args to avoid
 // ?   making this method async?
@@ -98,4 +103,4 @@ gameSchema.methods.setTurn = function(turnID: string): void {
 //   return nextTurn
 // }
 
-export default mongoose.model<IGameModel>('Game', gameSchema)
+export default mongoose.model<IGameModel>("Game", gameSchema);
