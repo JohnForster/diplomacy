@@ -43,6 +43,9 @@ const startServer = () => {
     console.log
   );
 
+  console.log(
+    `Setting up sessions with secret "${config.TOKEN_SECRET.slice(0, 6)}..."`
+  );
   app.use(
     session({
       secret: config.TOKEN_SECRET,

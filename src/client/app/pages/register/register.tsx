@@ -28,6 +28,8 @@ export default class Register extends Component<
   render(props: IRegisterProps, state: IRegisterState) {
     return (
       <Fragment>
+        <h1>Diplomacy</h1>
+        <br />
         <FormBox>
           <form
             action="/user/register"
