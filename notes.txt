@@ -54,7 +54,7 @@ UNIFY 'Id' vs 'ID'
 
 REFACTOR mongoose models to use ES6 classes
 
-Implement choosing empires ? 
+Implement choosing empires ?
 
 NEXT:
   refactor api to use /api
@@ -65,3 +65,6 @@ NEXT:
   SORT OUT FRONT END TYPES
 
   Refactor api messages to give arrays.
+
+MVP:
+  Add way of giving orders.
